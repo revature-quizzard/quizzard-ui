@@ -1,11 +1,23 @@
 /* Fonts:
    Fancy/header: font-family: var(--header-font, sans-serif);
    All-purpose: font-family: var(--normal-font, sans-serif);
+
+   Color scheme:
+   Purple (for highlights): background-color: var(--purple, #90708C);
+   Gray: background-color: var(--gray, #CEF0DC);
+   Blue: background-color: var(--blue, #3C7A89);
+   Navy: background-color: var(--navy, #2e4756);
+   Dark blue (probably best for menus/nav bars): background-color: var(--dark-blue, #16262E);
   */
 
   :root {
     --header-font: 'Righteous', sans-serif;
     --normal-font: 'Ubuntu', sans-serif;
+    --purple: #90708C;
+    --gray: #CEF0DC;
+    --blue: #3C7A89;
+    --navy: #2e4756;
+    --dark-blue: #16262E;
   }
 
   html, body {
