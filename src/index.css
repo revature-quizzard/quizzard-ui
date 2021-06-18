@@ -27,3 +27,9 @@
     height: 100%;
     font-family: var(--normal-font);
   }
+
+  /* NAVIGATION STYLES */
+  #navLink:hover {
+    text-decoration: none;
+    transform: scale(1.2, 1.2);
+  }
