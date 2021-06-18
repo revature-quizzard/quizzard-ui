@@ -26,6 +26,9 @@ const Navigation = () => {
             >
               Flashcards
             </Link>
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
+              Create Quiz
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
