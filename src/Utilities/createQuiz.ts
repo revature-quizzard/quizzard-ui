@@ -5,7 +5,8 @@ interface FlashCard {
   answer: string;
 }
 
-export const createQuiz = (studySet: any) => {
+let questionArray: any[] = [];
+export const createQuiz = (studySet: any[]) => {
 
   studySet.forEach((flashCard: FlashCard) => {
     
@@ -32,8 +33,10 @@ export const createQuiz = (studySet: any) => {
     let wrong2: string = wrongAnswerArray[1];
     let wrong3: string = wrongAnswerArray[2];
 
-    createQuizQuestion(flashCard, wrong1, wrong2, wrong3);
+    questionArray.push(createQuizQuestion(flashCard, wrong1, wrong2, wrong3));
   });
+    console.log("questionArray: ", questionArray);
+    return questionArray;
 };
 
 const generateRandom = (num: number) => {
@@ -52,8 +55,11 @@ const createQuizQuestion = (
     wrong1,
     wrong2,
     wrong3,
-  };
-  console.log("Generated Question: ", question);
+    };
+    
+    return question;
 };
+
+
 
 
