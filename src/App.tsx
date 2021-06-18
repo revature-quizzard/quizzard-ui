@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Main from "./components/Main";
-import Navigation from "./components/NavBar";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import FlashCard from "./components/Flashcards";
+import Main from "./components/Main/Main";
+import Navigation from "./components/NavBar/Navbar";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import FlashCard from "./components/Flashcards/Flashcard";
 
 function App() {
   return (
