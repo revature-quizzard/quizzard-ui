@@ -25,9 +25,6 @@ function App() {
           <Route exact path="/flashcards">
             <FlashCard />
           </Route>
-          <Route exact path="/createQuiz">
-            <CreateQuiz />
-          </Route>
         </Switch>
       </Container>
     </Router>
