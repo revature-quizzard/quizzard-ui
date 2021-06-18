@@ -5,7 +5,6 @@ import Navigation from "./components/NavBar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
-import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 
 function App() {
   return (
