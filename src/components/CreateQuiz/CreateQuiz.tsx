@@ -11,9 +11,9 @@ import { createQuiz } from "../../Utilities/createQuiz";
 const CreateQuiz = () => {
 
     const handleClick = () => {
-        
-        console.log("clicked");
-        createQuiz(studySet);
+    
+      createQuiz(studySet);
+      
   };
 
   return (
