@@ -2,12 +2,36 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 
 // Create an interface for the state object
+
+interface Question {
+    question: string,
+    answer: string,
+    wrong1: string,
+    wrong2: string,
+    wrong3: string
+}
+
+interface FlashCard {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+// interface StudySet {
+//     id: number,
+//     name: string,
+//     data: Array<object>
+// }
+
 interface State {
-    studySet: Array<object>;
+    studySet: Array<FlashCard>;
     isLoading: boolean;
     flashCard: object;
     isLoaded: boolean;
     studySetName: string;
+    showQuiz: boolean;
+    quiz: Array<Question>;
+    count: number;
 }
 
 //Declare the initial state values that extends the State interface
@@ -16,7 +40,10 @@ const initialState: State = {
     isLoading: false,
     flashCard: {},
     isLoaded: false,
-    studySetName: ""
+    studySetName: "",
+    showQuiz: false,
+    quiz: [],
+    count: 0
 }
 
 // Create the actual slice useing createSlice from the @reduxjs/toolkit dependency
@@ -39,12 +66,27 @@ export const createQuizSlice = createSlice({
         isLoaded: (state) => {
             state.isLoading = false;
             state.isLoaded = true;
+        },
+        showQuiz: (state) => {
+            state.showQuiz = true;
+        },
+        hideQuiz: (state) => {
+            state.showQuiz = false;
+        },
+        loadQuiz: (state, action: PayloadAction<Array<Question>>) => {
+            state.quiz = action.payload;
+        },
+        nextCard: (state) => {
+            state.count += 1;
+        },
+        prevCard: (state) => {
+            state.count -= 1;
         }
     }
 })
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { isLoading, isLoaded } = createQuizSlice.actions;
+export const { isLoading, isLoaded, showQuiz, hideQuiz, loadQuiz, nextCard, prevCard } = createQuizSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const createQuizState = (state: RootState) => state.createQuiz;

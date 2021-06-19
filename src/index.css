@@ -33,3 +33,27 @@
     text-decoration: none;
     transform: scale(1.2, 1.2);
   }
+
+  /*QUIZ NAVIGATION */
+.bottomRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.btn-prev,
+.btn-next,
+.btn-flip {
+  margin: 0px 20px;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+
+  .btn-prev, .btn-next {
+
+  }

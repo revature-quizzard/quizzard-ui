@@ -5,8 +5,16 @@ interface FlashCard {
   answer: string;
 }
 
-let questionArray: any[] = [];
-export const createQuiz = (studySet: any[]) => {
+interface Question {
+  question: string;
+  answer: string;
+  wrong1: string;
+  wrong2: string;
+  wrong3: string;
+}
+
+let questionArray: Array<Question> = [];
+export const createQuiz = (studySet: Array<FlashCard>) => {
 
   studySet.forEach((flashCard: FlashCard) => {
     
@@ -49,7 +57,7 @@ const createQuizQuestion = (
   wrong2: string,
   wrong3: string
 ) => {
-  let question = {
+  let question: Question = {
     question: flashCard.question,
     answer: flashCard.answer,
     wrong1,
