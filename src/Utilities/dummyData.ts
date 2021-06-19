@@ -71,5 +71,4 @@ export const studySet = [
 ];
 export const studySet2 = [flashCard1, flashCard2, flashCard3, flashCard4];
 
-export const setOfSets: Array<Array<FlashCard>> = [studySet, studySet2]
-
+export const setOfSets: Array<Array<FlashCard>> = [studySet, studySet2];

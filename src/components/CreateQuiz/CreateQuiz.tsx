@@ -1,10 +1,7 @@
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  isLoading,
-  isLoaded,
   showQuiz,
-  hideQuiz,
   loadQuiz,
   createQuizState,
 } from "../../StateSlices/CreateQuiz/createQuizSlice";
@@ -20,16 +17,10 @@ const CreateQuiz = () => {
   }
 
   const dispatch = useDispatch();
+
   const quizState = useSelector(createQuizState);
 
-  const handleClick = () => {
-    console.log("set of Sets: ", setOfSets);
-    
-  };
-
   const goToQuiz = (e: any) => {
-    console.log(e.target.id);
-    console.log("set by index: ", setOfSets[e.target.id]);
     dispatch(loadQuiz(createQuiz(setOfSets[e.target.id])));
     dispatch(showQuiz());
   };
@@ -66,11 +57,6 @@ const CreateQuiz = () => {
               </Row>
             </>
           )}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Button onClick={handleClick}>Click me</Button>
         </Col>
       </Row>
     </Container>

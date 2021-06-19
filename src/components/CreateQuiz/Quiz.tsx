@@ -2,8 +2,6 @@ import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createQuizState,
-  isLoading,
-  isLoaded,
   nextCard,
   prevCard,
 } from "../../StateSlices/CreateQuiz/createQuizSlice";
@@ -13,13 +11,21 @@ const Quiz = () => {
   const quizState = useSelector(createQuizState);
 
   const handlePrev = () => {
-    if (quizState.count >= 0) {
+    if (quizState.count > 0) {
       dispatch(prevCard());
     }
   };
   const handleNext = () => {
-    if (quizState.count <= quizState.quiz.length) {
+    if (quizState.count < quizState.quiz.length) {
       dispatch(nextCard());
+    }
+  };
+
+  const checkAnswer = (e: any) => {
+    if (e.currentTarget.id === "answer") {
+      console.log("CORRECT!");
+    } else {
+      console.log("WRONG!");
     }
   };
   return (
@@ -29,19 +35,18 @@ const Quiz = () => {
           <Row>
             <Col>{quizState.quiz[quizState.count].question}</Col>
           </Row>
-          <Row>
-            <Col>{quizState.quiz[quizState.count].wrong1}</Col>
-          </Row>
-          <Row>
-            <Col>{quizState.quiz[quizState.count].wrong2}</Col>
-          </Row>
-          <Row>
-            <Col>{quizState.quiz[quizState.count].wrong3}</Col>
-          </Row>
-          <Row>
-            <Col>{quizState.quiz[quizState.count].answer}</Col>
-          </Row>
+          {quizState.quiz[quizState.count].answers.map((key, value) => {
+            let id = Object.keys(key).toString();
+            return (
+              <Row id={id} className="answer" onClick={checkAnswer} key={value}>
+                <Col>{Object.values(key).toString()}</Col>
+              </Row>
+            );
+          })}
         </Col>
+      </Row>
+      <Row>
+        <Col></Col>
       </Row>
 
       <div className="bottomRow">

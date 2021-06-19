@@ -13,18 +13,21 @@ interface Question {
   wrong3: string;
 }
 
-let questionArray: Array<Question> = [];
-export const createQuiz = (studySet: Array<FlashCard>) => {
+interface ScrambledQuestion {
+  question: string;
+  answers: Array<object>;
+}
 
+let questionArray: Array<ScrambledQuestion> = [];
+export const createQuiz = (studySet: Array<FlashCard>) => {
   studySet.forEach((flashCard: FlashCard) => {
-    
     let newStudySet = studySet.filter((card: FlashCard) => {
       if (card.question !== flashCard.question) {
         return card;
       }
       return null;
     });
-   
+
     let wrongAnswerArray: string[] = [];
 
     let ranNum: number = generateRandom(newStudySet.length);
@@ -43,8 +46,8 @@ export const createQuiz = (studySet: Array<FlashCard>) => {
 
     questionArray.push(createQuizQuestion(flashCard, wrong1, wrong2, wrong3));
   });
-    console.log("questionArray: ", questionArray);
-    return questionArray;
+
+  return questionArray;
 };
 
 const generateRandom = (num: number) => {
@@ -63,11 +66,43 @@ const createQuizQuestion = (
     wrong1,
     wrong2,
     wrong3,
-    };
-    
-    return question;
+  };
+
+  return answerChoiceRandomizer(question);
 };
 
+export const answerChoiceRandomizer = (question: any) => {
+  let theQuestion = question.question;
 
+  let allowed = ["answer", "wrong1", "wrong2", "wrong3"];
 
+  let answerArray: Array<object> = [];
 
+  let answers = allowed.reduce(
+    (obj, key) => ({ ...obj, [key]: question[key] }),
+    {}
+  );
+
+  for (const [key, value] of Object.entries(answers)) {
+    answerArray.push({ [key]: value });
+  }
+
+  let ranNum: number = generateRandom(answerArray.length);
+
+  let scrambledAnswerArray: Array<object> = [];
+
+  while (scrambledAnswerArray.length < 4) {
+    if (!scrambledAnswerArray.includes(answerArray[ranNum])) {
+      scrambledAnswerArray.push(answerArray[ranNum]);
+    } else {
+      ranNum = generateRandom(answerArray.length);
+    }
+  }
+
+  let scrambledQuestion: ScrambledQuestion = {
+    question: theQuestion,
+    answers: scrambledAnswerArray,
+  };
+
+  return scrambledQuestion;
+};
