@@ -38,7 +38,7 @@ export const flashcardsSlice = createSlice({
         },
 
         addFlashcard: (state, action: PayloadAction<object>) =>{
-            state.flashCards.push(action.payload)
+           state.flashCards.push(action.payload)
         }
 
     }

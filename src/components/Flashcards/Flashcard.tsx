@@ -2,6 +2,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import { isLoading, isLoaded, addFlashcard, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import {useState} from "react"
+import { createCard } from "../../remote/cardService";
 
 interface Card {
   question: string;
@@ -22,7 +23,7 @@ const FlashCard = () => {
   const [subject, setSubject] = useState("");
 
 
-  const handleAddCard = () =>{
+  const handleAddCard = async () =>{
     let cardObj: Card = {
       question,
       answer,
@@ -30,6 +31,9 @@ const FlashCard = () => {
       isPublic,
       subject
     };
+
+    console.log("Subject: " + cardObj.subject)
+    let test = await createCard(cardObj.question, cardObj.answer, cardObj.reviewable, cardObj.isPublic, cardObj.subject);
     dispatch(addFlashcard(cardObj));
 
     setQuestion("");
