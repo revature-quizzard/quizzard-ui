@@ -54,7 +54,15 @@ body {
   cursor: pointer;
 }
 
+.answer {
+  font-size: 20px;
+  cursor: pointer;
+}
 .answer:hover {
-  background-color: blue;
-  color: white;
+  
+}
+
+.question {
+  font-size: 20px;
+  font-weight: 700;
 }

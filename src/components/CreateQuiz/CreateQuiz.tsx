@@ -6,7 +6,7 @@ import {
   createQuizState,
 } from "../../StateSlices/CreateQuiz/createQuizSlice";
 import { setOfSets } from "../../Utilities/dummyData";
-import { createQuiz } from "../../Utilities/createQuiz";
+import { createQuiz } from "../../Utilities/quizUtility";
 import Quiz from "./Quiz";
 
 const CreateQuiz = () => {

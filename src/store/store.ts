@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createQuizReducer from "../StateSlices/CreateQuiz/createQuizSlice";
+import quizResultsReducer from "../StateSlices/CreateQuiz/resultSlice";
 
 export const store = configureStore({
     reducer: {
-        createQuiz: createQuizReducer
+        createQuiz: createQuizReducer,
+        result: quizResultsReducer
     }
 })
 

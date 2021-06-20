@@ -64,6 +64,10 @@ export const createQuizSlice = createSlice({
     loadQuiz: (state, action: PayloadAction<Array<ScrambledQuestion>>) => {
       state.quiz = action.payload;
     },
+    clearQuiz: (state) => {
+      state.quiz = [];
+      state.count = 0;
+    },
     nextCard: (state) => {
       state.count += 1;
     },
@@ -82,6 +86,7 @@ export const {
   loadQuiz,
   nextCard,
   prevCard,
+  clearQuiz
 } = createQuizSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components

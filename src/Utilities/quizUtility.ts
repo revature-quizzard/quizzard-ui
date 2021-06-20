@@ -18,8 +18,8 @@ interface ScrambledQuestion {
   answers: Array<object>;
 }
 
-let questionArray: Array<ScrambledQuestion> = [];
 export const createQuiz = (studySet: Array<FlashCard>) => {
+  let questionArray: Array<ScrambledQuestion> = [];
   studySet.forEach((flashCard: FlashCard) => {
     let newStudySet = studySet.filter((card: FlashCard) => {
       if (card.question !== flashCard.question) {
