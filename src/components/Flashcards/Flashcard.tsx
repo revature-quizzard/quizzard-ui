@@ -2,7 +2,8 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import { isLoading, isLoaded, addFlashcard, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import {useState} from "react"
-import { createCard } from "../../remote/cardService";
+import { createCard, getCards } from "../../remote/cardService";
+import { Flashcard } from "../../Models/Flashcard";
 
 interface Card {
   question: string;
@@ -22,6 +23,15 @@ const FlashCard = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [subject, setSubject] = useState("");
 
+  const HandleGetAllCards = async() => {
+    //REPLACE MAGIC NUMBER WITH ACCOUNT ID
+    let test:Flashcard[] = await getCards(0);
+    test.forEach(card =>{
+      console.log(card)
+    })
+  }
+  
+  HandleGetAllCards()
 
   const handleAddCard = async () =>{
     let cardObj: Card = {
