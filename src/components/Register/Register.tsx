@@ -1,12 +1,52 @@
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { register } from "../../remote/login-register-service";
 
 const Register = () => {
+  const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""});
+
+  const handleChange = (e: any) => {
+    const {name, value} = e.target;
+    setNewUser({
+      ...newUser, [name]: value
+    });
+  }
+
+  let registerNewUser = async (e: any) => {
+    e.preventDefault();
+    let response = await register(newUser);
+    localStorage.setItem("Authorization", response.headers.Authorization);
+  }
+
+
   return (
-    <Row>
-      <Col>
-        <h1>Register COMPONENT</h1>
-      </Col>
-    </Row>
+    <>
+      <Form>
+        <Form.Group>
+          <Form.Label>Username: </Form.Label>
+          <Form.Control name="username" value={newUser.username} onChange={handleChange} type="text" placeholder="username"  />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password: </Form.Label>
+          <Form.Control name="password" value={newUser.password} onChange={handleChange} type="password" placeholder="*******"/>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email: </Form.Label>
+          <Form.Control name="email" value={newUser.email} onChange={handleChange} type="text" placeholder="email@email.com"  />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>First Name: </Form.Label>
+          <Form.Control name="firstName" value={newUser.firstName} onChange={handleChange} type="text" placeholder="John"  />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Last Name: </Form.Label>
+          <Form.Control name="lastName" value={newUser.lastName} onChange={handleChange} type="text" placeholder="Bond"  />
+        </Form.Group>
+        <Form.Group className="text-center">
+          <Button>Register</Button>
+        </Form.Group>
+      </Form>
+    </>
   );
 };
 
