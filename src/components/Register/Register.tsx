@@ -43,7 +43,7 @@ const Register = () => {
           <Form.Control name="lastName" value={newUser.lastName} onChange={handleChange} type="text" placeholder="Bond"  />
         </Form.Group>
         <Form.Group className="text-center">
-          <Button>Register</Button>
+          <Button onClick={registerNewUser} >Register</Button>
         </Form.Group>
       </Form>
     </>

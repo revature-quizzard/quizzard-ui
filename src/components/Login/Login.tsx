@@ -17,7 +17,8 @@ const Login = () => {
   let loginUser = async (e: any) => {
     e.preventDefault();
     let response = await login(username, password);
-    localStorage.setItem("Authorization", response.headers.Authorization);
+    console.log(response);
+    localStorage.setItem("Authorization", response.headers.authorization);
   }
 
 
