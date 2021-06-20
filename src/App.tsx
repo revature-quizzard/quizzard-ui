@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
+import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/createQuiz">
             <CreateQuiz />
+          </Route>
+          <Route exact path="/update">
+            <UpdateAccontInfo/>
           </Route>
         </Switch>
       </Container>
