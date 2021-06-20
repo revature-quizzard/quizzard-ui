@@ -20,9 +20,11 @@ const Navigation = () => {
             <Link
               id="navLink"
               className="text-light ml-2 mr-2"
-              to="/flashcards"
-            >
+              to="/flashcards">
               Flashcards
+            </Link>
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/studysets">
+              Studysets
             </Link>
           </Nav>
         </Navbar.Collapse>

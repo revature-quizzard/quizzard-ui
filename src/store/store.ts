@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createQuizReducer from "../StateSlices/CreateQuiz/createQuizSlice";
-
+import studySetReducer from "../StateSlices/StudySet/studysetSlice"
 export const store = configureStore({
     reducer: {
-        createQuiz: createQuizReducer
+        createQuiz: createQuizReducer,
+        studySet: studySetReducer,
     }
 })
 
