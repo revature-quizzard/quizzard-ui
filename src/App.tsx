@@ -1,3 +1,7 @@
+/**
+ * @Co-Author: Sean Taba
+ */
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Main from "./components/Main/Main";

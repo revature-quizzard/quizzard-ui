@@ -1,3 +1,7 @@
+/**
+ * @Co-Author: Sean Taba
+ */
+
 import { configureStore } from "@reduxjs/toolkit";
 import createQuizReducer from "../StateSlices/CreateQuiz/createQuizSlice";
 import studySetReducer from "../StateSlices/StudySet/studysetSlice"

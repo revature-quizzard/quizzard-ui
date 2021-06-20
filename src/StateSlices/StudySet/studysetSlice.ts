@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 import {StudySet} from "../../Models/StudySet";
 import {Flashcard} from "../../Models/Flashcard";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";

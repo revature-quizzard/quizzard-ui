@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 import {StudySet} from "../Models/StudySet";
 import {Account} from "../Models/Account";
 

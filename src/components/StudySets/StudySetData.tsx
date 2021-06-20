@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {setStudySet} from "../../StateSlices/StudySet/studysetSlice";
 import {StudySet} from "../../Models/StudySet";

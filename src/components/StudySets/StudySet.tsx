@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 import {Table} from "react-bootstrap";
 
 const StudySet = (props: any) => {

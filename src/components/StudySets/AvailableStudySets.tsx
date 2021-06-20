@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 import {Col, Row, Table} from "react-bootstrap";
 import StudySetData from "./StudySetData";
 
@@ -16,6 +20,7 @@ const AvailableStudySets = () => {
                     </tr>
                     </thead>
                         <StudySetData />
+                    {}
                 </Table>
             </Col>
         </Row>

@@ -1,3 +1,7 @@
+/**
+ * @Co-Author: Sean Taba
+ */
+
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -24,7 +28,7 @@ const Navigation = () => {
               Flashcards
             </Link>
             <Link id="navLink" className="text-light ml-2 mr-2" to="/studysets">
-              Studysets
+              StudySets
             </Link>
           </Nav>
         </Navbar.Collapse>

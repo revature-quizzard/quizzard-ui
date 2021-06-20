@@ -1,3 +1,7 @@
+/**
+ * @Author: Sean Taba
+ */
+
 export interface Flashcard {
     id: number;
     subject_id: number;
