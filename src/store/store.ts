@@ -4,8 +4,9 @@ import studySetReducer from "../StateSlices/StudySet/studysetSlice"
 export const store = configureStore({
     reducer: {
         createQuiz: createQuizReducer,
-        studySet: studySetReducer,
+        studySets: studySetReducer,
     }
 })
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

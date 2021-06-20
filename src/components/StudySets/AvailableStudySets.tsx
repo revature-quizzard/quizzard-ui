@@ -9,10 +9,10 @@ const AvailableStudySets = () => {
                 <Table hover>
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Studyset Topic</th>
-                        <th>Studyset Name</th>
-                        <th>Studyset Creator</th>
+                        <th>StudySet ID</th>
+                        <th>Owner Account ID</th>
+                        <th>StudySet Name</th>
+                        <th>Public</th>
                     </tr>
                     </thead>
                         <StudySetData />

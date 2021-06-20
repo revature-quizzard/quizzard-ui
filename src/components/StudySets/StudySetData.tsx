@@ -1,36 +1,23 @@
-const StudySetData = (props: any) => {
-    const dummyData =
-        [
-            {
-                id: 1,
-                topic: 'OOP',
-                name: 'OOP Set',
-                creator: 'Sean Taba'
-            },
-            {
-                id: 2,
-                topic: 'Java',
-                name: 'Basic Java Set',
-                creator: 'Jon Doe'
-            },
-            {
-                id: 3,
-                topic: 'React',
-                name: 'React Set',
-                creator: 'Mark Cuban'
-            }
-        ];
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {setStudySet} from "../../StateSlices/StudySet/studysetSlice";
+import {StudySet} from "../../Models/StudySet";
+import {dummyStudySetData} from "../dummyData";
+
+const StudySetData = () => {
+
+    useAppSelector((state => state.studySets));
+    const dispatch = useAppDispatch();
     const clickHandler = (e: any) => {
-        console.log(dummyData[e.currentTarget.id]);
+        dispatch(setStudySet(dummyStudySetData[e.currentTarget.id - 1]));
     }
     return (
         <tbody>
-        {dummyData.map((dataPoint: any, index: any) =>
-            <tr id={index} onClick={clickHandler}>
+        {dummyStudySetData.map((dataPoint: StudySet) =>
+            <tr key={dataPoint.id} id={dataPoint.id.toString()} onClick={clickHandler}>
                 <th scope="row" >{dataPoint.id}</th>
-                <td>{dataPoint.topic}</td>
+                <td>{dataPoint.account_id}</td>
                 <td>{dataPoint.name}</td>
-                <td>{dataPoint.creator}</td>
+                <td>{dataPoint.public.toString()}</td>
             </tr>
         )}
         </tbody>
