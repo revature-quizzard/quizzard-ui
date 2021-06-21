@@ -1,11 +1,10 @@
-import { Container, Row, Col, Form, Button } from "react-bootstrap"
-import { isLoading, isLoaded, addFlashcard, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
+import { Container, Row, Col, Form, Button, CardDeck, Card} from "react-bootstrap"
+import { isLoading, isLoaded, addFlashcard, setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
-import { Flashcard } from "../../Models/Flashcard";
 
-interface Card {
+interface Flashcard {
   question: string;
   answer: string;
   reviewable: boolean;
@@ -23,18 +22,26 @@ const FlashCard = () => {
   const [isPublic, setIsPublic] = useState(false);
   const [subject, setSubject] = useState("");
 
-  const HandleGetAllCards = async() => {
-    //REPLACE MAGIC NUMBER WITH ACCOUNT ID
-    let test:Flashcard[] = await getCards(0);
-    test.forEach(card =>{
-      console.log(card)
-    })
+  //This will call the axios function every frame. Might need to find a different way
+  // useEffect(()=> {
+  //   console.log("populate flashcards")
+   
+  //   const getData = async () => {
+  //     let cards = await getCards();
+  //     //dispatch(setFlashcards(cards))
+  //   };
+  //   getData();
+
+  // })
+
+  const getAllCards = async () => {
+    let cards = await getCards();
   }
   
-  HandleGetAllCards()
+  getAllCards()
 
   const handleAddCard = async () =>{
-    let cardObj: Card = {
+    let cardObj: Flashcard = {
       question,
       answer,
       reviewable,
@@ -99,6 +106,19 @@ const FlashCard = () => {
             <Button onClick={handleAddCard}>Create New Flashcard</Button>
           </Form>
         </Col>
+      </Row>
+      <Row>
+
+          <CardDeck>
+            {flashcards.flashCards.map((card) => {
+              return (
+                <Card className = " ">
+                    <Card.Header>card.question</Card.Header>
+                </Card>
+              )
+            })}
+          </CardDeck>
+
       </Row>
     </Container>
   );

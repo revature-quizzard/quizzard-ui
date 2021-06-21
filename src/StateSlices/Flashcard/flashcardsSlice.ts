@@ -39,13 +39,18 @@ export const flashcardsSlice = createSlice({
 
         addFlashcard: (state, action: PayloadAction<object>) =>{
            state.flashCards.push(action.payload)
+        },
+
+        setFlashcards: (state, action: PayloadAction<object[]>) => {
+            state.flashCards = action.payload
         }
+        
 
     }
 })
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { isLoading, isLoaded, addFlashcard } = flashcardsSlice.actions;
+export const { isLoading, isLoaded, addFlashcard, setFlashcards } = flashcardsSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const flashcardsState = (state: RootState) => state.flashcards;
