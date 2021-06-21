@@ -23,22 +23,17 @@ const FlashCard = () => {
   const [subject, setSubject] = useState("");
 
   //This will call the axios function every frame. Might need to find a different way
-  // useEffect(()=> {
-  //   console.log("populate flashcards")
+  useEffect(()=> {
+    console.log("populate flashcards")
    
-  //   const getData = async () => {
-  //     let cards = await getCards();
-  //     //dispatch(setFlashcards(cards))
-  //   };
-  //   getData();
+    const getData = async () => {
+      let cards = await getCards();
+      dispatch(setFlashcards(cards))
+    };
+    getData();
 
-  // })
+  }, [])
 
-  const getAllCards = async () => {
-    let cards = await getCards();
-  }
-  
-  getAllCards()
 
   const handleAddCard = async () =>{
     let cardObj: Flashcard = {
