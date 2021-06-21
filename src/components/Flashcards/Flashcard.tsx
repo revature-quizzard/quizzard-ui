@@ -85,11 +85,11 @@ const FlashCard = () => {
             <Form.Label>Subject: </Form.Label>
               <Form.Control as="select" onChange={(e) => setSubject(e.target.value)}>
               <option value="">Select a subject...</option>
-                <option value="Java">Java</option>
-                <option value="Spring">Spring</option>
+                <option value= "1">Java</option>
+                {/* <option value="Spring">Spring</option>
                 <option value="Javascript">Javascript</option>
                 <option value="React">React</option>
-                <option value="DevOps">DevOps</option>
+                <option value="DevOps">DevOps</option> */}
               </Form.Control>
               
             <Form.Check

@@ -2,10 +2,11 @@ import { quizzardClient } from "./quizzardClient";
 
 
 
-export async function createCard(question: String, answer: string, reviewable: boolean, isPublic: boolean, subject: String){
+export async function createCard(question: String, answer: string, reviewable: boolean, isPublic: boolean, subject: string){
     console.log("Running Axios function")
-    //How do I pass along the subject? Sending a string creates a 404 error
-    let response = await quizzardClient.post('/card/newcard/', {question, answer, reviewable, isPublic, test:null})
+
+    let subjectId = parseInt(subject)
+    let response = await quizzardClient.post('/card/newcard/', {question, answer, reviewable, isPublic, subjectId})
     console.log("Data: " + response.data)
     return await response.data;
 }
