@@ -61,8 +61,8 @@ export const createQuizSlice = createSlice({
     hideQuiz: (state) => {
       state.showQuiz = false;
     },
-    loadQuiz: (state, action: PayloadAction<Array<ScrambledQuestion>>) => {
-      state.quiz = action.payload;
+   // loadQuiz: (state, action: PayloadAction<Array<ScrambledQuestion>>) => {
+      //state.quiz = action.payload;
     },
     clearQuiz: (state) => {
       state.quiz = [];

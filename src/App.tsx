@@ -5,7 +5,6 @@ import Navigation from "./components/NavBar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
-import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 
 function App() {
   return (
@@ -24,9 +23,6 @@ function App() {
           </Route>
           <Route exact path="/flashcards">
             <FlashCard />
-          </Route>
-          <Route exact path="/createQuiz">
-            <CreateQuiz />
           </Route>
         </Switch>
       </Container>
