@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import {Studyset} from "../../Models/Studyset"
-import { Flashcard } from "../../models/Flashcard";
+import { Flashcard } from "../../Models/Flashcard";
 import FlashCard from "../../components/Flashcards/Flashcard";
 import { studySet } from "../../Utilities/dummyData";
 
@@ -46,9 +46,9 @@ export const createStudySetSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addStudySet: (state, action: PayloadAction<Array<Array<Flashcard>>) => {
-            state.studySet = action.payload;
-        },
+        // addStudySet: (state, action: PayloadAction<Array<Flashcard>>) => {
+        //     state.studySet = action.payload;
+        // },
 
 //load studySet
 
@@ -63,7 +63,6 @@ export const {
     isLoaded,
     addStudySet,
     deleteStudySet,
-    loadStudySet
 } = createStudySetSlice.actions;
 
 
