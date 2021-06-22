@@ -15,31 +15,25 @@ let flashCard3:  Flashcard;
 
 beforeEach(() => {
   flashCard1 = {
-    id: 1,
     question: "Who am I?",
     answer: "The best",
-    subject_id: 1,
-    account_id: 1,
+    subjectId: "",
     reviewable: true,
-    public: true
+    isPublic: true
   };
   flashCard2 = {
-    id: 2,
     question: "what is for lunch?",
     answer: "burgers",
-    subject_id: 1,
-    account_id: 1,
+    subjectId: "",
     reviewable: true,
-    public: true,
+    isPublic: true,
   };
   flashCard3 = {
-    id: 3,
     question: "Which color?",
     answer: "green",
-    subject_id: 1,
-    account_id: 1,
+    subjectId: "",
     reviewable: true,
-    public: true,
+    isPublic: true,
   };
 
 
@@ -64,16 +58,12 @@ test("Generates random number between 0 and number passed in as argument", () =>
 
 });
 
-const dummyData = require('../Utilities/dummyData');
-
-const quizUtility = require('../Utilities/quizUtility'); 
-
 test('creates 3 questions from studySet',()=>{
     expect(createQuiz(studySet)).toBeTruthy();
 });
 
 test('create quiz question',()=>{
-  let questionArray = createQuiz([]);
+  
   expect(createQuizQuestion(flashCard1, "wrong1", "wrong2", "wrong3")).toBeTruthy();
 });
 test('answerChoiceRandomizer',()=>{
