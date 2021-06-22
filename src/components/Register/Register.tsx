@@ -1,9 +1,11 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState } from 'react';
 import { register } from "../../remote/login-register-service";
+import { RegisterModel } from "../../models/register-model";
+
 
 const Register = () => {
-  const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""});
+  const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel)
 
   const handleChange = (e: any) => {
     const {name, value} = e.target;
@@ -12,10 +14,11 @@ const Register = () => {
     });
   }
 
-  let registerNewUser = async (e: any) => {
-    e.preventDefault();
+
+  let registerNewUser = async () => {   
     let response = await register(newUser);
-    localStorage.setItem("Authorization", response.headers.Authorization);
+    localStorage.setItem("Authorization", response.headers.authorization);
+    setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
   }
 
 
