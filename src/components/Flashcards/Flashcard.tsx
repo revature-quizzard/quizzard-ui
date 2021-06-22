@@ -5,7 +5,9 @@ import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
 import { getSubs } from "../../remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
-import {Flashcard} from "../../models/Flashcard"
+import {Flashcard} from "../../models/Flashcard";
+import {FlipCard} from "./FlipCard";
+
 
   /**
    * Renders the card creation and card viewing components
@@ -89,6 +91,13 @@ const FlashCard = () => {
         <Col>
           <h1>FlashCard Component</h1>
         </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h4>Flip your Flashcards!</h4>
+          {flashcards.flashCards[0] && <FlipCard />}
+        </Col>
+        
       </Row>
       <Row>
         <Col>
