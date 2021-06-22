@@ -5,10 +5,8 @@ const Navigation = () => {
   return (
     <Navbar bg="dark" expand="lg">
       <Container>
-        <Link to="/">
-          <Navbar.Brand className="text-primary" href="#home">
+        <Link to="/" className="text-primary">
             Qwizzard
-          </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -25,6 +23,9 @@ const Navigation = () => {
               to="/flashcards"
             >
               Flashcards
+            </Link>
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
+              Create Quiz
             </Link>
           </Nav>
         </Navbar.Collapse>
