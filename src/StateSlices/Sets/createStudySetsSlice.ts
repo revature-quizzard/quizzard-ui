@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import {Studyset} from "../../Models/Studyset"
+import { CardSet } from "../../Models/CardSet"
 import { Flashcard } from "../../Models/Flashcard";
 import FlashCard from "../../components/Flashcards/Flashcard";
 import { studySet } from "../../Utilities/dummyData";
@@ -61,7 +61,7 @@ export const createStudySetSlice = createSlice({
 export const {
     isLoading,
     isLoaded,
-    addStudySet,
+    // addStudySet,
     deleteStudySet,
 } = createStudySetSlice.actions;
 
