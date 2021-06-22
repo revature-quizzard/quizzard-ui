@@ -21,6 +21,9 @@ export function Sets() {
     const getData = async () => {
       let response = await createdSetSearch(username);
       dispatch(setSetList(response.data));
+
+      // needs to be updated eventually to actually check whether results were successfully fetched from the api
+      setShowList(true);
     };
     getData();
   }
