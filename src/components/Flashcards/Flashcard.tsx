@@ -1,63 +1,78 @@
-import { Container, Row, Col, Form, Button, CardDeck, Card} from "react-bootstrap"
+import { Container, Row, Col, Form, Button, CardDeck, Card, CardColumns} from "react-bootstrap"
 import { isLoading, isLoaded, addFlashcard, setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
+import { getSubs } from "../../remote/subjectService";
+import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
+import {Flashcard} from "../../Models/Flashcard"
 
-interface Flashcard {
-  question: string;
-  answer: string;
-  reviewable: boolean;
-  isPublic: boolean;
-  subject: string;
-
-}
 
 const FlashCard = () => {
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
+  const subjects = useSelector(subjectsState);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [reviewable, setReviewable] = useState(true);
   const [isPublic, setIsPublic] = useState(false);
-  const [subject, setSubject] = useState("");
+  const [subjectId, setSubjectId] = useState("");
 
-  //This will call the axios function every frame. Might need to find a different way
   useEffect(()=> {
     console.log("populate flashcards")
    
-    const getData = async () => {
+    const getFlashcards = async () => {
       let cards = await getCards();
       dispatch(setFlashcards(cards))
     };
-    getData();
+    getFlashcards();
+
+    const getSubjects = async () => {
+      let subjects = await getSubs();
+      dispatch(setSubjects(subjects));
+    }
+    getSubjects();
 
   }, [])
 
-
+  /**
+   * When the Create New Flashcard button is clicked it will call handleAddCard function which calls createCard
+   * and dispatches the new flashcard to the state.
+   * This function also resets the values on Question and Answer
+   * @param 
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
   const handleAddCard = async () =>{
     let cardObj: Flashcard = {
       question,
       answer,
-      reviewable,
+      reviewable, 
       isPublic,
-      subject
+      subjectId
     };
 
-    console.log("Subject: " + cardObj.subject)
-    let test = await createCard(cardObj.question, cardObj.answer, cardObj.reviewable, cardObj.isPublic, cardObj.subject);
+    console.log("Subject: " + cardObj.subjectId)
+    let test = await createCard(cardObj.question, cardObj.answer, cardObj.reviewable, cardObj.isPublic, cardObj.subjectId);
     dispatch(addFlashcard(cardObj));
 
     setQuestion("");
     setAnswer("");
   }
 
+  const handleSubject = (card: Flashcard) => {
+
+    let currentSubject = subjects.subjects[parseInt(card.subjectId)-1].name;
+
+    return currentSubject;
+  }
+
 
   return (
-    <Container>
+    <Container id="flashcard-container">
       <Row>
         <Col>
-          <h1>FlashCard COMPONENT</h1>
+          <h1>FlashCard Component</h1>
         </Col>
       </Row>
       <Row>
@@ -73,7 +88,7 @@ const FlashCard = () => {
                 onChange={(e) => setQuestion(e.target.value)}
               ></Form.Control>
               <Form.Label>Answer: </Form.Label>
-              <Form.Control
+              <Form.Control 
                 type="text"
                 id="card-answer"
                 name="card-answer"
@@ -83,13 +98,13 @@ const FlashCard = () => {
             </Form.Group>
 
             <Form.Label>Subject: </Form.Label>
-              <Form.Control as="select" onChange={(e) => setSubject(e.target.value)}>
+              <Form.Control as="select" onChange={(e) => setSubjectId(e.target.value)}>
               <option value="">Select a subject...</option>
-                <option value= "1">Java</option>
-                {/* <option value="Spring">Spring</option>
-                <option value="Javascript">Javascript</option>
-                <option value="React">React</option>
-                <option value="DevOps">DevOps</option> */}
+              {subjects.subjects.map((subject) => {
+              return (
+                <option value={subject.id}>{subject.name}</option>
+              )
+            })}
               </Form.Control>
               
             <Form.Check
@@ -103,17 +118,30 @@ const FlashCard = () => {
         </Col>
       </Row>
       <Row>
-
           <CardDeck>
+            
             {flashcards.flashCards.map((card) => {
               return (
-                <Card className = " ">
-                    <Card.Header>card.question</Card.Header>
-                </Card>
+                <Col xs={8} md={6} lg={4} style={{ padding: '1rem' }}>
+                  <Card>
+                      <Card.Header>{card.question}</Card.Header>
+                      <Card.Body>
+                        <Card.Title>
+                          <Card.Subtitle>Answer:</Card.Subtitle>
+                        </Card.Title>
+                        <Card.Body>
+                          <Card.Text>{card.answer}</Card.Text>
+                        </Card.Body>
+                      </Card.Body>
+                      <Card.Footer>
+                        {/* This is under the assumption that ID's match with the index */}
+                        <Card.Text>{handleSubject(card)}</Card.Text>
+                      </Card.Footer>
+                  </Card>
+                </Col>
               )
             })}
           </CardDeck>
-
       </Row>
     </Container>
   );

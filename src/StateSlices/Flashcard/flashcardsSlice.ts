@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
+import {Flashcard} from "../../Models/Flashcard"
 
 // Create an interface for the state object
 interface State {
     isLoading: boolean;
     isLoaded: boolean;
-    flashCards: Array<object>;
+    flashCards: Array<Flashcard>;
 }
 
 //Declare the initial state values that extends the State interface
@@ -37,11 +38,11 @@ export const flashcardsSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addFlashcard: (state, action: PayloadAction<object>) =>{
+        addFlashcard: (state, action: PayloadAction<Flashcard>) =>{
            state.flashCards.push(action.payload)
         },
 
-        setFlashcards: (state, action: PayloadAction<object[]>) => {
+        setFlashcards: (state, action: PayloadAction<Flashcard[]>) => {
             state.flashCards = action.payload
         }
         
