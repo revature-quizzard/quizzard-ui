@@ -92,13 +92,12 @@ const FlashCard = () => {
           <h1>FlashCard Component</h1>
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col>
           <h4>Flip your Flashcards!</h4>
           {flashcards.flashCards[0] && <FlipCard />}
         </Col>
-        
-      </Row>
+      </Row> */}
       <Row>
         <Col>
           <Form>
