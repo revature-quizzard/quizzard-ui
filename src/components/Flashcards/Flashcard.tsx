@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
 import { getSubs } from "../../remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
-import {Flashcard} from "../../Models/Flashcard"
+import {Flashcard} from "../../models/Flashcard"
 
 
 const FlashCard = () => {

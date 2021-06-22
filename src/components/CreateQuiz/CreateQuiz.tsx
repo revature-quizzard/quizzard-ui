@@ -8,7 +8,7 @@ import {
 import { setOfSets } from "../../Utilities/dummyData";
 import { createQuiz } from "../../Utilities/quizUtility";
 import Quiz from "./Quiz";
-import { Flashcard } from "../../Models/Flashcard";
+import { Flashcard } from "../../models/Flashcard";
 
 const CreateQuiz = () => {
  
