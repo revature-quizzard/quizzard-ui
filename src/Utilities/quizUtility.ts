@@ -4,19 +4,9 @@
     6 / 19 / 2021
 */
 
-import FlashCard from "../components/Flashcards/Flashcard";
+import { Flashcard } from "../models/Flashcard";
 
-export interface FlashCard {
-  id: number;
-  subject_id: number;
-  account_id: number;
-  question: string;
-  answer: string;
-  reviewable: boolean;
-  public: boolean;
-}
-
-export interface Question {
+interface Question {
   question: string;
   answer: string;
   wrong1: string;
@@ -29,12 +19,12 @@ export interface ScrambledQuestion {
   answers: Array<object>;
 }
 
-export const createQuiz = (studySet: Array<FlashCard>) => {
+export const createQuiz = (studySet: Array<Flashcard>) => {
   // Create an empty array for questions
   let questionArray: Array<ScrambledQuestion> = [];
 
   // Loop through each card in study set
-  studySet.forEach((flashCard: FlashCard) => {
+  studySet.forEach((flashCard: Flashcard) => {
     // Filter out the current target of the loop from the study set, creating a new study set array that does not include the current target of loop.
     let newStudySet = filterCurrentCard(flashCard, studySet);
 
@@ -53,7 +43,7 @@ export const createQuiz = (studySet: Array<FlashCard>) => {
   return questionArray;
 };
 
-export const createWrongAnswerArray = (newStudySet: Array<FlashCard>) => {
+export const createWrongAnswerArray = (newStudySet: Array<Flashcard>) => {
     let  answerArray: string[] = [];
 
     // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
@@ -71,8 +61,8 @@ export const createWrongAnswerArray = (newStudySet: Array<FlashCard>) => {
   return answerArray;
 }
 
-export const filterCurrentCard = (currentCard: FlashCard, studySet: Array<FlashCard>) => {
-  return studySet.filter((card: FlashCard) => {
+export const filterCurrentCard = (currentCard: Flashcard, studySet: Array<Flashcard>) => {
+  return studySet.filter((card: Flashcard) => {
       if (card.question !== currentCard.question) {
         return card;
       }
@@ -88,7 +78,7 @@ export const generateRandom = (num: number) => {
 
 // Creates a question object that includes the question, answer, and three wrong answers gathered from other cards in Study set.
 export const createQuizQuestion = (
-  flashCard: FlashCard,
+  flashCard: Flashcard,
   wrong1: string,
   wrong2: string,
   wrong3: string

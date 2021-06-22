@@ -8,13 +8,10 @@ import {
 import { setOfSets } from "../../Utilities/dummyData";
 import { createQuiz } from "../../Utilities/quizUtility";
 import Quiz from "./Quiz";
+import { Flashcard } from "../../models/Flashcard";
 
 const CreateQuiz = () => {
-  interface FlashCard {
-    id: number;
-    question: string;
-    answer: string;
-  }
+ 
 
   const dispatch = useDispatch();
 
@@ -42,7 +39,7 @@ const CreateQuiz = () => {
                 </Col>
               </Row>
               <Row className="p-4">
-                {setOfSets.map((set: Array<FlashCard>, index: any) => {
+                {setOfSets.map((set: Array<Flashcard>, index: any) => {
                   return (
                     <Col
                       onClick={goToQuiz}
