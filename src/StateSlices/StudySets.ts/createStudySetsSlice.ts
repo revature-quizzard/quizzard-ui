@@ -22,7 +22,6 @@ const initialState: State = {
     studySet: [],
     flashCard: {},
     showStudySet: false,
-    listStudySet: [],
 
 };
 
