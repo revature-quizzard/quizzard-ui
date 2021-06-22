@@ -12,7 +12,7 @@ interface State {
     studySet: Array<Flashcard>;
     flashCard: object;
     showStudySet: boolean;
-    listStudySet: Array<Studyset>
+    // listStudySet: Array<Studyset>
 }
 
 //set the initial state
@@ -47,7 +47,7 @@ export const createStudySetSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addStudySet: (state, action: PayloadAction<Array<Studyset>>) => {
+        addStudySet: (state, action: PayloadAction<Array<Array<Flashcard>>) => {
             state.studySet = action.payload;
         },
 
