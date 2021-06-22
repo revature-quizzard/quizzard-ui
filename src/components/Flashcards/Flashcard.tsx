@@ -7,7 +7,12 @@ import { getSubs } from "../../remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import {Flashcard} from "../../Models/Flashcard"
 
-
+  /**
+   * Renders the card creation and card viewing components
+   * @returns Flashcard component
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
 const FlashCard = () => {
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
@@ -17,7 +22,11 @@ const FlashCard = () => {
   const [reviewable, setReviewable] = useState(true);
   const [isPublic, setIsPublic] = useState(false);
   const [subjectId, setSubjectId] = useState("");
-
+  /**
+   * Acquires the current cards and subejcts that already exist in the database.
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
   useEffect(()=> {
     console.log("populate flashcards")
    
@@ -39,7 +48,6 @@ const FlashCard = () => {
    * When the Create New Flashcard button is clicked it will call handleAddCard function which calls createCard
    * and dispatches the new flashcard to the state.
    * This function also resets the values on Question and Answer
-   * @param 
    * @author 'Kevin Chang'
    * @author 'Giancarlo Tomasello'
    */
@@ -60,6 +68,13 @@ const FlashCard = () => {
     setAnswer("");
   }
 
+  /**
+   * Handles acquisition of a card's associated subject
+   * @param card Typed as Flashcard
+   * @returns Name of subject
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
   const handleSubject = (card: Flashcard) => {
 
     let currentSubject = subjects.subjects[parseInt(card.subjectId)-1].name;
