@@ -2,8 +2,8 @@ import { Container, Row, Col, Form, Button, CardDeck, Card, CardColumns} from "r
 import { isLoading, isLoaded, addFlashcard, setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect, useState} from "react"
-import { createCard, getCards } from "../../remote/cardService";
-import { getSubs } from "../../remote/subjectService";
+import { createCard, getCards } from "../../Remote/cardService";
+import { getSubs } from "../../Remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import {Flashcard} from "../../Models/Flashcard"
 

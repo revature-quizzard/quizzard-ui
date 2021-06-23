@@ -27,12 +27,12 @@ export const authSlice = createSlice({
     },
 
     // this will have to be modified later once login and register compenents are pulled in to handle passing back a token and username
-    loginUser: (state, action: PayloadAction<string>) => {
-      state.username = action.payload;
-      state.token = action.payload;
+    loginUserReducer: (state, action: PayloadAction<any>) => {
+      state.username = action.payload.username;
+      state.token = action.payload.token;
       state.isAuthenticated = true;
     },
-    logoutUser: (state) => {
+    logoutUserReducer: (state) => {
       state.username = "";
       state.token = "";
       state.isLoading = false;
@@ -41,7 +41,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { loading, isLoaded, loginUser, logoutUser } = authSlice.actions;
+export const { loading, isLoaded, loginUserReducer, logoutUserReducer } = authSlice.actions;
 
 export const authState = (state: RootState) => state.auth;
 

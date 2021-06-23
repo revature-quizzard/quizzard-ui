@@ -1,9 +1,15 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { login } from "../../remote/login-register-service";
-import { LoginModel } from "../../models/login-model";
+import { login } from "../../Remote/login-register-service";
+import { LoginModel } from "../../Models/login-model";
+//import { LoginModel } from "../../models/login-model";
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { loginUserReducer } from "../../StateSlices/Auth/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [loginUser, setLoginUser] = useState({username: "", password: ""} as LoginModel)
 
   let onChange = (e: any) => {
@@ -16,12 +22,13 @@ const Login = () => {
   let logUserIn = async (e: any) => {
     e.preventDefault();
     let response = await login(loginUser);
-    //console.log(response);
     localStorage.setItem("Authorization", response.headers.authorization);
-    setLoginUser({username: "", password: ""} as LoginModel)
+    setLoginUser({username: "", password: ""} as LoginModel);
+    dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+    history.push("/");
   }
 
-    // dispatch(loggingIn({username: res.data.username, token: res.data.token}))
+    // 
 
     return (
         <>

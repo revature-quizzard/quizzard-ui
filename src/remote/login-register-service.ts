@@ -1,5 +1,5 @@
-import { LoginModel } from "../models/login-model";
-import { RegisterModel } from "../models/register-model";
+import { LoginModel } from "../Models/login-model";
+import { RegisterModel } from "../Models/register-model";
 import { quizzardApiClient } from "./api-client"
 
 export async function register(newUser: RegisterModel){
