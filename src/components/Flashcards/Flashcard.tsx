@@ -92,12 +92,6 @@ const FlashCard = () => {
           <h1>FlashCard Component</h1>
         </Col>
       </Row>
-      {/* <Row>
-        <Col>
-          <h4>Flip your Flashcards!</h4>
-          {flashcards.flashCards[0] && <FlipCard />}
-        </Col>
-      </Row> */}
       <Row>
         <Col>
           <Form>
@@ -119,7 +113,6 @@ const FlashCard = () => {
                 onChange={(e) => setAnswer(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
             <Form.Label>Subject: </Form.Label>
               <Form.Control as="select" onChange={(e) => setSubjectId(e.target.value)}>
               <option value="">Select a subject...</option>
@@ -129,7 +122,6 @@ const FlashCard = () => {
               )
             })}
               </Form.Control>
-              
             <Form.Check
               type="checkbox"
               label="Would you like to make this card public?"
@@ -142,7 +134,6 @@ const FlashCard = () => {
       </Row>
       <Row>
           <CardDeck>
-            
             {flashcards.flashCards.map((card) => {
               return (
                 <Col xs={8} md={6} lg={4} style={{ padding: '1rem' }}>
