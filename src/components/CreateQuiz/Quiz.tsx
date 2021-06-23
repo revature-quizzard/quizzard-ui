@@ -15,6 +15,8 @@ import {
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
 
+
+
 const Quiz = () => {
   const dispatch = useDispatch();
   const quizState = useSelector(createQuizState);
@@ -42,21 +44,21 @@ const Quiz = () => {
     let wrong1 = document.getElementById("wrong1");
     let wrong2 = document.getElementById("wrong2");
     let wrong3 = document.getElementById("wrong3");
-    answer.style.color = "black";
-    answer.style.fontSize = "20px";
-    wrong1.style.color = "black";
-    wrong2.style.color = "black";
-    wrong3.style.color = "black";
+    answer!.style.color = "black";
+    answer!.style.fontSize = "20px";
+    wrong1!.style.color = "black";
+    wrong2!.style.color = "black";
+    wrong3!.style.color = "black";
   };
 
   const checkAnswer = (e: any) => {
-    if (e.currentTarget.id === "answer") {
-      let answerDiv: HTMLElement = document.getElementById(
-        `${e.currentTarget.id}`
-      );
-      answerDiv.style.color = "green";
-      answerDiv.style.fontSize = "30px";
-
+    if(e.currentTarget.id =="answer"){
+      let answerDiv = document.getElementById(
+        `${e.currentTarget.id}`);
+        answerDiv!.style.color = "green";
+        answerDiv!.style.fontSize = "30px";
+    
+      
       if (
         !results.answered.includes(quizState.count) &&
         !results.correct.includes(quizState.count)
@@ -64,11 +66,9 @@ const Quiz = () => {
         dispatch(addAnswered(quizState.count));
         dispatch(addCorrect(quizState.count));
       }
-    } else {
-      let wrongChoice: HTMLElement = document.getElementById(
-        `${e.currentTarget.id}`
-      );
-      wrongChoice.style.color = "red";
+    }else{
+      let wrongChoice = document.getElementById(`${e.currentTarget.id}`);
+      wrongChoice!.style.color = "red";      
       if (
         !results.answered.includes(quizState.count) &&
         !results.incorrect.includes(quizState.count)
@@ -77,6 +77,7 @@ const Quiz = () => {
         dispatch(addIncorrect(quizState.count));
       }
     }
+    
   };
   return (
     <>

@@ -1,4 +1,5 @@
 // Create dummy flashcards
+<<<<<<< HEAD
 // interface FlashCard {
 //   id: number;
 //   subject_id: number;
@@ -10,6 +11,17 @@
 // };
 
 import { Flashcard } from "../Models/Flashcard";
+=======
+interface FlashCard {
+  id: number;
+  subject_id: number;
+  account_id: number;
+  question: string;
+  answer: string;
+  reviewable: boolean;
+  isPublic: boolean;
+};
+>>>>>>> createQuiz/everett-ej
 
 let flashCard1: Flashcard = {
   question: "Who am I?",
@@ -81,6 +93,43 @@ let flashCard10: Flashcard = {
   reviewable: true,
   isPublic: true,
 };
+let flashCard11: FlashCard = {
+  id: 11,
+  question: "What's 5 + 10?",
+  answer: "21",
+  subject_id: 5,
+  account_id: 1,
+  reviewable: true,
+  isPublic: true,
+};
+let flashCard12: FlashCard = {
+  id: 12,
+  question: "What should you apply directly to your forehead?",
+  answer: "Head on!",
+  subject_id: 5,
+  account_id: 1,
+  reviewable: true,
+  isPublic: true,
+};
+let flashCard13: FlashCard = {
+  id: 13,
+  question: "Fanta fanta, dont you wanta?",
+  answer: "No...I actually dont wanta..",
+  subject_id: 5,
+  account_id: 1,
+  reviewable: true,
+  isPublic: true,
+};
+let flashCard14: FlashCard = {
+  id: 14,
+  question: "How many licks does it take to get to the center of a Tootsie Pop?",
+  answer: "*licks* One...*licks* Two...",
+  subject_id: 5,
+  account_id: 1,
+  reviewable: true,
+  isPublic: true,
+};
+
 
 // Create dummy flashcardSet
 export const studySet = [
@@ -95,6 +144,6 @@ export const studySet = [
   flashCard9,
   flashCard10,
 ];
-export const studySet2 = [flashCard1, flashCard2, flashCard3, flashCard4];
+export const studySet2 = [ flashCard11, flashCard12, flashCard13, flashCard14];
 
 export const setOfSets: Array<Array<Flashcard>> = [studySet, studySet2];

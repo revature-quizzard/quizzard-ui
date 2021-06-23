@@ -1,3 +1,4 @@
+import { studySet } from './dummyData';
 /* Create quiz utility
     @author: EJ Best
     @author: Everett Diuguid
@@ -6,14 +7,30 @@
 
 import { Flashcard } from "../Models/Flashcard";
 
+<<<<<<< HEAD
 interface Question {
+=======
+export interface FlashCard {
+  id: number;
+  subject_id: number;
+  account_id: number;
+  question: string;
+  answer: string;
+  reviewable: boolean;
+  isPublic: boolean;
+}
+
+export interface Question {
+>>>>>>> createQuiz/everett-ej
   question: string;
   answer: string;
   wrong1: string;
   wrong2: string;
   wrong3: string;
 }
+export interface StudySet{
 
+}
 export interface ScrambledQuestion {
   question: string;
   answers: Array<object>;
