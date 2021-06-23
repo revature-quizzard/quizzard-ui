@@ -16,6 +16,13 @@ export function Sets() {
   // const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
   const [showList, setShowList] = useState(false);
 
+  /**
+   * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
+   * Will display a list of the results. 
+   * @param e event when button is clicked
+   * @author Austin Knauer
+   * @author Vinson Chin
+   */
   let createdSetsSearch = async (e: any) => {
     e.preventDefault();
     const getData = async () => {
