@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Form, Button, Checkbox } from "react-bootstrap";
 import { CardSet } from "../../Models/CardSet";
-import { createdSetSearch } from "../../remote/set-service";
+import { createdSetSearch, createStudySet } from "../../remote/set-service";
 import SetList from './SetList';
 import { useDispatch, useSelector } from "react-redux";
 import { setSetList, setListState } from '../../StateSlices/Sets/setListSlice';
+import { createStudySetSlice, createStudySetState } from '../../StateSlices/Sets/createStudySetsSlice';
 // ANN: need to import state object and reducer for creating study sets, they've been moved into the Sets folder
 
 
@@ -12,10 +13,11 @@ export function Sets() {
 
   const dispatch = useDispatch();
   const allSetsState = useSelector(setListState);
+  const createSetState = useSelector(createStudySetState);
   // ANN: need to create a variable as above using the state object exported from the create study set slice
 
   let username = "revature";
-  // const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
+  const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
   const [showList, setShowList] = useState(false);
 
   let createdSetsSearch = async (e: any) => {
@@ -31,6 +33,10 @@ export function Sets() {
   }
 
   // ANN: need to add a method here that makes a request to the database with the newly created flashcard set using your axios method
+  // Needs to be filled -CL
+  let createStudySet = async (e: any) => {
+
+  }
 
   let publicSetsSearch = async (e: any) => {
 
@@ -55,6 +61,22 @@ export function Sets() {
             <Col className="col-1" style={{ padding: "2px" }}>
               <Button type="submit" onClick={publicSetsSearch} >All Public Sets</Button>
             </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form>
+            <Form.Group>
+            <Form.Label>Set Name: </Form.Label>
+            <Form.Control name="setName" value={createStudySet.setName} onChange={onChange} type="text" placeholder="Set Name"  />
+          </Form.Group>
+          <Form.Group>
+          <Checkbox label={"Do you want this study set to be public? "} handleCheckboxChange={createStudySet.isPublic = true} key={label}/>
+          </Form.Group>
+          <Form.Group className="text-center">
+            <Button onClick={createStudySet}>Create</Button>
+          </Form.Group>
+            </Form>
+          </Col>
         </Row>
       </Container>
       {

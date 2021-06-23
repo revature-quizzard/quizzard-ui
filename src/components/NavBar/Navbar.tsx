@@ -24,6 +24,13 @@ const Navigation = () => {
             >
               Flashcards
             </Link>
+            <Link
+              id="navLink"
+              className="text-light ml-2 mr-2"
+              to="/sets"
+            >
+              Sets
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

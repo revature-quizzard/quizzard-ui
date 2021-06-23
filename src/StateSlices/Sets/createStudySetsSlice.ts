@@ -45,9 +45,9 @@ export const createStudySetSlice = createSlice({
             state.isLoaded = true;
         },
 
-        // addStudySet: (state, action: PayloadAction<Array<Flashcard>>) => {
-        //     state.studySet = action.payload;
-        // },
+        addStudySet: (state, action: PayloadAction<Array<Flashcard>>) => {
+             state.studySet = action.payload;
+         },
 
 //load studySet
 
@@ -60,7 +60,7 @@ export const createStudySetSlice = createSlice({
 export const {
     isLoading,
     isLoaded,
-    // addStudySet,
+    addStudySet,
     deleteStudySet,
 } = createStudySetSlice.actions;
 
