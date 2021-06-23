@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
-
+import { updateAccInfo } from "../../remote/updateInfo-service";
+import {UpdateAccModel, ResUpdateAccModel } from "../../models/UpdateAccountInfo-model";
+import { useHistory } from "react-router-dom";
 interface IUpdateProps{
 
 }
@@ -25,15 +27,19 @@ const UpdateAccontInfo = (props:IUpdateProps)=>{
     //the fields we can get back are Email, Password, Username.
     //These will be used in the Modal for notification purposes
     const [result, setResult] = useState({
-                            Email:"",
-                            Password:"",
-                            Username:""
+                            email:"",
+                            password:"",
+                            username:"",
+                            conflict:""
     })
 
     //hook for displaying modal from react-boostrap
     const [show,setShow] = useState(false);
 
     //function that is invoked, we make put request and sent over the new information(username,email,password).
+
+    let history = useHistory();
+
     /**
      * This function will be invoked when user clicks on the submit button. We use our hooks to get the value
      * username, password, and email from the input Form, and persist it to the data base. Then we use one last hook
@@ -42,25 +48,26 @@ const UpdateAccontInfo = (props:IUpdateProps)=>{
      */
     let updateInfo =async (e:any)=>{
         e.preventDefault();
-        console.log(username,password,email);
-      // let response =await axios.put("http://localhost:5000/accounts/update/2",{username,email,password});
-        //console.log(response.data);
-        //here we set the result hook to the data returned from put method.
-        // if(username || password){
-        //     setTimeout()
-        //     localStorage.clear();
-        //     //redirect
-        // }
-        //setResult( prevState=> response.data);
-        console.log("result state: ", result);
+
+        let resultUser = await updateAccInfo({username,email, password})
+        setResult( prevState => resultUser);
+
+        if(!result.conflict){
+            setTimeout(()=>{
+            localStorage.clear();
+            history.push("/login")
+            },2000)
+        };
+
         setShow(true);
-        Object.entries(result).map(([key,value])=>{
-            console.log(value)
-        })
+        // Object.entries(result).map(([key,value])=>{
+        //     console.log(value)
+        // })
     }
 
+    //Handles the state for show, toggles it back to false. In order to stop rendering
+    //the Modal from react-bootstrap.
     const handleClose = ()=>setShow(false);
-    const handleShow = ()=>setShow(true);
 
     return(
         <>
@@ -106,10 +113,13 @@ const UpdateAccontInfo = (props:IUpdateProps)=>{
                 <Modal.Title>Your Updated Information!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                    <ul>
+                    <ul key="Unordered-list">
                         {Object.values(result).map((value,index)=>{
                             return(
-                                <li key={index}>{value}</li>
+                            value
+                            &&
+                             <li key={index}>{value}</li>
+
                             )
                         })}
                     </ul>
@@ -120,3 +130,4 @@ const UpdateAccontInfo = (props:IUpdateProps)=>{
 }
 
 export default UpdateAccontInfo;
+
