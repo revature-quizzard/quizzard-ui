@@ -22,22 +22,22 @@ function App() {
 
   //Placed to collect existing flashcards and subjects into the Redux application state eagerly
   //makes it possible to navigate to Study Flashcards for now...
-  useEffect(()=> {
-    console.log("FLIPCARD populate flashcards")
+  // useEffect(()=> {
+  //   console.log("FLIPCARD populate flashcards")
    
-    const getFlashcards = async () => {
-      let cards = await getCards();
-      dispatch(setFlashcards(cards))
-    };
-    getFlashcards();
+  //   const getFlashcards = async () => {
+  //     let cards = await getCards();
+  //     dispatch(setFlashcards(cards))
+  //   };
+  //   getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    }
-    getSubjects();
+  //   const getSubjects = async () => {
+  //     let subjects = await getSubs();
+  //     dispatch(setSubjects(subjects));
+  //   }
+  //   getSubjects();
 
-  }, [])
+  // }, [])
 
   return (
     <Router>
