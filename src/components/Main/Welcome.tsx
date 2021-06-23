@@ -43,7 +43,7 @@ const Welcome = () => {
                 </ul>
               </div>
             </Col>
-                  </Row>
+            </Row>
         </Col>
       </Row>
     </>

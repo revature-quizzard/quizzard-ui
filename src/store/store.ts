@@ -4,6 +4,7 @@ import flashcardsReducer from "../StateSlices/Flashcard/flashcardsSlice";
 import subjectsReducer from "../StateSlices/Subject/subjectsSlice";
 import quizResultsReducer from "../StateSlices/CreateQuiz/resultSlice";
 import setListReducer from '../StateSlices/Sets/setListSlice';
+import authReducer from "../StateSlices/Auth/authSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         flashcards: flashcardsReducer,
         subjects: subjectsReducer,
         result: quizResultsReducer,
-        setList: setListReducer
+        setList: setListReducer,
+        auth: authReducer
     }
 })
 
