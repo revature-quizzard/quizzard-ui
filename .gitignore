@@ -252,10 +252,6 @@ sketch
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/vcs.xml
-.idea/quizzard-ui.iml
-.idea/modules.xml
-.idea/inspectionProfiles**
 
 # Generated files
 .idea/**/contentModel.xml
@@ -312,7 +308,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-
 
 # Editor-based Rest Client
 .idea/httpRequests
