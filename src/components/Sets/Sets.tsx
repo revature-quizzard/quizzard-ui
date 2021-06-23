@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Row, Col, Container, ListGroup, Button, FormControl, Table } from "react-bootstrap";
-import { CardSet } from "../../models/cardSet";
+import { CardSet } from "../../Models/cardSet";
 import { createdSetSearch } from "../../remote/set-service";
 
 export function Sets() {

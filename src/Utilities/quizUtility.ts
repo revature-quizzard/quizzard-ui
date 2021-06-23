@@ -4,7 +4,7 @@
     6 / 19 / 2021
 */
 
-import { Flashcard } from "../models/Flashcard";
+import { Flashcard } from "../Models/Flashcard";
 
 interface Question {
   question: string;

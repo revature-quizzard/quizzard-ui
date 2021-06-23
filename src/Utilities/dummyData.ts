@@ -9,7 +9,7 @@
 //   public: boolean;
 // };
 
-import { Flashcard } from "../models/Flashcard";
+import { Flashcard } from "../Models/Flashcard";
 
 let flashCard1: Flashcard = {
   question: "Who am I?",
