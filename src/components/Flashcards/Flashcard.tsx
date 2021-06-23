@@ -5,9 +5,17 @@ import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
 import { getSubs } from "../../remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
-import {Flashcard} from "../../Models/Flashcard"
+
+import {Flashcard} from "../../Models/Flashcard";
+import {FlipCard} from "./FlipCard";
 
 
+  /**
+   * Renders the card creation and card viewing components
+   * @returns Flashcard component
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
 const FlashCard = () => {
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
@@ -17,29 +25,32 @@ const FlashCard = () => {
   const [reviewable, setReviewable] = useState(true);
   const [isPublic, setIsPublic] = useState(false);
   const [subjectId, setSubjectId] = useState("");
-
-  useEffect(()=> {
-    console.log("populate flashcards")
+  /**
+   * Acquires the current cards and subejcts that already exist in the database.
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
+  // useEffect(()=> {
+  //   console.log("populate flashcards")
    
-    const getFlashcards = async () => {
-      let cards = await getCards();
-      dispatch(setFlashcards(cards))
-    };
-    getFlashcards();
+  //   const getFlashcards = async () => {
+  //     let cards = await getCards();
+  //     dispatch(setFlashcards(cards))
+  //   };
+  //   getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    }
-    getSubjects();
+  //   const getSubjects = async () => {
+  //     let subjects = await getSubs();
+  //     dispatch(setSubjects(subjects));
+  //   }
+  //   getSubjects();
 
-  }, [])
+  // }, [])
 
   /**
    * When the Create New Flashcard button is clicked it will call handleAddCard function which calls createCard
    * and dispatches the new flashcard to the state.
    * This function also resets the values on Question and Answer
-   * @param 
    * @author 'Kevin Chang'
    * @author 'Giancarlo Tomasello'
    */
@@ -60,6 +71,13 @@ const FlashCard = () => {
     setAnswer("");
   }
 
+  /**
+   * Handles acquisition of a card's associated subject
+   * @param card Typed as Flashcard
+   * @returns Name of subject
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
   const handleSubject = (card: Flashcard) => {
 
     let currentSubject = subjects.subjects[parseInt(card.subjectId)-1].name;
@@ -96,7 +114,6 @@ const FlashCard = () => {
                 onChange={(e) => setAnswer(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
             <Form.Label>Subject: </Form.Label>
               <Form.Control as="select" onChange={(e) => setSubjectId(e.target.value)}>
               <option value="">Select a subject...</option>
@@ -106,7 +123,6 @@ const FlashCard = () => {
               )
             })}
               </Form.Control>
-              
             <Form.Check
               type="checkbox"
               label="Would you like to make this card public?"
@@ -119,7 +135,6 @@ const FlashCard = () => {
       </Row>
       <Row>
           <CardDeck>
-            
             {flashcards.flashCards.map((card) => {
               return (
                 <Col xs={8} md={6} lg={4} style={{ padding: '1rem' }}>

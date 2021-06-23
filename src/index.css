@@ -66,3 +66,21 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
+/* FLASHCARDS and FLIPCARD */
+.flip-card, .end-card {
+  position: relative;
+  top: 2rem;
+}
+
+.bottomRow {
+  position: relative;
+  top:5rem;
+  width: 100%;
+}
+
+.question-card, .answer-card {
+  width: 25rem;
+  height:auto;
+  
+}
