@@ -14,7 +14,6 @@ interface State {
     showStudySet: boolean;
     // listStudySet: Array<Studyset>
 }
-
 //set the initial state
 const initialState: State = {
     isLoading: false,
