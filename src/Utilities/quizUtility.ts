@@ -14,7 +14,7 @@ export interface FlashCard {
   question: string;
   answer: string;
   reviewable: boolean;
-  public: boolean;
+  isPublic: boolean;
 }
 
 export interface Question {
@@ -25,7 +25,7 @@ export interface Question {
   wrong3: string;
 }
 export interface StudySet{
-  
+
 }
 export interface ScrambledQuestion {
   question: string;
@@ -76,7 +76,7 @@ export const createWrongAnswerArray = (newStudySet: Array<FlashCard>) => {
 
 export const filterCurrentCard = (currentCard: FlashCard, studySet: Array<FlashCard>) => {
   return studySet.filter((card: FlashCard) => {
-      if (card.question !== currentCard.question) {
+      if ((card.question !== currentCard.question) && (card.isPublic === true) ){
         return card;
       }
       return null;

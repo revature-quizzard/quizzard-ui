@@ -46,10 +46,10 @@ const Quiz = () => {
     let wrong3 = document.getElementById("wrong3");
     //TODO: Create custom null pointer handler?
     //currently implemented janky null checks to make typescript happy
-    if(answer){
+    
       answer.style.color = "black";
       answer.style.fontSize = "20px";
-    }
+    
     if (wrong1){
       wrong1.style.color = "black";
     }

@@ -6,7 +6,7 @@ interface FlashCard {
   question: string;
   answer: string;
   reviewable: boolean;
-  public: boolean;
+  isPublic: boolean;
 };
 
 let flashCard1: FlashCard = {
@@ -16,7 +16,7 @@ let flashCard1: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true
+  isPublic: true
 };
 let flashCard2: FlashCard = {
   id: 2,
@@ -25,7 +25,7 @@ let flashCard2: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard3: FlashCard = {
   id: 3,
@@ -34,7 +34,7 @@ let flashCard3: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard4: FlashCard = {
   id: 4,
@@ -43,7 +43,7 @@ let flashCard4: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard5: FlashCard = {
   id: 5,
@@ -52,7 +52,7 @@ let flashCard5: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard6: FlashCard = {
   id: 6,
@@ -61,7 +61,7 @@ let flashCard6: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard7: FlashCard = {
   id: 7,
@@ -70,7 +70,7 @@ let flashCard7: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard8: FlashCard = {
   id: 8,
@@ -79,7 +79,7 @@ let flashCard8: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard9: FlashCard = {
   id: 9,
@@ -88,7 +88,7 @@ let flashCard9: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard10: FlashCard = {
   id: 10,
@@ -97,7 +97,7 @@ let flashCard10: FlashCard = {
   subject_id: 1,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard11: FlashCard = {
   id: 11,
@@ -106,7 +106,7 @@ let flashCard11: FlashCard = {
   subject_id: 5,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard12: FlashCard = {
   id: 12,
@@ -115,7 +115,7 @@ let flashCard12: FlashCard = {
   subject_id: 5,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard13: FlashCard = {
   id: 13,
@@ -124,7 +124,7 @@ let flashCard13: FlashCard = {
   subject_id: 5,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 let flashCard14: FlashCard = {
   id: 14,
@@ -133,7 +133,7 @@ let flashCard14: FlashCard = {
   subject_id: 5,
   account_id: 1,
   reviewable: true,
-  public: true,
+  isPublic: true,
 };
 
 

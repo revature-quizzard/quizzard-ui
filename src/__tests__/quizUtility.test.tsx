@@ -24,7 +24,7 @@ beforeEach(() => {
     subject_id: 1,
     account_id: 1,
     reviewable: true,
-    public: true
+    isPublic: true
   };
   flashCard2 = {
     id: 2,
@@ -33,7 +33,7 @@ beforeEach(() => {
     subject_id: 1,
     account_id: 1,
     reviewable: true,
-    public: true,
+    isPublic: true,
   };
   flashCard3 = {
     id: 3,
@@ -42,19 +42,19 @@ beforeEach(() => {
     subject_id: 1,
     account_id: 1,
     reviewable: true,
-    public: true,
+    isPublic: true,
   };
 
 
 // studySet = [flashCard1, flashCard2, flashCard3];
 })
 
-afterEach(() => {
-  flashCard1 = null;
-  flashCard2 = null;
-  flashCard3 = null;
-  //studySet = null;
-})
+// afterEach(() => {
+//   flashCard1 = null;
+//   flashCard2 = null;
+//   flashCard3 = null;
+//   //studySet = null;
+// })
   
 test("Generates random number between 0 and number passed in as argument", () => {
 
