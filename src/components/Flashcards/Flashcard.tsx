@@ -5,9 +5,8 @@ import {useEffect, useState} from "react"
 import { createCard, getCards } from "../../remote/cardService";
 import { getSubs } from "../../remote/subjectService";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
-import {Flashcard} from "../../models/Flashcard";
 import {FlipCard} from "./FlipCard";
-
+import {Flashcard} from "../../Models/Flashcard"
 
   /**
    * Renders the card creation and card viewing components

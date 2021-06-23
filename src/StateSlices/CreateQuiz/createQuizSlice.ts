@@ -36,7 +36,7 @@ const initialState: State = {
   count: 0,
 };
 
-// Create the actual slice useing createSlice from the @reduxjs/toolkit dependency
+// Create the actual slice using createSlice from the @reduxjs/toolkit dependency
 export const createQuizSlice = createSlice({
   // Name the slice
   name: "createQuiz",
