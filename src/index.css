@@ -99,7 +99,7 @@ footer {
   text-align: center;
 }
 /* FLASHCARDS and FLIPCARD */
-.flip-card, .end-card {
+.flip-card, .end-card, .start-button {
   position: relative;
   top: 2rem;
 }
