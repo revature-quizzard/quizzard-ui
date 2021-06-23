@@ -3,25 +3,44 @@
  */
 
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {setStudySet} from "../../StateSlices/StudySet/studysetSlice";
+import {
+    currentlyLoading,
+    finishedLoading,
+    savePublicStudySets,
+    setStudySet,
+    studySetState
+} from "../../StateSlices/StudySet/studysetSlice";
 import {StudySet} from "../../Models/StudySet";
-import {dummyStudySetData} from "../dummyData";
+import {publicSetsFetcher} from "../remotes/publicSetsFetcher";
 
-const StudySetData = () => {
 
-    useAppSelector((state => state.studySets));
+const StudySetData = (props: any) => {
+    console.log('StudySetData rendering');
+    let state = useAppSelector(studySetState);
     const dispatch = useAppDispatch();
+
+    if (!state.finishedLoading) {
+        console.log('in here')
+        dispatch(currentlyLoading());
+        publicSetsFetcher().then(data => {
+            console.log(data);
+            dispatch(savePublicStudySets(data));
+            console.log('after dispatch');
+        });
+    }
+    console.log('we are here');
     const clickHandler = (e: any) => {
-        dispatch(setStudySet(dummyStudySetData[e.currentTarget.id - 1]));
+        dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id - 1]));
+        props.onStudySetChange(state.availablePublicStudySets[e.currentTarget.id - 1]);
     }
     return (
         <tbody>
-        {dummyStudySetData.map((dataPoint: StudySet) =>
+        {state.finishedLoading && state.availablePublicStudySets.map((dataPoint: StudySet) =>
             <tr key={dataPoint.id} id={dataPoint.id.toString()} onClick={clickHandler}>
                 <th scope="row" >{dataPoint.id}</th>
-                <td>{dataPoint.account_id}</td>
+                <td>{dataPoint.creator === null ? 'Public' : dataPoint.creator.user.firstName}</td>
                 <td>{dataPoint.name}</td>
-                <td>{dataPoint.public.toString()}</td>
+                <td>{dataPoint.isPublic.toString()}</td>
             </tr>
         )}
         </tbody>

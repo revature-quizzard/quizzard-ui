@@ -4,56 +4,65 @@
 
 import {Button, Col, Row, Table} from "react-bootstrap";
 import StudySetData from "./StudySetData";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import FlashcardData from "./FlashcardData";
-import {showAddFlashcardModal} from "../../StateSlices/StudySet/studysetSlice";
 import AddFlashcardModal from "./AddFlashcardModal";
+import {useState} from "react";
+import {StudySet} from "../../Models/StudySet";
+import {Account} from "../../Models/Account";
+import {Flashcard} from "../../Models/Flashcard";
 
 const AvailableStudySets = () => {
-    const state = useAppSelector(state => state.studySets);
-    const dispatch = useAppDispatch();
+    console.log('AvailableStudySets Rendering: ');
+    const [showModal, setShowModal] = useState(false);
+    const [showCards, setShowCards] = useState(false);
+    const [studySet, setStudySet] = useState({id: 0, creator: {} as Account, cards: [] as Flashcard[], name: '', isPublic: false});
+    const renderFlashcardTable = (ss: StudySet) => {
+        setStudySet(ss);
+        setShowCards(true);
+    }
     const modalHandler = () => {
-       dispatch(showAddFlashcardModal(true));
+        if (showModal) setShowModal(false);
+        else setShowModal(true);
     }
     return (
         <Row>
             <Col>
-                {state.showModal &&
-                <AddFlashcardModal />
+                {showModal &&
+                <AddFlashcardModal onCloseModal={modalHandler} />
                 }
                 <Row>
-                    <Col>
-                        <h2>Available StudySets</h2>
-                        <Table hover>
+                    <Col className="justify-content-center">
+                        <h2 className="justify-content-center">Public Study Sets</h2>
+                        <Table striped bordered hover variant="dark">
                             <thead>
                             <tr>
-                                <th>StudySet ID</th>
-                                <th>Owner Account ID</th>
-                                <th>StudySet Name</th>
+                                <th>ID</th>
+                                <th>Owner</th>
+                                <th>Name</th>
                                 <th>Public</th>
                             </tr>
                             </thead>
-                            <StudySetData/>
+                                <StudySetData onStudySetChange={renderFlashcardTable}/>
                         </Table>
                     </Col>
                 </Row>
-                {state.isStudySetSelected &&
+                {showCards &&
                 <Row>
                     <Col>
-                        <h2>Available Flashcards in Selected StudySet ID: {state.studySet.id}</h2>
-                            <Table hover>
+                        <h2 className="justify-content-center">Flashcards in Study Set: #{studySet.id} - {studySet.name}</h2>
+                            <Table striped bordered hover variant="dark">
                             <thead>
                             <tr>
-                            <td>Flashcard ID</td>
-                            <td>Subject ID</td>
-                            <td>Account ID</td>
+                            <td>ID</td>
+                            <td>Subject</td>
+                            <td>Creator</td>
                             <td>Question</td>
                             <td>Answer</td>
                             <td>Reviewable</td>
                             <td>Public</td>
                             </tr>
                             </thead>
-                            <FlashcardData/>
+                            <FlashcardData data={studySet}/>
                             </Table>
                         <Button as="input" onClick={modalHandler} type="button" value="Add a New Flashcard to StudySet" />
                     </Col>
