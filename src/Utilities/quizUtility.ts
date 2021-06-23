@@ -1,3 +1,4 @@
+import { studySet } from './dummyData';
 /* Create quiz utility
     @author: EJ Best
     @author: Everett Diuguid
@@ -13,7 +14,9 @@ interface Question {
   wrong2: string;
   wrong3: string;
 }
+export interface StudySet{
 
+}
 export interface ScrambledQuestion {
   question: string;
   answers: Array<object>;

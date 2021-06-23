@@ -40,12 +40,12 @@ beforeEach(() => {
 // studySet = [flashCard1, flashCard2, flashCard3];
 })
 
-afterEach(() => {
-  flashCard1 = null;
-  flashCard2 = null;
-  flashCard3 = null;
-  //studySet = null;
-})
+// afterEach(() => {
+//   flashCard1 = null;
+//   flashCard2 = null;
+//   flashCard3 = null;
+//   //studySet = null;
+// })
   
 test("Generates random number between 0 and number passed in as argument", () => {
 
