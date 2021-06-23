@@ -14,23 +14,6 @@ import { createCard, getCards } from "../../remote/cardService";
  * @author 'Giancarlo Tomasello'
  */
 export const FlipCard = () =>{
-    // useEffect(()=> {
-    //     console.log("FLIPCARD populate flashcards")
-       
-    //     const getFlashcards = async () => {
-    //       let cards = await getCards();
-    //       dispatch(setFlashcards(cards))
-    //     };
-    //     getFlashcards();
-    
-    //     const getSubjects = async () => {
-    //       let subjects = await getSubs();
-    //       dispatch(setSubjects(subjects));
-    //     }
-    //     getSubjects();
-    
-    //   }, [])
-      
     const [isEnd, setIsEnd] = useState(false);
     const [isCardFlipped, setIsCardFlipped] = useState(false);
 
@@ -131,27 +114,21 @@ export const FlipCard = () =>{
  */
   const renderFlipCard = () => {
       return(
-         
             <Container className='flip-card'>
                 <ReactCardFlip isFlipped={isCardFlipped} flipDirection="horizontal">
                     <Card className="question-card">
                         <Card.Body className="text-center">{flashcards.flashCards[flashcards.count].question}</Card.Body>
-                        
                         <Card.Footer className="text-center"><Button onClick={handleClick} block>Check Answer</Button></Card.Footer>
-                        
                     </Card>
 
                     <Card className="answer-card">
                         <Card.Body className="text-center">
                             {flashcards.flashCards[flashcards.count].answer}
                         </Card.Body>
-                        
                         <Card.Footer className="text-center"><Button onClick={handleClick} block >Back</Button></Card.Footer>                    
-                    </Card>
-                            
+                    </Card>  
                 </ReactCardFlip>
             </Container>
-        
       )
   }
        
@@ -160,13 +137,12 @@ export const FlipCard = () =>{
         <>
             <Container className="justify-content-center">
                 <Row>
-                <Col className="d-flex justify-content-center question" style={{}}>
-                    {!isEnd ? <Row>{renderFlipCard()}</Row> : <Row>{renderEnd()}</Row>}
-                </Col>
+                    <Col className="d-flex justify-content-center question" style={{}}>
+                        {!isEnd ? <Row>{renderFlipCard()}</Row> : <Row>{renderEnd()}</Row>}
+                    </Col>
                 </Row>
 
                 <Row className="d-flex justify-content-center question text-center">
-                    
                     {(
                         <Row className="bottomRow">
                             <Col xs={6} md={6} lg={6}>
@@ -181,7 +157,6 @@ export const FlipCard = () =>{
                             </Col>
                         </Row>
                     )}
-                    
                 </Row>
             </Container>
         </>

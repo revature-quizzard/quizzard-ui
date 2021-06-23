@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { setListState } from '../../StateSlices/Sets/setListSlice';
-import { CardSet } from '../../Models/cardSet';
+import { CardSet } from '../../Models/CardSet';
 
 export default function SetList() {
 
