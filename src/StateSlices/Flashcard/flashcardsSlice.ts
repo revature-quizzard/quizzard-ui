@@ -7,6 +7,7 @@ interface State {
     isLoading: boolean;
     isLoaded: boolean;
     flashCards: Array<Flashcard>;
+    count: number;
 }
 
 //Declare the initial state values that extends the State interface
@@ -14,6 +15,9 @@ const initialState: State = {
     flashCards: [],
     isLoading: false,
     isLoaded: false,
+    //If you are using test cards, start at count: 426, so you can see the 'end of flashcards' component
+    //Which provides the button to go back to the start
+    count: 0
 }
 
 // Create the actual slice useing createSlice from the @reduxjs/toolkit dependency
@@ -44,6 +48,16 @@ export const flashcardsSlice = createSlice({
 
         setFlashcards: (state, action: PayloadAction<Flashcard[]>) => {
             state.flashCards = action.payload
+        },
+        nextCard: (state) => {
+            state.count += 1;
+          },
+        prevCard: (state) => {
+        state.count -= 1;
+        },
+
+        resetCount: (state) => {
+            state.count = 0;
         }
         
 
@@ -51,7 +65,7 @@ export const flashcardsSlice = createSlice({
 })
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { isLoading, isLoaded, addFlashcard, setFlashcards } = flashcardsSlice.actions;
+export const { isLoading, isLoaded, addFlashcard, setFlashcards, nextCard, prevCard, resetCount } = flashcardsSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const flashcardsState = (state: RootState) => state.flashcards;
