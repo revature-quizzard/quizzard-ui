@@ -4,8 +4,8 @@ import { flashcardsState, prevCard, nextCard, resetCount, setFlashcards} from ".
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import {useEffect, useState} from "react";
-import { getSubs } from "../../remote/subjectService";
-import { createCard, getCards } from "../../remote/cardService";
+import { getSubs } from "../../Remote/subjectService";
+import { createCard, getCards } from "../../Remote/cardService";
 
 /**
  * FlipCard component renders a flippable card and two arrows that allow you to navigate existing cards
