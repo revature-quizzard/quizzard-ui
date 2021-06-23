@@ -15,7 +15,9 @@ const initialState: State = {
     flashCards: [],
     isLoading: false,
     isLoaded: false,
-    count: 426
+    //If you are using test cards, start at count: 426, so you can see the 'end of flashcards' component
+    //Which provides the button to go back to the start
+    count: 0
 }
 
 // Create the actual slice useing createSlice from the @reduxjs/toolkit dependency

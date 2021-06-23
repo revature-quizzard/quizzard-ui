@@ -20,7 +20,8 @@ import { createCard, getCards } from "./remote/cardService";
 function App() {
   const dispatch = useDispatch();
 
-  //Placed temporarily to render flashcards into the Redux state eagerly, makes it possible to navigate to Study Flashcards for now...
+  //Placed to collect existing flashcards and subjects into the Redux application state eagerly
+  //makes it possible to navigate to Study Flashcards for now...
   useEffect(()=> {
     console.log("FLIPCARD populate flashcards")
    
@@ -41,7 +42,7 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Container>
+      <Container className="app-container">
         <Switch>
           <Route exact path="/">
             <Main />
@@ -53,7 +54,7 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/flashcards">
-            <FlashCard />
+            <FlashCard/>
           </Route>
           <Route exact path="/createQuiz">
             <CreateQuiz />

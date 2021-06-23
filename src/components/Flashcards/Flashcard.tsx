@@ -29,22 +29,22 @@ const FlashCard = () => {
    * @author 'Kevin Chang'
    * @author 'Giancarlo Tomasello'
    */
-  useEffect(()=> {
-    console.log("populate flashcards")
+  // useEffect(()=> {
+  //   console.log("populate flashcards")
    
-    const getFlashcards = async () => {
-      let cards = await getCards();
-      dispatch(setFlashcards(cards))
-    };
-    getFlashcards();
+  //   const getFlashcards = async () => {
+  //     let cards = await getCards();
+  //     dispatch(setFlashcards(cards))
+  //   };
+  //   getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    }
-    getSubjects();
+  //   const getSubjects = async () => {
+  //     let subjects = await getSubs();
+  //     dispatch(setSubjects(subjects));
+  //   }
+  //   getSubjects();
 
-  }, [])
+  // }, [])
 
   /**
    * When the Create New Flashcard button is clicked it will call handleAddCard function which calls createCard
