@@ -76,7 +76,7 @@ export const createWrongAnswerArray = (newStudySet: Array<FlashCard>) => {
 
 export const filterCurrentCard = (currentCard: FlashCard, studySet: Array<FlashCard>) => {
   return studySet.filter((card: FlashCard) => {
-      if ((card.question !== currentCard.question) && (card.isPublic === true) ){
+      if (card.question !== currentCard.question) {
         return card;
       }
       return null;

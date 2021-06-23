@@ -44,34 +44,21 @@ const Quiz = () => {
     let wrong1 = document.getElementById("wrong1");
     let wrong2 = document.getElementById("wrong2");
     let wrong3 = document.getElementById("wrong3");
-    //TODO: Create custom null pointer handler?
-    //currently implemented janky null checks to make typescript happy
-    
-      answer.style.color = "black";
-      answer.style.fontSize = "20px";
-    
-    if (wrong1){
-      wrong1.style.color = "black";
-    }
-    if(wrong2){
-      wrong2.style.color = "black";
-    }
-    if (wrong3){
-      wrong3.style.color = "black";
-    }
+    answer!.style.color = "black";
+    answer!.style.fontSize = "20px";
+    wrong1!.style.color = "black";
+    wrong2!.style.color = "black";
+    wrong3!.style.color = "black";
   };
 
   const checkAnswer = (e: any) => {
-    if (e.currentTarget.id === "answer"){
-      if(document.getElementById(`${e.currentTarget.id}`)!= null)
-      {
-        let answerDiv = document.getElementById(
-          `${e.currentTarget.id}`);
-          if(answerDiv != null){
-          answerDiv.style.color = "green";
-          answerDiv.style.fontSize = "30px";}
+    if(e.currentTarget.id =="answer"){
+      let answerDiv = document.getElementById(
+        `${e.currentTarget.id}`);
+        answerDiv!.style.color = "green";
+        answerDiv!.style.fontSize = "30px";
+    
       
-      }
       if (
         !results.answered.includes(quizState.count) &&
         !results.correct.includes(quizState.count)
@@ -79,17 +66,9 @@ const Quiz = () => {
         dispatch(addAnswered(quizState.count));
         dispatch(addCorrect(quizState.count));
       }
-    } else {
-      if (e.currentTarget.id === "answer"){
-        if(document.getElementById(`${e.currentTarget.id}`)!= null)
-        {
-          let wrongChoice = document.getElementById(`${e.currentTarget.id}`);
-          if(wrongChoice !=null){
-            wrongChoice.style.color = "red";
-        }
-        }
-      }
-      
+    }else{
+      let wrongChoice = document.getElementById(`${e.currentTarget.id}`);
+      wrongChoice!.style.color = "red";      
       if (
         !results.answered.includes(quizState.count) &&
         !results.incorrect.includes(quizState.count)
@@ -98,6 +77,7 @@ const Quiz = () => {
         dispatch(addIncorrect(quizState.count));
       }
     }
+    
   };
   return (
     <>
