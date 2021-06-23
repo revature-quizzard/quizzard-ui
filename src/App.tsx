@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Main from "./components/Main/Main";
 import Navigation from "./components/NavBar/Navbar";
 import Login from "./components/Login/Login";
@@ -30,6 +30,13 @@ function App() {
           </Route>
         </Switch>
       </Container>
+      <footer>
+        <Row className="bg-dark text-light">
+          <Col>
+            <div className="footerText">Copyright Revature LLC. &copy;</div>
+          </Col>
+        </Row>
+      </footer>
     </Router>
   );
 }

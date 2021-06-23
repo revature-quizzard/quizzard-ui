@@ -21,6 +21,7 @@ const Login = () => {
     setLoginUser({username: "", password: ""} as LoginModel)
   }
 
+    // dispatch(loggingIn({username: res.data.username, token: res.data.token}))
 
     return (
         <>
