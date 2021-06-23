@@ -20,7 +20,7 @@ afterEach(() => {
 
 test('Tests login: ', ()=> {
     const mockLoginFunction = jest.fn();
-    mockLoginFunction.mockReturnValue()
+    //mockLoginFunction.mockReturnValue()
 
     // expect(sum(1, 2)).toBe(3);
 });
