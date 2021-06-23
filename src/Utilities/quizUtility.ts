@@ -7,21 +7,7 @@ import { studySet } from './dummyData';
 
 import { Flashcard } from "../Models/Flashcard";
 
-<<<<<<< HEAD
 interface Question {
-=======
-export interface FlashCard {
-  id: number;
-  subject_id: number;
-  account_id: number;
-  question: string;
-  answer: string;
-  reviewable: boolean;
-  isPublic: boolean;
-}
-
-export interface Question {
->>>>>>> createQuiz/everett-ej
   question: string;
   answer: string;
   wrong1: string;

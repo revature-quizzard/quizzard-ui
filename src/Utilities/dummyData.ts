@@ -1,32 +1,10 @@
-// Create dummy flashcards
-<<<<<<< HEAD
-// interface FlashCard {
-//   id: number;
-//   subject_id: number;
-//   account_id: number;
-//   question: string;
-//   answer: string;
-//   reviewable: boolean;
-//   public: boolean;
-// };
 
 import { Flashcard } from "../Models/Flashcard";
-=======
-interface FlashCard {
-  id: number;
-  subject_id: number;
-  account_id: number;
-  question: string;
-  answer: string;
-  reviewable: boolean;
-  isPublic: boolean;
-};
->>>>>>> createQuiz/everett-ej
 
 let flashCard1: Flashcard = {
   question: "Who am I?",
   answer: "The best",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true
 };
@@ -93,39 +71,31 @@ let flashCard10: Flashcard = {
   reviewable: true,
   isPublic: true,
 };
-let flashCard11: FlashCard = {
-  id: 11,
+let flashCard11: Flashcard = {
   question: "What's 5 + 10?",
   answer: "21",
-  subject_id: 5,
-  account_id: 1,
+  subjectId: "TikTok + Commercials",
   reviewable: true,
   isPublic: true,
 };
-let flashCard12: FlashCard = {
-  id: 12,
+let flashCard12: Flashcard = {
   question: "What should you apply directly to your forehead?",
   answer: "Head on!",
-  subject_id: 5,
-  account_id: 1,
+  subjectId: "TikTok + Commercials",
   reviewable: true,
   isPublic: true,
 };
-let flashCard13: FlashCard = {
-  id: 13,
+let flashCard13: Flashcard = {
   question: "Fanta fanta, dont you wanta?",
   answer: "No...I actually dont wanta..",
-  subject_id: 5,
-  account_id: 1,
+  subjectId: "TikTok + Commercials",
   reviewable: true,
   isPublic: true,
 };
-let flashCard14: FlashCard = {
-  id: 14,
+let flashCard14: Flashcard = {
   question: "How many licks does it take to get to the center of a Tootsie Pop?",
   answer: "*licks* One...*licks* Two...",
-  subject_id: 5,
-  account_id: 1,
+  subjectId: "TikTok + Commercials",
   reviewable: true,
   isPublic: true,
 };

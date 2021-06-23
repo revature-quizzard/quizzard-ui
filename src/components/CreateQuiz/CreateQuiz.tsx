@@ -8,12 +8,7 @@ import {
 import { setOfSets } from "../../Utilities/dummyData";
 import { createQuiz } from "../../Utilities/quizUtility";
 import Quiz from "./Quiz";
-<<<<<<< HEAD
 import { Flashcard } from "../../Models/Flashcard";
-
-const CreateQuiz = () => {
- 
-=======
 import {Image} from "react-bootstrap";
 
 let image = "https://i.imgur.com/XoL4zEI.png";
@@ -24,7 +19,7 @@ const CreateQuiz = () => {
     question: string;
     answer: string;
   }
->>>>>>> createQuiz/everett-ej
+
 
   const dispatch = useDispatch();
 
@@ -52,12 +47,7 @@ const CreateQuiz = () => {
                 </Col>
               </Row>
               <Row className="p-4">
-<<<<<<< HEAD
                 {setOfSets.map((set: Array<Flashcard>, index: any) => {
-=======
-                {setOfSets.map((set: Array<FlashCard>, index: any) => {
-
->>>>>>> createQuiz/everett-ej
                   return (
                     <Card style={{ width: '18rem' ,margin:'.4em' }}>
                     <Card.Img variant="top" as={Image} fluid={true} src={image} alt="Quiz Image" />
@@ -65,7 +55,7 @@ const CreateQuiz = () => {
                       <Card.Title>Quiz {index + 1}</Card.Title>
                       <Card.Text>
                        
-                       Subject {setOfSets[index][index].subject_id}
+                       Subject: {setOfSets[index][index].subjectId} 
                       </Card.Text>
                       <Button onClick={goToQuiz}
                         key={index}
