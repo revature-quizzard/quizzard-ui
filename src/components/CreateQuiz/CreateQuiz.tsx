@@ -1,4 +1,4 @@
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Card,Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showQuiz,
@@ -8,8 +8,11 @@ import {
 import { setOfSets } from "../../Utilities/dummyData";
 import { createQuiz } from "../../Utilities/quizUtility";
 import Quiz from "./Quiz";
+import {Image} from "react-bootstrap";
 
-const CreateQuiz = () => {
+let image = "https://i.imgur.com/XoL4zEI.png";
+
+const CreateQuiz = () => { 
   interface FlashCard {
     id: number;
     question: string;
@@ -43,15 +46,30 @@ const CreateQuiz = () => {
               </Row>
               <Row className="p-4">
                 {setOfSets.map((set: Array<FlashCard>, index: any) => {
+
                   return (
-                    <Col
-                      onClick={goToQuiz}
-                      key={index}
-                      id={index}
-                      className="col-2 bg-dark text-light m-4"
-                    >
-                      Set
-                    </Col>
+                    <Card style={{ width: '18rem' ,margin:'.4em' }}>
+                    <Card.Img variant="top" as={Image} fluid={true} src={image} alt="Quiz Image" />
+                    <Card.Body>
+                      <Card.Title>Quiz {index + 1}</Card.Title>
+                      <Card.Text>
+                       
+                       Subject {setOfSets[index][index].subject_id}
+                      </Card.Text>
+                      <Button onClick={goToQuiz}
+                        key={index}
+                        id={index}
+                       > Go To Quiz</Button>
+                    </Card.Body>
+                  </Card>
+                    // <Col
+                    //   onClick={goToQuiz}
+                    //   key={index}
+                    //   id={index}
+                    //   className="col-2 bg-dark text-light m-4"
+                    // >
+                    //   Set
+                    // </Col>
                   );
                 })}
               </Row>
