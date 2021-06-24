@@ -20,6 +20,33 @@ export const FlipCard = () =>{
     const flashcards = useSelector(flashcardsState);
     const subjects = useSelector(subjectsState);
 
+     /**
+   * Acquires the current cards and subejcts that already exist in the database.
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
+  useEffect(()=> {
+    console.log("populate flashcards")
+   
+    const getFlashcards = async () => {
+      let cards = await getCards();
+      dispatch(setFlashcards(cards))
+    };
+    getFlashcards();
+
+    const getSubjects = async () => {
+      let subjects = await getSubs();
+      dispatch(setSubjects(subjects));
+    }
+    getSubjects();
+
+    const setIsLoaded = async () => {
+        dispatch(isLoaded());
+      }
+    
+
+  }, [])
+
 
     /**
      * Dispatches prevCard reducer to decrease count by 1, resets setIsEnd and setIsCardFlipped to false
@@ -81,6 +108,10 @@ export const FlipCard = () =>{
     setIsCardFlipped(!isCardFlipped);
     }
 
+    const handleStart = () =>{
+        dispatch(isLoaded());
+    }
+
 
   /**
      * Creates a renderable card that signifies the end of the array of Flashcards
@@ -113,21 +144,25 @@ export const FlipCard = () =>{
  */
   const renderFlipCard = () => {
       return(
-            <Container className='flip-card'>
-                <ReactCardFlip isFlipped={isCardFlipped} flipDirection="horizontal">
-                    <Card className="question-card">
-                        <Card.Body className="text-center">{flashcards.flashCards[flashcards.count].question}</Card.Body>
-                        <Card.Footer className="text-center"><Button onClick={handleClick} block>Check Answer</Button></Card.Footer>
-                    </Card>
+          <>
+            { flashcards.isLoaded ? (<Container className='flip-card'>
+                                        <ReactCardFlip isFlipped={isCardFlipped} flipDirection="horizontal">
+                                            <Card className="question-card">
+                                                <Card.Body className="text-center">{flashcards.flashCards[flashcards.count].question}</Card.Body>
+                                                <Card.Footer className="text-center"><Button onClick={handleClick} block>Check Answer</Button></Card.Footer>
+                                            </Card>
 
-                    <Card className="answer-card">
-                        <Card.Body className="text-center">
-                            {flashcards.flashCards[flashcards.count].answer}
-                        </Card.Body>
-                        <Card.Footer className="text-center"><Button onClick={handleClick} block >Back</Button></Card.Footer>                    
-                    </Card>  
-                </ReactCardFlip>
-            </Container>
+                                            <Card className="answer-card">
+                                                <Card.Body className="text-center">
+                                                    {flashcards.flashCards[flashcards.count].answer}
+                                                </Card.Body>
+                                                <Card.Footer className="text-center"><Button onClick={handleClick} block >Back</Button></Card.Footer>                    
+                                            </Card>  
+                                        </ReactCardFlip>
+                                    </Container>) : (<Button className="start-button" onClick={handleStart}>Start Studying</Button>)
+
+        }</>
+            
       )
   }
        
