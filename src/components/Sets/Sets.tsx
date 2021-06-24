@@ -1,13 +1,16 @@
-import { useState } from "react";
-
-
-import { Row, Col, Container, ListGroup, Button, FormControl, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Row, Col, Container, ListGroup, Button, FormControl, Table, Form, Card, CardDeck } from "react-bootstrap";
+import { isLoading, isLoaded, addFlashcard, setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice";
+import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import { CardSet } from "../../Models/CardSet";
-import { createdSetSearch } from "../../Remote/set-service";
+import { createdSetSearch, createStudySet } from "../../Remote/set-service";
 import SetList from './SetList';
 import { useDispatch, useSelector } from "react-redux";
-import { setSetList, setListState } from '../../StateSlices/Sets/setListSlice';
+import { setSetList, addSet, setListState } from '../../StateSlices/Sets/setListSlice';
 import { createStudySetSlice, createStudySetState } from '../../StateSlices/Sets/createStudySetsSlice';
+import {Flashcard} from "../../Models/Flashcard";
+import { getCards } from "../../Remote/cardService";
+import { getSubs } from "../../Remote/subjectService";
 // ANN: need to import state object and reducer for creating study sets, they've been moved into the Sets folder
 
 
@@ -19,8 +22,36 @@ export function Sets() {
   // ANN: need to create a variable as above using the state object exported from the create study set slice
 
   let username = "revature";
-  const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
+  const stateFlashcards = useSelector(flashcardsState);
+  const subjects = useSelector(subjectsState);
+  const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet || undefined);
   const [showList, setShowList] = useState(false);
+  const [setName, setSetName] = useState("");
+  const [isPublic, setIsPublic] = useState(false);
+  const [localFlashcards, setLocalFlashcards] = useState([]); 
+  const [checkedBoxes, setCheckedBoxes] = useState([]);
+
+    /**
+   * Acquires the current cards and subejcts that already exist in the database.
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
+     useEffect(()=> {
+      console.log("populate flashcards")
+     
+      const getFlashcards = async () => {
+        let cards = await getCards();
+        dispatch(setFlashcards(cards))
+      };
+      getFlashcards();
+  
+      const getSubjects = async () => {
+        let subjects = await getSubs();
+        dispatch(setSubjects(subjects));
+      }
+      getSubjects();
+  
+    }, [])
 
   let createdSetsSearch = async (e: any) => {
     e.preventDefault();
@@ -35,10 +66,69 @@ export function Sets() {
   }
 
   // ANN: need to add a method here that makes a request to the database with the newly created flashcard set using your axios method
-  let createStudySet = async (e: any) => {
-    e.preventDefault();
+  let handleCreateStudySet = () => {
+    handleLocalFlashcards();
+    handlePersistStudySet();
+  }
+
+
+  let handleLocalFlashcards = () =>{
+    checkedBoxes.forEach(element => {
+      console.log(parseInt(element));
+      localFlashcards.push(stateFlashcards.flashCards[parseInt(element)]);
+      console.log(localFlashcards);
+    });
+  }
+
+  let handlePersistStudySet = async () => {
+    let setObj: CardSet = {
+      setName,
+      isPublic,
+      localFlashcards
+    };
+
+    dispatch(addSet(setObj));
+
+    setCreatedSetElement(setObj);
+
     let response = await createStudySet(createdSetElement);
-    setCreatedSetElement({setName: "", isPublic: false} as unknown as CardSet[]);
+
+    setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
+
+
+    setLocalFlashcards([]);
+    
+  }
+
+  /**
+   * Handles acquisition of a card's associated subject
+   * @param card Typed as Flashcard
+   * @returns Name of subject
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
+   const handleSubject = (card: Flashcard) => {
+
+    let currentSubject = subjects.subjects[parseInt(card.subjectId)-1].name;
+
+    return currentSubject;
+  }
+
+  const handleChecked = (e: any) =>{
+    let currentChecked = checkedBoxes;
+    
+    console.log("Checked: " + e.target.checked);
+    console.log("Key: " + e.target.key);
+    console.log("ID: " + e.target.id);
+    if(e.target.checked){
+      currentChecked.push(e.target.id);
+    }
+    else{
+      currentChecked.splice(currentChecked.indexOf(e.target.id), 1);
+    }
+
+    console.log(currentChecked);
+    
   }
 
   let publicSetsSearch = async (e: any) => {
@@ -59,10 +149,10 @@ export function Sets() {
       <Container style={{ marginTop: "10px" }}>
         <Row className="justify-content-center">
             <Col className="col-1" style={{ padding: "2px" }}>
-              <Button type="submit" onClick={createdSetsSearch} >Your Sets</Button>
+              <Button type="submit" onClick={createdSetsSearch} >Your Sets (Not used yet)</Button>
             </Col>
             <Col className="col-1" style={{ padding: "2px" }}>
-              <Button type="submit" onClick={publicSetsSearch} >All Public Sets</Button>
+              <Button type="submit" onClick={publicSetsSearch} >All Public Sets (Not used yet)</Button>
             </Col>
         </Row>
         <Row>
@@ -70,17 +160,52 @@ export function Sets() {
             <Form>
               <Form.Group>
                 <Form.Label>Set Name: </Form.Label>
-                <Form.Control name="setName" value={CardSet.setName} onChange={onchange} type="text" placeholder="Set Name"  />
+                <Form.Control id="setName" name="setName" value={setName} onChange={(e) => setSetName(e.target.value)} type="text" placeholder="Set Name"  />
               </Form.Group>
               <Form.Group>
-                <Form.Check type = "checkbox" label="Do you want this study set to be public?" checked = {isPublic} onChange={e=>setIsPublic(e.target.checked)}></Form.Check>
+                <Form.Check type = "checkbox" label="Do you want this study set to be public?" checked={isPublic} onChange={e=>setIsPublic(e.target.checked)}></Form.Check>
               </Form.Group>
-              <Form.Group className="text-center">
-                <Button onClick={createStudySet}>Create</Button>
-              </Form.Group>
+              
             </Form>
           </Col>
         </Row>
+        <Row>
+          <CardDeck>
+            {stateFlashcards.flashCards.map((card) => {
+              return (
+                <Col xs={8} md={6} lg={4} style={{ padding: '1rem' }}>
+                  <Card>
+                      <Card.Header>{card.question}</Card.Header>
+                      <Card.Body>
+                        <Card.Title>
+                          <Card.Subtitle>Answer:</Card.Subtitle>
+                        </Card.Title>
+                        <Card.Body>
+                          <Card.Text>{card.answer}</Card.Text>
+                        </Card.Body>
+                      </Card.Body>
+                      <Card.Footer className="text-center">
+                        {/* This is under the assumption that ID's match with the index */}
+                        <Card.Text>{handleSubject(card)}</Card.Text>
+                          <Form.Check id={""+stateFlashcards.flashCards.indexOf(card)} className="add-card-checkbox" name={"Question" + stateFlashcards.flashCards.indexOf(card)} key={"Key"+stateFlashcards.flashCards.indexOf(card)} type="checkbox" label="Add Card" onChange={handleChecked}></Form.Check>
+                      </Card.Footer>
+                  </Card>
+                </Col>
+              )
+            })}
+          </CardDeck>
+      </Row>
+        <Container>
+          <Row>
+            <Col>
+              <Form>
+                <Form.Group className="text-center">
+                  <Button className="create-study-set-button" onClick={handleCreateStudySet}>Create Study Set</Button>
+                </Form.Group>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
       </Container>
       {
       showList

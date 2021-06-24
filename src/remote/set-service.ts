@@ -1,7 +1,8 @@
+import { CardSet } from "../Models/CardSet";
 import { webappClient } from "./web-client";
 
-export async function createStudySet(name: String, isPublic: boolean){
-	let response = await webappClient.post('/sets/newset',{name, isPublic});
+export async function createStudySet(studySet: CardSet){
+	let response = await webappClient.post('/sets/newset', {studySet});
 	return await response.data;
 }
 
