@@ -8,7 +8,7 @@ import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import Sets from "./components/Sets/Sets";
 import {FlipCard} from "./components/Flashcards/FlipCard";
-import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
+import { setFlashcards } from "./StateSlices/Flashcard/flashcardsSlice"
 import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
 import { useDispatch } from "react-redux";
 import {useEffect} from "react";

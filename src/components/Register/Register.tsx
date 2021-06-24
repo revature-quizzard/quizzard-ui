@@ -1,8 +1,8 @@
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import { useState } from 'react';
 import { register } from "../../remote/login-register-service";
 import { RegisterModel } from "../../Models/register-model";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { loginUserReducer } from "../../StateSlices/Auth/authSlice";
 
