@@ -12,6 +12,7 @@ import {
   addIncorrect,
   resultState,
   showResults,
+  resetAnswered,
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
 
@@ -23,6 +24,7 @@ const Quiz = () => {
   const handlePrev = () => {
     if (quizState.count > 0) {
       resetColors();
+      dispatch(resetAnswered());
       dispatch(prevCard());
     }
   };
@@ -32,7 +34,9 @@ const Quiz = () => {
       resetColors();
       console.log(quizState.count);
       dispatch(nextCard());
-    } else if (quizState.count === quizState.quiz.length - 1){
+      dispatch(resetAnswered());
+    } else if (quizState.count === quizState.quiz.length - 1) {
+      dispatch(resetAnswered());
       dispatch(showResults());
     }
   };
@@ -54,8 +58,6 @@ const Quiz = () => {
       let answerDiv: HTMLElement = document.getElementById(
         `${e.currentTarget.id}`
       );
-      answerDiv.style.color = "green";
-      answerDiv.style.fontSize = "30px";
 
       if (
         !results.answered.includes(quizState.count) &&
@@ -64,11 +66,19 @@ const Quiz = () => {
         dispatch(addAnswered(quizState.count));
         dispatch(addCorrect(quizState.count));
       }
-    } else {
+
+      answerDiv.style.color = "green";
+      answerDiv.style.fontSize = "30px";
+    }
+    if (
+      e.currentTarget.id === "wrong1" ||
+      e.currentTarget.id === "wrong2" ||
+      e.currentTarget.id === "wrong3"
+    ) {
       let wrongChoice: HTMLElement = document.getElementById(
         `${e.currentTarget.id}`
       );
-      wrongChoice.style.color = "red";
+
       if (
         !results.answered.includes(quizState.count) &&
         !results.incorrect.includes(quizState.count)
@@ -76,6 +86,8 @@ const Quiz = () => {
         dispatch(addAnswered(quizState.count));
         dispatch(addIncorrect(quizState.count));
       }
+
+      wrongChoice.style.color = "red";
     }
   };
   return (
@@ -96,7 +108,7 @@ const Quiz = () => {
                 <Row
                   id={id}
                   className="answer"
-                  onClick={checkAnswer}
+                  onClick={!results.isAnswered ? checkAnswer : null}
                   key={value}
                 >
                   <Col>{Object.values(key).toString()}</Col>

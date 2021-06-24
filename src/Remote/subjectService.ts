@@ -1,6 +1,6 @@
-import { quizzardClient } from "./quizzardClient";
+import { quizzardClient } from "../Remote/quizzardClient";
 
-  /**
+/**
    * Sends an axios call to retrieve all subjects in the database.
    * @returns Subject data in JSON format
    * @author 'Kevin Chang'

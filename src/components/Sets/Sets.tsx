@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Container, ListGroup, Button, FormControl, Table, Form, Card, CardDeck } from "react-bootstrap";
-import { isLoading, isLoaded, addFlashcard, setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice";
+import { Row, Col, Container, Button, Form, Card, CardDeck } from "react-bootstrap";
+import { setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice";
 import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import { CardSet } from "../../Models/CardSet";
 import { createdSetSearch, createStudySet } from "../../Remote/set-service";
 import SetList from './SetList';
 import { useDispatch, useSelector } from "react-redux";
 import { setSetList, addSet, setListState } from '../../StateSlices/Sets/setListSlice';
-import { createStudySetSlice, createStudySetState } from '../../StateSlices/Sets/createStudySetsSlice';
+import { createStudySetState } from '../../StateSlices/Sets/createStudySetsSlice';
 import {Flashcard} from "../../Models/Flashcard";
 import { getCards } from "../../Remote/cardService";
 import { getSubs } from "../../Remote/subjectService";
-// ANN: need to import state object and reducer for creating study sets, they've been moved into the Sets folder
 
 
 export function Sets() {
@@ -19,7 +18,6 @@ export function Sets() {
   const dispatch = useDispatch();
   const allSetsState = useSelector(setListState);
   const createSetState = useSelector(createStudySetState);
-  // ANN: need to create a variable as above using the state object exported from the create study set slice
 
   let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
@@ -53,16 +51,26 @@ export function Sets() {
 
     }, [])
 
+  /**
+   * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
+   * Will display a list of the results. 
+   * @param e event when button is clicked
+   * @author Austin Knauer
+   * @author Vinson Chin
+   */
   let createdSetsSearch = async (e: any) => {
     e.preventDefault();
-    const getData = async () => {
-      let response = await createdSetSearch(username);
-      dispatch(setSetList(response.data));
+
+    const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem("Authorization")
+    }
+    
+    let response = await createdSetSearch(headers);
+    dispatch(setSetList(response));
 
       // needs to be updated eventually to actually check whether results were successfully fetched from the api
-      setShowList(true);
-    };
-    getData();
+    setShowList(true);
   }
 
   /**

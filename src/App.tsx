@@ -6,38 +6,16 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
-import {FlipCard} from "./components/Flashcards/FlipCard";
-import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
-import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
-import { useDispatch } from "react-redux";
-import {useEffect} from "react";
-import { getSubs } from "./Remote/subjectService";
-import {  getCards } from "./Remote/cardService";
+import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
+import {FlipCard} from "./components/Flashcards/FlipCard";
+
+
 
 function App() {
-  const dispatch = useDispatch();
 
-  //Placed to collect existing flashcards and subjects into the Redux application state eagerly
-  //makes it possible to navigate to Study Flashcards for now...
-  // useEffect(()=> {
-  //   console.log("FLIPCARD populate flashcards")
-   
-  //   const getFlashcards = async () => {
-  //     let cards = await getCards();
-  //     dispatch(setFlashcards(cards))
-  //   };
-  //   getFlashcards();
-
-  //   const getSubjects = async () => {
-  //     let subjects = await getSubs();
-  //     dispatch(setSubjects(subjects));
-  //   }
-  //   getSubjects();
-
-  // }, [])
-
-  return (
+  // @ts-ignore
+    return (
     <Router>
       <Navigation />
       <Container className="app-container">
@@ -57,8 +35,17 @@ function App() {
           <Route exact path="/sets">
             <Sets />
           </Route>
+          <Route exact path="/update">
+              <UpdateAccontInfo />
+              </Route>
+          <Route exact path="/sets">
+            <Sets />
+          </Route>
           <Route exact path="/study">
             <FlipCard />
+          </Route>
+          <Route exact path="/createQuiz">
+            <CreateQuiz/>
           </Route>
         </Switch>
       </Container>

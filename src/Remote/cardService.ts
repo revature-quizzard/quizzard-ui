@@ -1,4 +1,4 @@
-import { quizzardClient } from "./quizzardClient";
+import { quizzardClient } from "../Remote/quizzardClient";
 
 
 /**
