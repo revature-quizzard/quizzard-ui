@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Container, Form, Button, Checkbox } from "react-bootstrap";
+import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import { CardSet } from "../../Models/CardSet";
 import { createdSetSearch, createStudySet } from "../../remote/set-service";
 import SetList from './SetList';
@@ -33,9 +33,10 @@ export function Sets() {
   }
 
   // ANN: need to add a method here that makes a request to the database with the newly created flashcard set using your axios method
-  // Needs to be filled -CL
   let createStudySet = async (e: any) => {
-
+    e.preventDefault();
+    let response = await createStudySet(createdSetElement);
+    setCreatedSetElement({setName: "", isPublic: false} as unknown as CardSet[]);
   }
 
   let publicSetsSearch = async (e: any) => {
@@ -65,16 +66,16 @@ export function Sets() {
         <Row>
           <Col>
             <Form>
-            <Form.Group>
-            <Form.Label>Set Name: </Form.Label>
-            <Form.Control name="setName" value={createStudySet.setName} onChange={onChange} type="text" placeholder="Set Name"  />
-          </Form.Group>
-          <Form.Group>
-          <Checkbox label={"Do you want this study set to be public? "} handleCheckboxChange={createStudySet.isPublic = true} key={label}/>
-          </Form.Group>
-          <Form.Group className="text-center">
-            <Button onClick={createStudySet}>Create</Button>
-          </Form.Group>
+              <Form.Group>
+                <Form.Label>Set Name: </Form.Label>
+                <Form.Control name="setName" value={CardSet.setName} onChange={onchange} type="text" placeholder="Set Name"  />
+              </Form.Group>
+              <Form.Group>
+                <Form.Check type = "checkbox" label="Do you want this study set to be public?" checked = {isPublic} onChange={e=>setIsPublic(e.target.checked)}></Form.Check>
+              </Form.Group>
+              <Form.Group className="text-center">
+                <Button onClick={createStudySet}>Create</Button>
+              </Form.Group>
             </Form>
           </Col>
         </Row>
