@@ -66,3 +66,52 @@ body {
   font-size: 20px;
   font-weight: 700;
 }
+
+/*Welcome page styling */
+
+.welcomeBanner {
+  text-align: center;
+  font-size: 40px;
+}
+
+.instructionsWelcome {
+ text-align: center;
+ color: purple;
+ font-weight: 800;
+ margin-top: 20px;
+}
+
+.featuresHeader {
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.featuresList {
+  padding: 5px 20px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.footerText {
+  text-align: center;
+}
+/* FLASHCARDS and FLIPCARD */
+.flip-card, .end-card, .start-button {
+  position: relative;
+  top: 2rem;
+}
+
+.bottomRow {
+  position: relative;
+  top:5rem;
+  width: 100%;
+}
+
+.question-card, .answer-card {
+  width: 25rem;
+  height:auto;
+  
+}

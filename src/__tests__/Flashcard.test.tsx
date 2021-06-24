@@ -1,4 +1,3 @@
-import { queryByAttribute } from "@testing-library/dom";
 import Enzyme, { mount } from "enzyme";
 import Adaptor from "@wojtekmaj/enzyme-adapter-react-17";
 import  configureStore  from "redux-mock-store";
@@ -14,7 +13,8 @@ test('Renders the Flashcard component with initial state', () =>{
         flashcards: {
             flashCards: [],
             isLoading: false,
-            isLoaded: false
+            isLoaded: false,
+            count: 0
         },
 
         subjects: {

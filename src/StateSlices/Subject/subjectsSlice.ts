@@ -11,7 +11,11 @@ interface State {
 const initialState: State = {
     subjects: [],
 }
-
+  /**
+   * Creates a slice for subjects with a reducer to set the subject state for existing subjects.
+   * @author 'Kevin Chang'
+   * @author 'Giancarlo Tomasello'
+   */
 export const subjectsSlice = createSlice({
     
     // Name the slice

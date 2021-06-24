@@ -2,6 +2,8 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
+
+  // bring authState into nav bar to show hide compenents
   return (
     <Navbar bg="dark" expand="lg">
       <Container>
@@ -11,7 +13,7 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/login">
+             <Link id="navLink" className="text-light ml-2 mr-2" to="/login">
               Login
             </Link>
             <Link id="navLink" className="text-light ml-2 mr-2" to="/register">
@@ -27,8 +29,13 @@ const Navigation = () => {
             <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
               Create Quiz
             </Link>
+<<<<<<< HEAD
             <Link id="navLink" className="text-light ml-2 mr-2" to="/sets">
               Sets
+=======
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/study">
+              Study Flashcards (Temporary)
+>>>>>>> f0f9376df02a25fa6caa96aac8dd0671092eae6c
             </Link>
           </Nav>
         </Navbar.Collapse>
