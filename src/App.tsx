@@ -8,34 +8,10 @@ import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import Sets from "./components/Sets/Sets";
 import {FlipCard} from "./components/Flashcards/FlipCard";
-import { setFlashcards } from "./StateSlices/Flashcard/flashcardsSlice"
-import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
-import { useDispatch } from "react-redux";
-import {useEffect} from "react";
-import { getSubs } from "./remote/subjectService";
-import {  getCards } from "./remote/cardService";
+
+
 
 function App() {
-  const dispatch = useDispatch();
-
-  //Placed to collect existing flashcards and subjects into the Redux application state eagerly
-  //makes it possible to navigate to Study Flashcards for now...
-  // useEffect(()=> {
-  //   console.log("FLIPCARD populate flashcards")
-   
-  //   const getFlashcards = async () => {
-  //     let cards = await getCards();
-  //     dispatch(setFlashcards(cards))
-  //   };
-  //   getFlashcards();
-
-  //   const getSubjects = async () => {
-  //     let subjects = await getSubs();
-  //     dispatch(setSubjects(subjects));
-  //   }
-  //   getSubjects();
-
-  // }, [])
 
   return (
     <Router>

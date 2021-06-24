@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { CardSet } from "../../Models/cardSet";
-import { createdSetSearch } from "../../remote/setService";
-import { Row, Col, Container, ListGroup, Button, FormControl, Table } from "react-bootstrap";
+import { createdSetSearch } from "../../Remote/setService";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import SetList from './SetList';
-import { useDispatch, useSelector } from "react-redux";
-import { setSetList, setListState } from '../../StateSlices/Sets/setListSlice';
+import { useDispatch } from "react-redux";
+import { setSetList } from '../../StateSlices/Sets/setListSlice';
 
 
 export function Sets() {
 
   const dispatch = useDispatch();
-  const allSetsState = useSelector(setListState);
-
+  
   // const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
   const [showList, setShowList] = useState(false);
 

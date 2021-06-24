@@ -1,5 +1,4 @@
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
-import { quizzardClient } from "./quizzardClient";
 
 /**
  * An axios get request to get all sets created by account

@@ -13,8 +13,8 @@ import {
   setSubjects,
 } from "../../StateSlices/Subject/subjectsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubs } from "../../remote/subjectService";
-import { createCard, getCards } from "../../remote/cardService";
+import { getSubs } from "../../Remote/subjectService";
+import { getCards } from "../../Remote/cardService";
 import { useState, useEffect } from "react";
 
 /**
@@ -29,7 +29,6 @@ export const FlipCard = () => {
 
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
-  const subjects = useSelector(subjectsState);
 
   /**
    * Acquires the current cards and subejcts that already exist in the database.
