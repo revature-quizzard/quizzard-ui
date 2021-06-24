@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
 import { updateAccInfo } from "../../Remote/updateInfo-service";
@@ -46,7 +45,16 @@ const UpdateAccontInfo =  ()=>{
     let updateInfo =async (e:any)=>{
         e.preventDefault();
 
-        let resultUser = await updateAccInfo({username,email, password})
+        console.log("update account",localStorage.getItem("Authorization"));
+        //let Authorization = localStorage.getItem("Authorization")
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("Authorization")
+        }
+        console.log("headers",headers);
+
+        let resultUser = await updateAccInfo({username,email, password}, headers)
         console.log(resultUser);
         setResult( prevState => resultUser);
 
@@ -58,9 +66,6 @@ const UpdateAccontInfo =  ()=>{
         };
 
         setShow(true);
-        // Object.entries(result).map(([key,value])=>{
-        //     console.log(value)
-        // })
     }
 
     //Handles the state for show, toggles it back to false. In order to stop rendering
