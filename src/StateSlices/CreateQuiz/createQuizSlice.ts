@@ -22,6 +22,7 @@ interface State {
   showQuiz: boolean;
   quiz: Array<ScrambledQuestion>;
   count: number;
+  isAnswered: boolean;
   
 }
 
@@ -35,6 +36,7 @@ const initialState: State = {
   showQuiz: false,
   quiz: [],
   count: 0,
+  isAnswered: false
   
 };
 
@@ -75,8 +77,7 @@ export const createQuizSlice = createSlice({
     },
     prevCard: (state) => {
       state.count -= 1;
-    },
-  
+    }
   },
 });
 

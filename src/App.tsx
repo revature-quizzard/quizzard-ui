@@ -7,15 +7,7 @@ import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import {FlipCard} from "./components/Flashcards/FlipCard";
-
-
-
-import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
-import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
 import { useDispatch } from "react-redux";
-import {useEffect} from "react";
-import { getSubs } from "./remote/subjectService";
-import {  getCards } from "./remote/CardService";
 
 function App() {
   const dispatch = useDispatch();

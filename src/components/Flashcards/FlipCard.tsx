@@ -1,11 +1,10 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import ReactCardFlip from 'react-card-flip';
 import { flashcardsState, prevCard, nextCard, resetCount, setFlashcards} from "../../StateSlices/Flashcard/flashcardsSlice"
-import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
+import {  subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import { useDispatch, useSelector } from "react-redux";
-import {useEffect, useState} from "react";
-import { getSubs } from "../../remote/subjectService";
-import { createCard, getCards } from "../../remote/CardService";
+import { useState} from "react";
+
 
 /**
  * FlipCard component renders a flippable card and two arrows that allow you to navigate existing cards

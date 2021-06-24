@@ -12,6 +12,7 @@ import {
   addIncorrect,
   resultState,
   showResults,
+  resetAnswered
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
 var clicks = 0;
@@ -33,6 +34,7 @@ const Quiz = () => {
       resetColors();
       console.log(quizState.count);
       dispatch(nextCard());
+      dispatch(resetAnswered());
     } else if (quizState.count === quizState.quiz.length - 1){
       dispatch(showResults());
     }
@@ -123,7 +125,7 @@ const Quiz = () => {
                 <Row
                   id={id}
                   className="answer"
-                  onClick={checkAnswer}
+                  onClick={!results.isAnswered ? checkAnswer : null}
                   key={value}
                   
                 >
