@@ -5,11 +5,11 @@ import {
   resetAll,
   hideResults,
   resultState,
-} from "../../StateSlices/CreateQuiz/resultSlice";
+} from "../../state-slices/create-quiz/result-slice";
 import {
   hideQuiz,
   clearQuiz,
-} from "../../StateSlices/CreateQuiz/createQuizSlice";
+} from "../../state-slices/create-quiz/create-quiz-slice";
 
 const Results = () => {
   const dispatch = useDispatch();

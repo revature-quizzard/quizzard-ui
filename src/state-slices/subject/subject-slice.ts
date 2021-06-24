@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import {Subject} from "../../Models/Subject"
+import {Subject} from "../../models/subject"
 
 // Create an interface for the state object
 interface State {

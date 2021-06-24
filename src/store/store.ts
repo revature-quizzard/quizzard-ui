@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import createQuizReducer from "../StateSlices/CreateQuiz/createQuizSlice";
-import createStudySetReducer from "../StateSlices/Sets/createStudySetsSlice";
-import flashcardsReducer from "../StateSlices/Flashcard/flashcardsSlice";
-import subjectsReducer from "../StateSlices/Subject/subjectsSlice";
-import quizResultsReducer from "../StateSlices/CreateQuiz/resultSlice";
-import setListReducer from '../StateSlices/Sets/setListSlice';
-import authReducer from "../StateSlices/Auth/authSlice";
+import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
+import createStudySetReducer from "../state-slices/sets/create-study-sets-slice";
+import flashcardsReducer from "../state-slices/flashcard/flashcard-slice";
+import subjectsReducer from "../state-slices/subject/subject-slice";
+import quizResultsReducer from "../state-slices/create-quiz/result-slice";
+import setListReducer from '../state-slices/sets/set-list-slice';
+import authReducer from "../state-slices/auth/auth-slice";
 
 export const store = configureStore({
     reducer: {

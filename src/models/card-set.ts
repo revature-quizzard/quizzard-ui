@@ -1,4 +1,4 @@
-import {Flashcard} from "../Models/Flashcard"
+import {Flashcard} from "../models/flashcard"
 
 export class CardSet {
 

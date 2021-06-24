@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
-import {updateAccInfo}  from "../../Remote/updateInfo-service";
+import {updateAccInfo}  from "../../remote/update-info-service";
 import { useHistory } from "react-router-dom";
 
 /**

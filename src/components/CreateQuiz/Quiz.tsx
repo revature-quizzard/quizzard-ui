@@ -4,7 +4,7 @@ import {
   createQuizState,
   nextCard,
   prevCard,
-} from "../../StateSlices/CreateQuiz/createQuizSlice";
+} from "../../state-slices/create-quiz/create-quiz-slice";
 import {
   setTotal,
   addAnswered,
@@ -13,7 +13,7 @@ import {
   resultState,
   showResults,
   resetAnswered,
-} from "../../StateSlices/CreateQuiz/resultSlice";
+} from "../../state-slices/create-quiz/result-slice";
 import Results from "./Results";
 
 const Quiz = () => {

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Container, Button, Form, Card, CardDeck } from "react-bootstrap";
-import { setFlashcards, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice";
-import { setSubjects, subjectsState } from "../../StateSlices/Subject/subjectsSlice"
-import { CardSet } from "../../Models/CardSet";
-import { createdSetSearch, createStudySet } from "../../Remote/set-service";
+import { setFlashcards, flashcardsState } from "../../state-slices/flashcard/flashcard-slice";
+import { setSubjects, subjectsState } from "../../state-slices/subject/subject-slice"
+import { CardSet } from "../../models/card-set";
+import { createdSetSearch, createStudySet } from "../../remote/set-service";
 import SetList from './SetList';
 import { useDispatch, useSelector } from "react-redux";
-import { setSetList, addSet, setListState } from '../../StateSlices/Sets/setListSlice';
-import { createStudySetState } from '../../StateSlices/Sets/createStudySetsSlice';
-import {Flashcard} from "../../Models/Flashcard";
-import { getCards } from "../../Remote/cardService";
-import { getSubs } from "../../Remote/subjectService";
+import { setSetList, addSet, setListState } from '../../state-slices/sets/set-list-slice';
+import { createStudySetState } from '../../state-slices/sets/create-study-sets-slice';
+import {Flashcard} from "../../models/flashcard";
+import { getCards } from "../../remote/card-service";
+import { getSubs } from "../../remote/subject-service";
 
 
 export function Sets() {

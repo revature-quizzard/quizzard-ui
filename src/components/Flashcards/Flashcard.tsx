@@ -1,12 +1,12 @@
 import { Container, Row, Col, Form, Button, CardDeck, Card} from "react-bootstrap"
-import { addFlashcard, flashcardsState, setFlashcards } from "../../StateSlices/Flashcard/flashcardsSlice"
+import { addFlashcard, flashcardsState, setFlashcards } from "../../state-slices/flashcard/flashcard-slice"
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react"
-import { createCard, getCards } from "../../Remote/cardService";
-import { getSubs } from "../../Remote/subjectService";
+import { createCard, getCards } from "../../remote/card-service";
+import { getSubs } from "../../remote/subject-service";
 
-import {  subjectsState, setSubjects } from "../../StateSlices/Subject/subjectsSlice"
-import {Flashcard} from "../../Models/Flashcard";
+import {  subjectsState, setSubjects } from "../../state-slices/subject/subject-slice"
+import {Flashcard} from "../../models/flashcard";
 
   /**
    * Renders the card creation and card viewing components

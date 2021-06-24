@@ -1,10 +1,10 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from 'react';
-import { register } from "../../Remote/login-register-service";
-import { RegisterModel } from "../../Models/register-model";
+import { register } from "../../remote/login-register-service";
+import { RegisterModel } from "../../models/register-model";
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
-import { loginUserReducer } from "../../StateSlices/Auth/authSlice";
+import { loginUserReducer } from "../../state-slices/auth/auth-slice";
 
 const Register = () => {
   const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel)

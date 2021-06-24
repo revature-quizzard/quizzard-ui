@@ -7,14 +7,14 @@ import {
   resetCount,
   setFlashcards,
   isLoaded,
-} from "../../StateSlices/Flashcard/flashcardsSlice";
+} from "../../state-slices/flashcard/flashcard-slice";
 import {
   subjectsState,
   setSubjects,
-} from "../../StateSlices/Subject/subjectsSlice";
+} from "../../state-slices/subject/subject-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubs } from "../../Remote/subjectService";
-import { getCards } from "../../Remote/cardService";
+import { getSubs } from "../../remote/subject-service";
+import { getCards } from "../../remote/card-service";
 import { useState, useEffect } from "react";
 
 /**

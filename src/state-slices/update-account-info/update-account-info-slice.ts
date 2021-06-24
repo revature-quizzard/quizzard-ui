@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 import { RootState} from "../../store/store";
-import {UpdateAccModel} from "../../Models/UpdateAccountInfo-model";
+import {UpdateAccModel} from "../../models/update-account-info-model";
 
 interface State{
     newInfoModel:{

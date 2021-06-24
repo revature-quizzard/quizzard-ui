@@ -4,11 +4,11 @@ import {
   showQuiz,
   loadQuiz,
   createQuizState,
-} from "../../StateSlices/CreateQuiz/createQuizSlice";
-import { setOfSets } from "../../Utilities/dummyData";
-import { createQuiz } from "../../Utilities/quizUtility";
+} from "../../state-slices/create-quiz/create-quiz-slice";
+import { setOfSets } from "../../utilities/dummy-data";
+import { createQuiz } from "../../utilities/quiz-utility";
 import Quiz from "./Quiz";
-import { Flashcard } from "../../Models/Flashcard";
+import { Flashcard } from "../../models/flashcard";
 
 const CreateQuiz = () => {
  

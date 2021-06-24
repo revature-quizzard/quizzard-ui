@@ -1,4 +1,4 @@
-import { Flashcard } from "../Models/Flashcard";
+import { Flashcard } from "../models/flashcard";
 
 let flashCard1: Flashcard = {
   question: "Who am I?",
