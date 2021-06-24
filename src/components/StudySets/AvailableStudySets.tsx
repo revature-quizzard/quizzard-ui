@@ -10,12 +10,15 @@ import {useState} from "react";
 import {StudySet} from "../../Models/StudySet";
 import {Account} from "../../Models/Account";
 import {Flashcard} from "../../Models/Flashcard";
+import {useAppSelector} from "../../store/hooks";
+import {studySetState} from "../../StateSlices/StudySet/studysetSlice";
 
 const AvailableStudySets = () => {
     console.log('AvailableStudySets Rendering: ');
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
     const [studySet, setStudySet] = useState({id: 0, creator: {} as Account, cards: [] as Flashcard[], name: '', isPublic: false});
+    const state = useAppSelector(studySetState);
     const renderFlashcardTable = (ss: StudySet) => {
         setStudySet(ss);
         setShowCards(true);

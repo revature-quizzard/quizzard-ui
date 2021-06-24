@@ -79,10 +79,14 @@ export const studySetSlice = createSlice({
         savePublicStudySets: (state, action: PayloadAction<StudySet[]>) => {
             state.availablePublicStudySets = action.payload;
             state.finishedLoading = true;
+        },
+        appendCardToStusySet: (state, action: PayloadAction<Flashcard>) => {
+            state.availablePublicStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
         }
     }
 })
 export const {setStudySet,setFlashcard, clearFlashcard, clearStudySet, showAddFlashcardModal,saveFlashcard,
-                savePublicStudySets, currentlyLoading, finishedLoading} = studySetSlice.actions;
+                savePublicStudySets, currentlyLoading, finishedLoading,
+                appendCardToStusySet} = studySetSlice.actions;
 export const studySetState = (state: RootState) => state.studySets;
 export default studySetSlice.reducer;

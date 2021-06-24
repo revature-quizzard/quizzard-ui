@@ -4,11 +4,11 @@
 import {Button, Col, Form, Modal, ModalBody, ModalFooter, ModalTitle, Row} from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import SubjectDropDown from "./SubjectDropDown";
-import {Flashcard} from "../../Models/Flashcard";
+import {Flashcard, FlashcardDTO} from "../../Models/Flashcard";
 import {flashcardSaver} from "../remotes/flashcardSaver";
 import {Subject} from "../../Models/Subject";
-import {User} from "../../Models/User";
-import {Role} from "../../Models/Role";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {appendCardToStusySet, studySetState} from "../../StateSlices/StudySet/studysetSlice";
 
 const AddFlashcardModal = (props: any) => {
     let question = '';
@@ -16,24 +16,31 @@ const AddFlashcardModal = (props: any) => {
     let isReviewable = true;
     let isPublic = true;
     let subject = {} as Subject;
-
+    const state = useAppSelector(studySetState);
+    const dispatch = useAppDispatch();
     const handleClose = () => {
         props.onCloseModal();
     }
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        let newCard = {
+        let newCard: FlashcardDTO = {
             id: 0,
             subject_id: subject.id,
             account_id: 1,
             question: question,
             answer: answer,
             reviewable: isReviewable,
-            public: isPublic
+            isPublic: isPublic,
+            studySet_id: state.selectedStudySet.id
         }
         console.log(newCard);
-        let flashCard = flashcardSaver(newCard).then(response => console.log(response)).catch(e => console.log(e));
-        flashCard.then(card => console.log(card));
+
+        flashcardSaver(newCard).then(card => {
+            console.log('promise returning')
+            dispatch(appendCardToStusySet(card));
+        });
+        console.log();
+
         props.onCloseModal();
     }
     const handleChange = (e: any) => {

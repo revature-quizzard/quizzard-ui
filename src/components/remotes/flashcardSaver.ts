@@ -1,18 +1,14 @@
 import axios from "axios";
+import {Flashcard} from "../../Models/Flashcard";
 
 
 export const flashcardSaver = async (props: any) =>
 {
-    let returnCard = {};
     console.log('Running flashcardSaver');
     console.log(props);
     const remoteURL = 'http://localhost:5000';
-    await axios.post(`${remoteURL}/cards/save`,
+    return await axios.post(`${remoteURL}/cards/save`,
         props)
-        .then(response => {
-            returnCard = response.data;
-            console.log(returnCard);
-        })
+        .then(response => response.data)
         .catch(e => console.log(e));
-    return returnCard;
 }

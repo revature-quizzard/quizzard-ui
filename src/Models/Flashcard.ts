@@ -13,3 +13,14 @@ export interface Flashcard {
     reviewable: boolean,
     public: boolean
 }
+
+export interface FlashcardDTO {
+    id: number,
+    subject_id: number,
+    account_id: number,
+    studySet_id: number,
+    question: string,
+    answer: string,
+    reviewable: boolean,
+    isPublic: boolean
+}

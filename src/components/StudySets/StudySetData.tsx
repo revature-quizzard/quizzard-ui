@@ -28,7 +28,6 @@ const StudySetData = (props: any) => {
             console.log('after dispatch');
         });
     }
-    console.log('we are here');
     const clickHandler = (e: any) => {
         dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id - 1]));
         props.onStudySetChange(state.availablePublicStudySets[e.currentTarget.id - 1]);
