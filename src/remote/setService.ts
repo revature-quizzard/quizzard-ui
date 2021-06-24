@@ -1,3 +1,4 @@
+import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 import { quizzardClient } from "./quizzardClient";
 
 /**
@@ -7,7 +8,9 @@ import { quizzardClient } from "./quizzardClient";
  * @author Vinson Chin
  * @author Austin Knauer
  */
-export async function createdSetSearch(username: String) {
-	let response = await quizzardClient.get(`/sets/created/${username}`);
+export async function createdSetSearch(headers:any) {
+	let response = await quizzardApiClientTokenAuthorizedSynchronous.get(`/sets/created`,{
+		headers:headers
+	});
 	return await response.data;
     }

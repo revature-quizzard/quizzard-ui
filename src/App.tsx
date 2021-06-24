@@ -6,20 +6,14 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
-<<<<<<< HEAD
 import Sets from "./components/Sets/Sets";
-=======
 import {FlipCard} from "./components/Flashcards/FlipCard";
-
-
-
 import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
 import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
 import { useDispatch } from "react-redux";
 import {useEffect} from "react";
-import { getSubs } from "./Remote/subjectService";
-import {  getCards } from "./Remote/cardService";
->>>>>>> f0f9376df02a25fa6caa96aac8dd0671092eae6c
+import { getSubs } from "./remote/subjectService";
+import {  getCards } from "./remote/cardService";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,13 +57,11 @@ function App() {
           <Route exact path="/createQuiz">
             <CreateQuiz />
           </Route>
-<<<<<<< HEAD
           <Route exact path="/sets">
             <Sets />
-=======
+          </Route>
           <Route exact path="/study">
             <FlipCard />
->>>>>>> f0f9376df02a25fa6caa96aac8dd0671092eae6c
           </Route>
         </Switch>
       </Container>

@@ -29,13 +29,11 @@ const Navigation = () => {
             <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
               Create Quiz
             </Link>
-<<<<<<< HEAD
             <Link id="navLink" className="text-light ml-2 mr-2" to="/sets">
               Sets
-=======
+            </Link>
             <Link id="navLink" className="text-light ml-2 mr-2" to="/study">
               Study Flashcards (Temporary)
->>>>>>> f0f9376df02a25fa6caa96aac8dd0671092eae6c
             </Link>
           </Nav>
         </Navbar.Collapse>
