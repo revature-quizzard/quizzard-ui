@@ -7,6 +7,7 @@ interface State {
     correct: Array<number>;
     incorrect: Array<number>;
     showResults: boolean;
+    isAnswered: boolean;
 }
 
 const initialState: State = {
@@ -15,6 +16,7 @@ const initialState: State = {
     correct: [],
     incorrect: [],
     showResults: false,
+    isAnswered: false
 }
 
 export const resultSlice = createSlice({
@@ -26,6 +28,7 @@ export const resultSlice = createSlice({
         },
         addAnswered: (state, action: PayloadAction<number>) => {
             state.answered.push(action.payload);
+            state.isAnswered = true;
         },
         addCorrect: (state, action: PayloadAction<number>) => {
             state.correct.push(action.payload);
@@ -44,12 +47,15 @@ export const resultSlice = createSlice({
         },
         hideResults: (state) => {
             state.showResults = false;
+        },
+        resetAnswered: (state) => {
+            state.isAnswered = false
         }
 
     }
 })
 
-export const { setTotal, addAnswered, addCorrect, addIncorrect, resetAll, showResults, hideResults } = resultSlice.actions;
+export const { setTotal, addAnswered, addCorrect, addIncorrect, resetAll, showResults, hideResults, resetAnswered } = resultSlice.actions;
 
 export const resultState = (state: RootState) => state.result;
 
