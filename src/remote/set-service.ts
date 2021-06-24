@@ -1,4 +1,4 @@
-import { CardSet } from "../Models/CardSet";
+import { CardSet } from "../models/card-set";
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 
 export async function createStudySet(studySet: CardSet){

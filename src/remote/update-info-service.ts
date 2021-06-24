@@ -3,7 +3,7 @@ import {
     quizzardApiClient,
     quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
-import { UpdateAccModel} from "../Models/UpdateAccountInfo-model";
+import { UpdateAccModel} from "../models/update-account-info-model";
 
 /**
  * Axios call that leverages the Token that contains account ID, which is used in the back end.
