@@ -1,11 +1,11 @@
-import {UpdateAccModel} from "../models/UpdateAccountInfo-model";
+import {UpdateAccModel} from "../Models/UpdateAccountInfo-model";
 import { act } from "react-dom/test-utils";
 import React from "react";
 import {mount} from "enzyme";
 import UpdateAccountInfo from "../components/UpdateAccountInfo/UpdateAccountInfo";
-import {updateAccInfo} from "../remote/updateInfo-service";
+import {updateAccInfo} from "../Remote/updateInfo-service";
 const axios = require("axios");
-const updateAccInfos = require("../remote/updateInfo-service")
+const updateAccInfos = require("../Remote/updateInfo-service")
 
 
 //import  mockAxios from "axios";

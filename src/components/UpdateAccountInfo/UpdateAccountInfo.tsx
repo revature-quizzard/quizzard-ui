@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
-import { updateAccInfo } from "../../remote/updateInfo-service";
-import {UpdateAccModel, ResUpdateAccModel } from "../../models/UpdateAccountInfo-model";
+import { updateAccInfo } from "../../Remote/updateInfo-service";
+import {UpdateAccModel, ResUpdateAccModel } from "../../Models/UpdateAccountInfo-model";
 import { useHistory } from "react-router-dom";
 
 /**
@@ -47,6 +47,7 @@ const UpdateAccontInfo =  ()=>{
         e.preventDefault();
 
         let resultUser = await updateAccInfo({username,email, password})
+        console.log(resultUser);
         setResult( prevState => resultUser);
 
         if(!result.conflict){
@@ -78,17 +79,17 @@ const UpdateAccontInfo =  ()=>{
                             <Form id="FormUAI">
                                 <Form.Group>
                                     <Form.Label id="label-username">Username:</Form.Label>
-                                    <Form.Control type="text" id="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
+                                    <Form.Control type="text" id="username" placeholder="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label id="label-pass">Password:</Form.Label>
-                                    <Form.Control type="text" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}>
+                                    <Form.Control type="text" id="password" name="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label id="label-email">Email:</Form.Label>
-                                    <Form.Control type="text" id="email" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}>
+                                    <Form.Control type="text" id="email" name="email" placeholder="email" value={email} onChange={(e)=>setEmail(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Col sm={{ span: 6, offset: 3 }} >

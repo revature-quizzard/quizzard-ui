@@ -1,11 +1,15 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useState } from 'react';
-import { register } from "../../remote/login-register-service";
-import { RegisterModel } from "../../models/register-model";
-
+import { register } from "../../Remote/login-register-service";
+import { RegisterModel } from "../../Models/register-model";
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { loginUserReducer } from "../../StateSlices/Auth/authSlice";
 
 const Register = () => {
   const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel)
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChange = (e: any) => {
     const {name, value} = e.target;
@@ -19,6 +23,8 @@ const Register = () => {
     let response = await register(newUser);
     localStorage.setItem("Authorization", response.headers.authorization);
     setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
+    dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+    history.push("/");
   }
 
 
@@ -46,7 +52,7 @@ const Register = () => {
           <Form.Control name="lastName" value={newUser.lastName} onChange={handleChange} type="text" placeholder="Bond"  />
         </Form.Group>
         <Form.Group className="text-center">
-          <Button onClick={registerNewUser} >Register</Button>
+          <Button onClick={registerNewUser} /*onKeyPress={handleKeyPress}*/>Register</Button>
         </Form.Group>
       </Form>
     </>

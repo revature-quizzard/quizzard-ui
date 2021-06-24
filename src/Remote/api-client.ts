@@ -15,6 +15,6 @@ export const quizzardApiClientTokenAuthorized = axios.create({
     //baseURL: 'http://1.2.3.4:5000',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem("Authorization"),
+        'Authorization':localStorage.getItem("Authorization")
     }
 })
