@@ -1,30 +1,38 @@
 import { useState } from "react";
-import { Row, Col, Container,  Button } from "react-bootstrap";
-import { createdSetSearch } from "../../Remote/set-service";
+import { createdSetSearch } from "../../Remote/setService";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import SetList from './SetList';
-import { useDispatch, useSelector } from "react-redux";
-import { setSetList, setListState } from '../../StateSlices/Sets/setListSlice';
+import { useDispatch } from "react-redux";
+import { setSetList } from '../../StateSlices/Sets/setListSlice';
 
 
 export function Sets() {
 
   const dispatch = useDispatch();
-  const allSetsState = useSelector(setListState);
-
-  let username = "revature";
+  
   // const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet[] || undefined);
   const [showList, setShowList] = useState(false);
 
+  /**
+   * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
+   * Will display a list of the results. 
+   * @param e event when button is clicked
+   * @author Austin Knauer
+   * @author Vinson Chin
+   */
   let createdSetsSearch = async (e: any) => {
     e.preventDefault();
-    const getData = async () => {
-      let response = await createdSetSearch(username);
-      dispatch(setSetList(response.data));
+
+    const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem("Authorization")
+    }
+    
+    let response = await createdSetSearch(headers);
+    dispatch(setSetList(response));
 
       // needs to be updated eventually to actually check whether results were successfully fetched from the api
-      setShowList(true);
-    };
-    getData();
+    setShowList(true);
   }
 
   let publicSetsSearch = async (e: any) => {

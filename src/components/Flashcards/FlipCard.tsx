@@ -13,9 +13,9 @@ import {
   setSubjects,
 } from "../../StateSlices/Subject/subjectsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { getCards } from "../../Remote/cardService";
 import { getSubs } from "../../Remote/subjectService";
+import { getCards } from "../../Remote/cardService";
+import { useState, useEffect } from "react";
 
 /**
  * FlipCard component renders a flippable card and two arrows that allow you to navigate existing cards
@@ -29,7 +29,6 @@ export const FlipCard = () => {
 
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
-  const subjects = useSelector(subjectsState);
 
   /**
    * Acquires the current cards and subejcts that already exist in the database.

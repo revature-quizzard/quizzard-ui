@@ -1,7 +1,7 @@
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { setListState } from '../../StateSlices/Sets/setListSlice';
-import { CardSet } from '../../Models/CardSet';
+import { CardSet } from '../../Models/cardSet';
 
 export default function SetList() {
 
