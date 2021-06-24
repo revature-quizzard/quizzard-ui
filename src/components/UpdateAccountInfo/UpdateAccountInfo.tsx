@@ -4,9 +4,6 @@ import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-
 import { updateAccInfo } from "../../remote/updateInfo-service";
 import {UpdateAccModel, ResUpdateAccModel } from "../../models/UpdateAccountInfo-model";
 import { useHistory } from "react-router-dom";
-interface IUpdateProps{
-
-}
 
 /**
  * This function component is where the user will be able to update their username, password, or email. We leverage
@@ -15,7 +12,7 @@ interface IUpdateProps{
  * @param props Nothing at the moment
  * @constructor
  */
-const UpdateAccontInfo = (props:IUpdateProps)=>{
+const UpdateAccontInfo =  ()=>{
 
     //useState hook for new username input, next two states are similar to this but for password, and email.
     const [username, setUsername] = useState("");
@@ -75,22 +72,22 @@ const UpdateAccontInfo = (props:IUpdateProps)=>{
             <Row >
                 <Col></Col>
                 <Col style={{marginTop:"150px"}} className="col-sm-9">
-                    <Card>
-                        <Card.Header style={{textAlign:"center"}}>Update Account Information</Card.Header>
+                    <Card id="CardUAI">
+                        <Card.Header id="header-title" style={{textAlign:"center"}}>Update Account Information</Card.Header>
                         <Card.Body>
-                            <Form>
+                            <Form id="FormUAI">
                                 <Form.Group>
-                                    <Form.Label>Username:</Form.Label>
+                                    <Form.Label id="label-username">Username:</Form.Label>
                                     <Form.Control type="text" id="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Password:</Form.Label>
+                                    <Form.Label id="label-pass">Password:</Form.Label>
                                     <Form.Control type="text" id="password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Email:</Form.Label>
+                                    <Form.Label id="label-email">Email:</Form.Label>
                                     <Form.Control type="text" id="email" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>

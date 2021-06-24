@@ -3,35 +3,47 @@ import { act } from "react-dom/test-utils";
 import React from "react";
 import {mount} from "enzyme";
 import UpdateAccountInfo from "../components/UpdateAccountInfo/UpdateAccountInfo";
+import {updateAccInfo} from "../remote/updateInfo-service";
+const axios = require("axios");
+const updateAccInfos = require("../remote/updateInfo-service")
 
 
-//import {updateAccInfo} from "../remote/updateInfo-service";
 //import  mockAxios from "axios";
 
 //any axios usages gets replaces with the jest own version of mock axios.
 
-
-jest.mock('../remote/updateInfo-service',()=>{
-    return{
-        __esModule:true,
-        default:async ()=>[
-            {
-                username:"shadowMonarch",
-                email:"shadow@gmail.com",
-                password:"test-password"
-            }
-        ]
-    }
-});
+let mockUpdate:UpdateAccModel={
+            username:"shadow",
+            password:"test-password",
+            email:"test-shadow@gmail.com"
+}
+jest.mock("axios",()=>({
+    put: jest.fn((_mockUpdate)=>{
+            return new Promise((resolve)=>{
+                mockupdate:_mockUpdate
+        })
+    })
+}));
 
 test("axios mock update account info", async ()=>{
-    const UpdateAccountInfo = require("../components/UpdateAccountInfo/UpdateAccountInfo");
+    // await axios.put.mockResolvedValue({
+    //     data:{
+    //         username:"shadow",
+    //         password:"test-password",
+    //         email:"test-shadow@gmail.com"
+    //     }
+    // });
 
-    let wrapper;
+    const mockNewUpdateAccountInfoObject:UpdateAccModel = {
+        username:"shadowMonarch",
+        password:"Rise123!",
+        email:"shadowmonarch@gmail.com"
+    };
 
-    await act( async ()=>{
-        wrapper = mount(<UpdateAccountInfo/>);
-    });
+
+    const updatedUser = await updateAccInfo(mockNewUpdateAccountInfoObject);
+    expect(updatedUser).toEqual("shadow");
+
 })
 
 

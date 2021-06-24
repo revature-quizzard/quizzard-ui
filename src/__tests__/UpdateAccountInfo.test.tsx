@@ -20,6 +20,12 @@ describe("UpdateAccountInfo Component",()=>{
         //wrapper = mount(<UpdateAccontInfo/>);
     })
 
+    test("Shallow Render",()=>{
+        const wrapper = shallow(<UpdateAccontInfo />);
+
+        expect(wrapper.exists()).toBe(true);
+    });
+
 
     test("render component",()=>{
 
@@ -37,10 +43,26 @@ describe("UpdateAccountInfo Component",()=>{
         expect(wrapper.find("FormControl#email").text()).toBe("");
         //Button Says submit
         expect(wrapper.find("Button#submit-btn").text()).toBe("Submit");
-
+        expect(wrapper.find("FormControl#username").length).toBe(1)
+        expect(wrapper.find("FormControl#password").length).toBe(1)
+        expect(wrapper.find("FormControl#email").length).toBe(1)
+        expect(wrapper.find("Card#CardUAI").length).toBe(1)
+        expect(wrapper.find("Form#FormUAI").length).toBe(1)
         //modal is there but not visible
         expect(wrapper.find(Modal).props().show).toBe(false);
         expect(wrapper.find("Modal#modalContainer").length).toBe(1)
+    });
+
+    test("Username form text box",()=>{
+       const wrapper = mount(<UpdateAccontInfo/>);
+        //<Form.Control type="text" id="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
+       expect(wrapper.find('FormControl#username').props()).toEqual({
+           type:"text",
+           id:"username",
+           name:"username",
+           value:"",//should be empty because of useState hook for username default is ""
+           onChange:expect.any(Function)
+       })
     });
 
     test("render component with Button Click to Display Modal",()=>{

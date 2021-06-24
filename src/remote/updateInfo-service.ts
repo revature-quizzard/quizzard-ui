@@ -8,6 +8,6 @@ import { UpdateAccModel} from "../models/UpdateAccountInfo-model";
  * @param newInformationModel Model object with fiels username, email, password with string type.
  */
 export async function updateAccInfo(newInformationModel:UpdateAccModel){
-    let response = await quizzardApiClient.put(`/accounts/update`,newInformationModel);
+    let response = await quizzardApiClientTokenAuthorized.put(`/accounts/update`,newInformationModel);
     return await response.data;
 }
