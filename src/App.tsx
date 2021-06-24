@@ -10,15 +10,7 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 
 import {FlipCard} from "./components/Flashcards/FlipCard";
-
-
-
-import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
-import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
 import { useDispatch } from "react-redux";
-import {useEffect} from "react";
-import { getSubs } from "./Remote/subjectService";
-import {  getCards } from "./Remote/cardService";
 
 function App() {
   const dispatch = useDispatch();
