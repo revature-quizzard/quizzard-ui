@@ -11,9 +11,12 @@ import { UpdateAccModel} from "../Models/UpdateAccountInfo-model";
  * username, email, and password with string type. Back end validates emptiness, so will not persist.
  * @param newInformationModel Model object with fields username, email, password with string type.
  */
-export async function updateAccInfo(newInformationModel:UpdateAccModel,headers:any){
+export async function updateAccInfo (newInformationModel:UpdateAccModel,headers:any){
     let response = await quizzardApiClientTokenAuthorizedSynchronous.put(`/accounts/update`,newInformationModel,{
         headers: headers
     });
     return await response.data;
 }
+
+
+

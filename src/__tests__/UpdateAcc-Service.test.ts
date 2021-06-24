@@ -4,45 +4,49 @@ import React from "react";
 import {mount} from "enzyme";
 import UpdateAccountInfo from "../components/UpdateAccountInfo/UpdateAccountInfo";
 import {updateAccInfo} from "../Remote/updateInfo-service";
-const axios = require("axios");
-const updateAccInfos = require("../Remote/updateInfo-service")
 
 
-//import  mockAxios from "axios";
 
-//any axios usages gets replaces with the jest own version of mock axios.
+
 
 let mockUpdate:UpdateAccModel={
             username:"shadow",
-            password:"test-password",
+            password:"Password Updated",
             email:"test-shadow@gmail.com"
 }
-jest.mock("axios",()=>({
-    put: jest.fn((_mockUpdate)=>{
-            return new Promise((resolve)=>{
-                mockupdate:_mockUpdate
-        })
-    })
-}));
+//here we jest will mock the file updateinfo-service from Remote and it has the function
+//updateAccInfo. We have it return the same named function but instead being a jest function.
+//In order for us to provide our own test implementation.
+jest.mock("../Remote/updateInfo-service",()=>{
+    return{
+        updateAccInfo:jest.fn()
+    }
+});
 
 test("axios mock update account info", async ()=>{
-    // await axios.put.mockResolvedValue({
-    //     data:{
-    //         username:"shadow",
-    //         password:"test-password",
-    //         email:"test-shadow@gmail.com"
-    //     }
-    // });
+
+    (updateAccInfo as jest.Mock ).mockClear().mockImplementation((newInformationModel:UpdateAccModel,headers:any)=>{
+        return new Promise(resolve => resolve(mockUpdate))
+    })
 
     const mockNewUpdateAccountInfoObject:UpdateAccModel = {
-        username:"shadowMonarch",
+        username:"shadow",
         password:"Rise123!",
-        email:"shadowmonarch@gmail.com"
+        email:"test-shadow@gmail.com"
     };
+    const header = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem("Authorization")
+    }
+    const expectedDTO ={
+        username:"shadow",
+        password:"Password Updated",
+        email:"test-shadow@gmail.com"
+    }
 
 
-    const updatedUser = await updateAccInfo(mockNewUpdateAccountInfoObject);
-    expect(updatedUser).toEqual("shadow");
+    const updatedUser = await updateAccInfo(mockNewUpdateAccountInfoObject, header);
+    expect(updatedUser).toEqual(expectedDTO);
 
 })
 

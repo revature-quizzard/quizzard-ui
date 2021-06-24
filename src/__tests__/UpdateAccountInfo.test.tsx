@@ -1,10 +1,11 @@
-import Enzyme, { mount, ReactWrapper, shallow } from "enzyme";
+import Enzyme, { mount, shallow } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-//import configureStore from "redux-mock-store";
 import { Button, Modal} from "react-bootstrap";
 import { render,fireEvent } from "@testing-library/react";
 import UpdateAccontInfo from "../components/UpdateAccountInfo/UpdateAccountInfo";
 import React from "react";
+import {UpdateAccModel} from "../Models/UpdateAccountInfo-model";
+import {updateAccInfo} from "../Remote/updateInfo-service";
 
 //configure onlye once, this will be needed for every test file though.
 Enzyme.configure({adapter:new Adapter()});
@@ -80,7 +81,7 @@ describe("UpdateAccountInfo Component",()=>{
         expect(wrapper.find("FormControl").length).toEqual(3);
     })
 
-    test("testing updateInfo",()=>{
+    test("testing click updateInfo",()=>{
         const setShow = jest.fn();
 
         const wrapper = mount(<UpdateAccontInfo onClick={setShow}/>)
@@ -136,7 +137,7 @@ describe("UpdateAccountInfo Component",()=>{
 
 });
 
-describe("Inpu tvalue",()=>{
+describe("Input value",()=>{
 
     test("input value change username",()=>{
         const { queryByTestId,queryByPlaceholderText} = render(<UpdateAccontInfo/>);
@@ -156,5 +157,51 @@ describe("Inpu tvalue",()=>{
 
     })
 
+})
+
+
+//here we jest will mock the file updateinfo-service from Remote and it has the function
+//updateAccInfo. We have it return the same named function but instead being a jest function.
+//In order for us to provide our own test implementation.
+jest.mock("../Remote/updateInfo-service",()=>{
+    return{
+        updateAccInfo:jest.fn()
+    }
+});
+describe("update account info axios method testing", ()=>{
+
+    let DtoFromApi:UpdateAccModel={
+        username:"shadow",
+        password:"Password Updated",
+        email:"test-shadow@gmail.com"
+    }
+
+
+    test("axios mock update account info", async ()=>{
+
+        (updateAccInfo as jest.Mock ).mockImplementation((newInformationModel:UpdateAccModel,headers:any)=>{
+            return new Promise(resolve => resolve(DtoFromApi))
+        })
+
+        const mockNewUpdateAccountInfoObject:UpdateAccModel = {
+            username:"shadow",
+            password:"Rise123!",
+            email:"test-shadow@gmail.com"
+        };
+        const header = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("Authorization")
+        }
+        const expectedDTO ={
+            username:"shadow",
+            password:"Password Updated",
+            email:"test-shadow@gmail.com"
+        }
+
+
+        const updatedUser = await updateAccInfo(mockNewUpdateAccountInfoObject, header);
+        expect(updatedUser).toEqual(expectedDTO);
+
+    })
 })
 

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
-import { updateAccInfo } from "../../Remote/updateInfo-service";
-import {UpdateAccModel, ResUpdateAccModel } from "../../Models/UpdateAccountInfo-model";
+import {updateAccInfo}  from "../../Remote/updateInfo-service";
 import { useHistory } from "react-router-dom";
 
 /**
@@ -19,7 +18,7 @@ const UpdateAccontInfo =  ()=>{
     const [password, setPassword] = useState("");
     
     const [email, setEmail] = useState("");
-    //this useState hook will hold the reponse from our request
+    //this useState hook will hold the response from our request
     //the fields we can get back are Email, Password, Username.
     //These will be used in the Modal for notification purposes
     const [result, setResult] = useState({
@@ -32,7 +31,6 @@ const UpdateAccontInfo =  ()=>{
     //hook for displaying modal from react-boostrap
     const [show,setShow] = useState(false);
 
-    //function that is invoked, we make put request and sent over the new information(username,email,password).
 
     let history = useHistory();
 
@@ -45,17 +43,12 @@ const UpdateAccontInfo =  ()=>{
     let updateInfo =async (e:any)=>{
         e.preventDefault();
 
-        console.log("update account",localStorage.getItem("Authorization"));
-        //let Authorization = localStorage.getItem("Authorization")
-
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem("Authorization")
         }
-        console.log("headers",headers);
 
         let resultUser = await updateAccInfo({username,email, password}, headers)
-        console.log(resultUser);
         setResult( prevState => resultUser);
 
         if(!result.conflict){
