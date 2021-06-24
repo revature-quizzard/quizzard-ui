@@ -5,6 +5,7 @@ import Navigation from "./components/NavBar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
+<<<<<<< HEAD
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import {FlipCard} from "./components/Flashcards/FlipCard";
 
@@ -16,6 +17,9 @@ import { useDispatch } from "react-redux";
 import {useEffect} from "react";
 import { getSubs } from "./Remote/subjectService";
 import {  getCards } from "./Remote/cardService";
+=======
+import Sets from "./components/Sets/Sets";
+>>>>>>> e1da01dcb5d5b391acd163525e535faa7ae12d88
 
 function App() {
   const dispatch = useDispatch();
@@ -56,8 +60,8 @@ function App() {
           <Route exact path="/flashcards">
             <FlashCard/>
           </Route>
-          <Route exact path="/createQuiz">
-            <CreateQuiz />
+          <Route exact path="/sets">
+            <Sets />
           </Route>
           <Route exact path="/study">
             <FlipCard />

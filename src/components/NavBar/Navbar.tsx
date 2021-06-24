@@ -26,8 +26,12 @@ const Navigation = () => {
             >
               Flashcards
             </Link>
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
-              Create Quiz
+            <Link
+              id="navLink"
+              className="text-light ml-2 mr-2"
+              to="/sets"
+            >
+              Sets
             </Link>
             <Link id="navLink" className="text-light ml-2 mr-2" to="/study">
               Study Flashcards (Temporary)
