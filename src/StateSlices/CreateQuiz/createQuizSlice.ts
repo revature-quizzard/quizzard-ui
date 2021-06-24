@@ -65,7 +65,7 @@ export const createQuizSlice = createSlice({
     hideQuiz: (state) => {
       state.showQuiz = false;
     },
-    loadQuiz: (state, action: PayloadAction<Array<ScrambledQuestion>>) => {
+      loadQuiz: (state, action: PayloadAction<Array<ScrambledQuestion>>) => {
       state.quiz = action.payload;
     },
     clearQuiz: (state) => {
@@ -78,7 +78,7 @@ export const createQuizSlice = createSlice({
     prevCard: (state) => {
       state.count -= 1;
     }
-  },
+  }
 });
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent

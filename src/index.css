@@ -115,3 +115,11 @@ footer {
   height:auto;
   
 }
+/* STUDY SETS */
+
+.create-study-set-button {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  height: 5rem;
+  width: 15rem;
+}

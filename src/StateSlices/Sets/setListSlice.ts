@@ -21,11 +21,15 @@ export const setListSlice = createSlice({
     reducers: {
         setSetList: (state,  action: PayloadAction<CardSet[]>) => {
             state.cardSetList = action.payload
+        },
+
+        addSet: (state, action: PayloadAction<CardSet>) => {
+            state.cardSetList.push(action.payload)
         }
     }
 });
 
-export const { setSetList } = setListSlice.actions;
+export const { setSetList, addSet } = setListSlice.actions;
 export const setListState = (state: RootState) => state.setList;
 export default setListSlice.reducer;
 

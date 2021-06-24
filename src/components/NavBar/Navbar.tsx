@@ -15,21 +15,16 @@ const Navigation = () => {
             <Link id="navLink" className="text-light ml-2 mr-2" to="/login">
               Login
             </Link>
+
             <Link id="navLink" className="text-light ml-2 mr-2" to="/register">
               Register
             </Link>
-            <Link
-              id="navLink"
-              className="text-light ml-2 mr-2"
-              to="/flashcards"
-            >
+
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/flashcards">
               Flashcards
             </Link>
-            <Link
-              id="navLink"
-              className="text-light ml-2 mr-2"
-              to="/createQuiz"
-            >
+            
+            <Link id="navLink" className="text-light ml-2 mr-2" to="/createQuiz">
               Create Quiz
             </Link>
 
@@ -40,7 +35,7 @@ const Navigation = () => {
               Sets
             </Link>
             <Link id="navLink" className="text-light ml-2 mr-2" to="/study">
-              Study Flashcards (Temporary)
+              Study
             </Link>
           </Nav>
         </Navbar.Collapse>

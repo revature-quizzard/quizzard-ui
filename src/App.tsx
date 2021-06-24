@@ -32,8 +32,8 @@ function App() {
           <Route exact path="/flashcards">
             <FlashCard/>
           </Route>
-          <Route exact path="/createQuiz">
-            <CreateQuiz />
+          <Route exact path="/sets">
+            <Sets />
           </Route>
           <Route exact path="/update">
               <UpdateAccontInfo />
@@ -43,6 +43,9 @@ function App() {
           </Route>
           <Route exact path="/study">
             <FlipCard />
+          </Route>
+          <Route exact path="/createQuiz">
+            <CreateQuiz/>
           </Route>
         </Switch>
       </Container>

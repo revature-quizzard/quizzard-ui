@@ -1,4 +1,11 @@
+import { CardSet } from "../Models/CardSet";
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
+
+export async function createStudySet(studySet: CardSet){
+	let response = await quizzardApiClientTokenAuthorizedSynchronous.post('/sets/newset', {studySet});
+	return await response.data;
+}
+
 
 /**
  * An axios get request to get all sets created by account
@@ -7,7 +14,7 @@ import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
  * @author Vinson Chin
  * @author Austin Knauer
  */
-export async function createdSetSearch(headers:any) {
+ export async function createdSetSearch(headers:any) {
 	let response = await quizzardApiClientTokenAuthorizedSynchronous.get(`/sets/created`,{
 		headers:headers
 	});
