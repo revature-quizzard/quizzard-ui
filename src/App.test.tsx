@@ -4,7 +4,6 @@ import App from './App';
 import Enzyme, { mount } from "enzyme";
 import Adaptor from "@wojtekmaj/enzyme-adapter-react-17";
 import  configureStore  from "redux-mock-store";
-import {FlipCard} from "../components/Flashcards/FlipCard";
 import { Provider } from "react-redux";
 
 

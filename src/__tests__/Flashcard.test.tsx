@@ -9,6 +9,7 @@ Enzyme.configure({adapter: new Adaptor()});
 test('Renders the Flashcard component with initial state', () =>{
     const configureMockStore = configureStore();
 
+    // @ts-ignore
     let initialState = {
         flashcards: {
             flashCards: [],
