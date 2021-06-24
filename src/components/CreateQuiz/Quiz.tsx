@@ -12,7 +12,7 @@ import {
   addIncorrect,
   resultState,
   showResults,
-  resetAnswered
+  resetAnswered,
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
 
@@ -24,6 +24,7 @@ const Quiz = () => {
   const handlePrev = () => {
     if (quizState.count > 0) {
       resetColors();
+      dispatch(resetAnswered());
       dispatch(prevCard());
     }
   };
@@ -34,7 +35,8 @@ const Quiz = () => {
       console.log(quizState.count);
       dispatch(nextCard());
       dispatch(resetAnswered());
-    } else if (quizState.count === quizState.quiz.length - 1){
+    } else if (quizState.count === quizState.quiz.length - 1) {
+      dispatch(resetAnswered());
       dispatch(showResults());
     }
   };
@@ -50,51 +52,43 @@ const Quiz = () => {
     wrong2.style.color = "black";
     wrong3.style.color = "black";
   };
-  
 
   const checkAnswer = (e: any) => {
-   
-  
-      if (e.currentTarget.id === "answer") {
-        
-        let answerDiv: HTMLElement = document.getElementById(
-          `${e.currentTarget.id}`
-        );
-        
-        if (
-          !results.answered.includes(quizState.count) &&
-          !results.correct.includes(quizState.count)
-        ) {
-          dispatch(addAnswered(quizState.count));
-          dispatch(addCorrect(quizState.count));
-        }
-      
-          answerDiv.style.color = "green";
-          answerDiv.style.fontSize = "30px";
-    
-        
-      } if ((e.currentTarget.id === "wrong1" || e.currentTarget.id === "wrong2" || e.currentTarget.id === "wrong3") ){
-      
-      
-        let wrongChoice: HTMLElement = document.getElementById(
-          `${e.currentTarget.id}`
-        );
-        
-        if (
-          !results.answered.includes(quizState.count) &&
-          !results.incorrect.includes(quizState.count)
-        ) {
-          dispatch(addAnswered(quizState.count));
-          dispatch(addIncorrect(quizState.count));
-        }
+    if (e.currentTarget.id === "answer") {
+      let answerDiv: HTMLElement = document.getElementById(
+        `${e.currentTarget.id}`
+      );
 
-        wrongChoice.style.color = "red";
-
+      if (
+        !results.answered.includes(quizState.count) &&
+        !results.correct.includes(quizState.count)
+      ) {
+        dispatch(addAnswered(quizState.count));
+        dispatch(addCorrect(quizState.count));
       }
-    
-  
-  
-    
+
+      answerDiv.style.color = "green";
+      answerDiv.style.fontSize = "30px";
+    }
+    if (
+      e.currentTarget.id === "wrong1" ||
+      e.currentTarget.id === "wrong2" ||
+      e.currentTarget.id === "wrong3"
+    ) {
+      let wrongChoice: HTMLElement = document.getElementById(
+        `${e.currentTarget.id}`
+      );
+
+      if (
+        !results.answered.includes(quizState.count) &&
+        !results.incorrect.includes(quizState.count)
+      ) {
+        dispatch(addAnswered(quizState.count));
+        dispatch(addIncorrect(quizState.count));
+      }
+
+      wrongChoice.style.color = "red";
+    }
   };
   return (
     <>
@@ -116,7 +110,6 @@ const Quiz = () => {
                   className="answer"
                   onClick={!results.isAnswered ? checkAnswer : null}
                   key={value}
-                  
                 >
                   <Col>{Object.values(key).toString()}</Col>
                 </Row>
