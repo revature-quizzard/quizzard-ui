@@ -1,83 +1,72 @@
-// Create dummy flashcards
-// interface FlashCard {
-//   id: number;
-//   subject_id: number;
-//   account_id: number;
-//   question: string;
-//   answer: string;
-//   reviewable: boolean;
-//   public: boolean;
-// };
-
 import { Flashcard } from "../Models/Flashcard";
 
 let flashCard1: Flashcard = {
   question: "Who am I?",
   answer: "The best",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true
 };
 let flashCard2: Flashcard = {
   question: "what is for lunch?",
   answer: "burgers",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard3: Flashcard = {
   question: "Which color?",
   answer: "green",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard4: Flashcard = {
   question: "What are you wearing, Jake from statefarm?",
   answer: "Khakis",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard5: Flashcard = {
   question: "What is Java?",
   answer: "Programming Language",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard6: Flashcard = {
   question: "What is JavaScript?",
   answer: "Really Cool Programming Language",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard7: Flashcard = {
   question: "What is Python?",
   answer: "It is a snake",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard8: Flashcard = {
   question: "Where are your parents?",
   answer: "Right behind you",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard9: Flashcard = {
   question: "How Many Tacos, Sir?",
   answer: "I would like none, bring me a burrito",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };
 let flashCard10: Flashcard = {
   question: "Have you eaten any apples today?",
   answer: "No, I have not",
-  subjectId: "",
+  subjectId: "Random Trivia",
   reviewable: true,
   isPublic: true,
 };

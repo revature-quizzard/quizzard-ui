@@ -2,8 +2,8 @@ import { useState } from "react";
 
 
 import { Row, Col, Container, ListGroup, Button, FormControl, Table } from "react-bootstrap";
-import { CardSet } from "../../Models/CardSet";
-import { createdSetSearch } from "../../Remote/set-service";
+import { CardSet } from "../../Models/cardSet";
+import { createdSetSearch } from "../../remote/set-service";
 import SetList from './SetList';
 import { useDispatch, useSelector } from "react-redux";
 import { setSetList, setListState } from '../../StateSlices/Sets/setListSlice';

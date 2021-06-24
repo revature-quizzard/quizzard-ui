@@ -48,7 +48,7 @@ const CreateQuiz = () => {
                       <Card.Title>Quiz {index + 1}</Card.Title>
                       <Card.Text>
                        
-                       Subject {setOfSets[index][index].subjectId}
+                       Subject: {setOfSets[index][index].subjectId}
                       </Card.Text>
                     
                       <Button name = {index} onClick={goToQuiz}

@@ -52,12 +52,10 @@ const Quiz = () => {
     wrong3.style.color = "black";
   };
   
-  let firstDone = false;
+
   const checkAnswer = (e: any) => {
-    if (firstDone === true){
-      return;
-    }
-    if (firstDone === false){
+   
+  
       if (e.currentTarget.id === "answer") {
         
         let answerDiv: HTMLElement = document.getElementById(
@@ -92,17 +90,9 @@ const Quiz = () => {
         }
 
         wrongChoice.style.color = "red";
-    
-      
-  
-        
-      
-      }else{
-        firstDone = true;
-        return;
+
       }
-      firstDone = true;
-    }
+    
   
   
     
