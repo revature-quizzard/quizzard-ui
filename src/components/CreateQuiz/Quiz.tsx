@@ -15,7 +15,6 @@ import {
   resetAnswered
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
-var clicks = 0;
 
 const Quiz = () => {
   const dispatch = useDispatch();

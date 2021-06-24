@@ -2,7 +2,7 @@ import { Container, Row, Col, Form, Button, CardDeck, Card} from "react-bootstra
 import { addFlashcard, flashcardsState } from "../../StateSlices/Flashcard/flashcardsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useState} from "react"
-import { createCard } from "../../remote/cardService";
+import { createCard } from "../../Remote/cardService";
 import {  subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import {Flashcard} from "../../Models/Flashcard";
 

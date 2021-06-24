@@ -1,6 +1,6 @@
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import ReactCardFlip from 'react-card-flip';
-import { flashcardsState, prevCard, nextCard, resetCount, setFlashcards} from "../../StateSlices/Flashcard/flashcardsSlice"
+import { flashcardsState, prevCard, nextCard, resetCount} from "../../StateSlices/Flashcard/flashcardsSlice"
 import {  subjectsState } from "../../StateSlices/Subject/subjectsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useState} from "react";

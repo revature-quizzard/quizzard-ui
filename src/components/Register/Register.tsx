@@ -1,6 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { useState } from 'react';
-import { register } from "../../remote/login-register-service";
+import { register } from "../../Remote/login-register-service";
 import { RegisterModel } from "../../Models/register-model";
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
