@@ -22,6 +22,7 @@ interface State {
   showQuiz: boolean;
   quiz: Array<ScrambledQuestion>;
   count: number;
+  
 }
 
 //Declare the initial state values that extends the State interface
@@ -34,6 +35,7 @@ const initialState: State = {
   showQuiz: false,
   quiz: [],
   count: 0,
+  
 };
 
 // Create the actual slice using createSlice from the @reduxjs/toolkit dependency
@@ -74,6 +76,7 @@ export const createQuizSlice = createSlice({
     prevCard: (state) => {
       state.count -= 1;
     },
+  
   },
 });
 

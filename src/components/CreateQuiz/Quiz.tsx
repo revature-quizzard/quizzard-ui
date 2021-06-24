@@ -14,6 +14,7 @@ import {
   showResults,
 } from "../../StateSlices/CreateQuiz/resultSlice";
 import Results from "./Results";
+var clicks = 0;
 
 const Quiz = () => {
   const dispatch = useDispatch();
@@ -48,38 +49,60 @@ const Quiz = () => {
     wrong2.style.color = "black";
     wrong3.style.color = "black";
   };
-
-  const checkAnswer = (e: any) => {
-    let count = 0;
-    if (e.currentTarget.id === "answer") {
-      let answerDiv: HTMLElement = document.getElementById(
-        `${e.currentTarget.id}`
-      );
-      answerDiv.style.color = "green";
-      answerDiv.style.fontSize = "30px";
-
-      if (
-        !results.answered.includes(quizState.count) &&
-        !results.correct.includes(quizState.count)
-      ) {
-        dispatch(addAnswered(quizState.count));
-        dispatch(addCorrect(quizState.count));
-      }
-    } else {
-      let wrongChoice: HTMLElement = document.getElementById(
-        `${e.currentTarget.id}`
-      );
-      wrongChoice.style.color = "red";
-      if (
-        !results.answered.includes(quizState.count) &&
-        !results.incorrect.includes(quizState.count)
-      ) {
-        dispatch(addAnswered(quizState.count));
-        dispatch(addIncorrect(quizState.count));
-      }
   
-
+  let firstDone = false;
+  const checkAnswer = (e: any) => {
+    if (firstDone === true){
+      return;
     }
+    if (firstDone === false){
+      if (e.currentTarget.id === "answer") {
+        
+        let answerDiv: HTMLElement = document.getElementById(
+          `${e.currentTarget.id}`
+        );
+        
+        if (
+          !results.answered.includes(quizState.count) &&
+          !results.correct.includes(quizState.count)
+        ) {
+          dispatch(addAnswered(quizState.count));
+          dispatch(addCorrect(quizState.count));
+        }
+      
+          answerDiv.style.color = "green";
+          answerDiv.style.fontSize = "30px";
+    
+        
+      } if ((e.currentTarget.id === "wrong1" || e.currentTarget.id === "wrong2" || e.currentTarget.id === "wrong3") ){
+      
+      
+        let wrongChoice: HTMLElement = document.getElementById(
+          `${e.currentTarget.id}`
+        );
+        
+        if (
+          !results.answered.includes(quizState.count) &&
+          !results.incorrect.includes(quizState.count)
+        ) {
+          dispatch(addAnswered(quizState.count));
+          dispatch(addIncorrect(quizState.count));
+        }
+
+        wrongChoice.style.color = "red";
+    
+      
+  
+        
+      
+      }else{
+        firstDone = true;
+        return;
+      }
+      firstDone = true;
+    }
+  
+  
     
   };
   return (
