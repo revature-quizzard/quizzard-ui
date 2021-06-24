@@ -50,7 +50,7 @@ export function Sets() {
         dispatch(setSubjects(subjects));
       }
       getSubjects();
-  
+
     }, [])
 
   let createdSetsSearch = async (e: any) => {
@@ -65,21 +65,31 @@ export function Sets() {
     getData();
   }
 
-  // ANN: need to add a method here that makes a request to the database with the newly created flashcard set using your axios method
+  /**
+   * Local flashcards are set here along with calls to persist study sets
+   * @author 'Kevin Chang'
+   */
   let handleCreateStudySet = () => {
     handleLocalFlashcards();
     handlePersistStudySet();
   }
 
-
+ /**
+   * Sets local flashcards based on checked boxes
+   * @author 'Kevin Chang'
+   */
   let handleLocalFlashcards = () =>{
     checkedBoxes.forEach(element => {
-      console.log(parseInt(element));
       localFlashcards.push(stateFlashcards.flashCards[parseInt(element)]);
-      console.log(localFlashcards);
     });
   }
 
+ /**
+   * Local flashcards are set here along with calls to persist study sets
+   * @author 'Ann-Aisha Louis-Charles'
+   * @author 'Christopher Levano'
+   * @author 'Kevin Chang'
+   */
   let handlePersistStudySet = async () => {
     let setObj: CardSet = {
       setName,
@@ -94,8 +104,6 @@ export function Sets() {
     let response = await createStudySet(createdSetElement);
 
     setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
-
-
     setLocalFlashcards([]);
     
   }
@@ -114,12 +122,13 @@ export function Sets() {
     return currentSubject;
   }
 
+   /**
+   * Keeps track of checked cards for persistign selected cards into the database
+   * @author 'Kevin Chang'
+   */
   const handleChecked = (e: any) =>{
     let currentChecked = checkedBoxes;
-    
-    console.log("Checked: " + e.target.checked);
-    console.log("Key: " + e.target.key);
-    console.log("ID: " + e.target.id);
+  
     if(e.target.checked){
       currentChecked.push(e.target.id);
     }

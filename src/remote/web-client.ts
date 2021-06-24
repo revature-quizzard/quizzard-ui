@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const webappClient = axios.create({
     //baseURL: 'http://18.217.93.22:5555',
-    baseURL: 'http://localhost',
+    baseURL: 'http://localhost:5000',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -11,7 +11,7 @@ export const webappClient = axios.create({
 
 export const webappClientAuthorized = axios.create({
     //baseURL: 'http://18.217.93.22:5555',
-    baseURL: 'http://localhost',
+    baseURL: 'http://localhost:5000',
     headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem("authorization"),
