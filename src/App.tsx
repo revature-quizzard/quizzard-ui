@@ -14,8 +14,8 @@ import {  setFlashcards} from "./StateSlices/Flashcard/flashcardsSlice"
 import { setSubjects } from "./StateSlices/Subject/subjectsSlice"
 import { useDispatch } from "react-redux";
 import {useEffect} from "react";
-import { getSubs } from "./Remote/subjectService";
-import {  getCards } from "./Remote/cardService";
+import { getSubs } from "./remote/subjectService";
+import {  getCards } from "./remote/CardService";
 
 function App() {
   const dispatch = useDispatch();

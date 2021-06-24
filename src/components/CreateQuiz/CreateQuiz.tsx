@@ -1,4 +1,4 @@
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container,Image,Card,Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showQuiz,
@@ -18,7 +18,7 @@ const CreateQuiz = () => {
   const quizState = useSelector(createQuizState);
 
   const goToQuiz = (e: any) => {
-    dispatch(loadQuiz(createQuiz(setOfSets[e.target.id])));
+    dispatch(loadQuiz(createQuiz(setOfSets[e.target.name])));
     dispatch(showQuiz());
   };
 
@@ -40,15 +40,24 @@ const CreateQuiz = () => {
               </Row>
               <Row className="p-4">
                 {setOfSets.map((set: Array<Flashcard>, index: any) => {
+                  let id = "go-to-quiz-" + {index};
                   return (
-                    <Col
-                      onClick={goToQuiz}
-                      key={index}
-                      id={index}
-                      className="col-2 bg-dark text-light m-4"
-                    >
-                      Set
-                    </Col>
+                    <Card style={{ width: '18rem' ,margin:'.4em' }}>
+                    <Card.Img variant="top" as={Image} fluid={true} src="https://i.imgur.com/XoL4zEI.png" alt="Quiz Image" />
+                    <Card.Body>
+                      <Card.Title>Quiz {index + 1}</Card.Title>
+                      <Card.Text>
+                       
+                       Subject {setOfSets[index][index].subjectId}
+                      </Card.Text>
+                    
+                      <Button name = {index} onClick={goToQuiz}
+                        key={index}
+                        id={id}
+                         
+                       > Go To Quiz</Button>
+                    </Card.Body>
+                  </Card>
                   );
                 })}
               </Row>

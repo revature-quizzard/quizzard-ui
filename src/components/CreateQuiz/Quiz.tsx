@@ -50,6 +50,7 @@ const Quiz = () => {
   };
 
   const checkAnswer = (e: any) => {
+    let count = 0;
     if (e.currentTarget.id === "answer") {
       let answerDiv: HTMLElement = document.getElementById(
         `${e.currentTarget.id}`
@@ -76,7 +77,10 @@ const Quiz = () => {
         dispatch(addAnswered(quizState.count));
         dispatch(addIncorrect(quizState.count));
       }
+  
+
     }
+    
   };
   return (
     <>
@@ -98,6 +102,7 @@ const Quiz = () => {
                   className="answer"
                   onClick={checkAnswer}
                   key={value}
+                  
                 >
                   <Col>{Object.values(key).toString()}</Col>
                 </Row>
