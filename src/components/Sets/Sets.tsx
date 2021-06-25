@@ -100,18 +100,21 @@ export function Sets() {
    */
   let handlePersistStudySet = async () => {
     let setObj: CardSet = {
+      setId: 0,
       setName,
       isPublic,
       localFlashcards
     };
 
+    
+
     dispatch(addSet(setObj));
 
-    setCreatedSetElement(setObj);
+    // setCreatedSetElement(setObj);
 
-    let response = await createStudySet(createdSetElement);
+    let response = await createStudySet(setObj);
 
-    setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
+    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
     setLocalFlashcards([]);
     
   }

@@ -2,7 +2,9 @@ import { CardSet } from "../models/card-set";
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 
 export async function createStudySet(studySet: CardSet){
-	let response = await quizzardApiClientTokenAuthorizedSynchronous.post('/sets/newset', {studySet});
+	console.log("Inside set-service: " + JSON.stringify(studySet))
+	let response = await quizzardApiClientTokenAuthorizedSynchronous.post('/sets/newset', studySet);
+	console.log(response);
 	return await response.data;
 }
 

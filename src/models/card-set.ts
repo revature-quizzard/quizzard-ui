@@ -2,15 +2,15 @@ import {Flashcard} from "../models/flashcard"
 
 export class CardSet {
 
-    // setId: number;
+    setId: number;
     setName: String;
     isPublic: boolean;
     localFlashcards: Array<Flashcard>;
     // You need something for Accounts, I'd recommend using the Account ID
 
-    constructor(setName: string, isPublic: boolean, localFlashcards: Array<Flashcard>) {
+    constructor(setName: string, isPublic: boolean, localFlashcards: Array<Flashcard>, setId: number) {
         //implement accountid association
-        // this.setId = setId;
+        this.setId = setId;
         this.setName = setName;
         this.isPublic = isPublic;
         this.localFlashcards = localFlashcards;
