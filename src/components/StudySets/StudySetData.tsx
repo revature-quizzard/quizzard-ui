@@ -6,7 +6,7 @@ import {
     setStudySet,
     studySetState
 } from "../../state-slices/study-set/study-set-slice";
-import {StudySet} from "../../Models/study-set";
+import {StudySet} from "../../models/study-set";
 import {publicSetsFetcher} from "../../remote/public-sets-fetcher";
 
 /**

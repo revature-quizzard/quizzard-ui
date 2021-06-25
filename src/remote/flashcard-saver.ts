@@ -1,5 +1,5 @@
 import axios from "axios";
-import {FlashcardDTO} from "../Models/flashcard";
+import {FlashcardDTO} from "../models/flashcard";
 
 /**
  * @author Sean Taba

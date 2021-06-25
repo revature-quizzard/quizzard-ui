@@ -1,5 +1,5 @@
 import axios from "axios";
-import {StudySet} from "../Models/study-set";
+import {StudySet} from "../models/study-set";
 
 /**
  * @author Sean Taba

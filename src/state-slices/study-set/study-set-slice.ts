@@ -1,10 +1,10 @@
 
-import {StudySet} from "../../Models/study-set";
-import {Flashcard} from "../../Models/flashcard";
+import {StudySet} from "../../models/study-set";
+import {Flashcard} from "../../models/flashcard";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "../../store/store";
-import {Account} from "../../Models/account";
-import {Subject} from "../../Models/subject";
+import {Account} from "../../models/account";
+import {Subject} from "../../models/subject";
 
 /**
  * @author Sean Taba

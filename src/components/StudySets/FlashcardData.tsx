@@ -1,5 +1,5 @@
 
-import {Flashcard} from "../../Models/flashcard";
+import {Flashcard} from "../../models/flashcard";
 import {useAppSelector} from "../../store/hooks";
 import {studySetState} from "../../state-slices/study-set/study-set-slice";
 

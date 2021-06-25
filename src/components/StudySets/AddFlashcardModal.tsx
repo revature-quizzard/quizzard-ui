@@ -2,9 +2,9 @@
 import {Button, Col, Form, Modal, ModalBody, ModalFooter, ModalTitle, Row} from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import SubjectDropDown from "./SubjectDropDown";
-import {FlashcardDTO} from "../../Models/flashcard";
+import {FlashcardDTO} from "../../models/flashcard";
 import {flashcardSaver} from "../../remote/flashcard-saver";
-import {Subject} from "../../Models/subject";
+import {Subject} from "../../models/subject";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {appendCardToStudySet, studySetState} from "../../state-slices/study-set/study-set-slice";
 
