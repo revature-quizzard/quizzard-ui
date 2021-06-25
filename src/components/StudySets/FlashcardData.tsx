@@ -1,17 +1,17 @@
-/**
- * @Author: Sean Taba
- */
 
-import {Flashcard} from "../../Models/Flashcard";
+import {Flashcard} from "../../Models/flashcard";
 import {useAppSelector} from "../../store/hooks";
-import {studySetState} from "../../StateSlices/StudySet/studysetSlice";
+import {studySetState} from "../../state-slices/study-set/study-set-slice";
 
-const FlashcardData = (props: any) => {
-    console.log('FlashcardData rendering:');
-
+/**
+ * @author Sean Taba
+ * @returns {JSX.Element}
+ * Populates flashcard table with flashcards belonging to the selected set
+ */
+const FlashcardData = () => {
     const state = useAppSelector(studySetState);
     const flashCards = state.availablePublicStudySets[state.selectedStudySet.id - 1].cards;
-    const clickHandler = (e: any) => {
+    const clickHandler = () => {
 
     }
     return (

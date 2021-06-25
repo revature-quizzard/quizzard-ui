@@ -1,7 +1,12 @@
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import {useState} from "react";
-import {Subject} from "../../Models/Subject";
 
+/**
+ * @author Sean Taba
+ * @param props: Callback function
+ * @returns {JSX.Element}
+ * renders subjects dropdown menu
+ */
 const SubjectDropDown = (props: any) => {
     const [topic, setTopic] = useState('OOP');
     let topics = new Map ([
@@ -17,12 +22,11 @@ const SubjectDropDown = (props: any) => {
         ['SOAP',10],
         ['REST',11],
         ['Javascript',12],
-    ])
+    ]);
     const changeHandler = (e: any) => {
         let subject = {id: topics.get(e), name: e};
             props.onChangeCallback(subject);
             setTopic(e);
-
     }
     return <div>
         <DropdownButton id="dropdown-basic-button" title={topic} onSelect={changeHandler}>

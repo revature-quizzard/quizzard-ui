@@ -1,9 +1,11 @@
-/**
- * @Author: Sean Taba
- */
-import {Account} from "./Account";
-import {Subject} from "./Subject";
 
+import {Account} from "./account";
+import {Subject} from "./subject";
+
+/**
+ * @author Sean Taba
+ * interface for Flashcard entity
+ */
 export interface Flashcard {
     id: number,
     subject: Subject,

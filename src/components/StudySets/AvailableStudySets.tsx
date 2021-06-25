@@ -1,26 +1,23 @@
-/**
- * @Author: Sean Taba
- */
 
 import {Button, Col, Row, Table} from "react-bootstrap";
 import StudySetData from "./StudySetData";
 import FlashcardData from "./FlashcardData";
 import AddFlashcardModal from "./AddFlashcardModal";
 import {useState} from "react";
-import {StudySet} from "../../Models/StudySet";
-import {Account} from "../../Models/Account";
-import {Flashcard} from "../../Models/Flashcard";
 import {useAppSelector} from "../../store/hooks";
-import {studySetState} from "../../StateSlices/StudySet/studysetSlice";
+import {studySetState} from "../../state-slices/study-set/study-set-slice";
 
+/**
+ * @author Sean Taba
+ * @returns {JSX.Element}
+ * renders the studySets page
+ */
 const AvailableStudySets = () => {
-    console.log('AvailableStudySets Rendering: ');
+    console.log('ASS');
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
-    const [studySet, setStudySet] = useState({id: 0, creator: {} as Account, cards: [] as Flashcard[], name: '', isPublic: false});
     const state = useAppSelector(studySetState);
-    const renderFlashcardTable = (ss: StudySet) => {
-        setStudySet(ss);
+    const renderFlashcardTable = () => {
         setShowCards(true);
     }
     const modalHandler = () => {
@@ -52,7 +49,7 @@ const AvailableStudySets = () => {
                 {showCards &&
                 <Row>
                     <Col>
-                        <h2 className="justify-content-center">Flashcards in Study Set: #{studySet.id} - {studySet.name}</h2>
+                        <h2 className="justify-content-center">Flashcards in Study Set: #{state.selectedStudySet.id} - {state.selectedStudySet.name}</h2>
                             <Table striped bordered hover variant="dark">
                             <thead>
                             <tr>
@@ -65,7 +62,7 @@ const AvailableStudySets = () => {
                             <td>Public</td>
                             </tr>
                             </thead>
-                            <FlashcardData data={studySet}/>
+                            <FlashcardData />
                             </Table>
                         <Button as="input" onClick={modalHandler} type="button" value="Add a New Flashcard to StudySet" />
                     </Col>

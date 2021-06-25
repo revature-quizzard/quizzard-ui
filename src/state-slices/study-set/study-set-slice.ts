@@ -1,14 +1,15 @@
-/**
- * @Author: Sean Taba
- */
 
-import {StudySet} from "../../Models/StudySet";
-import {Flashcard} from "../../Models/Flashcard";
+import {StudySet} from "../../Models/study-set";
+import {Flashcard} from "../../Models/flashcard";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "../../store/store";
-import {Account} from "../../Models/Account";
-import {Subject} from "../../Models/Subject";
+import {Account} from "../../Models/account";
+import {Subject} from "../../Models/subject";
 
+/**
+ * @author Sean Taba
+ * interface for the state
+ */
 interface StudySetState {
     selectedStudySet: StudySet;
     flashcard: Flashcard;
@@ -24,6 +25,10 @@ interface StudySetState {
     finishedLoading: boolean;
 }
 
+/**
+ * @author Sean Taba
+ * initial state values
+ */
 const initialState: StudySetState = {
     selectedStudySet: {id: -1, creator: {} as Account,cards: [] as Flashcard[], name: '', isPublic: true},
     isStudySetSelected: false,
@@ -39,6 +44,10 @@ const initialState: StudySetState = {
     finishedLoading: false,
 }
 
+/**
+ * @author Sean Taba
+ * state definition, name, initial state, reducers
+ */
 export const studySetSlice = createSlice({
     name: "studySet",
     initialState,
@@ -80,13 +89,13 @@ export const studySetSlice = createSlice({
             state.availablePublicStudySets = action.payload;
             state.finishedLoading = true;
         },
-        appendCardToStusySet: (state, action: PayloadAction<Flashcard>) => {
+        appendCardToStudySet: (state, action: PayloadAction<Flashcard>) => {
             state.availablePublicStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
         }
     }
 })
-export const {setStudySet,setFlashcard, clearFlashcard, clearStudySet, showAddFlashcardModal,saveFlashcard,
+export const {setStudySet,setFlashcard, clearStudySet, saveFlashcard,
                 savePublicStudySets, currentlyLoading, finishedLoading,
-                appendCardToStusySet} = studySetSlice.actions;
+                appendCardToStudySet} = studySetSlice.actions;
 export const studySetState = (state: RootState) => state.studySets;
 export default studySetSlice.reducer;

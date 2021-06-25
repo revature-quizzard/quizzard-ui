@@ -1,15 +1,19 @@
-/**
- * @Author: Sean Taba
- */
+
 import {Button, Col, Form, Modal, ModalBody, ModalFooter, ModalTitle, Row} from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import SubjectDropDown from "./SubjectDropDown";
-import {Flashcard, FlashcardDTO} from "../../Models/Flashcard";
-import {flashcardSaver} from "../remotes/flashcardSaver";
-import {Subject} from "../../Models/Subject";
+import {FlashcardDTO} from "../../Models/flashcard";
+import {flashcardSaver} from "../../remote/flashcard-saver";
+import {Subject} from "../../Models/subject";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {appendCardToStusySet, studySetState} from "../../StateSlices/StudySet/studysetSlice";
+import {appendCardToStudySet, studySetState} from "../../state-slices/study-set/study-set-slice";
 
+/**
+ * @author Sean Taba
+ * @param props: Callback function to close the modal
+ * @returns {JSX.Element}
+ * renders the modal
+ */
 const AddFlashcardModal = (props: any) => {
     let question = '';
     let answer = '';
@@ -37,7 +41,7 @@ const AddFlashcardModal = (props: any) => {
 
         flashcardSaver(newCard).then(card => {
             console.log('promise returning')
-            dispatch(appendCardToStusySet(card));
+            dispatch(appendCardToStudySet(card));
         });
         console.log();
 

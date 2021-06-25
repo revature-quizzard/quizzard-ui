@@ -3,8 +3,8 @@
  */
 
 import { configureStore } from "@reduxjs/toolkit";
-import createQuizReducer from "../StateSlices/CreateQuiz/createQuizSlice";
-import studySetReducer from "../StateSlices/StudySet/studysetSlice"
+import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
+import studySetReducer from "../state-slices/study-set/study-set-slice"
 export const store = configureStore({
     reducer: {
         createQuiz: createQuizReducer,

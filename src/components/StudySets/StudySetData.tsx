@@ -1,36 +1,32 @@
-/**
- * @Author: Sean Taba
- */
 
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {
     currentlyLoading,
-    finishedLoading,
     savePublicStudySets,
     setStudySet,
     studySetState
-} from "../../StateSlices/StudySet/studysetSlice";
-import {StudySet} from "../../Models/StudySet";
-import {publicSetsFetcher} from "../remotes/publicSetsFetcher";
+} from "../../state-slices/study-set/study-set-slice";
+import {StudySet} from "../../Models/study-set";
+import {publicSetsFetcher} from "../../remote/public-sets-fetcher";
 
-
+/**
+ * @author Sean Taba
+ * @param props: Callback function
+ */
 const StudySetData = (props: any) => {
-    console.log('StudySetData rendering');
+    console.log('SSD');
     let state = useAppSelector(studySetState);
     const dispatch = useAppDispatch();
 
     if (!state.finishedLoading) {
-        console.log('in here')
-        dispatch(currentlyLoading());
         publicSetsFetcher().then(data => {
             console.log(data);
             dispatch(savePublicStudySets(data));
-            console.log('after dispatch');
         });
     }
     const clickHandler = (e: any) => {
         dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id - 1]));
-        props.onStudySetChange(state.availablePublicStudySets[e.currentTarget.id - 1]);
+        props.onStudySetChange();
     }
     return (
         <tbody>
@@ -44,8 +40,6 @@ const StudySetData = (props: any) => {
         )}
         </tbody>
     )
-
-
 };
 
 export default StudySetData;
