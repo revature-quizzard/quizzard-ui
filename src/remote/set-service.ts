@@ -22,3 +22,8 @@ export async function createStudySet(studySet: CardSet){
 	});
 	return await response.data;
     }
+
+export async function getStudySet(setId: number) {
+	let response = await quizzardApiClientTokenAuthorizedSynchronous.get(`/sets/${setId}`);
+	return await response.data;
+}

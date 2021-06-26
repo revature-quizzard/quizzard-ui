@@ -9,6 +9,7 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import {FlipCard} from "./components/Flashcards/FlipCard";
+import {StudyableSet} from "./components/Sets/StudyableSet"
 
 
 
@@ -42,7 +43,7 @@ function App() {
             <Sets />
           </Route>
           <Route exact path="/study">
-            <FlipCard />
+            <StudyableSet />
           </Route>
           <Route exact path="/createQuiz">
             <CreateQuiz/>

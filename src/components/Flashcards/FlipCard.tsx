@@ -38,11 +38,11 @@ export const FlipCard = () => {
   useEffect(() => {
     console.log("populate flashcards");
 
-    const getFlashcards = async () => {
-      let cards = await getCards();
-      dispatch(setFlashcards(cards));
-    };
-    getFlashcards();
+    // const getFlashcards = async () => {
+    //   let cards = await getCards();
+    //   dispatch(setFlashcards(cards));
+    // };
+    // getFlashcards();
 
     const getSubjects = async () => {
       let subjects = await getSubs();
