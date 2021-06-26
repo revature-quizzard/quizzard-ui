@@ -7,20 +7,23 @@ import {
     studySetState
 } from "../../state-slices/study-set/study-set-slice";
 import {StudySet} from "../../models/study-set";
-import {publicSetsFetcher} from "../../remote/public-sets-fetcher";
+import {ownedSetsFetcher} from "../../remote/sets-fetcher";
+import {authState} from "../../state-slices/auth/auth-slice";
 
 /**
  * @author Sean Taba
  * @param props: Callback function
  */
-const StudySetData = (props: any) => {
+const OwnedStudySetData = (props: any) => {
     console.log('SSD');
     let state = useAppSelector(studySetState);
+    let auth = useAppSelector(authState);
     const dispatch = useAppDispatch();
+
 
     if (!state.finishedLoading) {
         console.log('in here 01')
-        publicSetsFetcher().then(data => {
+        ownedSetsFetcher(auth.token).then(data => {
             console.log(data);
             dispatch(savePublicStudySets(data));
         });
@@ -45,4 +48,6 @@ const StudySetData = (props: any) => {
     )
 };
 
-export default StudySetData;
+
+
+export default OwnedStudySetData;

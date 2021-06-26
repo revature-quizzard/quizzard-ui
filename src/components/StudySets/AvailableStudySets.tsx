@@ -1,12 +1,19 @@
 
 import {Button, Col, Row, Table} from "react-bootstrap";
-import StudySetData from "./StudySetData";
+import PublicStudySetData from "./PublicStudySetData";
 import FlashcardData from "./FlashcardData";
 import AddFlashcardModal from "./AddFlashcardModal";
 import {useState} from "react";
 import {useAppSelector} from "../../store/hooks";
-import {studySetState} from "../../state-slices/study-set/study-set-slice";
+import {currentlyLoading, savePublicStudySets, studySetState} from "../../state-slices/study-set/study-set-slice";
 import {authState} from "../../state-slices/auth/auth-slice";
+import {createdSetSearch} from "../../remote/set-service";
+import {setSetList} from "../../state-slices/sets/set-list-slice";
+import {useDispatch} from "react-redux";
+import OwnedStudySetData from "./OwnedStudySetData";
+
+
+
 
 /**
  * @author Sean Taba
@@ -15,8 +22,11 @@ import {authState} from "../../state-slices/auth/auth-slice";
  */
 const AvailableStudySets = () => {
     console.log('ASS');
+    const dispatch = useDispatch();
+    const [showList, setShowList] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
+    const [useList, setUseList] = useState(true);//true = public, false = owned
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
     const renderFlashcardTable = () => {
@@ -26,12 +36,64 @@ const AvailableStudySets = () => {
         if (showModal) setShowModal(false);
         else setShowModal(true);
     }
+
+    // /**
+    //  * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
+    //  * Will display a list of the results.
+    //  * @param e event when button is clicked
+    //  * @author Austin Knauer
+    //  * @author Vinson Chin
+    //  */
+    // let createdSetsSearch = async (e: any) => {
+    //     e.preventDefault();
+    //
+    //     const headers = {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': localStorage.getItem("Authorization")
+    //     }
+    //
+    //     let response = await createdSetSearch(headers);
+    //     dispatch(setSetList(response));
+    //
+    //     // needs to be updated eventually to actually check whether results were successfully fetched from the api
+    //     setShowList(true);
+    // }
+
+    /*
+    These functions set which list is displayed below based on button presses.
+     */
+    const publicSetMode = (e: any) => {
+        dispatch(currentlyLoading());
+        setUseList(true);
+    }
+    const ownedSetMode = (e: any) => {
+        dispatch(currentlyLoading());
+        setUseList(false);
+    }
+
+    let publicSetsSearch = async (e: any) => {
+        e.preventDefault();
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem("Authorization")
+        }
+    }
+
+
     return (
         <Row>
             <Col>
                 {showModal &&
                 <AddFlashcardModal onCloseModal={modalHandler} />
                 }
+                <Row className="justify-content-center">
+                    <Col className="col-1" style={{ padding: "2px" }}>
+                        <Button type="submit" onClick={ownedSetMode} >Your Sets (Not used yet)</Button>
+                    </Col>
+                    <Col className="col-1" style={{ padding: "2px" }}>
+                        <Button type="submit" onClick={publicSetMode} >All Public Sets (Not used yet)</Button>
+                    </Col>
+                </Row>
                 <Row>
                     <Col className="justify-content-center">
                         <Row>
@@ -52,7 +114,9 @@ const AvailableStudySets = () => {
                                 <th>Public</th>
                             </tr>
                             </thead>
-                                <StudySetData onStudySetChange={renderFlashcardTable}/>
+                            {useList
+                                ? <PublicStudySetData onStudySetChange={renderFlashcardTable}/>
+                                : <OwnedStudySetData onStudySetChange={renderFlashcardTable}/>}
                         </Table>
                     </Col>
                 </Row>
