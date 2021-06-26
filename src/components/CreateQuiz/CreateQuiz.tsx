@@ -9,16 +9,18 @@ import { setOfSets } from "../../utilities/dummy-data";
 import { createQuiz } from "../../utilities/quiz-utility";
 import Quiz from "./Quiz";
 import {Flashcard, FlashcardDTO} from "../../models/flashcard";
-
+import { studySetState } from "../../state-slices/study-set/study-set-slice";
 const CreateQuiz = () => {
  
+  const studySet = useSelector(studySetState);
 
   const dispatch = useDispatch();
 
   const quizState = useSelector(createQuizState);
 
   const goToQuiz = (e: any) => {
-    dispatch(loadQuiz(createQuiz(setOfSets[e.target.name])));
+    console.log("event.target.name: ",studySet.availablePublicStudySets[parseInt(e.target.name)].cards);
+    dispatch(loadQuiz(createQuiz(studySet.availablePublicStudySets[parseInt(e.target.name)].cards)));
     dispatch(showQuiz());
   };
 
@@ -39,7 +41,7 @@ const CreateQuiz = () => {
                 </Col>
               </Row>
               <Row className="p-4">
-                {setOfSets.map((set: Array<FlashcardDTO>, index: any) => {
+                {studySet.availablePublicStudySets.map((set: any, index: any) => {
                   let id = "go-to-quiz-" + {index};
                   return (
                     <Card style={{ width: '18rem' ,margin:'.4em' }}>
@@ -48,11 +50,12 @@ const CreateQuiz = () => {
                       <Card.Title>Quiz {index + 1}</Card.Title>
                       <Card.Text>
                        
-                       Subject: {setOfSets[index][index].subjectId}
+                       Subject: {studySet.availablePublicStudySets[index].name}
                       </Card.Text>
                     
                       <Button name = {index} onClick={goToQuiz}
                         key={index}
+
                         id={id}
                          
                        > Go To Quiz</Button>

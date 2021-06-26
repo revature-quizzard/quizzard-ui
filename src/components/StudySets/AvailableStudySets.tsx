@@ -70,14 +70,14 @@ const AvailableStudySets = () => {
         dispatch(currentlyLoading());
         setUseList(false);
     }
-
-    let publicSetsSearch = async (e: any) => {
-        e.preventDefault();
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("Authorization")
-        }
-    }
+    //
+    // let publicSetsSearch = async (e: any) => {
+    //     e.preventDefault();
+    //     const headers = {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': localStorage.getItem("Authorization")
+    //     }
+    // }
 
 
     return (

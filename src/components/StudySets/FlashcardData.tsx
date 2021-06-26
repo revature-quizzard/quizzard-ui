@@ -11,7 +11,8 @@ import {studySetState} from "../../state-slices/study-set/study-set-slice";
 const FlashcardData = () => {
     const state = useAppSelector(studySetState);
     const flashCards = state.availablePublicStudySets[state.selectedStudySet.id - 1].cards;
-    const clickHandler = () => {
+    const clickHandler = (event: any) => {
+
 
     }
     return (

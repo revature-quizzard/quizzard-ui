@@ -4,7 +4,7 @@
     6 / 19 / 2021
 */
 
-import {Flashcard, FlashcardDTO} from "../models/flashcard";
+import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../models/flashcard";
 
 interface Question {
   question: string;
@@ -14,17 +14,19 @@ interface Question {
   wrong3: string;
 }
 
+
+
 export interface ScrambledQuestion {
   question: string;
   answers: Array<object>;
 }
 
-export const createQuiz = (studySet: Array<FlashcardDTO>) => {
+export const createQuiz = (studySet: Array<SetFlashcardDTO>) => {
   // Create an empty array for questions
   let questionArray: Array<ScrambledQuestion> = [];
 
   // Loop through each card in study set
-  studySet.forEach((flashCard: FlashcardDTO) => {
+  studySet.forEach((flashCard: SetFlashcardDTO) => {
     // Filter out the current target of the loop from the study set, creating a new study set array that does not include the current target of loop.
     let newStudySet = filterCurrentCard(flashCard, studySet);
 
@@ -43,7 +45,7 @@ export const createQuiz = (studySet: Array<FlashcardDTO>) => {
   return questionArray;
 };
 
-export const createWrongAnswerArray = (newStudySet: Array<FlashcardDTO>) => {
+export const createWrongAnswerArray = (newStudySet: Array<SetFlashcardDTO>) => {
     let  answerArray: string[] = [];
 
     // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
@@ -61,8 +63,8 @@ export const createWrongAnswerArray = (newStudySet: Array<FlashcardDTO>) => {
   return answerArray;
 }
 
-export const filterCurrentCard = (currentCard: FlashcardDTO, studySet: Array<FlashcardDTO>) => {
-  return studySet.filter((card: FlashcardDTO) => {
+export const filterCurrentCard = (currentCard: SetFlashcardDTO, studySet: Array<SetFlashcardDTO>) => {
+  return studySet.filter((card: SetFlashcardDTO) => {
       if (card.question !== currentCard.question) {
         return card;
       }
@@ -78,7 +80,7 @@ export const generateRandom = (num: number) => {
 
 // Creates a question object that includes the question, answer, and three wrong answers gathered from other cards in Study set.
 export const createQuizQuestion = (
-  flashCard: FlashcardDTO,
+  flashCard: SetFlashcardDTO,
   wrong1: string,
   wrong2: string,
   wrong3: string
