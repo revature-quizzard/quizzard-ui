@@ -6,6 +6,7 @@ import AddFlashcardModal from "./AddFlashcardModal";
 import {useState} from "react";
 import {useAppSelector} from "../../store/hooks";
 import {studySetState} from "../../state-slices/study-set/study-set-slice";
+import {authState} from "../../state-slices/auth/auth-slice";
 
 /**
  * @author Sean Taba
@@ -17,6 +18,7 @@ const AvailableStudySets = () => {
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
     const state = useAppSelector(studySetState);
+    const auState = useAppSelector(authState);
     const renderFlashcardTable = () => {
         setShowCards(true);
     }
@@ -32,7 +34,15 @@ const AvailableStudySets = () => {
                 }
                 <Row>
                     <Col className="justify-content-center">
-                        <h2 className="justify-content-center">Public Study Sets</h2>
+                        <Row>
+                            <Col>
+                                <h2 className="justify-content-center">Public Study Sets</h2>
+                            </Col>
+                            <Col>
+                                <h3 className="justify-content-end">User: {auState.username} points: {}</h3>
+                            </Col>
+                        </Row>
+
                         <Table striped bordered hover variant="dark">
                             <thead>
                             <tr>

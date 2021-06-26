@@ -2,11 +2,14 @@
 import {Button, Col, Form, Modal, ModalBody, ModalFooter, ModalTitle, Row} from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import SubjectDropDown from "./SubjectDropDown";
-import {FlashcardDTO} from "../../models/flashcard";
+import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../../models/flashcard";
 import {flashcardSaver} from "../../remote/flashcard-saver";
 import {Subject} from "../../models/subject";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {appendCardToStudySet, studySetState} from "../../state-slices/study-set/study-set-slice";
+import {Account} from "../../models/account";
+import {authSlice, authState} from "../../state-slices/auth/auth-slice";
+import {Role} from "../../models/role";
 
 /**
  * @author Sean Taba
@@ -20,27 +23,30 @@ const AddFlashcardModal = (props: any) => {
     let isReviewable = true;
     let isPublic = true;
     let subject = {} as Subject;
-    const state = useAppSelector(studySetState);
+    const stState = useAppSelector(studySetState);
     const dispatch = useAppDispatch();
+    const auState = useAppSelector(authState)
     const handleClose = () => {
         props.onCloseModal();
     }
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        let newCard: FlashcardDTO = {
+
+        let newCard: SetFlashcardDTO = {
             id: 0,
-            subject_id: subject.id,
-            account_id: 1,
+            subject: subject,
+            creator: {username: 'seantaba', password: '', id: 0, points: 0, roles: {} as Role[]},
             question: question,
             answer: answer,
             reviewable: isReviewable,
-            isPublic: isPublic,
-            studySet_id: state.selectedStudySet.id
+            public: isPublic,
+            studySetId: stState.selectedStudySet.id
         }
+
         console.log(newCard);
 
         flashcardSaver(newCard).then(card => {
-            console.log('promise returning')
+            console.log('promise returning', card)
             dispatch(appendCardToStudySet(card));
         });
         console.log();
@@ -64,6 +70,7 @@ const AddFlashcardModal = (props: any) => {
         }
     }
     const handleDropdown = (e: Subject) => {
+        console.log('subject:',e);
         subject = e;
     }
 

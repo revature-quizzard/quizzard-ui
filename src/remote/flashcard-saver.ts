@@ -1,5 +1,5 @@
 import axios from "axios";
-import {FlashcardDTO} from "../models/flashcard";
+import {FlashcardDTO, SetFlashcardDTO} from "../models/flashcard";
 
 /**
  * @author Sean Taba
@@ -7,7 +7,7 @@ import {FlashcardDTO} from "../models/flashcard";
  * @param props: Created flashcard to be persisted
  * persists the created flashcard to the DB
  */
-export const flashcardSaver = async (props: FlashcardDTO) =>
+export const flashcardSaver = async (props: SetFlashcardDTO) =>
 {
     const remoteURL = 'http://localhost:5000';
     return await axios.post(`${remoteURL}/cards/save`, props)

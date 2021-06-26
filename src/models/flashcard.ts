@@ -18,11 +18,21 @@ export interface Flashcard {
 
 export interface FlashcardDTO {
     id: number,
-    subject_id: number,
-    account_id: number,
-    studySet_id: number,
+    subjectId: number,
+    accountId: number,
     question: string,
     answer: string,
     reviewable: boolean,
     isPublic: boolean
+}
+
+export interface SetFlashcardDTO {
+    id: number,
+    subject: Subject,
+    creator: Account,
+    question: string,
+    answer: string,
+    reviewable: boolean,
+    public: boolean,
+    studySetId: number
 }

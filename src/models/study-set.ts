@@ -1,5 +1,5 @@
 
-import {Flashcard} from "./flashcard";
+import { SetFlashcardDTO} from "./flashcard";
 import {Account} from "./account";
 
 /**
@@ -9,7 +9,7 @@ import {Account} from "./account";
 export interface StudySet {
     id: number;
     creator: Account;
-    cards: Flashcard[];
+    cards: SetFlashcardDTO[];
     name: string;
     isPublic: boolean;
 }

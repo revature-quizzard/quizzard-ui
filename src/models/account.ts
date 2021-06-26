@@ -12,5 +12,5 @@ export interface Account {
     username: string,
     password: string,
     roles: Role[],
-    user: User
+    // user: User
 }

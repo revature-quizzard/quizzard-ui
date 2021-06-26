@@ -1,6 +1,6 @@
 
 import {StudySet} from "../../models/study-set";
-import {Flashcard} from "../../models/flashcard";
+import {Flashcard, SetFlashcardDTO} from "../../models/flashcard";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "../../store/store";
 import {Account} from "../../models/account";
@@ -23,6 +23,7 @@ interface StudySetState {
     availablePublicStudySets: StudySet[];
     isLoading: boolean;
     finishedLoading: boolean;
+    account: Account;
 }
 
 /**
@@ -30,7 +31,7 @@ interface StudySetState {
  * initial state values
  */
 const initialState: StudySetState = {
-    selectedStudySet: {id: -1, creator: {} as Account,cards: [] as Flashcard[], name: '', isPublic: true},
+    selectedStudySet: {id: -1, creator: {} as Account,cards: [] as SetFlashcardDTO[], name: '', isPublic: true},
     isStudySetSelected: false,
     flashcard: {id: -1, creator: {} as Account, public: true, answer: '', question: '', reviewable: true, subject: {} as Subject},
     isFlashCardSelected: false,
@@ -42,6 +43,7 @@ const initialState: StudySetState = {
     availablePublicStudySets: [],
     isLoading: false,
     finishedLoading: false,
+    account: {} as Account
 }
 
 /**
@@ -65,7 +67,7 @@ export const studySetSlice = createSlice({
             state.isStudySetSelected = true;
         },
         clearStudySet: (state) => {
-            state.selectedStudySet = {id: 0, creator: {} as Account,cards: [] as Flashcard[], name: '', isPublic: true};
+            state.selectedStudySet = {id: 0, creator: {} as Account,cards: [] as SetFlashcardDTO[], name: '', isPublic: true};
             state.isStudySetSelected = false;
         },
         setFlashcard: (state, action: PayloadAction<Flashcard>) => {
@@ -89,7 +91,7 @@ export const studySetSlice = createSlice({
             state.availablePublicStudySets = action.payload;
             state.finishedLoading = true;
         },
-        appendCardToStudySet: (state, action: PayloadAction<Flashcard>) => {
+        appendCardToStudySet: (state, action: PayloadAction<SetFlashcardDTO>) => {
             state.availablePublicStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
         }
     }

@@ -10,26 +10,116 @@
    Dark blue (probably best for menus/nav bars): background-color: var(--dark-blue, #16262E);
   */
 
-  :root {
-    --header-font: 'Righteous', sans-serif;
-    --normal-font: 'Ubuntu', sans-serif;
-    --purple: #90708C;
-    --gray: #CEF0DC;
-    --blue: #3C7A89;
-    --navy: #2e4756;
-    --dark-blue: #16262E;
-  }
+:root {
+  --header-font: "Righteous", sans-serif;
+  --normal-font: "Ubuntu", sans-serif;
+  --purple: #90708c;
+  --gray: #cef0dc;
+  --blue: #3c7a89;
+  --navy: #2e4756;
+  --dark-blue: #16262e;
+}
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: var(--normal-font);
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--normal-font);
+}
 
-  /* NAVIGATION STYLES */
-  #navLink:hover {
-    text-decoration: none;
-    transform: scale(1.2, 1.2);
-  }
+/* NAVIGATION STYLES */
+#navLink:hover {
+  text-decoration: none;
+  transform: scale(1.2, 1.2);
+}
+
+/*QUIZ NAVIGATION */
+.bottomRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.btn-prev,
+.btn-next,
+.btn-flip {
+  margin: 0px 20px;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.answer {
+  font-size: 20px;
+  cursor: pointer;
+}
+.answer:hover {
+  
+}
+
+.question {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/*Welcome page styling */
+
+.welcomeBanner {
+  text-align: center;
+  font-size: 40px;
+}
+
+.instructionsWelcome {
+ text-align: center;
+ color: purple;
+ font-weight: 800;
+ margin-top: 20px;
+}
+
+.featuresHeader {
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.featuresList {
+  padding: 5px 20px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.footerText {
+  text-align: center;
+}
+/* FLASHCARDS and FLIPCARD */
+.flip-card, .end-card, .start-button {
+  position: relative;
+  top: 2rem;
+}
+
+.bottomRow {
+  position: relative;
+  top:5rem;
+  width: 100%;
+}
+
+.question-card, .answer-card {
+  width: 25rem;
+  height:auto;
+  
+}
+/* STUDY SETS */
+
+.create-study-set-button {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  height: 5rem;
+  width: 15rem;
+}

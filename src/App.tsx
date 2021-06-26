@@ -3,19 +3,26 @@
  */
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Main from "./components/Main/Main";
 import Navigation from "./components/NavBar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import AvailableStudySets from "./components/StudySets/AvailableStudySets";
+import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
+import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
+import Sets from "./components/Sets/Sets";
+import {FlipCard} from "./components/Flashcards/FlipCard";
+
 
 function App() {
-  return (
+
+  // @ts-ignore
+    return (
     <Router>
       <Navigation />
-      <Container>
+      <Container className="app-container">
         <Switch>
           <Route exact path="/">
             <Main />
@@ -27,13 +34,35 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/flashcards">
-            <FlashCard />
+            <FlashCard/>
+          </Route>
+          <Route exact path="/sets">
+            <Sets />
+          </Route>
+          <Route exact path="/update">
+              <UpdateAccontInfo />
+              </Route>
+          <Route exact path="/sets">
+            <Sets />
+          </Route>
+          <Route exact path="/study">
+            <FlipCard />
+          </Route>
+          <Route exact path="/createQuiz">
+            <CreateQuiz/>
           </Route>
           <Route exact path="/studysets">
             <AvailableStudySets />
           </Route>
         </Switch>
       </Container>
+      <footer>
+        <Row className="bg-dark text-light">
+          <Col>
+            <div className="footerText">Copyright Revature LLC. &copy;</div>
+          </Col>
+        </Row>
+      </footer>
     </Router>
   );
 }

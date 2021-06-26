@@ -8,11 +8,12 @@ import {StudySet} from "../models/study-set";
  */
 export const publicSetsFetcher = async () =>
 {
+    console.log('fetcher 01')
     let data: StudySet[] = [];
     const remoteURL = 'http://localhost:5000';
     await axios.get(`${remoteURL}/sets`)
         .then(response => {
-           data = response.data;
+            data = response.data;
         })
         .catch(e => console.log(e));
     return data;
