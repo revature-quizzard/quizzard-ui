@@ -18,6 +18,10 @@ export const StudyableSet = () => {
 
     const dispatch = useDispatch();
     
+    /**
+     * Upon clicking into the study set a new screen (the details area) is loaded and will use
+     * this axios call to get the set info from the database to be used
+     */
     useEffect(() => {
         const getSet = async () => {
             setSelectedSet(await getStudySet(selectedSetId))
@@ -26,6 +30,10 @@ export const StudyableSet = () => {
         
     })
 
+    /**
+     * When clicking on the study button set the flashcards 
+     * and switch states to display the flipcard component
+     */
     const handleClick = () => {
         console.log("Selected Set: ", selectedSet.setName)
         setIsStudying(true);

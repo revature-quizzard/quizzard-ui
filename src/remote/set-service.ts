@@ -23,6 +23,12 @@ export async function createStudySet(studySet: CardSet){
 	return await response.data;
     }
 
+/**
+ * An axios get request to get a set's info by its id
+ * @param setId The id of the set you are looking for
+ * @returns A set entity
+ * @author Giancarlo Tomasello
+ */
 export async function getStudySet(setId: number) {
 	let response = await quizzardApiClientTokenAuthorizedSynchronous.get(`/sets/${setId}`);
 	return await response.data;
