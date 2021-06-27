@@ -28,7 +28,7 @@ export const StudyableSet = () => {
         }
         getSet();
         
-    })
+    }, [])
 
     /**
      * When clicking on the study button set the flashcards 

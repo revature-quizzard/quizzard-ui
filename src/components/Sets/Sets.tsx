@@ -22,7 +22,7 @@ export function Sets() {
   let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
-  const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet || undefined);
+  // const [createdSetElement, setCreatedSetElement] = useState(undefined as unknown as CardSet || undefined);
   const [showList, setShowList] = useState(false);
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
@@ -106,15 +106,10 @@ export function Sets() {
       localFlashcards
     };
 
-    
-
-    dispatch(addSet(setObj));
-
-    // setCreatedSetElement(setObj);
-
     let response = await createStudySet(setObj);
 
-    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
+    dispatch(addSet(response));
+    
     setLocalFlashcards([]);
     
   }
