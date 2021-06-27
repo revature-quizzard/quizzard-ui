@@ -18,9 +18,8 @@ const CreateQuiz = () => {
 
   const quizState = useSelector(createQuizState);
 
-  const goToQuiz = (e: any) => {
-    console.log("event.target.name: ",studySet.availablePublicStudySets[parseInt(e.target.name)].cards);
-    dispatch(loadQuiz(createQuiz(studySet.availablePublicStudySets[parseInt(e.target.name)].cards)));
+  const goToQuiz = (e: any) => { 
+    dispatch(loadQuiz(createQuiz(studySet.availablePublicStudySets[e.target.name].cards)));
     dispatch(showQuiz());
   };
 

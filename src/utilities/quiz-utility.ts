@@ -4,7 +4,7 @@
     6 / 19 / 2021
 */
 
-import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../models/flashcard";
+import { SetFlashcardDTO } from "../models/flashcard";
 
 interface Question {
   question: string;
@@ -24,12 +24,12 @@ export interface ScrambledQuestion {
 export const createQuiz = (studySet: Array<SetFlashcardDTO>) => {
   // Create an empty array for questions
   let questionArray: Array<ScrambledQuestion> = [];
-
+  
   // Loop through each card in study set
   studySet.forEach((flashCard: SetFlashcardDTO) => {
     // Filter out the current target of the loop from the study set, creating a new study set array that does not include the current target of loop.
     let newStudySet = filterCurrentCard(flashCard, studySet);
-
+    
     // Create empty array to store all answers from other cards in this particular study set
     let wrongAnswerArray = createWrongAnswerArray(newStudySet);
 
@@ -47,23 +47,30 @@ export const createQuiz = (studySet: Array<SetFlashcardDTO>) => {
 
 export const createWrongAnswerArray = (newStudySet: Array<SetFlashcardDTO>) => {
     let  answerArray: string[] = [];
-
+  
     // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
     let ranNum: number = generateRandom(newStudySet.length);
-
+  
     // Build an array of potential wrong answers from all other answers in study set.
-    while (answerArray.length < 3) {
-      if (!answerArray.includes(newStudySet[ranNum].answer)) {
-        answerArray.push(newStudySet[ranNum].answer);
-      } else {
-        ranNum = generateRandom(newStudySet.length);
+  while (answerArray.length < 3) {
+    
+    if (!answerArray.includes(newStudySet[ranNum].answer)) {
+      
+      answerArray.push(newStudySet[ranNum].answer);
+      
+    } else {
+      
+      ranNum = generateRandom(newStudySet.length);
+      
       }
     }
+  
   
   return answerArray;
 }
 
 export const filterCurrentCard = (currentCard: SetFlashcardDTO, studySet: Array<SetFlashcardDTO>) => {
+  
   return studySet.filter((card: SetFlashcardDTO) => {
       if (card.question !== currentCard.question) {
         return card;
