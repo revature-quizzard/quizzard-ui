@@ -26,7 +26,7 @@ const Login = () => {
     localStorage.setItem("Authorization", response.headers.authorization);
     setLoginUser({username: "", password: ""} as LoginModel);
     dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-    history.push("/");
+    history.push("/studySets");
   }
 
     // 

@@ -24,7 +24,7 @@ const Register = () => {
     localStorage.setItem("Authorization", response.headers.authorization);
     setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
     dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-    history.push("/");
+    history.push("/studySets");
   }
 
 
