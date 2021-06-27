@@ -1,21 +1,12 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import ReactCardFlip from "react-card-flip";
-import {
-  flashcardsState,
-  prevCard,
-  nextCard,
-  resetCount,
-  setFlashcards,
-  isLoaded,
-} from "../../state-slices/flashcard/flashcard-slice";
-import {
-  subjectsState,
-  setSubjects,
-} from "../../state-slices/subject/subject-slice";
+import { flashcardsState, prevCard, nextCard, resetCount, setFlashcardsForStudy, isLoaded, } from "../../state-slices/flashcard/flashcard-slice";
+import { subjectsState, setSubjects } from "../../state-slices/subject/subject-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubs } from "../../remote/subject-service";
 import { getCards } from "../../remote/card-service";
 import { useState, useEffect } from "react";
+import { studySetState } from "../../state-slices/study-set/study-set-slice";
 
 /**
  * FlipCard component renders a flippable card and two arrows that allow you to navigate existing cards
@@ -26,7 +17,7 @@ import { useState, useEffect } from "react";
 export const FlipCard = () => {
   const [isEnd, setIsEnd] = useState(false);
   const [isCardFlipped, setIsCardFlipped] = useState(false);
-
+  const studySet = useSelector(studySetState);
   const dispatch = useDispatch();
   const flashcards = useSelector(flashcardsState);
 
@@ -34,21 +25,14 @@ export const FlipCard = () => {
    * Acquires the current cards and subejcts that already exist in the database.
    * @author 'Kevin Chang'
    * @author 'Giancarlo Tomasello'
+   * Refactored by Everett and Kyle et al.
    */
   useEffect(() => {
     console.log("populate flashcards");
 
-    const getFlashcards = async () => {
-      let cards = await getCards();
-      dispatch(setFlashcards(cards));
-    };
-    getFlashcards();
+    let cards = studySet.selectedStudySet.cards;
+    dispatch(setFlashcardsForStudy(cards));
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    };
-    getSubjects();
     dispatch(isLoaded());
   }, []);
 
@@ -71,13 +55,13 @@ export const FlipCard = () => {
    * @author 'Giancarlo Tomasello'
    */
   const handleNext = () => {
-    if (flashcards.count < flashcards.flashCards.length - 1) {
+    if (flashcards.count < flashcards.flashCardsForStudy.length - 1) {
       //   dispatch(setTotal(quizState.quiz.length));
       setIsCardFlipped(false);
       console.log(flashcards.count);
-      console.log(flashcards.flashCards.length);
+      console.log(flashcards.flashCardsForStudy.length);
       dispatch(nextCard());
-    } else if (flashcards.count === flashcards.flashCards.length - 1) {
+    } else if (flashcards.count === flashcards.flashCardsForStudy.length - 1) {
       dispatch(nextCard());
       setIsCardFlipped(false);
       handleEnd();
@@ -151,7 +135,7 @@ export const FlipCard = () => {
             <ReactCardFlip isFlipped={isCardFlipped} flipDirection="horizontal">
               <Card className="question-card">
                 <Card.Body className="text-center">
-                  {flashcards.flashCards[flashcards.count].question}
+                  {flashcards.flashCardsForStudy[flashcards.count].question}
                 </Card.Body>
                 <Card.Footer className="text-center">
                   <Button onClick={handleClick} block>
@@ -162,7 +146,7 @@ export const FlipCard = () => {
 
               <Card className="answer-card">
                 <Card.Body className="text-center">
-                  {flashcards.flashCards[flashcards.count].answer}
+                  {flashcards.flashCardsForStudy[flashcards.count].answer}
                 </Card.Body>
                 <Card.Footer className="text-center">
                   <Button onClick={handleClick} block>

@@ -1,51 +1,49 @@
 import { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Container,
-  Button,
-  Form,
-  Card,
-  CardDeck,
-} from "react-bootstrap";
-import {
-  setFlashcards,
-  flashcardsState,
-} from "../../state-slices/flashcard/flashcard-slice";
-import {
-  setSubjects,
-  subjectsState,
-} from "../../state-slices/subject/subject-slice";
-import { CardSet } from "../../models/card-set";
-import { createdSetSearch, createStudySet } from "../../remote/set-service";
+import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootstrap";
+import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
+import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
+import { CardSetRequest } from "../../models/request-models/card-set-request";
+import { CardSetResponse } from "../../models/response-models/card-set-response";
+import {createdSetSearch, createStudySetWithToken} from "../../remote/set-service";
 import SetList from "./SetList";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSetList,
-  addSet,
-  setListState,
-} from "../../state-slices/sets/set-list-slice";
-import { createStudySetState } from "../../state-slices/sets/create-study-sets-slice";
-import { Flashcard, FlashcardDTO } from "../../models/flashcard";
+import { setSetList, addSet, } from "../../state-slices/sets/set-list-slice";
+import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
 import { getSubs } from "../../remote/subject-service";
+import { useHistory } from 'react-router-dom'
 
+
+/**
+ * Top of Sets function. Who wrote this?
+ * @constructor
+ */
 export function Sets() {
   const dispatch = useDispatch();
-  const allSetsState = useSelector(setListState);
-  const createSetState = useSelector(createStudySetState);
+  //const allSetsState = useSelector(setListState);
+  const history = useHistory();
+  //const createSetState = useSelector(createStudySetState);
 
-  let username = "revature";
+  //let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
   const [createdSetElement, setCreatedSetElement] = useState(
-    (undefined as unknown as CardSet) || undefined
+    (undefined as unknown as CardSetRequest) || undefined
   );
   const [showList, setShowList] = useState(false);
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [localFlashcards, setLocalFlashcards] = useState([]);
   const [checkedBoxes, setCheckedBoxes] = useState([]);
+
+  /**
+   * get headers with token for auth based axios calls
+   *
+   */
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("Authorization"),
+  };
 
   /**
    * Acquires the current cards and subejcts that already exist in the database.
@@ -75,11 +73,6 @@ export function Sets() {
    * @author Austin Knauer
    * @author Vinson Chin
    */
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: localStorage.getItem("Authorization"),
-  };
-
   let createdSetsSearch = async (e: any) => {
     e.preventDefault();
 
@@ -97,6 +90,8 @@ export function Sets() {
   let handleCreateStudySet = () => {
     handleLocalFlashcards();
     handlePersistStudySet();
+    history.push("/studySets");
+    //history.go(0);//re-render component?
   };
 
   /**
@@ -116,20 +111,25 @@ export function Sets() {
    * @author 'Kevin Chang'
    */
   let handlePersistStudySet = async () => {
-    let setObj: CardSet = {
-      setId: 0,
+    let setObj: CardSetRequest = {
       setName,
       isPublic,
       localFlashcards,
     };
 
-    dispatch(addSet(setObj));
+    //Changed this to use one of Sean's reducers to hook into his functionality
+    //dispatch(addSet(setObj));
+
 
     // setCreatedSetElement(setObj);
 
-    let response = await createStudySet(setObj);
+    await createStudySetWithToken(setObj, headers).then((res) => {
+      console.log('Create study set response from API: ', res);
+    }).catch((error) => {
+      console.log(error);
+    });
 
-    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSet);
+    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSetResponse);
     setLocalFlashcards([]);
   };
 

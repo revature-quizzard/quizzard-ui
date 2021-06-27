@@ -1,7 +1,7 @@
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { setListState } from '../../state-slices/sets/set-list-slice';
-import { CardSet } from '../../models/card-set';
+import { CardSetRequest } from '../../models/request-models/card-set-request';
 
 export default function SetList() {
 
@@ -21,7 +21,7 @@ export default function SetList() {
               </tr>
             </thead>
             <tbody>
-            {allSetsState.cardSetList.map((cardSet: CardSet) => (
+            {allSetsState.cardSetList.map((cardSet: CardSetRequest) => (
                 <tr>
                   <td>cardSet.setName</td>
                   <td>{cardSet.isPublic 

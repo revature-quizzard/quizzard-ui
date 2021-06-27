@@ -21,7 +21,7 @@ const Results = () => {
     dispatch(clearQuiz());
     dispatch(hideResults());
     dispatch(hideQuiz());
-    history.push("/createQuiz");
+    history.push("/studySets");
   };
 
   return (

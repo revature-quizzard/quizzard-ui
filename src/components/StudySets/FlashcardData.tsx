@@ -10,15 +10,16 @@ import {studySetState} from "../../state-slices/study-set/study-set-slice";
  */
 const FlashcardData = () => {
     const state = useAppSelector(studySetState);
-    const flashCards = state.availablePublicStudySets[state.selectedStudySet.id - 1].cards;
+    //const flashCards = state.availablePublicStudySets[state.selectedStudySet.id].cards;
+    const flashCards = state.selectedStudySet.cards;
     const clickHandler = (event: any) => {
 
 
     }
     return (
             <tbody>
-            {flashCards.map((card: SetFlashcardDTO) =>
-                    <tr id={card.id.toString()} key={card.id} onClick={clickHandler}>
+            {flashCards.map((card: SetFlashcardDTO, index: any) =>
+                    <tr id={index} key={card.id} onClick={clickHandler}>
                         <th scope="row">{card.id}</th>
                         <td>{card.subject.name}</td>
                         <td>{card.creator.username}</td>

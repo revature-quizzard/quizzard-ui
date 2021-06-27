@@ -1,18 +1,19 @@
 
-import {Button, Col, Row, Table} from "react-bootstrap";
+import {Alert, Button, Col, Row, Table} from "react-bootstrap";
 import PublicStudySetData from "./PublicStudySetData";
 import FlashcardData from "./FlashcardData";
 import AddFlashcardModal from "./AddFlashcardModal";
 import {useState} from "react";
 import {useAppSelector} from "../../store/hooks";
-import {currentlyLoading, savePublicStudySets, studySetState} from "../../state-slices/study-set/study-set-slice";
+import { clearStudySet, currentlyLoading, savePublicStudySets, studySetState } from "../../state-slices/study-set/study-set-slice";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {createdSetSearch} from "../../remote/set-service";
 import {setSetList} from "../../state-slices/sets/set-list-slice";
 import {useDispatch} from "react-redux";
 import OwnedStudySetData from "./OwnedStudySetData";
-
-
+import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
+import { useHistory } from "react-router-dom";
+import {clearQuiz, hideQuiz} from "../../state-slices/create-quiz/create-quiz-slice";
 
 
 /**
@@ -29,6 +30,7 @@ const AvailableStudySets = () => {
     const [useList, setUseList] = useState(true);//true = public, false = owned
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
+    const history = useHistory();
     const renderFlashcardTable = () => {
         setShowCards(true);
     }
@@ -64,12 +66,33 @@ const AvailableStudySets = () => {
      */
     const publicSetMode = (e: any) => {
         dispatch(currentlyLoading());
+        dispatch(clearStudySet());
         setUseList(true);
     }
     const ownedSetMode = (e: any) => {
         dispatch(currentlyLoading());
+        dispatch(clearStudySet());
         setUseList(false);
     }
+
+    const goToStudy = (e: any) => {
+        e.preventDefault();
+        console.log('Button: Go to study...')
+        dispatch(isLoading());
+        history.push("/study")
+    }
+
+    const goToQuiz = (e: any) => {
+        e.preventDefault();
+        if(state.selectedStudySet.cards.length < 4) {
+            alert("Quizes need at least 4 questions. SORRY!!");
+        } else {
+            console.log('Button: Go to quiz...');
+            history.push("/createQuiz");
+        }
+
+    }
+
     //
     // let publicSetsSearch = async (e: any) => {
     //     e.preventDefault();
@@ -88,21 +111,22 @@ const AvailableStudySets = () => {
                 }
                 <Row className="justify-content-center">
                     <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={ownedSetMode} >Your Sets (Not used yet)</Button>
+                        <Button type="submit" onClick={ownedSetMode} >Your Sets</Button>
                     </Col>
                     <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={publicSetMode} >All Public Sets (Not used yet)</Button>
+                        <Button type="submit" onClick={publicSetMode} >Public Sets</Button>
                     </Col>
                 </Row>
                 <Row>
                     <Col className="justify-content-center">
                         <Row>
                             <Col>
-                                <h2 className="justify-content-center">Public Study Sets</h2>
+                                <h2 className="justify-content-center">Study Sets</h2>
                             </Col>
-                            <Col>
-                                <h3 className="justify-content-end">User: {auState.username} points: {}</h3>
-                            </Col>
+                            {/*Removed this stuff until points are actually used.*/}
+                            {/*<Col>*/}
+                            {/*    <h3 className="justify-content-end">User: {auState.username} points: {}</h3>*/}
+                            {/*</Col>*/}
                         </Row>
 
                         <Table striped bordered hover variant="dark">
@@ -123,7 +147,18 @@ const AvailableStudySets = () => {
                 {showCards &&
                 <Row>
                     <Col>
-                        <h2 className="justify-content-center">Flashcards in Study Set: #{state.selectedStudySet.id} - {state.selectedStudySet.name}</h2>
+                        <Row>
+                            <Col>
+                                <h2 className="justify-content-center">Flashcards in Study Set: #{state.selectedStudySet.id} - {state.selectedStudySet.name}</h2>
+                            </Col>
+                            <Col>
+                                <Button type="submit" onClick={goToStudy} >Study This</Button>
+                            </Col>
+                            <Col>
+                                <Button type="submit" onClick={goToQuiz} >Quiz Me!</Button>
+                            </Col>
+                        </Row>
+
                             <Table striped bordered hover variant="dark">
                             <thead>
                             <tr>

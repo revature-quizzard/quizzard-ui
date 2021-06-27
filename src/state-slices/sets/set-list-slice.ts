@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { CardSet } from '../../models/card-set';
+import { CardSetRequest } from '../../models/request-models/card-set-request';
 
 // Create an interface for the state object
 interface State {
-    cardSetList: Array<CardSet>;
+    cardSetList: Array<CardSetRequest>;
 }
 
 //Declare the initial state values that extends the State interface
@@ -19,11 +19,11 @@ export const setListSlice = createSlice({
     initialState,
 
     reducers: {
-        setSetList: (state,  action: PayloadAction<CardSet[]>) => {
+        setSetList: (state,  action: PayloadAction<CardSetRequest[]>) => {
             state.cardSetList = action.payload
         },
 
-        addSet: (state, action: PayloadAction<CardSet>) => {
+        addSet: (state, action: PayloadAction<CardSetRequest>) => {
             state.cardSetList.push(action.payload)
         }
     }

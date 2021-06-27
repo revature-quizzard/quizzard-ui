@@ -27,14 +27,14 @@ const PublicStudySetData = (props: any) => {
     }
     console.log('in here 02')
     const clickHandler = (e: any) => {
-        dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id - 1]));
+        dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id]));
         props.onStudySetChange();
     }
     console.log('in here 03')
     return (
         <tbody>
-        {state.finishedLoading && state.availablePublicStudySets.map((dataPoint: StudySet) =>
-            <tr key={dataPoint.id} id={dataPoint.id.toString()} onClick={clickHandler}>
+        {state.finishedLoading && state.availablePublicStudySets.map((dataPoint: StudySet, index: any) =>
+            <tr key={dataPoint.id} id={index} onClick={clickHandler}>
                 <th scope="row" >{dataPoint.id}</th>
                 <td>{dataPoint.creator === null ? 'Public' : dataPoint.creator.username}</td>
                 <td>{dataPoint.name}</td>

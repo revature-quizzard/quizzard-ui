@@ -1,18 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import {Flashcard, FlashcardDTO} from "../../models/flashcard";
+import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../../models/flashcard";
 
 // Create an interface for the state object
 interface State {
     isLoading: boolean;
     isLoaded: boolean;
     flashCards: Array<FlashcardDTO>;
+    flashCardsForStudy: Array<SetFlashcardDTO>;
     count: number;
 }
 
 //Declare the initial state values that extends the State interface
 const initialState: State = {
     flashCards: [],
+    flashCardsForStudy: [],
     isLoading: false,
     isLoaded: false,
     //If you are using test cards, start at count: 426, so you can see the 'end of flashcards' component
@@ -45,9 +47,11 @@ export const flashcardsSlice = createSlice({
         addFlashcard: (state, action: PayloadAction<FlashcardDTO>) =>{
            state.flashCards.push(action.payload)
         },
-
         setFlashcards: (state, action: PayloadAction<FlashcardDTO[]>) => {
             state.flashCards = action.payload
+        },
+        setFlashcardsForStudy: (state, action: PayloadAction<SetFlashcardDTO[]>) => {
+            state.flashCardsForStudy = action.payload
         },
         nextCard: (state) => {
             state.count += 1;
@@ -65,7 +69,7 @@ export const flashcardsSlice = createSlice({
 })
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { isLoading, isLoaded, addFlashcard, setFlashcards, nextCard, prevCard, resetCount } = flashcardsSlice.actions;
+export const { isLoading, isLoaded, addFlashcard, setFlashcards, setFlashcardsForStudy, nextCard, prevCard, resetCount } = flashcardsSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const flashcardsState = (state: RootState) => state.flashcards;

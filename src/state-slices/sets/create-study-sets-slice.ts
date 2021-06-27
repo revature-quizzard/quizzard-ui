@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { CardSet } from "../../models/card-set"
+import { CardSetRequest } from "../../models/request-models/card-set-request"
 import { Flashcard } from "../../models/flashcard";
 import FlashCard from "../../components/Flashcards/Flashcard";
 import { studySet } from "../../utilities/dummy-data";
