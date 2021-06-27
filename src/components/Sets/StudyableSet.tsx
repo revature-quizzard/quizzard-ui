@@ -53,7 +53,7 @@ export const StudyableSet = () => {
                 : 
                 <>
                     <h2>Display public study sets</h2>
-                    <button onClick = {handleClick}>Study</button>
+                    <button id="study-button" onClick = {handleClick}>Study</button>
                 </>
             }
         </>
