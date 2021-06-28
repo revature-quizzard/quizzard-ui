@@ -2,7 +2,7 @@
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {
     currentlyLoading,
-    savePublicStudySets,
+    saveStudySets,
     setStudySet,
     studySetState
 } from "../../state-slices/study-set/study-set-slice";
@@ -14,26 +14,25 @@ import {publicSetsFetcher} from "../../remote/sets-fetcher";
  * @param props: Callback function
  */
 const PublicStudySetData = (props: any) => {
-    console.log('SSD');
+ 
     let state = useAppSelector(studySetState);
     const dispatch = useAppDispatch();
 
     if (!state.finishedLoading) {
-        console.log('in here 01')
         publicSetsFetcher().then(data => {
             console.log(data);
-            dispatch(savePublicStudySets(data));
+            dispatch(saveStudySets(data));
         });
     }
-    console.log('in here 02')
+   
     const clickHandler = (e: any) => {
-        dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id]));
+        dispatch(setStudySet(state.availableStudySets[e.currentTarget.id]));
         props.onStudySetChange();
     }
-    console.log('in here 03')
+    
     return (
         <tbody>
-        {state.finishedLoading && state.availablePublicStudySets.map((dataPoint: StudySet, index: any) =>
+        {state.finishedLoading && state.availableStudySets.map((dataPoint: StudySet, index: any) =>
             <tr key={dataPoint.id} id={index} onClick={clickHandler}>
                 <th scope="row" >{dataPoint.id}</th>
                 <td>{dataPoint.creator === null ? 'Public' : dataPoint.creator.username}</td>

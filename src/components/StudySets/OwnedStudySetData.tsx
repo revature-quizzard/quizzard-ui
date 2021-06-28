@@ -2,7 +2,7 @@
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {
     currentlyLoading,
-    savePublicStudySets,
+    saveStudySets,
     setStudySet,
     studySetState
 } from "../../state-slices/study-set/study-set-slice";
@@ -25,18 +25,20 @@ const OwnedStudySetData = (props: any) => {
         console.log('in here 01')
         ownedSetsFetcher(auth.token).then(data => {
             console.log(data);
-            dispatch(savePublicStudySets(data));
+            dispatch(saveStudySets(data));
         });
     }
+
     console.log('in here 02')
     const clickHandler = (e: any) => {
-        dispatch(setStudySet(state.availablePublicStudySets[e.currentTarget.id - 1]));
+        dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
         props.onStudySetChange();
     }
+    
     console.log('in here 03')
     return (
         <tbody>
-        {state.finishedLoading && state.availablePublicStudySets.map((dataPoint: StudySet) =>
+        {state.finishedLoading && state.availableStudySets.map((dataPoint: StudySet) =>
             <tr key={dataPoint.id} id={dataPoint.id.toString()} onClick={clickHandler}>
                 <th scope="row" >{dataPoint.id}</th>
                 <td>{dataPoint.creator === null ? 'Public' : dataPoint.creator.username}</td>

@@ -20,7 +20,7 @@ interface StudySetState {
     answer: string;
     reviewable: boolean;
     public: boolean;
-    availablePublicStudySets: StudySet[];
+    availableStudySets: StudySet[];
     isLoading: boolean;
     finishedLoading: boolean;
     account: Account;
@@ -40,7 +40,7 @@ const initialState: StudySetState = {
     answer: '',
     reviewable: true,
     public: true,
-    availablePublicStudySets: [],
+    availableStudySets: [],
     isLoading: false,
     finishedLoading: false,
     account: {} as Account
@@ -87,17 +87,17 @@ export const studySetSlice = createSlice({
             state.reviewable = action.payload.reviewable;
             state.public = action.payload.public;
         },
-        savePublicStudySets: (state, action: PayloadAction<StudySet[]>) => {
-            state.availablePublicStudySets = action.payload;
+        saveStudySets: (state, action: PayloadAction<StudySet[]>) => {
+            state.availableStudySets = action.payload;
             state.finishedLoading = true;
         },
         appendCardToStudySet: (state, action: PayloadAction<SetFlashcardDTO>) => {
-            state.availablePublicStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
+            state.availableStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
         }
     }
 })
 export const {setStudySet,setFlashcard, clearStudySet, saveFlashcard,
-                savePublicStudySets, currentlyLoading, finishedLoading,
+                saveStudySets, currentlyLoading, finishedLoading,
                 appendCardToStudySet} = studySetSlice.actions;
 export const studySetState = (state: RootState) => state.studySets;
 export default studySetSlice.reducer;

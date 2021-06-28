@@ -4,8 +4,8 @@
 
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
-import {useSelector, useDispatch} from "react-redux";
+import { authState, logoutUserReducer } from "../../state-slices/auth/auth-slice";
+import { useSelector, useDispatch } from "react-redux";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -25,31 +25,28 @@ const Navigation = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {!auth.isAuthenticated &&
-                <>
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/login">
-              Login
-            </Link>
+              <>
+                <Link id="navLink" className="text-light ml-2 mr-2" to="/login">
+                  Login
+                </Link>
 
-              <Link id="navLink" className="text-light ml-2 mr-2" to="/register">
-              Register
-              </Link>
-            </>
+                <Link id="navLink" className="text-light ml-2 mr-2" to="/register">
+                  Register
+                </Link>
+              </>
             }
             {auth.isAuthenticated &&
-                <>
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/studysets">
-              StudySets
-            </Link>
+              <>
+                <Link id="navLink" className="text-light ml-2 mr-2" to="/study">
+                  Study
+                </Link>
 
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/update">
-              Update
-            </Link>
-            <Link id="navLink" className="text-light ml-2 mr-2" to="/sets">
-              Sets
-            </Link>
+                <Link id="navLink" className="text-light ml-2 mr-2" to="/update">
+                  Update
+                </Link>
 
-            <a id="navLink" className="text-light ml-2 mr-2" onClick={handleLogout}>Logout</a>
-                </>
+                <a id="navLink" className="text-light ml-2 mr-2" onClick={handleLogout}>Logout</a>
+              </>
             }
           </Nav>
         </Navbar.Collapse>

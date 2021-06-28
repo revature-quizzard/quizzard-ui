@@ -1,19 +1,14 @@
 
-import {Alert, Button, Col, Row, Table} from "react-bootstrap";
-import PublicStudySetData from "./PublicStudySetData";
-import FlashcardData from "./FlashcardData";
+import { Button, Col, Row, Table } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
 import {useState} from "react";
 import {useAppSelector} from "../../store/hooks";
-import { clearStudySet, currentlyLoading, savePublicStudySets, studySetState } from "../../state-slices/study-set/study-set-slice";
+import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
 import {authState} from "../../state-slices/auth/auth-slice";
-import {createdSetSearch} from "../../remote/set-service";
-import {setSetList} from "../../state-slices/sets/set-list-slice";
 import {useDispatch} from "react-redux";
-import OwnedStudySetData from "./OwnedStudySetData";
+import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
 import { useHistory } from "react-router-dom";
-import {clearQuiz, hideQuiz} from "../../state-slices/create-quiz/create-quiz-slice";
 
 
 /**
@@ -22,21 +17,22 @@ import {clearQuiz, hideQuiz} from "../../state-slices/create-quiz/create-quiz-sl
  * renders the studySets page
  */
 const AvailableStudySets = () => {
-    console.log('ASS');
+    
     const dispatch = useDispatch();
-    const [showList, setShowList] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
     const [useList, setUseList] = useState(true);//true = public, false = owned
+
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
     const history = useHistory();
+
     const renderFlashcardTable = () => {
         setShowCards(true);
     }
+    
     const modalHandler = () => {
-        if (showModal) setShowModal(false);
-        else setShowModal(true);
+        setShowModal(prevState => !prevState);
     }
 
     // /**
@@ -61,14 +57,14 @@ const AvailableStudySets = () => {
     //     setShowList(true);
     // }
 
-    /*
-    These functions set which list is displayed below based on button presses.
-     */
+    
+    // These functions set which list is displayed below based on button presses.
     const publicSetMode = (e: any) => {
         dispatch(currentlyLoading());
         dispatch(clearStudySet());
         setUseList(true);
     }
+
     const ownedSetMode = (e: any) => {
         dispatch(currentlyLoading());
         dispatch(clearStudySet());
@@ -79,16 +75,16 @@ const AvailableStudySets = () => {
         e.preventDefault();
         console.log('Button: Go to study...')
         dispatch(isLoading());
-        history.push("/study")
+        history.push("/card")
     }
 
     const goToQuiz = (e: any) => {
         e.preventDefault();
         if(state.selectedStudySet.cards.length < 4) {
-            alert("Quizes need at least 4 questions. SORRY!!");
+            alert("Quizzes need at least 4 questions. SORRY!!");
         } else {
             console.log('Button: Go to quiz...');
-            history.push("/createQuiz");
+            history.push("/quiz");
         }
 
     }
@@ -129,19 +125,7 @@ const AvailableStudySets = () => {
                             {/*</Col>*/}
                         </Row>
 
-                        <Table striped bordered hover variant="dark">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Owner</th>
-                                <th>Name</th>
-                                <th>Public</th>
-                            </tr>
-                            </thead>
-                            {useList
-                                ? <PublicStudySetData onStudySetChange={renderFlashcardTable}/>
-                                : <OwnedStudySetData onStudySetChange={renderFlashcardTable}/>}
-                        </Table>
+                        <StudyListTable content={useList ? "public-sets" : "owned-sets"} type="sets" columns={["ID", "Owner", "Name", "Public"]} onStudySetChange={renderFlashcardTable} />
                     </Col>
                 </Row>
                 {showCards &&
@@ -158,21 +142,7 @@ const AvailableStudySets = () => {
                                 <Button type="submit" onClick={goToQuiz} >Quiz Me!</Button>
                             </Col>
                         </Row>
-
-                            <Table striped bordered hover variant="dark">
-                            <thead>
-                            <tr>
-                            <td>ID</td>
-                            <td>Subject</td>
-                            <td>Creator</td>
-                            <td>Question</td>
-                            <td>Answer</td>
-                            <td>Reviewable</td>
-                            <td>Public</td>
-                            </tr>
-                            </thead>
-                            <FlashcardData />
-                            </Table>
+                            <StudyListTable content="flashcards" type="flashcards" columns={["ID", "Subject", "Creator", "Question", "Answer", "Reviewable", "Public"]} />
                         <Button as="input" onClick={modalHandler} type="button" value="Add a New Flashcard to StudySet" />
                     </Col>
                 </Row>
