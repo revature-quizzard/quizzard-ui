@@ -1,10 +1,7 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import ReactCardFlip from "react-card-flip";
 import { flashcardsState, prevCard, nextCard, resetCount, setFlashcardsForStudy, isLoaded, } from "../../state-slices/flashcard/flashcard-slice";
-import { subjectsState, setSubjects } from "../../state-slices/subject/subject-slice";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubs } from "../../remote/subject-service";
-import { getCards } from "../../remote/card-service";
 import { useState, useEffect } from "react";
 import { studySetState } from "../../state-slices/study-set/study-set-slice";
 
@@ -43,8 +40,11 @@ export const FlipCard = () => {
    */
   const handlePrev = () => {
     if (flashcards.count > 0) {
-      dispatch(prevCard());
       setIsCardFlipped(false);
+      setTimeout(() => {
+        dispatch(prevCard())
+      },150);
+
       setIsEnd(false);
     }
   };
@@ -58,9 +58,11 @@ export const FlipCard = () => {
     if (flashcards.count < flashcards.flashCardsForStudy.length - 1) {
       //   dispatch(setTotal(quizState.quiz.length));
       setIsCardFlipped(false);
+      setTimeout(() => {
+        dispatch(nextCard())
+      },150);
       console.log(flashcards.count);
       console.log(flashcards.flashCardsForStudy.length);
-      dispatch(nextCard());
     } else if (flashcards.count === flashcards.flashCardsForStudy.length - 1) {
       dispatch(nextCard());
       setIsCardFlipped(false);

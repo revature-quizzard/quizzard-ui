@@ -29,8 +29,6 @@ const Login = () => {
     history.push("/study");
   }
 
-    // 
-
     return (
         <>
         <Form>

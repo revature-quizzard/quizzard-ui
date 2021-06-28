@@ -50,12 +50,19 @@ export const resultSlice = createSlice({
         },
         resetAnswered: (state) => {
             state.isAnswered = false
+        },
+        takeAnotherQuizResult: (state) => {
+            state.total = 0;
+            state.answered = [];
+            state.correct = [];
+            state.incorrect = [];
+            state.showResults = false;
         }
 
     }
 })
 
-export const { setTotal, addAnswered, addCorrect, addIncorrect, resetAll, showResults, hideResults, resetAnswered } = resultSlice.actions;
+export const { setTotal, addAnswered, addCorrect, addIncorrect, resetAll, showResults, hideResults, resetAnswered, takeAnotherQuizResult } = resultSlice.actions;
 
 export const resultState = (state: RootState) => state.result;
 

@@ -8,7 +8,8 @@ import {useState} from "react";
  * renders subjects dropdown menu
  */
 const SubjectDropDown = (props: any) => {
-    
+    const [topic,setTopic] = useState('OOP');
+
     let topics = new Map ([
         ['OOP', 1],
         ['Core Java',2],
@@ -25,7 +26,9 @@ const SubjectDropDown = (props: any) => {
     ]);
     const changeHandler = (e: any) => {
         let subject = {id: topics.get(e), name: e};
+        console.log('subject created: ',subject);
         props.onChangeCallback(subject);
+        setTopic(e);
     }
     return <div>
         <DropdownButton id="dropdown-basic-button" title={topic} onSelect={changeHandler}>

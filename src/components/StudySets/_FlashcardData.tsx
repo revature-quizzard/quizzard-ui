@@ -14,7 +14,6 @@ const FlashcardData = () => {
     const flashCards = state.selectedStudySet.cards;
     const clickHandler = (event: any) => {
 
-
     }
     return (
             <tbody>
