@@ -1,11 +1,11 @@
 
 import { Button, Col, Row, Table } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
-import {useState} from "react";
-import {useAppSelector} from "../../store/hooks";
+import { useState } from "react";
+import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import {authState} from "../../state-slices/auth/auth-slice";
-import {useDispatch} from "react-redux";
+import { authState } from "../../state-slices/auth/auth-slice";
+import { useDispatch } from "react-redux";
 import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
 import { useHistory } from "react-router-dom";
@@ -21,7 +21,7 @@ const AvailableStudySets = () => {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
-    const [useList, setUseList] = useState(true);//true = public, false = owned
+    const [useList, setUseList] = useState(false);//true = public, false = owned
 
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
@@ -89,6 +89,10 @@ const AvailableStudySets = () => {
 
     }
 
+    const createSet = (e: any) => {
+        history.push("/sets");
+    }
+
     //
     // let publicSetsSearch = async (e: any) => {
     //     e.preventDefault();
@@ -107,10 +111,13 @@ const AvailableStudySets = () => {
                 }
                 <Row className="justify-content-center">
                     <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={ownedSetMode} >Your Sets</Button>
+                        <Button type="button" onClick={ownedSetMode} >Your Sets</Button>
                     </Col>
                     <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={publicSetMode} >Public Sets</Button>
+                        <Button type="button" onClick={publicSetMode} >Public Sets</Button>
+                    </Col>
+                    <Col className="col-1" style={{padding: "2px"}}>
+                        <Button type="button" onClick={createSet}>Create New Set</Button>
                     </Col>
                 </Row>
                 <Row>
