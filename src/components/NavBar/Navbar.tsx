@@ -45,7 +45,7 @@ const Navigation = () => {
                   Update
                 </Link>
 
-                <a id="navLink" className="text-light ml-2 mr-2" onClick={handleLogout}>Logout</a>
+                <Link id="navLink" className="text-light ml-2 mr-2" onClick={handleLogout} to="/">Logout</Link>
               </>
             }
           </Nav>
