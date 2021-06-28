@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
  * @returns {JSX.Element}
  * renders the studySets page
  */
-const AvailableStudySets = () => {
+const StudyHub = () => {
     
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -159,4 +159,4 @@ const AvailableStudySets = () => {
     )
 };
 
-export default AvailableStudySets;
+export default StudyHub;

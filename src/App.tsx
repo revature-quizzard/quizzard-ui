@@ -5,11 +5,11 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Main from "./components/Main/Main";
-import Navigation from "./components/NavBar/Navbar";
+import Navigation from "./components/NavBar/Navigation";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
-import AvailableStudySets from "./components/StudySets/AvailableStudySets";
+import StudyHub from "./components/StudySets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
@@ -52,7 +52,7 @@ function App() {
             <CreateQuiz />
           </Route>
           <Route exact path="/study">
-            <AvailableStudySets />
+            <StudyHub />
           </Route>
         </Switch>
       </Container>
