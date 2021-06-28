@@ -11,7 +11,7 @@ import {
 import { authState } from '../../state-slices/auth/auth-slice';
 
 export default function StudyListTable(props: any) {
-
+    console.log("props.columns: ", props.columns);
     const dispatch = useAppDispatch();
     const state = useAppSelector(studySetState);
     const auth = useAppSelector(authState);
@@ -48,12 +48,12 @@ export default function StudyListTable(props: any) {
             <thead>
                 <tr>
                     {props.columns.map((elem: String, index: number) => {
-                        <th key={`column-label: ${index}`}>elem</th>
+                        return (<th key={`column-label: ${index}`}>{elem}</th>)
                     })}
                 </tr>
             </thead>
             {state.finishedLoading && iterable.map((elem: any, index: number) => {
-                <tr key={index} id={elem.id} onClick={clickHandler}>
+                return (<tr key={index} id={elem.id} onClick={clickHandler}>
                     <th scope="row">{elem.id}</th>
 
                     {props.type === "sets" &&
@@ -72,7 +72,7 @@ export default function StudyListTable(props: any) {
                             <td>{elem.reviewable.toString()}</td>
                             <td>{elem.public.toString()}</td>
                         </>}
-                </tr>
+                </tr>)
             })}
 
         </Table>

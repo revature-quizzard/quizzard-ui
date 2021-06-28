@@ -11,7 +11,8 @@ export const publicSetsFetcher = async () =>
 {
     console.log('fetcher 01')
     let data: StudySet[] = [];
-    const remoteURL = 'http://quizzard-api-lb-109748176.us-east-2.elb.amazonaws.com';
+    // const remoteURL = 'http://quizzard-api-lb-109748176.us-east-2.elb.amazonaws.com';
+    const remoteURL = "http://localhost:5000";
     await axios.get(`${remoteURL}/publicSets`)
         .then(response => {
             data = response.data;
@@ -29,7 +30,8 @@ export const ownedSetsFetcher = async (token: string) =>
 
     console.log('fetcher 02')
     let data: StudySet[] = [];
-    const remoteURL = 'http://quizzard-api-lb-109748176.us-east-2.elb.amazonaws.com';
+    // const remoteURL = 'http://quizzard-api-lb-109748176.us-east-2.elb.amazonaws.com';
+    const remoteURL = "http://localhost:5000";
     await axios.get(`${remoteURL}/ownedSets`, {headers})
         .then(response => {
             data = response.data;

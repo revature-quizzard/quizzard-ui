@@ -34,13 +34,13 @@ const AddFlashcardModal = (props: any) => {
 
         let newCard: SetFlashcardDTO = {
             id: 0,
-            subject: subject,
-            creator: {username: 'seantaba', password: '', id: 0, points: 0, roles: {} as Role[]},
+            subject: { id: 1, name: "OOP"},
+            creator: {username: 'aanderson', password: '', id: 0, points: 0, roles: {} as Role[]},
             question: question,
             answer: answer,
             reviewable: isReviewable,
             public: isPublic,
-            studySetId: stState.selectedStudySet.id
+            studySetId: 1
         }
 
         console.log(newCard);
