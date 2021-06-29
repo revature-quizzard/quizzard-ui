@@ -60,56 +60,29 @@ export default function StudyListTable(props: any) {
       : state.selectedStudySet.cards;
 
   return (
-    <div
-      className="col-md-4 tileContainer"
-    >
+    <div className="tile-container">
       {state.finishedLoading &&
         iterable.map((elem: any, index: number) => {
           return (
-            <div
-              className="studySetTile"
-                  id={elem.id}
-              onClick={clickHandler}
-            >
-              <Row>
-                <Col className="elementName">{elem.name}</Col>
-              </Row>
-              <Row>
-                {props.type === "sets" && (
-                  <Col className="elementIsPublic">
-                    {elem.isPublic ? (
-                      <div className="isPublic">Public</div>
-                    ) : (
-                      <div className="isPrivate">Private</div>
-                    )}
-                  </Col>
-                )}
-              </Row>
-              <Row>
-                <Col className="elementCreator">
+            <div className={props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"} id={`${props.type}-${elem.id}`} onClick={clickHandler}>
+                {props.type === "sets" && <p className="element-name tile-field">
+                  {elem.name}
+                </p>}
+                {props.type === "sets" && elem.isPublic && <div className="is-public tile-field">Public</div>}
+                {props.type === "sets" && !elem.isPublic && <div className="is-private tile-field">Private</div>}
+                <p className="element-creator tile-field">
                   {elem.creator === null ? "Public" : elem.creator.username}
-                </Col>
-              </Row>
+                </p>
 
               {props.type === "flashcards" && (
                 <>
-                  <Row>
-                    <Col>{elem.question}</Col>
-                  </Row>
-                  <Row>
-                    <Col>{elem.answer}</Col>
-                  </Row>
-                  <Row>
-                    <Col>{elem.subject.name}</Col>
-                  </Row>
-                  <Row>
-                    <Col>{elem.reviewable.toString()}</Col>
-                  </Row>
-                  <Row>
-                    <Col>{elem.public.toString()}</Col>
-                  </Row>
+                    <p className="tile-field">{elem.question}</p>
+                    <p className="tile-field">{elem.subject.name}</p>
+                    <p className="tile-field">{elem.reviewable.toString()}</p>
+                    <p className="tile-field">{elem.public.toString()}</p>
                 </>
               )}
+
             </div>
           );
         })}

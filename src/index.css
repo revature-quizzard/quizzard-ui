@@ -212,48 +212,78 @@ td {
 
 
 /* Study set container Styling */
+.tile-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  padding: 1rem 6rem;
+  margin: 2rem 1rem;
+}
 
-.studySetRow {
+.tile-card {
+  width: 16rem;
+  height: 16rem;
+  margin: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: .25rem;
   cursor: pointer;
 }
- 
-.elementName {
-  text-align: center;
-  font-size: 20px;
+
+.flashcard-tile {
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
-.elementIsPublic {
-  text-align:center;
-  font-size: 15px;
-}
-.elementCreator {
-  text-align:center;
-  font-size: 15px;
-  font-weight: 700;
+.flashcard-tile > .tile-field {
+  margin: 0;
+  padding: 0;
 }
 
-.isPublic {
-  
+.is-public {
   color: green;
-  
 }
-.isPrivate {
+
+.is-private {
   color: red;
 }
 
-.tileContainer {
+.tile-field {
+  width: 100%;
+  font-family: var(--normal-font);
+  font-size: 1rem;
   display: flex;
-  justify-content: space-between;
-  align-content: center;
-  flex: wrap;
-  cursor: pointer;
-  
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }
 
-.studySetTile {
-  margin: 10px;
-  height: 10rem;
-  width: 10rem;
-  border: 1px black solid;
-  border-radius: 10px;
+.element-name {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#app-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-width: none;
+  padding-bottom: 2rem;
+}
+
+#app-container > div {
+  /*this is a little hacky and needs fixing,
+  the row element that is a child of the app-container element
+  was overflowing upwards so that it got partially 
+  stuck behind the nav bar, need a better solution
+  because neither the nav bar or app container have fixed heights
+  so if their sizes changed the space between the nav bar and the
+  start of the content would be unpredictable */
+  margin-top: 2rem;
 }
