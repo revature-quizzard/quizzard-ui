@@ -4,6 +4,7 @@ import {updateAccInfo}  from "../../remote/update-info-service";
 import { useHistory } from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
+import {ResUpdateAccModel} from "../../models/update-account-info-model";
 
 /**
  * This function component is where the user will be able to update their username, password, or email. We leverage
@@ -12,7 +13,7 @@ import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
  * @param props Nothing at the moment
  * @constructor
  */
-const UpdateAccontInfo =  ()=>{
+const UpdateAccountInfo =  ()=>{
 
     //useState hook for new username input, next two states are similar to this but for password, and email.
     const [username, setUsername] = useState("");
@@ -30,7 +31,7 @@ const UpdateAccontInfo =  ()=>{
                             password:"",
                             username:"",
                             conflict:""
-    })
+    } as ResUpdateAccModel);
 
     //hook for displaying modal from react-boostrap
     const [show,setShow] = useState(false);
@@ -52,10 +53,9 @@ const UpdateAccontInfo =  ()=>{
             'Authorization': localStorage.getItem("Authorization")
         }
 
-        let resultUser = await updateAccInfo({username,email, password}, headers)
-        setResult( prevState => resultUser);
-
-        if(!result.conflict){
+        let resultUser:ResUpdateAccModel = await updateAccInfo({username,email, password}, headers)
+        setResult( resultUser);
+        if(!resultUser.conflict){
             dispatch(logoutUserReducer());
             setTimeout(()=>{
             localStorage.clear();
@@ -83,7 +83,7 @@ const UpdateAccontInfo =  ()=>{
                             <Form id="FormUAI">
                                 <Form.Group>
                                     <Form.Label id="label-username">Username:</Form.Label>
-                                    <Form.Control type="text" id="username" placeholder="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
+                                    <Form.Control type="text" id="username"  placeholder="username" name="username" value={username} onChange={(e)=>setUsername(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -98,7 +98,7 @@ const UpdateAccontInfo =  ()=>{
                                 </Form.Group>
                                 <Col sm={{ span: 6, offset: 3 }} >
                                 <Form.Group>
-                                    <Button variant="danger" id="submit-btn"type="submit" onClick={updateInfo} block>Submit</Button>
+                                    <Button variant="danger" data-testid="submit-btn" id="submit-btn"type="submit" onClick={updateInfo}  block>Submit</Button>
                                 </Form.Group>
 
                                 </Col>
@@ -110,7 +110,7 @@ const UpdateAccontInfo =  ()=>{
             </Row>
         </Container>
 
-        <Modal id="modalContainer" show={show} onHide={handleClose}>
+        <Modal data-testid="containerModal" id="modalContainer" show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Your Updated Information!</Modal.Title>
             </Modal.Header>
@@ -131,4 +131,4 @@ const UpdateAccontInfo =  ()=>{
     )
 }
 
-export default UpdateAccontInfo;
+export default UpdateAccountInfo;

@@ -11,7 +11,7 @@ import Register from "./components/Register/Register";
 import FlashCard from "./components/Flashcards/Flashcard";
 import StudyHub from "./components/StudySets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
-import UpdateAccontInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
+import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
 
@@ -40,7 +40,7 @@ function App() {
             <Sets />
           </Route>
           <Route exact path="/update">
-            <UpdateAccontInfo />
+            <UpdateAccountInfo />
           </Route>
           <Route exact path="/card">
             <FlipCard />
