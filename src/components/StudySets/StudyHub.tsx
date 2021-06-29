@@ -1,7 +1,7 @@
 
 import { Button, Col, Row, Table } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
 import { authState } from "../../state-slices/auth/auth-slice";
@@ -26,6 +26,12 @@ const StudyHub = () => {
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
     const history = useHistory();
+
+    useEffect(() => {
+      if (showCards) {
+        document.getElementById("selected-study-set-title").scrollIntoView();
+      }
+    });
 
     const renderFlashcardTable = () => {
         setShowCards(true);
@@ -158,7 +164,7 @@ const StudyHub = () => {
               <Col >
                 <Row>
                   <Col>
-                    <h2 className="justify-content-center">
+                    <h2 className="justify-content-center" id="selected-study-set-title">
                       Flashcards in Study Set: #{state.selectedStudySet.id} -{" "}
                       {state.selectedStudySet.name}
                     </h2>

@@ -37,15 +37,7 @@ export default function StudyListTable(props: any) {
             dispatch(saveStudySets(data));
         });
     }
-
-
-    if (!state.finishedLoading && props.content === "public-sets") {
-        publicSetsFetcher(auth.token).then(data => {
-            console.log(data);
-            dispatch(saveStudySets(data));
-        });
-    }
-
+  
     if (!state.finishedLoading && props.content === "owned-sets") {
         ownedSetsFetcher(auth.token).then(data => {
             console.log(data);
@@ -60,66 +52,39 @@ export default function StudyListTable(props: any) {
             props.onStudySetChange();
         }
     };
-
-    const iterable: Array<any> =
+  
+ const iterable: Array<any> = 
         props.type === "sets"
             ? state.availableStudySets
             : state.selectedStudySet.cards;
 
-    return (
-        <div
-            className="col-md-4 tileContainer"
-        >
-            {state.finishedLoading &&
-            iterable.map((elem: any, index: number) => {
-                return (
-                    <div
-                        className="studySetTile"
-                        id={elem.id}
-                        onClick={clickHandler}
-                    >
-                        <Row>
-                            <Col className="elementName">{elem.name}</Col>
-                        </Row>
-                        <Row>
-                            {props.type === "sets" && (
-                                <Col className="elementIsPublic">
-                                    {elem.isPublic ? (
-                                        <div className="isPublic">Public</div>
-                                    ) : (
-                                        <div className="isPrivate">Private</div>
-                                    )}
-                                </Col>
-                            )}
-                        </Row>
-                        <Row>
-                            <Col className="elementCreator">
-                                {elem.creator === null ? "Public" : elem.creator.username}
-                            </Col>
-                        </Row>
+  return (
+    <div className="tile-container">
+      {state.finishedLoading &&
+        iterable.map((elem: any, index: any) => {
+          return (
+            <div className={props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"} id={index} onClick={clickHandler}>
+                {props.type === "sets" && <p className="element-name tile-field">
+                  {elem.name}
+                </p>}
+                {props.type === "sets" && elem.isPublic && <div className="is-public tile-field">Public</div>}
+                {props.type === "sets" && !elem.isPublic && <div className="is-private tile-field">Private</div>}
+                <p className="element-creator tile-field">
+                  {elem.creator === null ? "Public" : elem.creator.username}
+                </p>
 
-                        {props.type === "flashcards" && (
-                            <>
-                                <Row>
-                                    <Col>{elem.question}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>{elem.answer}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>{elem.subject.name}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>{elem.reviewable.toString()}</Col>
-                                </Row>
-                                <Row>
-                                    <Col>{elem.public.toString()}</Col>
-                                </Row>
-                            </>
-                        )}
-                    </div>
-                );
-            })}
-        </div>
-    );
+              {props.type === "flashcards" && (
+                <>
+                    <p className="tile-field tile-flashcard-field">{elem.question}</p>
+                    <p className="tile-field tile-flashcard-field">{elem.subject.name}</p>
+                    <p className="tile-field">{elem.reviewable.toString()}</p>
+                    <p className="tile-field">{elem.public.toString()}</p>
+                </>
+              )}
+
+            </div>
+          );
+        })}
+    </div>
+  );
 }
