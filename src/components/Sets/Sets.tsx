@@ -3,6 +3,7 @@ import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootst
 import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
 import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
 import { CardSetRequest } from "../../models/request-models/card-set-request";
+import { CardSetResponse } from "../../models/response-models/card-set-response";
 import {createdSetSearch, createStudySetWithToken} from "../../remote/set-service";
 import SetList from "./SetList";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,15 +13,12 @@ import { getCards } from "../../remote/card-service";
 import { getSubs } from "../../remote/subject-service";
 import { useHistory } from 'react-router-dom'
 
-import { appendCardToStudySet } from "../../state-slices/study-set/study-set-slice";
-
-
 
 /**
  * Top of Sets function. Who wrote this?
  * @constructor
  */
-function Sets() {
+export function Sets() {
   const dispatch = useDispatch();
   //const allSetsState = useSelector(setListState);
   const history = useHistory();
@@ -92,7 +90,7 @@ function Sets() {
   let handleCreateStudySet = () => {
     handleLocalFlashcards();
     handlePersistStudySet();
-    history.push("/study");
+    history.push("/studySets");
     //history.go(0);//re-render component?
   };
 
@@ -127,7 +125,6 @@ function Sets() {
 
     await createStudySetWithToken(setObj, headers).then((res) => {
       console.log('Create study set response from API: ', res);
-      dispatch(appendCardToStudySet(res.cards));
     }).catch((error) => {
       console.log(error);
     });
@@ -180,8 +177,8 @@ function Sets() {
   return (
     <>
       <Container style={{ marginTop: "10px" }}>
-        <Row className="sticky-top">
-          <Col md={10} className="mobile-semitransparent">
+        <Row>
+          <Col>
             <Form>
               <Form.Group>
                 <Form.Label>Set Name: </Form.Label>
@@ -204,22 +201,12 @@ function Sets() {
               </Form.Group>
             </Form>
           </Col>
-          <Col md={2}>
-            <Form.Group className="text-center">
-              <Button
-                className="create-study-set-button"
-                onClick={handleCreateStudySet}
-              >
-                Create Study Set
-              </Button>
-            </Form.Group>
-          </Col>
         </Row>
         <Row>
           <CardDeck>
             {stateFlashcards.flashCards.map((card) => {
               return (
-                <Col xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
+                <Col xs={8} md={6} lg={4} style={{ padding: "1rem" }}>
                   <Card>
                     <Card.Header>{card.question}</Card.Header>
                     <Card.Body>
@@ -251,6 +238,22 @@ function Sets() {
             })}
           </CardDeck>
         </Row>
+        <Container>
+          <Row>
+            <Col>
+              <Form>
+                <Form.Group className="text-center">
+                  <Button
+                    className="create-study-set-button"
+                    onClick={handleCreateStudySet}
+                  >
+                    Create Study Set
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
       </Container>
       {showList && <SetList />}
     </>

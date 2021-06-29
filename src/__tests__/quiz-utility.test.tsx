@@ -5,9 +5,9 @@ import {
   answerChoiceRandomizer,
   createWrongAnswerArray,
   filterCurrentCard
-} from '../Utilities/quizUtility';
-import { studySet } from "../Utilities/dummyData";
-import { Flashcard } from "../Models/Flashcard";
+} from '../utilities/quiz-utility';
+import { studySet } from "../utilities/dummy-data";
+import { Flashcard } from "../models/flashcard";
 
 let flashCard1 : Flashcard;
 let flashCard2 : Flashcard;
