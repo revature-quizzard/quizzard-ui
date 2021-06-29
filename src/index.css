@@ -201,11 +201,13 @@ td {
 
 .sticky-top {
   background-color: white;
+  position: sticky;
 }
 
 @media (max-width:768px) {
   .sticky-top {
     background-color: rgba(0,0,0,0);
+    
   }
   .mobile-semitransparent {
     background-color: rgba(0, 0, 0, 0.25);

@@ -47,8 +47,9 @@ export default function StudyListTable(props: any) {
 
 
     const clickHandler = (e: any) => {
-        if (props.type === "sets") {
-            dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
+      if (props.type === "sets") {
+          console.log("e.currentTarget.id with out negative one", state.availableStudySets[e.currentTarget.id])
+            dispatch(setStudySet(state.availableStudySets[e.currentTarget.id]));
             props.onStudySetChange();
         }
     };
