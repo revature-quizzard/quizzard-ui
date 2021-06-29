@@ -12,13 +12,12 @@ import { authState } from '../../state-slices/auth/auth-slice';
 import { useEffect } from 'react';
 
 export default function StudyListTable(props: any) {
-    console.log("props.columns: ", props.columns);
     const dispatch = useAppDispatch();
     const state = useAppSelector(studySetState);
     const auth = useAppSelector(authState);
 
     useEffect(() => {
-        publicSetsFetcher().then(data => {
+        publicSetsFetcher(auth.token).then(data => {
             console.log(data);
             dispatch(saveStudySets(data));
         }).catch(err => console.log());
@@ -31,7 +30,7 @@ export default function StudyListTable(props: any) {
     }, [state.selectedStudySet.cards])
 
     if (!state.finishedLoading && props.content === "public-sets") {
-        publicSetsFetcher().then(data => {
+        publicSetsFetcher(auth.token).then(data => {
             console.log(data);
             dispatch(saveStudySets(data));
         });

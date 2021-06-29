@@ -8,6 +8,7 @@ import {
 } from "../../state-slices/study-set/study-set-slice";
 import {StudySet} from "../../models/study-set";
 import {publicSetsFetcher} from "../../remote/sets-fetcher";
+import {authState} from "../../state-slices/auth/auth-slice";
 
 /**
  * @author Sean Taba
@@ -16,10 +17,11 @@ import {publicSetsFetcher} from "../../remote/sets-fetcher";
 const PublicStudySetData = (props: any) => {
  
     let state = useAppSelector(studySetState);
+    let auState = useAppSelector(authState);
     const dispatch = useAppDispatch();
 
     if (!state.finishedLoading) {
-        publicSetsFetcher().then(data => {
+        publicSetsFetcher(auState.token).then(data => {
             console.log(data);
             dispatch(saveStudySets(data));
         });

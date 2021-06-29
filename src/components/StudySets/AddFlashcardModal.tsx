@@ -28,7 +28,7 @@ const AddFlashcardModal = (props: any) => {
     const dispatch = useAppDispatch();
     const auState = useAppSelector(authState)
 
-const [topic, setTopic] = useState({ id: 1, name: "OOP"});
+// const [topic, setTopic] = useState({ id: 1, name: "OOP"});
     
     const handleClose = () => {
         props.onCloseModal();
@@ -39,7 +39,7 @@ const [topic, setTopic] = useState({ id: 1, name: "OOP"});
         let newCard: SetFlashcardDTO = {
             id: 0,
             subject: subject,
-            creator: {username: 'aanderson', password: '', id: 0, points: 0, roles: {} as Role[]},
+            creator: {username: auState.username, password: '', id: 0, points: 0, roles: {} as Role[]},
             question: question,
             answer: answer,
             reviewable: isReviewable,
@@ -49,7 +49,7 @@ const [topic, setTopic] = useState({ id: 1, name: "OOP"});
 
         console.log(newCard);
 
-        flashcardSaver(newCard).then(card => {
+        flashcardSaver(newCard,auState.token).then(card => {
             console.log('promise returning', card)
             dispatch(appendCardToStudySet(card));
         });
