@@ -3,7 +3,6 @@ import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootst
 import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
 import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
 import { CardSetRequest } from "../../models/request-models/card-set-request";
-import { CardSetResponse } from "../../models/response-models/card-set-response";
 import {createdSetSearch, createStudySetWithToken} from "../../remote/set-service";
 import SetList from "./SetList";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +11,16 @@ import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
 import { getSubs } from "../../remote/subject-service";
 import { useHistory } from 'react-router-dom'
+
 import { appendCardToStudySet } from "../../state-slices/study-set/study-set-slice";
+
 
 
 /**
  * Top of Sets function. Who wrote this?
  * @constructor
  */
-export function Sets() {
+function Sets() {
   const dispatch = useDispatch();
   //const allSetsState = useSelector(setListState);
   const history = useHistory();
