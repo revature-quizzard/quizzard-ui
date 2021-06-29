@@ -1,6 +1,7 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {addPointsToUser} from "../../remote/update-info-service";
 import {
   resetAll,
   hideResults,
@@ -10,6 +11,7 @@ import {
   hideQuiz,
   clearQuiz, takeAnotherQuizCreate,
 } from "../../state-slices/create-quiz/create-quiz-slice";
+import {useEffect} from "react";
 
 const Results = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,10 @@ const Results = () => {
     dispatch(takeAnotherQuizResult());
     history.push("/study");
   };
+
+  useEffect(() => {
+    addPointsToUser({points: results.correct.length * 10})
+  }, []);
 
   return (
     <Row>
@@ -48,6 +54,13 @@ const Results = () => {
             <h4>
               You got {results.incorrect.length} wrong...{" "}
               {(results.incorrect.length / results.total) * 100}%
+            </h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h4>
+              You have been awarded {results.correct.length * 10} points!
             </h4>
           </Col>
         </Row>
