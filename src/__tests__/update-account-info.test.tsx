@@ -4,8 +4,8 @@ import { Button, Modal} from "react-bootstrap";
 import { render,fireEvent } from "@testing-library/react";
 import UpdateAccontInfo from "../components/UpdateAccountInfo/UpdateAccountInfo";
 import React from "react";
-import {UpdateAccModel} from "../Models/UpdateAccountInfo-model";
-import {updateAccInfo} from "../Remote/updateInfo-service";
+import {UpdateAccModel} from "../models/update-account-info-model";
+import {updateAccInfo} from "../remote/update-info-service";
 
 //configure onlye once, this will be needed for every test file though.
 Enzyme.configure({adapter:new Adapter()});

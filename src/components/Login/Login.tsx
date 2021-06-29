@@ -19,6 +19,13 @@ const Login = () => {
     });
   }
 
+  const handleKeypress = (e: { keyCode: number; }) => {
+      //it triggers by pressing the enter key
+    if (e.keyCode === 13) {
+      logUserIn(e);
+    }
+  };
+
   let logUserIn = async (e: any) => {
     e.preventDefault();
     let response = await login(loginUser);
@@ -41,7 +48,7 @@ const Login = () => {
             <Form.Control name="password" value={loginUser.password} onChange={onChange} type="password" placeholder="*******"/>
           </Form.Group>
           <Form.Group className="text-center">
-            <Button onClick={logUserIn}>Login</Button>
+            <Button onClick={logUserIn} onKeyPress={handleKeypress}>Login</Button>
           </Form.Group>
         </Form>
       </>
