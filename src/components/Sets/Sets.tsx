@@ -144,6 +144,7 @@ function Sets() {
    * @author 'Giancarlo Tomasello'
    */
   const handleSubject = (card: FlashcardDTO) => {
+    console.log("Card: ", subjects.subjects[card.subjectId - 1].name);
     let currentSubject = subjects.subjects[card.subjectId - 1].name;
 
     return currentSubject;
