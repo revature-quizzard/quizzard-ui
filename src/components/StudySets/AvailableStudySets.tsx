@@ -109,13 +109,9 @@ const AvailableStudySets = () => {
                 {showModal &&
                 <AddFlashcardModal onCloseModal={modalHandler} />
                 }
-                <Row className="justify-content-center">
-                    <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={ownedSetMode} >Your Sets</Button>
-                    </Col>
-                    <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="submit" onClick={publicSetMode} >Public Sets</Button>
-                    </Col>
+                <Row className="justify-content-center" style={{"alignContent":"center"}}>
+                        <Button type="submit" style={{ "padding": "5px", "width": "100px", "margin": "10px" }} onClick={ownedSetMode} >Your Sets</Button>
+                        <Button type="submit" style={{ "padding": "5px", "width": "100px", "margin": "10px" }} onClick={publicSetMode} >Public Sets</Button>
                 </Row>
                 <Row>
                     <Col className="justify-content-center">

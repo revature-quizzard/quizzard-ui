@@ -176,8 +176,8 @@ export function Sets() {
   return (
     <>
       <Container style={{ marginTop: "10px" }}>
-        <Row>
-          <Col>
+        <Row className="sticky-top">
+          <Col md={10} className="mobile-semitransparent">
             <Form>
               <Form.Group>
                 <Form.Label>Set Name: </Form.Label>
@@ -200,12 +200,22 @@ export function Sets() {
               </Form.Group>
             </Form>
           </Col>
+          <Col md={2}>
+            <Form.Group className="text-center">
+              <Button
+                className="create-study-set-button"
+                onClick={handleCreateStudySet}
+              >
+                Create Study Set
+              </Button>
+            </Form.Group>
+          </Col>
         </Row>
         <Row>
           <CardDeck>
             {stateFlashcards.flashCards.map((card) => {
               return (
-                <Col xs={8} md={6} lg={4} style={{ padding: "1rem" }}>
+                <Col xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
                   <Card>
                     <Card.Header>{card.question}</Card.Header>
                     <Card.Body>
@@ -237,22 +247,6 @@ export function Sets() {
             })}
           </CardDeck>
         </Row>
-        <Container>
-          <Row>
-            <Col>
-              <Form>
-                <Form.Group className="text-center">
-                  <Button
-                    className="create-study-set-button"
-                    onClick={handleCreateStudySet}
-                  >
-                    Create Study Set
-                  </Button>
-                </Form.Group>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
       </Container>
       {showList && <SetList />}
     </>

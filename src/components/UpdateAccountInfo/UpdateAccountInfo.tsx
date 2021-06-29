@@ -14,9 +14,9 @@ const UpdateAccontInfo =  ()=>{
 
     //useState hook for new username input, next two states are similar to this but for password, and email.
     const [username, setUsername] = useState("");
-    
+
     const [password, setPassword] = useState("");
-    
+
     const [email, setEmail] = useState("");
     //this useState hook will hold the response from our request
     //the fields we can get back are Email, Password, Username.
@@ -70,7 +70,7 @@ const UpdateAccontInfo =  ()=>{
         <Container >
             <Row >
                 <Col></Col>
-                <Col style={{marginTop:"150px"}} className="col-sm-9">
+                <Col style={{paddingTop:"3rem"}} xs={12} md={9}>
                     <Card id="CardUAI">
                         <Card.Header id="header-title" style={{textAlign:"center"}}>Update Account Information</Card.Header>
                         <Card.Body>
@@ -94,7 +94,7 @@ const UpdateAccontInfo =  ()=>{
                                 <Form.Group>
                                     <Button variant="danger" id="submit-btn"type="submit" onClick={updateInfo} block>Submit</Button>
                                 </Form.Group>
-                                
+
                                 </Col>
                             </Form>
                         </Card.Body>
@@ -126,4 +126,3 @@ const UpdateAccontInfo =  ()=>{
 }
 
 export default UpdateAccontInfo;
-

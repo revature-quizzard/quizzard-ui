@@ -19,7 +19,7 @@ const Register = () => {
   }
 
 
-  let registerNewUser = async () => {   
+  let registerNewUser = async () => {
     let response = await register(newUser);
     localStorage.setItem("Authorization", response.headers.authorization);
     setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
@@ -30,7 +30,8 @@ const Register = () => {
 
   return (
     <>
-      <Form>
+      <Form className="auth-form">
+        <h2>Registration</h2>
         <Form.Group>
           <Form.Label>Username: </Form.Label>
           <Form.Control name="username" value={newUser.username} onChange={handleChange} type="text" placeholder="username"  />

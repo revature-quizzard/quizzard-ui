@@ -1,12 +1,16 @@
 import { Row, Col } from "react-bootstrap";
 import Welcome from "./Welcome";
+import Register from "../Register/Register"
 
 const Main = () => {
   return (
     <Row className="d-flex justify-content-center align-items-center">
-      <Col lg={10} style={{ height: "100vh" }}>
+      <Col md={8} style={{ height: "100%" }}>
         <Welcome />
       </Col>
+      <aside className="col-md-4">
+        <Register />
+      </aside>
     </Row>
   );
 };
