@@ -90,8 +90,12 @@ export default function StudyListTable(props: any) {
                   <p className="tile-field tile-flashcard-field">
                     {elem.subject.name}
                   </p>
-                  <p className="tile-field">{elem.reviewable.toString()}</p>
-                  <p className="tile-field">{elem.public.toString()}</p>
+                  <p className="tile-field">{elem.reviewable
+                  ? "Reviewable"
+                  : ""}</p>
+                  <p className="tile-field">{elem.public
+                  ? "Public"
+                  : "Private"}</p>
                 </>
               )}
             </div>
