@@ -49,7 +49,7 @@ export default function StudyListTable(props: any) {
 
   const clickHandler = (e: any) => {
     if (props.type === "sets") {
-      dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
+      dispatch(setStudySet(state.availableStudySets[e.currentTarget.id]));
       props.onStudySetChange();
     }
   };
@@ -62,9 +62,9 @@ export default function StudyListTable(props: any) {
   return (
     <div className="tile-container">
       {state.finishedLoading &&
-        iterable.map((elem: any, index: number) => {
+        iterable.map((elem: any, index: any) => {
           return (
-            <div className={props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"} id={`${props.type}-${elem.id}`} onClick={clickHandler}>
+            <div className={props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"} id={index} onClick={clickHandler}>
                 {props.type === "sets" && <p className="element-name tile-field">
                   {elem.name}
                 </p>}

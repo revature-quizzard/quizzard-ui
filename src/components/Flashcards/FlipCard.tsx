@@ -176,21 +176,17 @@ export const FlipCard = () => {
           </Col>
         </Row>
 
-        <Row className="d-flex justify-content-center question text-center">
-          {
-            <Row className="bottomRow">
-              <Col xs={6} md={6} lg={6}>
-                <div onClick={handlePrev} className="btn-prev">
+        <Row className="d-flex justify-content-center question text-center mt-4">
+              <Col onClick={handlePrev} xs={6} md={6} lg={6}>
+                <div  className="btn-prev text-black mt-4">
                   &lt; Prev
                 </div>
               </Col>
-              <Col xs={6} md={6} lg={6}>
-                <div onClick={handleNext} className="btn-next">
+              <Col onClick={handleNext} xs={6} md={6} lg={6}>
+                <div  className="btn-next text-black mt-4">
                   Next &gt;
                 </div>
               </Col>
-            </Row>
-          }
         </Row>
       </Container>
     </>
