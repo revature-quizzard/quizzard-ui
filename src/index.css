@@ -265,6 +265,10 @@ td {
   pointer-events: none;
 }
 
+.tile-flashcard-field {
+  text-overflow: ellipsis;
+}
+
 .element-name {
   font-weight: bold;
   font-size: 1.25rem;
