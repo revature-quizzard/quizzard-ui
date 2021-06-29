@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
 import {updateAccInfo}  from "../../remote/update-info-service";
 import { useHistory } from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
 
 /**
  * This function component is where the user will be able to update their username, password, or email. We leverage
@@ -16,6 +18,8 @@ const UpdateAccontInfo =  ()=>{
     const [username, setUsername] = useState("");
     
     const [password, setPassword] = useState("");
+    const auState = useAppSelector(authState);
+    const dispatch = useAppDispatch();
     
     const [email, setEmail] = useState("");
     //this useState hook will hold the response from our request
@@ -52,6 +56,7 @@ const UpdateAccontInfo =  ()=>{
         setResult( prevState => resultUser);
 
         if(!result.conflict){
+            dispatch(logoutUserReducer());
             setTimeout(()=>{
             localStorage.clear();
             history.push("/login")
@@ -63,7 +68,8 @@ const UpdateAccontInfo =  ()=>{
 
     //Handles the state for show, toggles it back to false. In order to stop rendering
     //the Modal from react-bootstrap.
-    const handleClose = ()=>setShow(false);
+    const handleClose = ()=>
+        setShow(false);
 
     return(
         <>

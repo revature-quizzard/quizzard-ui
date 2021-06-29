@@ -4,11 +4,11 @@ import { useHistory } from "react-router-dom";
 import {
   resetAll,
   hideResults,
-  resultState,
+  resultState, takeAnotherQuizResult,
 } from "../../state-slices/create-quiz/result-slice";
 import {
   hideQuiz,
-  clearQuiz,
+  clearQuiz, takeAnotherQuizCreate,
 } from "../../state-slices/create-quiz/create-quiz-slice";
 
 const Results = () => {
@@ -17,11 +17,9 @@ const Results = () => {
   const history = useHistory();
 
   const handleClick = () => {
-    dispatch(resetAll());
-    dispatch(clearQuiz());
-    dispatch(hideResults());
-    dispatch(hideQuiz());
-    history.push("/studySets");
+    dispatch(takeAnotherQuizCreate());
+    dispatch(takeAnotherQuizResult());
+    history.push("/study");
   };
 
   return (

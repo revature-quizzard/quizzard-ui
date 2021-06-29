@@ -9,12 +9,26 @@ import {
     studySetState
 } from "../../state-slices/study-set/study-set-slice";
 import { authState } from '../../state-slices/auth/auth-slice';
+import { useEffect } from 'react';
 
 export default function StudyListTable(props: any) {
     console.log("props.columns: ", props.columns);
     const dispatch = useAppDispatch();
     const state = useAppSelector(studySetState);
     const auth = useAppSelector(authState);
+
+    useEffect(() => {
+        publicSetsFetcher().then(data => {
+            console.log(data);
+            dispatch(saveStudySets(data));
+        }).catch(err => console.log());
+
+        ownedSetsFetcher(auth.token).then(data => {
+            console.log(data);
+            dispatch(saveStudySets(data));
+        }).catch(err => console.log(err));
+
+    }, [state.selectedStudySet.cards])
 
     if (!state.finishedLoading && props.content === "public-sets") {
         publicSetsFetcher().then(data => {

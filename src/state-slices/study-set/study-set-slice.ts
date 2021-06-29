@@ -92,7 +92,7 @@ export const studySetSlice = createSlice({
             state.finishedLoading = true;
         },
         appendCardToStudySet: (state, action: PayloadAction<SetFlashcardDTO>) => {
-            state.availableStudySets[state.selectedStudySet.id - 1].cards.push(action.payload);
+            state.selectedStudySet.cards.push(action.payload);
         }
     }
 })

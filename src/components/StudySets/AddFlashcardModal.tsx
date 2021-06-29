@@ -10,6 +10,7 @@ import {appendCardToStudySet, studySetState} from "../../state-slices/study-set/
 import {Account} from "../../models/account";
 import {authSlice, authState} from "../../state-slices/auth/auth-slice";
 import {Role} from "../../models/role";
+import { useEffect, useState } from "react";
 
 /**
  * @author Sean Taba
@@ -22,10 +23,13 @@ const AddFlashcardModal = (props: any) => {
     let answer = '';
     let isReviewable = true;
     let isPublic = true;
-    let subject = {} as Subject;
+    let subject = {id: 1, name: 'OOP'} as Subject;
     const stState = useAppSelector(studySetState);
     const dispatch = useAppDispatch();
     const auState = useAppSelector(authState)
+
+const [topic, setTopic] = useState({ id: 1, name: "OOP"});
+    
     const handleClose = () => {
         props.onCloseModal();
     }
@@ -34,13 +38,13 @@ const AddFlashcardModal = (props: any) => {
 
         let newCard: SetFlashcardDTO = {
             id: 0,
-            subject: { id: 1, name: "OOP"},
+            subject: subject,
             creator: {username: 'aanderson', password: '', id: 0, points: 0, roles: {} as Role[]},
             question: question,
             answer: answer,
             reviewable: isReviewable,
             public: isPublic,
-            studySetId: 1
+            studySetId: stState.selectedStudySet.id
         }
 
         console.log(newCard);
@@ -49,7 +53,7 @@ const AddFlashcardModal = (props: any) => {
             console.log('promise returning', card)
             dispatch(appendCardToStudySet(card));
         });
-        console.log();
+       
 
         props.onCloseModal();
     }

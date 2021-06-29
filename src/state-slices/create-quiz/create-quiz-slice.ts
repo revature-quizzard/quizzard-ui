@@ -77,6 +77,11 @@ export const createQuizSlice = createSlice({
     },
     prevCard: (state) => {
       state.count -= 1;
+    },
+    takeAnotherQuizCreate: (state) => {
+      state.quiz = [];
+      state.count = 0;
+      state.showQuiz = false;
     }
   }
 });
@@ -90,7 +95,8 @@ export const {
   loadQuiz,
   nextCard,
   prevCard,
-  clearQuiz
+  clearQuiz,
+  takeAnotherQuizCreate
 } = createQuizSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
