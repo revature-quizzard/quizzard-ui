@@ -3,6 +3,7 @@ import {
     quizzardApiClient,
     quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
+import addPoints from "../models/request-models/add-points";
 import { UpdateAccModel} from "../models/update-account-info-model";
 
 /**
@@ -19,4 +20,7 @@ export async function updateAccInfo (newInformationModel:UpdateAccModel,headers:
 }
 
 
-
+export async function addPointsToUser (ponits: addPoints) {
+    let response = await quizzardApiClientTokenAuthorized.post(`/accounts/points`, ponits);
+    return await response.data;
+}

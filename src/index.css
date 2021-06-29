@@ -296,3 +296,10 @@ td {
   start of the content would be unpredictable */
   margin-top: 2rem;
 }
+
+.answer div {
+  padding: 20px 20px;
+}
+.btn-next, .btn-prev {
+  padding: 0 30px;
+}
