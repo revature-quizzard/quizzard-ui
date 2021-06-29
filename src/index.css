@@ -27,13 +27,26 @@ body {
   width: 100%;
   height: 100%;
   font-family: var(--normal-font);
+  min-height: 100vh;
 }
 
 /* NAVIGATION STYLES */
-#navLink:hover {
+.navLink {
   text-decoration: none;
-  transform: scale(1.2, 1.2);
+  cursor: pointer;
 }
+
+.navLink:hover {
+  text-decoration: none;
+  color: var(--navy);
+}
+
+@media (min-width: 768px){
+  .navLink:hover {
+    transform: scale(1.2, 1.2);
+  }
+}
+
 
 /*QUIZ NAVIGATION */
 .bottomRow {
@@ -59,7 +72,7 @@ body {
   cursor: pointer;
 }
 .answer:hover {
-  
+
 }
 
 .question {
@@ -76,7 +89,7 @@ body {
 
 .instructionsWelcome {
  text-align: center;
- color: purple;
+ color: var(--purple);
  font-weight: 800;
  margin-top: 20px;
 }
@@ -113,13 +126,168 @@ footer {
 .question-card, .answer-card {
   width: 25rem;
   height:auto;
-  
+
 }
 /* STUDY SETS */
 
 .create-study-set-button {
-  margin-top: 2rem;
-  margin-bottom: 5rem;
   height: 5rem;
-  width: 15rem;
+  width: 8rem;
+}
+
+button.btn {
+  border-color: var(--navy);
+  background-color: var(--navy);
+}
+button.btn:hover {
+  border-color: var(--purple);
+  background-color: var(--purple);
+}
+.form-control {
+  border-color:var(--purple);
+}
+
+aside h2 {
+  text-align: center;
+}
+
+td {
+  cursor: pointer;
+}
+
+
+@media (min-width: 768px) {
+  .authLink {
+    float: right;
+  }
+
+  .navLink {
+    width: fit-content;
+  }
+
+  .navbar-nav {
+    display: block;
+    width: 100%;
+  }
+
+  div {
+    margin: 0;
+  }
+
+}
+
+  nav a {
+    color: white;
+  }
+
+  nav a:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+.navbrand {
+  transform:scale(0.8);
+}
+.navbrand img {
+  float: left;
+}
+.navbrand h1 {
+  float: left;
+  text-transform:uppercase;
+  font-size: 30px;
+}
+
+.sticky-top {
+  background-color: white;
+}
+
+@media (max-width:768px) {
+  .sticky-top {
+    background-color: rgba(0,0,0,0);
+  }
+  .mobile-semitransparent {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+
+/* Study set container Styling */
+.tile-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  padding: 1rem 6rem;
+  margin: 2rem 1rem;
+}
+
+.tile-card {
+  width: 16rem;
+  height: 16rem;
+  margin: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.flashcard-tile {
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.flashcard-tile > .tile-field {
+  margin: 0;
+  padding: 0;
+}
+
+.is-public {
+  color: green;
+}
+
+.is-private {
+  color: red;
+}
+
+.tile-field {
+  width: 100%;
+  font-family: var(--normal-font);
+  font-size: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.tile-flashcard-field {
+  text-overflow: ellipsis;
+}
+
+.element-name {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#app-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-width: none;
+  padding-bottom: 2rem;
+}
+
+#app-container > div {
+  /*this is a little hacky and needs fixing,
+  the row element that is a child of the app-container element
+  was overflowing upwards so that it got partially 
+  stuck behind the nav bar, need a better solution
+  because neither the nav bar or app container have fixed heights
+  so if their sizes changed the space between the nav bar and the
+  start of the content would be unpredictable */
+  margin-top: 2rem;
 }

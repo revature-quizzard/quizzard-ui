@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Container className="app-container">
+      <Container className="app-container" id="app-container">
         <Switch>
           <Route exact path="/">
             <Main />
@@ -41,9 +41,6 @@ function App() {
           </Route>
           <Route exact path="/update">
             <UpdateAccontInfo />
-          </Route>
-          <Route exact path="/sets">
-            <Sets />
           </Route>
           <Route exact path="/card">
             <FlipCard />

@@ -1,7 +1,7 @@
 
 import { Button, Col, Row, Table } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
 import { authState } from "../../state-slices/auth/auth-slice";
@@ -26,6 +26,12 @@ const StudyHub = () => {
     const state = useAppSelector(studySetState);
     const auState = useAppSelector(authState);
     const history = useHistory();
+
+    useEffect(() => {
+      if (showCards) {
+        document.getElementById("selected-study-set-title").scrollIntoView();
+      }
+    });
 
     const renderFlashcardTable = () => {
         setShowCards(true);
@@ -104,59 +110,101 @@ const StudyHub = () => {
 
 
     return (
-        <Row>
-            <Col>
-                {showModal &&
-                <AddFlashcardModal onCloseModal={modalHandler} />
-                }
-                <Row className="justify-content-center">
-                    <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="button" onClick={ownedSetMode} >Your Sets</Button>
-                    </Col>
-                    <Col className="col-1" style={{ padding: "2px" }}>
-                        <Button type="button" onClick={publicSetMode} >Public Sets</Button>
-                    </Col>
-                    <Col className="col-1" style={{padding: "2px"}}>
-                        <Button type="button" onClick={createSet}>Create New Set</Button>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="justify-content-center">
-                        <Row>
-                            <Col>
-                                <h2 className="justify-content-center">Study Sets</h2>
-                            </Col>
-                            {/*Removed this stuff until points are actually used.*/}
-                            {/*<Col>*/}
-                            {/*    <h3 className="justify-content-end">User: {auState.username} points: {}</h3>*/}
-                            {/*</Col>*/}
-                        </Row>
+      <Row>
+        <Col>
+          {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
+          <Row
+            className="justify-content-center"
+            style={{ alignContent: "center" }}
+          >
+            <Button
+              type="submit"
+              style={{ padding: "5px", width: "100px", margin: "10px" }}
+              onClick={ownedSetMode}
+            >
+              Your Sets
+            </Button>
+            <Button
+              type="submit"
+              style={{ padding: "5px", width: "100px", margin: "10px" }}
+              onClick={publicSetMode}
+            >
+              Public Sets
+            </Button>
+            <Button
+              type="submit"
+              style={{ padding: "5px", width: "100px", margin: "10px" }}
+              onClick={createSet}
+            >
+              Create a Set
+            </Button>
+          </Row>
+          <Row>
+            <Col className="justify-content-center">
+              <Row>
+                <Col>
+                  <h2 className="justify-content-center">Study Sets</h2>
+                </Col>
+                {/*Removed this stuff until points are actually used.*/}
+                {/*<Col>*/}
+                {/*    <h3 className="justify-content-end">User: {auState.username} points: {}</h3>*/}
+                {/*</Col>*/}
+              </Row>
 
-                        <StudyListTable content={useList ? "public-sets" : "owned-sets"} type="sets" columns={["ID", "Owner", "Name", "Public"]} onStudySetChange={renderFlashcardTable} />
-                    </Col>
-                </Row>
-                {showCards &&
-                <Row>
-                    <Col>
-                        <Row>
-                            <Col>
-                                <h2 className="justify-content-center">Flashcards in Study Set: #{state.selectedStudySet.id} - {state.selectedStudySet.name}</h2>
-                            </Col>
-                            <Col>
-                                <Button type="submit" onClick={goToStudy} >Study This</Button>
-                            </Col>
-                            <Col>
-                                <Button type="submit" onClick={goToQuiz} >Quiz Me!</Button>
-                            </Col>
-                        </Row>
-                            <StudyListTable content="flashcards" type="flashcards" columns={["ID", "Subject", "Creator", "Question", "Answer", "Reviewable", "Public"]} />
-                        <Button as="input" onClick={modalHandler} type="button" value="Add a New Flashcard to StudySet" />
-                    </Col>
-                </Row>
-                }
+              <StudyListTable
+                content={useList ? "public-sets" : "owned-sets"}
+                type="sets"
+                columns={["ID", "Owner", "Name", "Public"]}
+                onStudySetChange={renderFlashcardTable}
+              />
             </Col>
-        </Row>
-    )
+          </Row>
+          {showCards && (
+            <Row>
+              <Col >
+                <Row>
+                  <Col>
+                    <h2 className="justify-content-center" id="selected-study-set-title">
+                      Flashcards in Study Set: #{state.selectedStudySet.id} -{" "}
+                      {state.selectedStudySet.name}
+                    </h2>
+                  </Col>
+                  <Col>
+                    <Button type="submit" onClick={goToStudy}>
+                      Study This
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Button type="submit" onClick={goToQuiz}>
+                      Quiz Me!
+                    </Button>
+                  </Col>
+                </Row>
+                <StudyListTable
+                  content="flashcards"
+                  type="flashcards"
+                  columns={[
+                    "ID",
+                    "Subject",
+                    "Creator",
+                    "Question",
+                    "Answer",
+                    "Reviewable",
+                    "Public",
+                  ]}
+                />
+                <Button
+                  as="input"
+                  onClick={modalHandler}
+                  type="button"
+                  value="Add a New Flashcard to StudySet"
+                />
+              </Col>
+            </Row>
+          )}
+        </Col>
+      </Row>
+    );
 };
 
 export default StudyHub;
