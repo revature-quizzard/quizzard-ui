@@ -42,9 +42,6 @@ function App() {
           <Route exact path="/update">
             <UpdateAccontInfo />
           </Route>
-          <Route exact path="/sets">
-            <Sets />
-          </Route>
           <Route exact path="/card">
             <FlipCard />
           </Route>

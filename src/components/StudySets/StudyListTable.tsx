@@ -1,17 +1,17 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { publicSetsFetcher, ownedSetsFetcher } from "../../remote/sets-fetcher";
+import React from "react";
+import {Table, Row, Col} from "react-bootstrap";
+import {useAppSelector, useAppDispatch} from "../../store/hooks";
+import {publicSetsFetcher, ownedSetsFetcher} from "../../remote/sets-fetcher";
 import {
-    currentlyLoading,
     saveStudySets,
     setStudySet,
-    studySetState
+    studySetState,
 } from "../../state-slices/study-set/study-set-slice";
-import { authState } from '../../state-slices/auth/auth-slice';
-import { useEffect } from 'react';
+import {authState} from "../../state-slices/auth/auth-slice";
+import {useEffect} from "react";
 
 export default function StudyListTable(props: any) {
+
     const dispatch = useAppDispatch();
     const state = useAppSelector(studySetState);
     const auth = useAppSelector(authState);
@@ -22,12 +22,22 @@ export default function StudyListTable(props: any) {
             dispatch(saveStudySets(data));
         }).catch(err => console.log());
 
-        ownedSetsFetcher(auth.token).then(data => {
+
+        ownedSetsFetcher(auth.token)
+            .then((data) => {
+                console.log(data);
+                dispatch(saveStudySets(data));
+            })
+            .catch((err) => console.log(err));
+    }, [state.selectedStudySet.cards]);
+
+    if (!state.finishedLoading && props.content === "public-sets") {
+        publicSetsFetcher(auth.token).then((data) => {
             console.log(data);
             dispatch(saveStudySets(data));
-        }).catch(err => console.log(err));
+        });
+    }
 
-    }, [state.selectedStudySet.cards])
 
     if (!state.finishedLoading && props.content === "public-sets") {
         publicSetsFetcher(auth.token).then(data => {
@@ -43,51 +53,73 @@ export default function StudyListTable(props: any) {
         });
     }
 
+
     const clickHandler = (e: any) => {
         if (props.type === "sets") {
             dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
             props.onStudySetChange();
         }
+    };
 
-    }
-
-    const iterable: Array<any> = props.type === "sets"
-        ? state.availableStudySets
-        : state.selectedStudySet.cards;
-
+    const iterable: Array<any> =
+        props.type === "sets"
+            ? state.availableStudySets
+            : state.selectedStudySet.cards;
 
     return (
-        <Table striped bordered hover variant="dark">
-            <thead>
-                <tr>
-                    {props.columns.map((elem: String, index: number) => {
-                        return (<th key={`column-label: ${index}`}>{elem}</th>)
-                    })}
-                </tr>
-            </thead>
-            {state.finishedLoading && iterable.map((elem: any, index: number) => {
-                return (<tr key={index} id={elem.id} onClick={clickHandler}>
-                    <th scope="row">{elem.id}</th>
+        <div
+            className="col-md-4 tileContainer"
+        >
+            {state.finishedLoading &&
+            iterable.map((elem: any, index: number) => {
+                return (
+                    <div
+                        className="studySetTile"
+                        id={elem.id}
+                        onClick={clickHandler}
+                    >
+                        <Row>
+                            <Col className="elementName">{elem.name}</Col>
+                        </Row>
+                        <Row>
+                            {props.type === "sets" && (
+                                <Col className="elementIsPublic">
+                                    {elem.isPublic ? (
+                                        <div className="isPublic">Public</div>
+                                    ) : (
+                                        <div className="isPrivate">Private</div>
+                                    )}
+                                </Col>
+                            )}
+                        </Row>
+                        <Row>
+                            <Col className="elementCreator">
+                                {elem.creator === null ? "Public" : elem.creator.username}
+                            </Col>
+                        </Row>
 
-                    {props.type === "sets" &&
-                        <>
-                            <td>{elem.creator === null ? 'Public' : elem.creator.username}</td>
-                            <td>{elem.name}</td>
-                            <td>{elem.isPublic.toString()}</td>
-                        </>}
-
-                    {props.type === "flashcards" &&
-                        <>
-                            <td>{elem.subject.name}</td>
-                            <td>{elem.creator.username}</td>
-                            <td>{elem.question}</td>
-                            <td>{elem.answer}</td>
-                            <td>{elem.reviewable.toString()}</td>
-                            <td>{elem.public.toString()}</td>
-                        </>}
-                </tr>)
+                        {props.type === "flashcards" && (
+                            <>
+                                <Row>
+                                    <Col>{elem.question}</Col>
+                                </Row>
+                                <Row>
+                                    <Col>{elem.answer}</Col>
+                                </Row>
+                                <Row>
+                                    <Col>{elem.subject.name}</Col>
+                                </Row>
+                                <Row>
+                                    <Col>{elem.reviewable.toString()}</Col>
+                                </Row>
+                                <Row>
+                                    <Col>{elem.public.toString()}</Col>
+                                </Row>
+                            </>
+                        )}
+                    </div>
+                );
             })}
-
-        </Table>
-    )
+        </div>
+    );
 }
