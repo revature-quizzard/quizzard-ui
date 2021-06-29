@@ -12,6 +12,7 @@ import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
 import { getSubs } from "../../remote/subject-service";
 import { useHistory } from 'react-router-dom'
+import { appendCardToStudySet } from "../../state-slices/study-set/study-set-slice";
 
 
 /**
@@ -90,7 +91,7 @@ export function Sets() {
   let handleCreateStudySet = () => {
     handleLocalFlashcards();
     handlePersistStudySet();
-    history.push("/studySets");
+    history.push("/study");
     //history.go(0);//re-render component?
   };
 
@@ -125,6 +126,7 @@ export function Sets() {
 
     await createStudySetWithToken(setObj, headers).then((res) => {
       console.log('Create study set response from API: ', res);
+      dispatch(appendCardToStudySet(res.cards));
     }).catch((error) => {
       console.log(error);
     });

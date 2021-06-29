@@ -130,7 +130,7 @@ const StudyHub = () => {
               style={{ padding: "5px", width: "100px", margin: "10px" }}
               onClick={createSet}
             >
-              Public Sets
+              Create a Set
             </Button>
           </Row>
           <Row>
@@ -155,7 +155,7 @@ const StudyHub = () => {
           </Row>
           {showCards && (
             <Row>
-              <Col>
+              <Col >
                 <Row>
                   <Col>
                     <h2 className="justify-content-center">

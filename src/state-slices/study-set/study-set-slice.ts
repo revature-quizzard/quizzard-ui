@@ -94,6 +94,7 @@ export const studySetSlice = createSlice({
         appendCardToStudySet: (state, action: PayloadAction<SetFlashcardDTO>) => {
             state.selectedStudySet.cards.push(action.payload);
         }
+        
     }
 })
 export const {setStudySet,setFlashcard, clearStudySet, saveFlashcard,
