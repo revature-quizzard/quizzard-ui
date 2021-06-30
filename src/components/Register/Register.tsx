@@ -19,7 +19,8 @@ const Register = () => {
   }
 
 
-  let registerNewUser = async () => {
+  let registerNewUser = async (e:any) => {
+    e.preventDefault();
     let response = await register(newUser);
     localStorage.setItem("Authorization", response.headers.authorization);
     setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
