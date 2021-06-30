@@ -1,16 +1,18 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
 import { login } from "../../remote/login-register-service";
 import { LoginModel } from "../../models/login-model";
-import {  useDispatch } from 'react-redux';
-
+import {  useDispatch, useSelector } from 'react-redux';
+import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
 import { useHistory } from "react-router-dom";
 import { loginUserReducer } from "../../state-slices/auth/auth-slice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [loginUser, setLoginUser] = useState({username: "", password: ""} as LoginModel)
+  const [loginUser, setLoginUser] = useState({ username: "", password: "" } as LoginModel)
+  
+  const error = useSelector(errorState);
 
   let onChange = (e: any) => {
     const {name, value} = e.target;
@@ -31,7 +33,11 @@ const Login = () => {
         history.push("/study");
       }).catch(error => {
         if (error.response.status == 401) {
-          alert("Invalid credentials!\nPlease try again...")
+          dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
+          setTimeout(() => {
+            dispatch(hideErrorMessage());
+          }, 5000)
+         
         }
       }
     );
@@ -52,6 +58,9 @@ const Login = () => {
           <Form.Group className="text-center">
             <Button onClick={logUserIn} type="submit" >Login</Button>
           </Form.Group>
+          {error.showError && 
+          <Alert variant="danger">{error.errorMsg}</Alert>
+          }
         </Form>
       </>
     )
