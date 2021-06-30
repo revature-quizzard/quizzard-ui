@@ -42,7 +42,7 @@ export default function StudyListTable(props: any) {
         })
         .catch((err) => console.log(err));
     }
-      
+
   }, [state.selectedStudySet.cards]);
 
   const clickHandler = (e: any) => {
@@ -95,11 +95,13 @@ export default function StudyListTable(props: any) {
                     {elem.subject.name}
                   </p>
                   <p className="tile-field">{elem.reviewable
-                  ? "Reviewable"
-                  : ""}</p>
+                    ? "Reviewable"
+                    : ""}
+                  </p>
                   <p className="tile-field">{elem.public
-                  ? "Public"
-                  : "Private"}</p>
+                    ? "Public"
+                    : "Private"}
+                  </p>
                 </>
               )}
             </div>
