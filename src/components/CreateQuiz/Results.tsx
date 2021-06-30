@@ -45,18 +45,18 @@ const Results = () => {
           <Col>
             <h4>
               You got {results.correct.length} right!{" "}
-              {(results.correct.length / results.total) * 100}%
+              {((results.correct.length / results.total) * 100).toFixed(2)}%
             </h4>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <h4>
-              You got {results.incorrect.length} wrong...{" "}
-              {(results.incorrect.length / results.total) * 100}%
-            </h4>
-          </Col>
-        </Row>
+        {/*<Row>*/}
+        {/*  <Col>*/}
+        {/*    <h4>*/}
+        {/*      You got {results.incorrect.length} wrong...{" "}*/}
+        {/*      {(((results.total - results.correct.length) / results.total) * 100).toFixed(2)}%*/}
+        {/*    </h4>*/}
+        {/*  </Col>*/}
+        {/*</Row>*/}
         <Row>
           <Col>
             <h4>
