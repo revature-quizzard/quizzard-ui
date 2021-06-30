@@ -88,7 +88,7 @@ const UpdateAccountInfo =  ()=>{
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label id="label-pass">Password:</Form.Label>
-                                    <Form.Control type="text" id="password" name="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)}>
+                                    <Form.Control type="password" id="password" name="password" placeholder="password" value={password} onChange={(e)=>setPassword(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group>
