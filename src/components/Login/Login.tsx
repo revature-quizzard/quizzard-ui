@@ -32,6 +32,7 @@ const Login = () => {
     return (
         <>
         <Form>
+        <h2>Login</h2>
           <Form.Group>
             <Form.Label>Username: </Form.Label>
             <Form.Control name="username" value={loginUser.username} onChange={onChange} type="text" placeholder="username"  />

@@ -145,7 +145,7 @@ const StudyHub = () => {
             <Col className="justify-content-center">
               <Row>
                 <Col>
-                  <h2 className="justify-content-center">Study Sets</h2>
+                  <h2 className="justify-content-center d-flex">Study Sets</h2>
                 </Col>
                 {/*Removed this stuff until points are actually used.*/}
                 {/*<Col>*/}

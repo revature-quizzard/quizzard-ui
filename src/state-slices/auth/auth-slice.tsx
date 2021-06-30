@@ -6,6 +6,7 @@ interface State {
   isLoading: boolean;
   username: string;
   token: string;
+  showLogin: boolean;
 }
 
 const initialState: State = {
@@ -13,6 +14,7 @@ const initialState: State = {
   isLoading: false,
   username: "",
   token: "",
+  showLogin: false,
 };
 
 export const authSlice = createSlice({
@@ -37,11 +39,20 @@ export const authSlice = createSlice({
       state.token = "";
       state.isLoading = false;
       state.isAuthenticated = false;
+      state.showLogin = false;
     },
+
+    loginFormReducer: (state) => {
+      state.showLogin = true;
+    },
+
+    registerFormReducer: (state) => {
+      state.showLogin = false;
+    }
   },
 });
 
-export const { loading, isLoaded, loginUserReducer, logoutUserReducer } = authSlice.actions;
+export const { loading, isLoaded, loginUserReducer, logoutUserReducer, loginFormReducer, registerFormReducer } = authSlice.actions;
 
 export const authState = (state: RootState) => state.auth;
 

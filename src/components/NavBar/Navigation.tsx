@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import {
   authState,
   logoutUserReducer,
+  loginFormReducer,
+  registerFormReducer,
 } from "../../state-slices/auth/auth-slice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -19,6 +21,15 @@ const Navigation = () => {
     dispatch(logoutUserReducer());
     localStorage.removeItem("Authorization");
   };
+
+  const handleLogin = () => {
+    dispatch(loginFormReducer());
+  }
+
+  const handleRegister = () => {
+    dispatch(registerFormReducer());
+  }
+
   return (
     <Navbar bg="dark" expand="lg">
       <Container>
@@ -37,19 +48,19 @@ const Navigation = () => {
           <Nav className="me-auto">
             {!auth.isAuthenticated && (
               <>
-                <Link
+                <a
                   className="text-light ml-2 mr-2 navLink authLink"
-                  to="/login"
+                  onClick={handleLogin}
                 >
                   Login
-                </Link>
+                </a>
 
-                <Link
+                <a
                   className="text-light ml-2 mr-2 navLink authLink"
-                  to="/register"
+                  onClick={handleRegister}
                 >
                   Register
-                </Link>
+                </a>
               </>
             )}
             {auth.isAuthenticated && (
