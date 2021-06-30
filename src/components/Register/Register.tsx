@@ -21,11 +21,16 @@ const Register = () => {
 
   let registerNewUser = async (e:any) => {
     e.preventDefault();
-    let response = await register(newUser);
-    localStorage.setItem("Authorization", response.headers.authorization);
-    setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
-    dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-    history.push("/study");
+    await register(newUser).then(response => {
+      localStorage.setItem("Authorization", response.headers.authorization);
+      setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
+      dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+      history.push("/study");
+    }).catch(error => {
+      if (error.response.status == 409) {
+        alert("Invalid inputs...")
+      }
+    });
   }
 
 

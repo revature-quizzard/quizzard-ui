@@ -19,14 +19,22 @@ const Login = () => {
     });
   }
 
+/*
+  Perfection looks like this (what all axios calls should look like):
+*/
   let logUserIn = async (e: any) => {
     e.preventDefault();
-    let response = await login(loginUser);
-    console.log("ON Login",response.headers.authorization);
-    localStorage.setItem("Authorization", response.headers.authorization);
-    setLoginUser({username: "", password: ""} as LoginModel);
-    dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-    history.push("/study");
+    await login(loginUser).then(response => {
+        localStorage.setItem("Authorization", response.headers.authorization);
+        setLoginUser({username: "", password: ""} as LoginModel);
+        dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+        history.push("/study");
+      }).catch(error => {
+        if (error.response.status == 401) {
+          alert("Invalid credentials!\nPlease try again...")
+        }
+      }
+    );
   }
 
     return (
