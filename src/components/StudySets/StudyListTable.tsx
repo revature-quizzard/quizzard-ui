@@ -67,6 +67,7 @@ export default function StudyListTable(props: any) {
         iterable.map((elem: any, index: any) => {
           return (
             <div
+              key = {index}
               className={
                 props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"
               }
