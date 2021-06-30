@@ -98,6 +98,7 @@ const StudyHub = () => {
     }
 
     const createSet = (e: any) => {
+        e.preventDefault();
         history.push("/sets");
     }
 
