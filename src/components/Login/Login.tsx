@@ -41,11 +41,7 @@ const Login = () => {
             <Form.Control name="password" value={loginUser.password} onChange={onChange} type="password" placeholder="*******"/>
           </Form.Group>
           <Form.Group className="text-center">
-<<<<<<< HEAD
             <Button onClick={logUserIn} type="submit" >Login</Button>
-=======
-            <Button type="submit" onClick={logUserIn}>Login</Button>
->>>>>>> pre_dev_merge_party
           </Form.Group>
         </Form>
       </>
