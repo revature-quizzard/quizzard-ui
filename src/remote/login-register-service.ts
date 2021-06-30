@@ -1,6 +1,6 @@
 import { LoginModel } from "../models/login-model";
 import { RegisterModel } from "../models/register-model";
-import { quizzardApiClient } from "./api-client"
+import { quizzardApiClient } from "./api-client";
 
 export async function register(newUser: RegisterModel){
     let response = await quizzardApiClient.post(`/register`, newUser);
