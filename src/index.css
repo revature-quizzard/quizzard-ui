@@ -207,7 +207,7 @@ td {
 @media (max-width:768px) {
   .sticky-top {
     background-color: rgba(0,0,0,0);
-    
+
   }
   .mobile-semitransparent {
     background-color: rgba(0, 0, 0, 0.25);
@@ -221,10 +221,10 @@ td {
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: auto;
-  padding: 1rem 6rem;
-  margin: 2rem 1rem;
+  padding: 1rem 1rem;
+  margin: 1rem 1rem;
 }
 
 .tile-card {
@@ -289,7 +289,7 @@ td {
 #app-container > div {
   /*this is a little hacky and needs fixing,
   the row element that is a child of the app-container element
-  was overflowing upwards so that it got partially 
+  was overflowing upwards so that it got partially
   stuck behind the nav bar, need a better solution
   because neither the nav bar or app container have fixed heights
   so if their sizes changed the space between the nav bar and the

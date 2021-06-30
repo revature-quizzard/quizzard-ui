@@ -113,8 +113,18 @@ const StudyHub = () => {
 
     return (
       <Row>
+
         <Col>
           {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
+          <Row>
+            <Col>
+              <h2 className="justify-content-center d-flex">Study Sets</h2>
+            </Col>
+            {/*Removed this stuff until points are actually used.*/}
+            {/*<Col>*/}
+            {/*    <h3 className="justify-content-end">User: {auState.username} points: {}</h3>*/}
+            {/*</Col>*/}
+          </Row>
           <Row
             className="justify-content-center"
             style={{ alignContent: "center" }}
@@ -143,16 +153,6 @@ const StudyHub = () => {
           </Row>
           <Row>
             <Col className="justify-content-center">
-              <Row>
-                <Col>
-                  <h2 className="justify-content-center d-flex">Study Sets</h2>
-                </Col>
-                {/*Removed this stuff until points are actually used.*/}
-                {/*<Col>*/}
-                {/*    <h3 className="justify-content-end">User: {auState.username} points: {}</h3>*/}
-                {/*</Col>*/}
-              </Row>
-
               <StudyListTable
                 content={useList ? "public-sets" : "owned-sets"}
                 type="sets"
