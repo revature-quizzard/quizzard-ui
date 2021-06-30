@@ -47,10 +47,14 @@ const Quiz = () => {
     let wrong2 = document.getElementById("wrong2");
     let wrong3 = document.getElementById("wrong3");
     answer.style.color = "black";
-    answer.style.fontSize = "20px";
+    answer.style.fontWeight = "400";
     wrong1.style.color = "black";
+    wrong1.style.fontWeight = "400";
     wrong2.style.color = "black";
+    wrong2.style.fontWeight = "400";
     wrong3.style.color = "black";
+    wrong3.style.fontWeight = "400";
+
   };
 
   const checkAnswer = (e: any) => {
@@ -68,7 +72,8 @@ const Quiz = () => {
       }
 
       answerDiv.style.color = "green";
-      answerDiv.style.fontSize = "30px";
+      answerDiv.style.fontWeight = "700";
+      //answerDiv.style.fontSize = "30px";
     }
     if (
       e.currentTarget.id === "wrong1" ||
@@ -88,6 +93,7 @@ const Quiz = () => {
       }
 
       wrongChoice.style.color = "red";
+      wrongChoice.style.fontWeight = "700";
     }
   };
   return (
@@ -111,7 +117,7 @@ const Quiz = () => {
                   onClick={!results.isAnswered ? checkAnswer : null}
                   key={value}
                 >
-                  <Col>{Object.values(key).toString()}</Col>
+                  <Col>{String.fromCharCode(65+value)})   {Object.values(key).toString()}</Col>
                 </Row>
               );
             })}
