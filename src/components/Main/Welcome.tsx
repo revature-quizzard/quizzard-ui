@@ -4,10 +4,8 @@ const Welcome = () => {
   return (
     <>
       <Row className="d-flex justify-content-center align-items-center mt-4 mb-4">
-        <Col lg={10} className="border bg-dark text-light">
-          <div className="welcomeBanner">
-            Welcome to Qwizzard, your resource for everything QC!
-          </div>
+        <Col lg={10} className="welcomeBanner">
+          <img className="welcomeBanner" src="qwizzard.gif" alt="qwizzard quizzard qwizard kwizzard" height="80px" />
         </Col>
       </Row>
       <Row>
