@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
  * renders the studySets page
  */
 const StudyHub = () => {
-    
+
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const [showCards, setShowCards] = useState(false);
@@ -36,7 +36,7 @@ const StudyHub = () => {
     const renderFlashcardTable = () => {
         setShowCards(true);
     }
-    
+
     const modalHandler = () => {
         setShowModal(prevState => !prevState);
     }
@@ -63,18 +63,20 @@ const StudyHub = () => {
     //     setShowList(true);
     // }
 
-    
+
     // These functions set which list is displayed below based on button presses.
     const publicSetMode = (e: any) => {
-        dispatch(currentlyLoading());
-        dispatch(clearStudySet());
-        setUseList(true);
+      setShowCards(false);
+      dispatch(currentlyLoading());
+      dispatch(clearStudySet());
+      setUseList(true);
     }
 
     const ownedSetMode = (e: any) => {
-        dispatch(currentlyLoading());
-        dispatch(clearStudySet());
-        setUseList(false);
+      setShowCards(false);
+      dispatch(currentlyLoading());
+      dispatch(clearStudySet());
+      setUseList(false);
     }
 
     const goToStudy = (e: any) => {
