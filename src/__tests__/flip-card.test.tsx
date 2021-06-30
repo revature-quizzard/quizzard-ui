@@ -3,7 +3,7 @@ import Adaptor from "@wojtekmaj/enzyme-adapter-react-17";
 import  configureStore  from "redux-mock-store";
 import {FlipCard} from "../components/Flashcards/FlipCard";
 import { Provider } from "react-redux";
-import {Flashcard} from "../Models/Flashcard"
+import {Flashcard} from "../models/Flashcard"
 
 /**
  * Uses Jest and Enzyme to test the rendering of FlipCard
@@ -15,7 +15,7 @@ test('Renders the FlipCard component with initial state', () =>{
     const mockFlashcard =  {
         question: 'Question',
         answer: 'Answer',
-        reviewable: true, 
+        reviewable: true,
         isPublic: true,
         subjectId: "1"
     }
@@ -33,12 +33,12 @@ test('Renders the FlipCard component with initial state', () =>{
 
     const wrapper = mount(
         <Provider store={mockStore}>
-            <FlipCard />    
+            <FlipCard />
         </Provider>
         );
-    
-   
+
+
     console.log(wrapper.find('Container#flip-card').debug());
     expect(wrapper.find('Container#flip-card')).toBeTruthy();
-    
+
 })

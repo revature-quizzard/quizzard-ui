@@ -5,9 +5,9 @@ import {
   answerChoiceRandomizer,
   createWrongAnswerArray,
   filterCurrentCard
-} from '../Utilities/quizUtility';
-import { studySet } from "../Utilities/dummyData";
-import { Flashcard } from "../Models/Flashcard";
+} from '../utilities/quiz-utility';
+import { studySet } from "../utilities/dummy-data";
+import { Flashcard } from "../models/flashcard";
 
 let flashCard1 : Flashcard;
 let flashCard2 : Flashcard;
@@ -46,7 +46,7 @@ afterEach(() => {
   flashCard3 = null;
   //studySet = null;
 })
-  
+
 test("Generates random number between 0 and number passed in as argument", () => {
 
     const num = 4;
@@ -63,7 +63,7 @@ test('creates 3 questions from studySet',()=>{
 });
 
 test('create quiz question',()=>{
-  
+
   expect(createQuizQuestion(flashCard1, "wrong1", "wrong2", "wrong3")).toBeTruthy();
 });
 test('answerChoiceRandomizer',()=>{
@@ -86,8 +86,3 @@ test('Check length of wrong Answer Array',()=>{
   let answerArray = createWrongAnswerArray(studySet);
   expect(answerArray.length).toBe(3);
 });
-
-
-
-
-

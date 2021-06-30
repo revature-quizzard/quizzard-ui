@@ -1,6 +1,6 @@
 // import { login } from "../Remote/login-register-service";
 //import { LoginModel } from "../Models/login-model";
-import {  } from "../Models/login-model";
+import {  } from "../models/login-model";
 
 // const sut = require('../components/Login/Login');
 //
