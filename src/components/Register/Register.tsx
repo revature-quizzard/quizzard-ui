@@ -10,6 +10,8 @@ import {
   hideErrorMessage,
   errorState,
 } from "../../state-slices/error/errorSlice";
+import {getSubs} from "../../remote/subject-service";
+import {setSubjects} from "../../state-slices/subject/subject-slice";
 
 const Register = () => {
   const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel)
@@ -24,7 +26,10 @@ const Register = () => {
       ...newUser, [name]: value
     });
   }
-
+  const getSubjects = async () => {
+    let subjects = await getSubs();
+    dispatch(setSubjects(subjects));
+  }
 
   let registerNewUser = async (e:any) => {
     e.preventDefault();
@@ -32,6 +37,7 @@ const Register = () => {
       localStorage.setItem("Authorization", response.headers.authorization);
       setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
       dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+      getSubjects();
       history.push("/study");
     }).catch(error => {
       if (error.response.status == 409) {
