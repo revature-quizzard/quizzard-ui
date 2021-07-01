@@ -37,11 +37,11 @@ const FlashCard = () => {
     };
     getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    }
-    getSubjects();
+    // const getSubjects = async () => {
+    //   let subjects = await getSubs();
+    //   dispatch(setSubjects(subjects));
+    // }
+    // getSubjects();
 
   }, [])
 

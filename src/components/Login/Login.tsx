@@ -6,6 +6,8 @@ import {  useDispatch, useSelector } from 'react-redux';
 import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
 import { useHistory } from "react-router-dom";
 import { loginUserReducer } from "../../state-slices/auth/auth-slice";
+import {getSubs} from "../../remote/subject-service";
+import {setSubjects} from "../../state-slices/subject/subject-slice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,11 @@ const Login = () => {
   const [loginUser, setLoginUser] = useState({ username: "", password: "" } as LoginModel)
   
   const error = useSelector(errorState);
+
+  const getSubjects = async () => {
+    let subjects = await getSubs();
+    dispatch(setSubjects(subjects));
+  }
 
   let onChange = (e: any) => {
     const {name, value} = e.target;
@@ -30,6 +37,7 @@ const Login = () => {
         localStorage.setItem("Authorization", response.headers.authorization);
         setLoginUser({username: "", password: ""} as LoginModel);
         dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+        getSubjects();
         history.push("/study");
       }).catch(error => {
         if (error.response.status == 401) {
