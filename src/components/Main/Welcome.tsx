@@ -8,8 +8,8 @@ const Welcome = () => {
           <img className="welcomeBanner" src="qwizzard.gif" alt="qwizzard quizzard qwizard kwizzard" height="80px" />
         </Col>
       </Row>
-      <Row>
-        <Col className="bg-light">
+      <Row className="d-flex justify-content-center align-items-center">
+        <Col className="bg-light" lg={10}>
           <Row>
             <Col>
               <div className="instructionsWelcome">

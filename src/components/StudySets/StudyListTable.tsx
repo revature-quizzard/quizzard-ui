@@ -89,7 +89,7 @@ export default function StudyListTable(props: any) {
 
               {props.type === "flashcards" && (
                 <>
-                  <p className="tile-field tile-flashcard-field">
+                  <p className="tile-field tile-flashcard-field element-question">
                     {elem.question}
                   </p>
                   <p className="tile-field tile-flashcard-field">

@@ -169,26 +169,29 @@ export const FlipCard = () => {
 
   return (
     <>
-      <Container className="justify-content-center">
-        <Row>
-          <Col className="d-flex justify-content-center question" style={{}}>
+      <Container className="d-flex flex-column justify-content-center align-items-center flex-grow-1" style={{height: "80vh", paddingBottom: "3rem"}}>
+        <Row style={{marginBottom: "3rem"}}>
+          <Col className="d-flex justify-content-center question">
             {!isEnd ? <Row>{renderFlipCard()}</Row> : <Row>{renderEnd()}</Row>}
           </Col>
         </Row>
 
         <Row className="d-flex justify-content-center question text-center mt-4">
-              <Col onClick={handlePrev} xs={6} md={6} lg={6}>
-                <div  className="btn-prev text-black mt-4">
-                  &lt; Prev
-                </div>
+              <Col xs={6} md={6} lg={6} className="d-flex justify-content-center align-items-center">
+                <Button onClick={handlePrev}  className="btn-prev-card text-black mt-4">
+                  <i className="fas fa-caret-left"></i>
+                  <span>Prev</span>
+                </Button>
               </Col>
-              <Col onClick={handleNext} xs={6} md={6} lg={6}>
-                <div  className="btn-next text-black mt-4">
-                  Next &gt;
-                </div>
+              <Col xs={6} md={6} lg={6} className="d-flex justify-content-center align-items-center">
+                <Button type="button" onClick={handleNext}  className="btn-next-card text-black mt-4">
+                  <span>Next</span>
+                  <i className="fas fa-caret-right"></i>
+                </Button>
               </Col>
         </Row>
-      </Container>
+        
+        </Container>
     </>
   );
 };

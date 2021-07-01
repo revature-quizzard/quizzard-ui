@@ -76,7 +76,7 @@ const UpdateAccountInfo =  ()=>{
         <Container >
             <Row >
                 <Col></Col>
-                <Col style={{paddingTop:"3rem"}} xs={12} md={9}>
+                <Col style={{padding:"3rem"}} xs={12} md={9}>
                     <Card id="CardUAI">
                         <Card.Header id="header-title" style={{textAlign:"center"}}>Update Account Information</Card.Header>
                         <Card.Body>
