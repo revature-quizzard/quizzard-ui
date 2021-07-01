@@ -27,7 +27,7 @@ const CreateQuiz = () => {
   return (
     <Container>
       <Row className="d-flex justify-content-center align-content-center mt-4">
-        <Col style={{ height: "80vh" }} className="bg-light" lg={10}>
+        <Col style={{ height: "80vh", marginBottom: "2rem" }} className="bg-light d-flex flex-column justify-content-start align-items-center" lg={10}>
           {quizState.showQuiz ? (
             <Quiz />
           ) : (

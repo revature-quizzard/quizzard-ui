@@ -31,17 +31,17 @@ const Results = () => {
   return (
     <Row>
       <Col>
-        <Row>
+        <Row style={{marginBottom: "1rem"}}>
           <Col>
             <h1>Congratulations! You have completed this quiz!</h1>
           </Col>
         </Row>
-        <Row>
+        <Row style={{marginBottom: "1rem"}}>
           <Col>
             <h3> You answered {results.answered.length} questions.</h3>
           </Col>
         </Row>
-        <Row>
+        <Row style={{marginBottom: "1rem"}}>
           <Col>
             <h4>
               You got {results.correct.length} right!{" "}
@@ -57,7 +57,7 @@ const Results = () => {
         {/*    </h4>*/}
         {/*  </Col>*/}
         {/*</Row>*/}
-        <Row>
+        <Row style={{marginBottom: "1rem"}}>
           <Col>
             <h4>
               You have been awarded {results.correct.length * 10} points!
