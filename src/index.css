@@ -30,6 +30,13 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  min-height: 100%;
+}
+
 /* NAVIGATION STYLES */
 .navLink {
   text-decoration: none;
@@ -69,6 +76,21 @@ body {
   border: 1px solid black;
 }
 
+.btn-prev-card,
+.btn-next-card {
+  padding: 0 .5rem !important;
+  width: 5rem;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+  border: 1px solid black;
+}
+
+
 .answer {
   font-size: 20px;
   cursor: pointer;
@@ -90,10 +112,11 @@ body {
 }
 
 .instructionsWelcome {
- text-align: center;
- color: var(--purple);
+ /* text-align: center; */
+ /* color: var(--purple); */
  font-weight: 800;
  margin-top: 20px;
+ font-family: var(--normal-font);
 }
 
 .featuresHeader {
@@ -106,9 +129,9 @@ body {
 }
 
 footer {
-  position: fixed;
   bottom: 0;
   width: 100%;
+  overflow-x: hidden;
 }
 .footerText {
   text-align: center;
@@ -120,8 +143,8 @@ footer {
 }
 
 .bottomRow {
-  position: relative;
-  top:5rem;
+  /* position: relative;
+  top:5rem; */
   width: 100%;
 }
 
@@ -151,6 +174,7 @@ button.btn:hover {
 
 aside h2 {
   text-align: center;
+  font-size: 1.75rem;
 }
 
 td {
@@ -228,8 +252,8 @@ td {
 }
 
 .tile-card {
-  width: 16rem;
-  height: 16rem;
+  width: 14rem;
+  height: 14rem;
   margin: 1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -243,6 +267,7 @@ td {
 .flashcard-tile {
   justify-content: flex-start;
   overflow: hidden;
+  cursor: default;
 }
 
 .flashcard-tile > .tile-field {
@@ -267,6 +292,7 @@ td {
   justify-content: center;
   align-items: center;
   pointer-events: none;
+  text-align: center;
 }
 
 .tile-flashcard-field {
@@ -278,23 +304,23 @@ td {
   font-size: 1.25rem;
 }
 
+.element-question {
+  height: 4rem;
+  margin-bottom: 2rem !important;
+}
+
+.flashcard-tile > .element-creator {
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
 #app-container {
   overflow-x: hidden;
-  overflow-y: hidden;
+  
   max-width: none;
   padding-bottom: 2rem;
   padding: 1rem 10%;
-}
-
-#app-container > div {
-  /*this is a little hacky and needs fixing,
-  the row element that is a child of the app-container element
-  was overflowing upwards so that it got partially
-  stuck behind the nav bar, need a better solution
-  because neither the nav bar or app container have fixed heights
-  so if their sizes changed the space between the nav bar and the
-  start of the content would be unpredictable */
-  margin-top: 2rem;
+  flex-grow: 1;
 }
 
 .answer div {
@@ -302,4 +328,29 @@ td {
 }
 .btn-next, .btn-prev {
   padding: 0 30px;
+}
+
+#nav-container {
+  max-width: none;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#submit-btn {
+  margin-top: 3rem;
+}
+
+.flashcard-study-label-row {
+  margin-top: 5rem;
+}
+
+.study-button {
+  height: 4rem;
+  padding: "5px";
+  width: "100px";
+  margin: "10px";
+}
+
+#add-flashcard-button {
+  margin: 2.5rem;
 }

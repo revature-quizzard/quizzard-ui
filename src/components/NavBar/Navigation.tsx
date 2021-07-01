@@ -31,8 +31,8 @@ const Navigation = () => {
   }
 
   return (
-    <Navbar bg="dark" expand="lg">
-      <Container>
+    <Navbar bg="dark" expand="md">
+      <Container id="nav-container">
         <Navbar.Brand href="/" style={{ color: "white" }}>
           <img
             src="https://i.imgur.com/PAm216P.png"
