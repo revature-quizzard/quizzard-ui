@@ -1,10 +1,9 @@
 
-import { Button, Col, Row, Table } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import { authState } from "../../state-slices/auth/auth-slice";
 import { useDispatch } from "react-redux";
 import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
@@ -24,7 +23,6 @@ const StudyHub = () => {
   const [useList, setUseList] = useState(false);//true = public, false = owned
 
   const state = useAppSelector(studySetState);
-  const auState = useAppSelector(authState);
   const history = useHistory();
 
   useEffect(() => {
@@ -40,29 +38,6 @@ const StudyHub = () => {
   const modalHandler = () => {
     setShowModal(prevState => !prevState);
   }
-
-  // /**
-  //  * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
-  //  * Will display a list of the results.
-  //  * @param e event when button is clicked
-  //  * @author Austin Knauer
-  //  * @author Vinson Chin
-  //  */
-  // let createdSetsSearch = async (e: any) => {
-  //     e.preventDefault();
-  //
-  //     const headers = {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': localStorage.getItem("Authorization")
-  //     }
-  //
-  //     let response = await createdSetSearch(headers);
-  //     dispatch(setSetList(response));
-  //
-  //     // needs to be updated eventually to actually check whether results were successfully fetched from the api
-  //     setShowList(true);
-  // }
-
 
   // These functions set which list is displayed below based on button presses.
   const publicSetMode = (e: any) => {
@@ -101,16 +76,6 @@ const StudyHub = () => {
     e.preventDefault();
     history.push("/sets");
   }
-
-  //
-  // let publicSetsSearch = async (e: any) => {
-  //     e.preventDefault();
-  //     const headers = {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': localStorage.getItem("Authorization")
-  //     }
-  // }
-
 
   return (
     <Row>
