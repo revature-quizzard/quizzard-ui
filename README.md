@@ -1,5 +1,5 @@
-# Qwizard (UI)
-This repository contains the backend of Qwizard.
+# Qwizard* (UI)
+This repository contains the frontend of Qwizard.
 
 See the API side of Qwizard here:
 https://github.com/revature-quizzard/quizzard-api
@@ -53,3 +53,11 @@ comes from splitting up the root Redux state object into multiple "slices"
 of state. -Redux Essentials, Part 2: Redux App Structure
  
  https://redux.js.org/tutorials/essentials/part-2-app-structure
+ 
+
+
+ 
+ 
+ 
+ 
+ *Qwizard has no officially designed spelling.
