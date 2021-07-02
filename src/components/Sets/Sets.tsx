@@ -129,15 +129,6 @@ function Sets() {
     
   };
 
-  // ANN: need to add another conditional render statement like with SetList below that renders
-  // a form with an input for the study set name, a dropdown input with public/private options,
-  // and a button with an onclick that calls the method you'll create to persist the new set to the database
-  // You'll also have to add another button insidd the top Container element below that has its own onClick
-  // method which sets showList to false and sets a new piece of state you'll have to create in this component
-  // using useState that tracks whether the create study set form is currently open (just a simple boolean value
-  // called creatingSet or something along those lines). Then you'll use that piece of state to as the condition
-  // in the conditional render I mentioned at the beginning of this comment
-
   return (
     <>
       <Container style={{ marginTop: "10px" }}>
