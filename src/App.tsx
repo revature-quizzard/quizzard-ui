@@ -8,7 +8,6 @@ import Main from "./components/Main/Main";
 import Navigation from "./components/NavBar/Navigation";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import FlashCard from "./components/Flashcards/Flashcard";
 import StudyHub from "./components/StudySets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
@@ -32,9 +31,6 @@ function App() {
           </Route>
           <Route exact path="/register">
             <Register />
-          </Route>
-          <Route exact path="/flashcards">
-            <FlashCard />
           </Route>
           <Route exact path="/sets">
             <Sets />

@@ -26,7 +26,6 @@ const SubjectDropDown = (props: any) => {
     ]);
     const changeHandler = (e: any) => {
         let subject = {id: topics.get(e), name: e};
-        console.log('subject created: ',subject);
         props.onChangeCallback(subject);
         setTopic(e);
     }

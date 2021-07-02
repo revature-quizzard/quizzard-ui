@@ -13,6 +13,5 @@ export async function register(newUser: RegisterModel){
 // }
 export async function login(loginUser: LoginModel){
     let response = await quizzardApiClient.post(`/login`, loginUser);
-    console.log("This is in service: ", response);
     return await response;
 }

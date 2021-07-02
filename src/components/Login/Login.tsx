@@ -40,7 +40,7 @@ const Login = () => {
         getSubjects();
         history.push("/study");
       }).catch(error => {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
           setTimeout(() => {
             dispatch(hideErrorMessage());

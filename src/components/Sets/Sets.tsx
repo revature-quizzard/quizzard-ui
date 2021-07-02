@@ -3,10 +3,8 @@ import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootst
 import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
 import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
 import { CardSetRequest } from "../../models/request-models/card-set-request";
-import {createdSetSearch, createStudySetWithToken} from "../../remote/set-service";
-import SetList from "./SetList";
+import {createStudySetWithToken} from "../../remote/set-service";
 import { useDispatch, useSelector } from "react-redux";
-import { setSetList, addSet, } from "../../state-slices/sets/set-list-slice";
 import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
 import { getSubs } from "../../remote/subject-service";
@@ -29,10 +27,8 @@ function Sets() {
   //let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
-  const [createdSetElement, setCreatedSetElement] = useState(
-    (undefined as unknown as CardSetRequest) || undefined
-  );
-  const [showList, setShowList] = useState(false);
+  
+  
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [localFlashcards, setLocalFlashcards] = useState([]);
@@ -53,8 +49,7 @@ function Sets() {
    * @author 'Giancarlo Tomasello'
    */
   useEffect(() => {
-    console.log("populate flashcards");
-
+   
     const getFlashcards = async () => {
       let cards = await getCards();
       dispatch(setFlashcards(cards));
@@ -67,23 +62,6 @@ function Sets() {
     };
     getSubjects();
   }, []);
-
-  /**
-   * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
-   * Will display a list of the results.
-   * @param e event when button is clicked
-   * @author Austin Knauer
-   * @author Vinson Chin
-   */
-  let createdSetsSearch = async (e: any) => {
-    e.preventDefault();
-
-    let response = await createdSetSearch(headers);
-    dispatch(setSetList(response));
-
-    // needs to be updated eventually to actually check whether results were successfully fetched from the api
-    setShowList(true);
-  };
 
   /**
    * Local flashcards are set here along with calls to persist study sets
@@ -126,10 +104,9 @@ function Sets() {
     // setCreatedSetElement(setObj);
 
     await createStudySetWithToken(setObj, headers).then((res) => {
-      console.log('Create study set response from API: ', res);
       dispatch(appendCardToStudySet(res.cards));
     }).catch((error) => {
-      console.log(error);
+     
     });
 
     // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSetResponse);
@@ -144,7 +121,7 @@ function Sets() {
    * @author 'Giancarlo Tomasello'
    */
   const handleSubject = (card: FlashcardDTO) => {
-    console.log("Card: ", subjects.subjects[card.subjectId - 1].name);
+   
     let currentSubject = subjects.subjects[card.subjectId - 1].name;
 
     return currentSubject;
@@ -162,11 +139,11 @@ function Sets() {
     } else {
       currentChecked.splice(currentChecked.indexOf(e.target.id), 1);
     }
-
-    console.log(currentChecked);
+    
+    
   };
 
-  let publicSetsSearch = async (e: any) => {};
+ 
 
   // ANN: need to add another conditional render statement like with SetList below that renders
   // a form with an input for the study set name, a dropdown input with public/private options,
@@ -252,7 +229,6 @@ function Sets() {
           </CardDeck>
         </Row>
       </Container>
-      {showList && <SetList />}
     </>
   );
 }

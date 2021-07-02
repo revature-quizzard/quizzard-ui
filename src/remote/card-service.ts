@@ -1,6 +1,5 @@
 import { quizzardClient } from "./quizzard-client";
 
-
 /**
  * Performs an axio post request to save a card into the database
  * @param question A string representing the question
@@ -13,12 +12,22 @@ import { quizzardClient } from "./quizzard-client";
  * @author 'Giancarlo Tomasello'
  */
 
-export async function createCard(question: String, answer: string, reviewable: boolean, isPublic: boolean, subjectId: number){
-    console.log("Running Axios function")
+export async function createCard(
+  question: String,
+  answer: string,
+  reviewable: boolean,
+  isPublic: boolean,
+  subjectId: number
+) {
+  let response = await quizzardClient.post("/card/newcard", {
+    question,
+    answer,
+    reviewable,
+    isPublic,
+    subjectId,
+  });
 
-    let response = await quizzardClient.post('/card/newcard', {question, answer, reviewable, isPublic, subjectId})
-    // console.log("Data: " + response.data)
-    return await response.data;
+  return await response.data;
 }
 
 /**
@@ -28,10 +37,7 @@ export async function createCard(question: String, answer: string, reviewable: b
  * @author 'Giancarlo Tomasello'
  */
 
-export async function getCards(){
-    console.log("Running getCards axios function")
-    let response = await quizzardClient.get('/card/all')
-    // console.log("Data: " + response.data)
-    return await response.data;
+export async function getCards() {
+  let response = await quizzardClient.get("/card/all");
+  return await response.data;
 }
-

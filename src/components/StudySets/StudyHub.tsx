@@ -1,15 +1,16 @@
-
-import { Button, Col, Row, Table } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import AddFlashcardModal from "./AddFlashcardModal";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
-import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import { authState } from "../../state-slices/auth/auth-slice";
+import {
+  clearStudySet,
+  currentlyLoading,
+  studySetState,
+} from "../../state-slices/study-set/study-set-slice";
 import { useDispatch } from "react-redux";
 import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
 import { useHistory } from "react-router-dom";
-
 
 /**
  * @author Sean Taba
@@ -17,14 +18,12 @@ import { useHistory } from "react-router-dom";
  * renders the studySets page
  */
 const StudyHub = () => {
-
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [showCards, setShowCards] = useState(false);
-  const [useList, setUseList] = useState(false);//true = public, false = owned
+  const [useList, setUseList] = useState(false); //true = public, false = owned
 
   const state = useAppSelector(studySetState);
-  const auState = useAppSelector(authState);
   const history = useHistory();
 
   useEffect(() => {
@@ -35,11 +34,11 @@ const StudyHub = () => {
 
   const renderFlashcardTable = () => {
     setShowCards(true);
-  }
+  };
 
   const modalHandler = () => {
-    setShowModal(prevState => !prevState);
-  }
+    setShowModal((prevState) => !prevState);
+  };
 
   // /**
   //  * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
@@ -63,44 +62,40 @@ const StudyHub = () => {
   //     setShowList(true);
   // }
 
-
   // These functions set which list is displayed below based on button presses.
   const publicSetMode = (e: any) => {
     setShowCards(false);
     dispatch(currentlyLoading());
     dispatch(clearStudySet());
     setUseList(true);
-  }
+  };
 
   const ownedSetMode = (e: any) => {
     setShowCards(false);
     dispatch(currentlyLoading());
     dispatch(clearStudySet());
     setUseList(false);
-  }
+  };
 
   const goToStudy = (e: any) => {
     e.preventDefault();
-    console.log('Button: Go to study...')
     dispatch(isLoading());
-    history.push("/card")
-  }
+    history.push("/card");
+  };
 
   const goToQuiz = (e: any) => {
     e.preventDefault();
     if (state.selectedStudySet.cards.length < 4) {
       alert("Quizzes need at least 4 questions. SORRY!!");
     } else {
-      console.log('Button: Go to quiz...');
       history.push("/quiz");
     }
-
-  }
+  };
 
   const createSet = (e: any) => {
     e.preventDefault();
     history.push("/sets");
-  }
+  };
 
   //
   // let publicSetsSearch = async (e: any) => {
@@ -111,10 +106,8 @@ const StudyHub = () => {
   //     }
   // }
 
-
   return (
     <Row>
-
       <Col>
         {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
         <Row className="d-flex justify-content-between align-items-center">
@@ -162,7 +155,6 @@ const StudyHub = () => {
           </Col>
         </Row>
 
-
         <Row>
           <Col className="justify-content-center">
             <StudyListTable
@@ -176,26 +168,41 @@ const StudyHub = () => {
 
         {showCards && (
           <>
-              <Row className="d-flex justify-content-between flashcard-study-label-row">
-                <Col className="col-md-7">
-                  <h2 className="justify-content-center" id="selected-study-set-title">
-                    Flashcards in Study Set: #{state.selectedStudySet.id} -{" "}
-                    {state.selectedStudySet.name}
-                  </h2>
-                </Col>
-                <Col className="col-md-5">
-                  <Row className="d-flex justify-content-center flex-nowrap"
-              style={{ alignContent: "center" }}>
-                  <Button type="submit" onClick={goToStudy} className="study-button" style={{ padding: "5px", width: "100px", margin: "10px" }}>
+            <Row className="d-flex justify-content-between flashcard-study-label-row">
+              <Col className="col-md-7">
+                <h2
+                  className="justify-content-center"
+                  id="selected-study-set-title"
+                >
+                  Flashcards in Study Set: #{state.selectedStudySet.id} -{" "}
+                  {state.selectedStudySet.name}
+                </h2>
+              </Col>
+              <Col className="col-md-5">
+                <Row
+                  className="d-flex justify-content-center flex-nowrap"
+                  style={{ alignContent: "center" }}
+                >
+                  <Button
+                    type="submit"
+                    onClick={goToStudy}
+                    className="study-button"
+                    style={{ padding: "5px", width: "100px", margin: "10px" }}
+                  >
                     Study This
                   </Button>
-                  <Button type="submit" onClick={goToQuiz} className="study-button" style={{ padding: "5px", width: "100px", margin: "10px" }}>
+                  <Button
+                    type="submit"
+                    onClick={goToQuiz}
+                    className="study-button"
+                    style={{ padding: "5px", width: "100px", margin: "10px" }}
+                  >
                     Quiz Me!
                   </Button>
-                  </Row>
-                </Col>
-              </Row>
-              <Row>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
               <StudyListTable
                 content="flashcards"
                 type="flashcards"
@@ -216,10 +223,9 @@ const StudyHub = () => {
                 type="button"
                 value="Add a New Flashcard to StudySet"
               />
-               </Row>
+            </Row>
           </>
         )}
-       
       </Col>
     </Row>
   );

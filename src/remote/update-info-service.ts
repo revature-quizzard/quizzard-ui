@@ -1,6 +1,5 @@
 import {
     quizzardApiClientTokenAuthorized,
-    quizzardApiClient,
     quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
 import addPoints from "../models/request-models/add-points";

@@ -1,23 +1,18 @@
-import { Row, Col, Container,Image,Card,Button } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   showQuiz,
   loadQuiz,
   createQuizState,
 } from "../../state-slices/create-quiz/create-quiz-slice";
-import { setOfSets } from "../../utilities/dummy-data";
 import { createQuiz } from "../../utilities/quiz-utility";
 import Quiz from "./Quiz";
-import {Flashcard, FlashcardDTO} from "../../models/flashcard";
 import { studySetState } from "../../state-slices/study-set/study-set-slice";
-import {create} from "domain";
-const CreateQuiz = () => {
- 
-  const studySet = useSelector(studySetState);
 
+const CreateQuiz = () => {
+  const studySet = useSelector(studySetState);
   const dispatch = useDispatch();
   const quizState = useSelector(createQuizState);
-
   const goToQuiz = (e: any) => { 
     //dispatch(loadQuiz(createQuiz(studySet.availablePublicStudySets[e.target.name].cards)));
     dispatch(loadQuiz(createQuiz(studySet.selectedStudySet.cards)));
