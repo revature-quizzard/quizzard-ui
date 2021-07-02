@@ -1,48 +1,55 @@
-#Qwizzard (UI)
-## Covid-19, don't touch!
-## Getting Started with Create React App
+# Qwizzard (UI)
+This repository contains the frontend of Qwizzard.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+See the API side of Qwizzard here:
+https://github.com/revature-quizzard/quizzard-api
 
-## Available Scripts
+Qwizzard is a self-study web application made to assist Revature associates
+with QC study. Qwizzard has two main functions, study and quiz.
+Both study and quiz are flashcard-centric.
 
-In the project directory, you can run:
+### Flashcards:
+Flashcards are made up of questions and answers. This is the basic
+unit of knowledge in Qwizzard. Flashcards should contain a meaningful
+question, and a brief but complete answer. Flashcards are grouped into
+study sets, and associated with a category.
 
-### `npm start`
+### Study:
+A user can select a study set and launch study mode. In study mode users
+are presented with the questions one-by-one. At first the answer is obscured.
+A user can try to answer the question on their own, and then reveal the answer
+in order to check their knowledge.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Quiz:
+A user can also create a quiz from a study set to test themselves. A quiz
+randomizes the order of questions, and then generates a selection of wrong
+answers for each, randomly selected from the correct answers to other
+questions. A user selects an answer for each question, and is given a score.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## UI Structure:
+The UI structure should follow ordinary opinionated react and redux patterns.
 
-### `npm test`
+### Components:
+Components are the primary UI unit in react. Components let you split 
+the UI into independent, reusable pieces, and think about each piece in isolation.
+The top-level component is App, which can be found in App.tsx.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Remotes:
+Remotes are Axios functions used for accessing API endpoints. These are split into 
+clients and services. Clients describe a location with HTTP resources and set up 
+defaults for reaching those resources. Services are verb-specific functions 
+which use a client to access the API endpoints.
 
-### `npm run build`
+### Models:
+Models are the front end version of DTOs. These are simple objects containing fields 
+used to communicate data throughout the front end and across the API.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+As of V0.1 some of these models may be redundant or no longer used.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Slices:
+A "slice" is a collection of Redux reducer logic and actions for a single 
+feature in your app, typically defined together in a single file. The name 
+comes from splitting up the root Redux state object into multiple "slices" 
+of state. -Redux Essentials, Part 2: Redux App Structure
+ 
+ https://redux.js.org/tutorials/essentials/part-2-app-structure
