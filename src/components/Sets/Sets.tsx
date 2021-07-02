@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootstrap";
 import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
-import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
+import { subjectsState,} from "../../state-slices/subject/subject-slice";
 import { CardSetRequest } from "../../models/request-models/card-set-request";
-import {createdSetSearch, createStudySetWithToken} from "../../remote/set-service";
-import SetList from "./SetList";
+import { createStudySetWithToken } from "../../remote/set-service";
 import { useDispatch, useSelector } from "react-redux";
-import { setSetList, addSet, } from "../../state-slices/sets/set-list-slice";
 import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
-import { getSubs } from "../../remote/subject-service";
 import { useHistory } from 'react-router-dom'
 
 import { appendCardToStudySet } from "../../state-slices/study-set/study-set-slice";
@@ -22,17 +19,10 @@ import { appendCardToStudySet } from "../../state-slices/study-set/study-set-sli
  */
 function Sets() {
   const dispatch = useDispatch();
-  //const allSetsState = useSelector(setListState);
   const history = useHistory();
-  //const createSetState = useSelector(createStudySetState);
 
-  //let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
-  const [createdSetElement, setCreatedSetElement] = useState(
-    (undefined as unknown as CardSetRequest) || undefined
-  );
-  const [showList, setShowList] = useState(false);
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [localFlashcards, setLocalFlashcards] = useState([]);
@@ -61,29 +51,7 @@ function Sets() {
     };
     getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    };
-    getSubjects();
   }, []);
-
-  /**
-   * When "Your Sets" button is clicked, request to retrieve all created sets for account will be sent.
-   * Will display a list of the results.
-   * @param e event when button is clicked
-   * @author Austin Knauer
-   * @author Vinson Chin
-   */
-  let createdSetsSearch = async (e: any) => {
-    e.preventDefault();
-
-    let response = await createdSetSearch(headers);
-    dispatch(setSetList(response));
-
-    // needs to be updated eventually to actually check whether results were successfully fetched from the api
-    setShowList(true);
-  };
 
   /**
    * Local flashcards are set here along with calls to persist study sets
@@ -122,9 +90,6 @@ function Sets() {
     //Changed this to use one of Sean's reducers to hook into his functionality
     //dispatch(addSet(setObj));
 
-
-    // setCreatedSetElement(setObj);
-
     await createStudySetWithToken(setObj, headers).then((res) => {
       console.log('Create study set response from API: ', res);
       dispatch(appendCardToStudySet(res.cards));
@@ -132,7 +97,6 @@ function Sets() {
       console.log(error);
     });
 
-    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSetResponse);
     setLocalFlashcards([]);
   };
 
@@ -165,8 +129,6 @@ function Sets() {
 
     console.log(currentChecked);
   };
-
-  let publicSetsSearch = async (e: any) => {};
 
   // ANN: need to add another conditional render statement like with SetList below that renders
   // a form with an input for the study set name, a dropdown input with public/private options,
@@ -252,7 +214,6 @@ function Sets() {
           </CardDeck>
         </Row>
       </Container>
-      {showList && <SetList />}
     </>
   );
 }

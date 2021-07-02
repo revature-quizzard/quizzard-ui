@@ -1,6 +1,5 @@
 import axios from "axios";
 import {StudySet} from "../models/study-set";
-import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 import apiUrl from './api-url';
 
 /**
