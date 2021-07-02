@@ -169,9 +169,9 @@ function Sets() {
         </Row>
         <Row>
           <CardDeck>
-            {stateFlashcards.flashCards.map((card) => {
+            {stateFlashcards.flashCards.map((card, index: any) => {
               return (
-                <Col xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
+                <Col key={index} xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
                   <Card>
                     <Card.Header>{card.question}</Card.Header>
                     <Card.Body>
