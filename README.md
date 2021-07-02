@@ -1,16 +1,16 @@
-# Qwizard* (UI)
-This repository contains the frontend of Qwizard.
+# Qwizzard (UI)
+This repository contains the frontend of Qwizzard.
 
-See the API side of Qwizard here:
+See the API side of Qwizzard here:
 https://github.com/revature-quizzard/quizzard-api
 
-Qwizard is a self-study web application made to assist Revature associates
-with QC study. Qwizard has two main functions, study and quiz.
+Qwizzard is a self-study web application made to assist Revature associates
+with QC study. Qwizzard has two main functions, study and quiz.
 Both study and quiz are flashcard-centric.
 
 ### Flashcards:
 Flashcards are made up of questions and answers. This is the basic
-unit of knowledge in Qwizard. Flashcards should contain a meaningful
+unit of knowledge in Qwizzard. Flashcards should contain a meaningful
 question, and a brief but complete answer. Flashcards are grouped into
 study sets, and associated with a category.
 
@@ -53,11 +53,3 @@ comes from splitting up the root Redux state object into multiple "slices"
 of state. -Redux Essentials, Part 2: Redux App Structure
  
  https://redux.js.org/tutorials/essentials/part-2-app-structure
- 
-
-
- 
- 
- 
- 
- *Qwizard has no officially designed spelling.
