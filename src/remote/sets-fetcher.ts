@@ -1,6 +1,6 @@
 import axios from "axios";
-import { StudySet } from "../models/study-set";
-import apiUrl from "./api-url";
+import {StudySet} from "../models/study-set";
+import apiUrl from './api-url';
 
 /**
  * @author Sean Taba

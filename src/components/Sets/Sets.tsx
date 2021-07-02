@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Row, Col, Container, Button, Form, Card, CardDeck, } from "react-bootstrap";
 import { setFlashcards, flashcardsState, } from "../../state-slices/flashcard/flashcard-slice";
-import { setSubjects, subjectsState,} from "../../state-slices/subject/subject-slice";
+import { subjectsState,} from "../../state-slices/subject/subject-slice";
 import { CardSetRequest } from "../../models/request-models/card-set-request";
-import {createStudySetWithToken} from "../../remote/set-service";
+import { createStudySetWithToken } from "../../remote/set-service";
 import { useDispatch, useSelector } from "react-redux";
 import { FlashcardDTO } from "../../models/flashcard";
 import { getCards } from "../../remote/card-service";
-import { getSubs } from "../../remote/subject-service";
 import { useHistory } from 'react-router-dom'
 
 import { appendCardToStudySet } from "../../state-slices/study-set/study-set-slice";
@@ -20,15 +19,11 @@ import { appendCardToStudySet } from "../../state-slices/study-set/study-set-sli
  */
 function Sets() {
   const dispatch = useDispatch();
-  //const allSetsState = useSelector(setListState);
   const history = useHistory();
-  //const createSetState = useSelector(createStudySetState);
 
-  //let username = "revature";
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
-  
-  
+
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [localFlashcards, setLocalFlashcards] = useState([]);
@@ -56,11 +51,6 @@ function Sets() {
     };
     getFlashcards();
 
-    const getSubjects = async () => {
-      let subjects = await getSubs();
-      dispatch(setSubjects(subjects));
-    };
-    getSubjects();
   }, []);
 
   /**
@@ -100,16 +90,12 @@ function Sets() {
     //Changed this to use one of Sean's reducers to hook into his functionality
     //dispatch(addSet(setObj));
 
-
-    // setCreatedSetElement(setObj);
-
     await createStudySetWithToken(setObj, headers).then((res) => {
       dispatch(appendCardToStudySet(res.cards));
     }).catch((error) => {
      
     });
 
-    // setCreatedSetElement({setName: "", isPublic: false, flashcards: {}} as unknown as CardSetResponse);
     setLocalFlashcards([]);
   };
 
@@ -142,8 +128,6 @@ function Sets() {
     
     
   };
-
- 
 
   // ANN: need to add another conditional render statement like with SetList below that renders
   // a form with an input for the study set name, a dropdown input with public/private options,
