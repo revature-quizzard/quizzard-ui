@@ -32,7 +32,6 @@ const Quiz = () => {
     if (quizState.count < quizState.quiz.length - 1) {
       dispatch(setTotal(quizState.quiz.length));
       resetColors();
-      console.log(quizState.count);
       dispatch(nextCard());
       dispatch(resetAnswered());
     } else if (quizState.count === quizState.quiz.length - 1) {

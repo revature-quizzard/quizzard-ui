@@ -4,7 +4,7 @@
     6 / 19 / 2021
 */
 
-import {FlashcardDTO, SetFlashcardDTO} from "../models/flashcard";
+import {SetFlashcardDTO} from "../models/flashcard";
 
 interface Question {
   question: string;

@@ -33,7 +33,7 @@ const Navigation = () => {
   return (
     <Navbar bg="dark" expand="md">
       <Container id="nav-container">
-        <Navbar.Brand href="/" style={{ color: "white" }}>
+        <Navbar.Brand href="#" style={{ color: "white" }}>
           <img
             src="https://i.imgur.com/PAm216P.png"
             width="30"
@@ -48,19 +48,19 @@ const Navigation = () => {
           <Nav className="me-auto">
             {!auth.isAuthenticated && (
               <>
-                <a
+                <div
                   className="text-light ml-2 mr-2 navLink authLink"
                   onClick={handleLogin}
                 >
                   Login
-                </a>
+                </div>
 
-                <a
+                <div
                   className="text-light ml-2 mr-2 navLink authLink"
                   onClick={handleRegister}
                 >
                   Register
-                </a>
+                </div>
               </>
             )}
             {auth.isAuthenticated && (

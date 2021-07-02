@@ -25,8 +25,6 @@ export const FlipCard = () => {
    * Refactored by Everett and Kyle et al.
    */
   useEffect(() => {
-    console.log("populate flashcards");
-
     let cards = studySet.selectedStudySet.cards;
     dispatch(setFlashcardsForStudy(cards));
 
@@ -61,8 +59,6 @@ export const FlipCard = () => {
       setTimeout(() => {
         dispatch(nextCard())
       },150);
-      console.log(flashcards.count);
-      console.log(flashcards.flashCardsForStudy.length);
     } else if (flashcards.count === flashcards.flashCardsForStudy.length - 1) {
       dispatch(nextCard());
       setIsCardFlipped(false);

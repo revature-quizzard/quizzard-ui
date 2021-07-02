@@ -23,6 +23,7 @@ function Sets() {
 
   const stateFlashcards = useSelector(flashcardsState);
   const subjects = useSelector(subjectsState);
+
   const [setName, setSetName] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [localFlashcards, setLocalFlashcards] = useState([]);
@@ -43,8 +44,7 @@ function Sets() {
    * @author 'Giancarlo Tomasello'
    */
   useEffect(() => {
-    console.log("populate flashcards");
-
+   
     const getFlashcards = async () => {
       let cards = await getCards();
       dispatch(setFlashcards(cards));
@@ -91,10 +91,9 @@ function Sets() {
     //dispatch(addSet(setObj));
 
     await createStudySetWithToken(setObj, headers).then((res) => {
-      console.log('Create study set response from API: ', res);
       dispatch(appendCardToStudySet(res.cards));
     }).catch((error) => {
-      console.log(error);
+     
     });
 
     setLocalFlashcards([]);
@@ -108,7 +107,7 @@ function Sets() {
    * @author 'Giancarlo Tomasello'
    */
   const handleSubject = (card: FlashcardDTO) => {
-    console.log("Card: ", subjects.subjects[card.subjectId - 1].name);
+   
     let currentSubject = subjects.subjects[card.subjectId - 1].name;
 
     return currentSubject;
@@ -126,18 +125,9 @@ function Sets() {
     } else {
       currentChecked.splice(currentChecked.indexOf(e.target.id), 1);
     }
-
-    console.log(currentChecked);
+    
+    
   };
-
-  // ANN: need to add another conditional render statement like with SetList below that renders
-  // a form with an input for the study set name, a dropdown input with public/private options,
-  // and a button with an onclick that calls the method you'll create to persist the new set to the database
-  // You'll also have to add another button insidd the top Container element below that has its own onClick
-  // method which sets showList to false and sets a new piece of state you'll have to create in this component
-  // using useState that tracks whether the create study set form is currently open (just a simple boolean value
-  // called creatingSet or something along those lines). Then you'll use that piece of state to as the condition
-  // in the conditional render I mentioned at the beginning of this comment
 
   return (
     <>

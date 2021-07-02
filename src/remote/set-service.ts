@@ -2,11 +2,12 @@ import { CardSetRequest } from "../models/request-models/card-set-request";
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 
 export async function createStudySet(studySet: CardSetRequest) {
-	
-	console.log("Inside set-service: " + JSON.stringify(studySet))
-	let response = await quizzardApiClientTokenAuthorizedSynchronous.post('/sets/newset', studySet);
-	console.log(response);
-	return await response.data;
+  let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
+    "/sets/newset",
+    studySet
+  );
+
+  return await response.data;
 }
 
 /**
@@ -15,12 +16,18 @@ export async function createStudySet(studySet: CardSetRequest) {
  * @author Kyle, Ej, Everett, Rich
  * @param studySet
  */
-export async function createStudySetWithToken(studySet: CardSetRequest, headers: any) {
+export async function createStudySetWithToken(
+  studySet: CardSetRequest,
+  headers: any
+) {
+  let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
+    "/sets/newset",
+    studySet,
+    {
+      headers: headers,
+    }
+  );
 
-	console.log("Inside set-service: " + JSON.stringify(studySet))
-	let response = await quizzardApiClientTokenAuthorizedSynchronous.post('/sets/newset', studySet, {
-		headers: headers
-	});
-	console.log(response);
-	return await response.data;
+  return await response.data;
 }
+

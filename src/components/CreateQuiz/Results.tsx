@@ -3,13 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {addPointsToUser} from "../../remote/update-info-service";
 import {
-  resetAll,
-  hideResults,
   resultState, takeAnotherQuizResult,
 } from "../../state-slices/create-quiz/result-slice";
 import {
-  hideQuiz,
-  clearQuiz, takeAnotherQuizCreate,
+  takeAnotherQuizCreate,
 } from "../../state-slices/create-quiz/create-quiz-slice";
 import {useEffect} from "react";
 

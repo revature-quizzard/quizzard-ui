@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Form, Button, Container,Row, Col, Card, Modal, ListGroup } from "react-bootstrap";
+import { Form, Button, Container,Row, Col, Card, Modal } from "react-bootstrap";
 import {updateAccInfo}  from "../../remote/update-info-service";
 import { useHistory } from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
+import {useAppDispatch} from "../../store/hooks";
+import { logoutUserReducer} from "../../state-slices/auth/auth-slice";
 import {ResUpdateAccModel} from "../../models/update-account-info-model";
 
 /**

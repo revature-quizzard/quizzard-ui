@@ -5,12 +5,15 @@ import {
   setStudySet,
   studySetState,
   currentlyLoading,
-  finishedLoading
+  finishedLoading,
 } from "../../state-slices/study-set/study-set-slice";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { useEffect } from "react";
-import {takeAnotherQuizResult} from "../../state-slices/create-quiz/result-slice";
-import {clearQuiz, takeAnotherQuizCreate} from "../../state-slices/create-quiz/create-quiz-slice";
+import { takeAnotherQuizResult } from "../../state-slices/create-quiz/result-slice";
+import {
+  clearQuiz,
+  takeAnotherQuizCreate,
+} from "../../state-slices/create-quiz/create-quiz-slice";
 
 export default function StudyListTable(props: any) {
   const dispatch = useAppDispatch();
@@ -25,7 +28,6 @@ export default function StudyListTable(props: any) {
       dispatch(currentlyLoading());
       publicSetsFetcher(auth.token)
         .then((data) => {
-          console.log(data);
           dispatch(saveStudySets(data));
           dispatch(finishedLoading());
         })
@@ -36,21 +38,15 @@ export default function StudyListTable(props: any) {
       dispatch(currentlyLoading());
       ownedSetsFetcher(auth.token)
         .then((data) => {
-          console.log(data);
           dispatch(saveStudySets(data));
           dispatch(finishedLoading());
         })
         .catch((err) => console.log(err));
     }
-
   }, [state.selectedStudySet.cards]);
 
   const clickHandler = (e: any) => {
     if (props.type === "sets") {
-      console.log(
-        "e.currentTarget.id with out negative one",
-        state.availableStudySets[e.currentTarget.id]
-      );
       dispatch(setStudySet(state.availableStudySets[e.currentTarget.id]));
       props.onStudySetChange();
     }
@@ -67,7 +63,7 @@ export default function StudyListTable(props: any) {
         iterable.map((elem: any, index: any) => {
           return (
             <div
-              key = {index}
+              key={index}
               className={
                 props.type === "sets" ? "tile-card" : "tile-card flashcard-tile"
               }
@@ -95,13 +91,11 @@ export default function StudyListTable(props: any) {
                   <p className="tile-field tile-flashcard-field">
                     {elem.subject.name}
                   </p>
-                  <p className="tile-field">{elem.reviewable
-                    ? "Reviewable"
-                    : ""}
+                  <p className="tile-field">
+                    {elem.reviewable ? "Reviewable" : ""}
                   </p>
-                  <p className="tile-field">{elem.public
-                    ? "Public"
-                    : "Private"}
+                  <p className="tile-field">
+                    {elem.public ? "Public" : "Private"}
                   </p>
                 </>
               )}

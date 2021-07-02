@@ -40,7 +40,7 @@ const Register = () => {
       getSubjects();
       history.push("/study");
     }).catch(error => {
-      if (error.response.status == 409) {
+      if (error.response.status === 409) {
         dispatch(showErrorMessage("Invalid inputs"));
         setTimeout(() => {
           dispatch(hideErrorMessage());
