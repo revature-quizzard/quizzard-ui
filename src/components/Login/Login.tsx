@@ -1,6 +1,6 @@
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState } from "react";
-import { login } from "../../remote/login-register-service";
+import { authenticate } from "../../remote/login-register-service";
 import { LoginModel } from "../../models/login-model";
 import {  useDispatch, useSelector } from 'react-redux';
 import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { loginUserReducer } from "../../state-slices/auth/auth-slice";
 import {getSubs} from "../../remote/subject-service";
 import {setSubjects} from "../../state-slices/subject/subject-slice";
+import {Redirect} from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -33,25 +34,18 @@ const Login = () => {
 */
   let logUserIn = async (e: any) => {
     e.preventDefault();
-    await login(loginUser).then(response => {
-        localStorage.setItem("Authorization", response.headers.authorization);
-        setLoginUser({username: "", password: ""} as LoginModel);
-        dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-        getSubjects();
-        history.push("/study");
-      }).catch(error => {
-        if (error.response.status === 401) {
-          dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
-          setTimeout(() => {
-            dispatch(hideErrorMessage());
-          }, 5000)
-         
-        }
-      }
-    );
+    let response = authenticate(loginUser);
+
+    //localStorage.setItem("Authorization", response.signInUserSession);
+    //setLoginUser({username: "", password: ""} as LoginModel);
+    //dispatch(loginUserReducer({username: response.signInUserSession.accessToken.payload.username, token: response.signInUserSession.accessToken.jwtToken}));
+   // getSubjects();
+    //history.push("/study");
+
   }
 
     return (
+        loginUser ? <Redirect to="/study"/> :
         <>
         <Form>
         <h2>Login</h2>
