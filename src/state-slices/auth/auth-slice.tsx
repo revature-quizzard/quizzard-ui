@@ -34,6 +34,7 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isAuthenticated = true;
     },
+    // Delete this?
     logoutUserReducer: (state) => {
       state.username = "";
       state.token = "";
