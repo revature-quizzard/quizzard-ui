@@ -31,7 +31,7 @@ const Navigation = () => {
   }
 
   return (
-    <Navbar bg="dark" expand="md">
+    <Navbar style={{background: "#4F3F63"}} expand="md">
       <Container id="nav-container">
         <Navbar.Brand href="#" style={{ color: "white" }}>
           <img

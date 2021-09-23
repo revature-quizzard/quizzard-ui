@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Container className="app-container" id="app-container">
+      <Container className="app-container" id="app-container" style={{background: "white"}}>
         <Switch>
           <Route exact path="/">
             <Main />

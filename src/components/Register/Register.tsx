@@ -22,10 +22,13 @@ const Register = () => {
 
   const handleChange = (e: any) => {
     const {name, value} = e.target;
+    console.log(e.target);
     setNewUser({
       ...newUser, [name]: value
     });
+    e.target = undefined;
   }
+ 
   const getSubjects = async () => {
     let subjects = await getSubs();
     dispatch(setSubjects(subjects));
@@ -46,13 +49,13 @@ const Register = () => {
           dispatch(hideErrorMessage());
         }, 5000);
       }
-    });
-  }
+    })
+}
 
 
   return (
     <>
-      <Form className="auth-form">
+      <Form  style={{color:"#4E3E61"}} >
         <h2>Registration</h2>
         <Form.Group>
           <Form.Label>Username: </Form.Label>
@@ -105,7 +108,7 @@ const Register = () => {
           />
         </Form.Group>
         <Form.Group className="text-center">
-          <Button onClick={registerNewUser} type="submit">
+          <Button onClick={registerNewUser} style={{background: "#4F3F63"}} type="submit">
             Register
           </Button>
         </Form.Group>

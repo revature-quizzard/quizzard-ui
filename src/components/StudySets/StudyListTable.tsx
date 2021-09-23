@@ -58,7 +58,7 @@ export default function StudyListTable(props: any) {
       : state.selectedStudySet.cards;
 
   return (
-    <div className="tile-container">
+    <div className="tile-container"  style={{background: "#4F3F63"}}>
       {state.finishedLoading &&
         iterable.map((elem: any, index: any) => {
           return (

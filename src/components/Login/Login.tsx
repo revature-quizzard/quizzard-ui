@@ -53,7 +53,7 @@ const Login = () => {
 
     return (
         <>
-        <Form>
+        <Form style={{color:"#ffffff"}}>
         <h2>Login</h2>
           <Form.Group>
             <Form.Label>Username: </Form.Label>
@@ -64,7 +64,7 @@ const Login = () => {
             <Form.Control name="password" value={loginUser.password} onChange={onChange} type="password" placeholder="*******"/>
           </Form.Group>
           <Form.Group className="text-center">
-            <Button onClick={logUserIn} type="submit" >Login</Button>
+            <Button onClick={logUserIn} type="submit" style={{background: "#4F3F63"}} >Login</Button>
           </Form.Group>
           {error.showError && 
           <Alert variant="danger">{error.errorMsg}</Alert>

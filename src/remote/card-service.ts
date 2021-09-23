@@ -1,7 +1,7 @@
 import { quizzardClient } from "./quizzard-client";
 
 /**
- * Performs an axio post request to save a card into the database
+ * Performs an axios post request to save a card into the database
  * @param question A string representing the question
  * @param answer A string representing the answer to the question
  * @param reviewable A boolean to set wether a card flaged for review
