@@ -5,7 +5,7 @@ import { LoginModel } from "../../models/login-model";
 import {  useDispatch, useSelector } from 'react-redux';
 import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
 import { useHistory } from "react-router-dom";
-import { loginUserReducer } from "../../state-slices/auth/auth-slice";
+import { authState, loginUserReducer } from "../../state-slices/auth/auth-slice";
 import {getSubs} from "../../remote/subject-service";
 import {setSubjects} from "../../state-slices/subject/subject-slice";
 import {Redirect} from "react-router-dom";
@@ -14,7 +14,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [loginUser, setLoginUser] = useState({ username: "", password: "" } as LoginModel)
-  
+  const auth = useSelector(authState);
+
   const error = useSelector(errorState);
 
   const getSubjects = async () => {
@@ -29,23 +30,18 @@ const Login = () => {
     });
   }
 
-/*
-  Perfection looks like this (what all axios calls should look like):
-*/
   let logUserIn = async (e: any) => {
     e.preventDefault();
-    let response = authenticate(loginUser);
-
-    //localStorage.setItem("Authorization", response.signInUserSession);
-    //setLoginUser({username: "", password: ""} as LoginModel);
-    //dispatch(loginUserReducer({username: response.signInUserSession.accessToken.payload.username, token: response.signInUserSession.accessToken.jwtToken}));
-   // getSubjects();
-    //history.push("/study");
-
+    let response = await authenticate(loginUser);
+    console.log(response);
+    dispatch(loginUserReducer({username: response.signInUserSession.accessToken.payload.username, token: response.signInUserSession.idToken.jwtToken}));
+    // This is needed as a state change to force an update to the page. Any change in state should update the page.
+    setLoginUser({username: "", password: ""} as LoginModel);
+    // getSubjects();
   }
 
     return (
-        loginUser ? <Redirect to="/study"/> :
+        auth.isAuthenticated ? <Redirect to="/study"/> :
         <>
         <Form>
         <h2>Login</h2>
