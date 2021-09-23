@@ -34,9 +34,8 @@ const Login = () => {
 */
   let logUserIn = async (e: any) => {
     e.preventDefault();
-    let response = authenticate(loginUser);
-
-    //localStorage.setItem("Authorization", response.signInUserSession);
+    let response = await authenticate(loginUser);
+    localStorage.setItem("Authorization", response.signInUserSession.idToken.jwtToken);
     //setLoginUser({username: "", password: ""} as LoginModel);
     //dispatch(loginUserReducer({username: response.signInUserSession.accessToken.payload.username, token: response.signInUserSession.accessToken.jwtToken}));
    // getSubjects();
@@ -45,7 +44,7 @@ const Login = () => {
   }
 
     return (
-        loginUser ? <Redirect to="/study"/> :
+        localStorage.getItem("Authorization") ? <Redirect to="/study"/> :
         <>
         <Form>
         <h2>Login</h2>
