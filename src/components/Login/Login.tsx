@@ -29,14 +29,11 @@ const Login = () => {
     });
   }
 
-/*
-  Perfection looks like this (what all axios calls should look like):
-*/
   let logUserIn = async (e: any) => {
     e.preventDefault();
     let response = await authenticate(loginUser);
     localStorage.setItem("Authorization", response.signInUserSession.idToken.jwtToken);
-    //setLoginUser({username: "", password: ""} as LoginModel);
+    setLoginUser({username: "", password: ""} as LoginModel);
     //dispatch(loginUserReducer({username: response.signInUserSession.accessToken.payload.username, token: response.signInUserSession.accessToken.jwtToken}));
    // getSubjects();
     //history.push("/study");
