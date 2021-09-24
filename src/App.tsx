@@ -13,15 +13,7 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
-import {ConfirmSignup} from "./components/Login/ConfirmSignup";
-import {Amplify} from "aws-amplify";
-import {COGNITO} from "./config/aws";
 
-Amplify.configure({
-    aws_cognito_region: COGNITO.REGION,
-    aws_user_pools_id: COGNITO.USER_POOL_ID,
-    aws_user_pools_web_client_id: COGNITO.APP_CLIENT_ID
-})
 
 function App() {
 
@@ -54,9 +46,6 @@ function App() {
           </Route>
           <Route exact path="/study">
             <StudyHub />
-          </Route>
-          <Route exact path="/confirmation">
-            <ConfirmSignup />
           </Route>
         </Switch>
       </Container>
