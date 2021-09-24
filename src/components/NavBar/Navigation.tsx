@@ -11,8 +11,6 @@ import {
   registerFormReducer,
 } from "../../state-slices/auth/auth-slice";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../remote/login-register-service";
-import { ButtonBase } from "@material-ui/core";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -22,7 +20,6 @@ const Navigation = () => {
   const handleLogout = () => {
     dispatch(logoutUserReducer());
     localStorage.removeItem("Authorization");
-    logout();
   };
 
   const handleLogin = () => {
@@ -51,19 +48,19 @@ const Navigation = () => {
           <Nav className="me-auto">
             {!auth.isAuthenticated && (
               <>
-                <ButtonBase
+                <div
                   className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/login"
+                  onClick={handleLogin}
                 >
                   Login
-                </ButtonBase>
+                </div>
 
-                <ButtonBase
+                <div
                   className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/register"
+                  onClick={handleRegister}
                 >
                   Register
-                </ButtonBase>
+                </div>
               </>
             )}
             {auth.isAuthenticated && (

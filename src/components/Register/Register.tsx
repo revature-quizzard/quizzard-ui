@@ -1,6 +1,6 @@
 import { Form, Button, Alert } from "react-bootstrap";
 import { useState } from 'react';
-import { registerUserAccount } from "../../remote/login-register-service";
+import { register } from "../../remote/login-register-service";
 import { RegisterModel } from "../../models/register-model";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
@@ -33,19 +33,19 @@ const Register = () => {
 
   let registerNewUser = async (e:any) => {
     e.preventDefault();
-    registerUserAccount(newUser).then(response => {
-      //localStorage.setItem("Authorization", response.headers.authorization);
-      //setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
-      //dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-      //getSubjects();
-      history.push("/confirmation");
+    await register(newUser).then(response => {
+      localStorage.setItem("Authorization", response.headers.authorization);
+      setNewUser({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel);
+      dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
+      getSubjects();
+      history.push("/study");
     }).catch(error => {
-        console.log(error);
-//      if (error.response.status === 409) {
-//        dispatch(showErrorMessage("Invalid inputs"));
-//        setTimeout(() => {
-//          dispatch(hideErrorMessage());
-//        }, 5000);
+      if (error.response.status === 409) {
+        dispatch(showErrorMessage("Invalid inputs"));
+        setTimeout(() => {
+          dispatch(hideErrorMessage());
+        }, 5000);
+      }
     });
   }
 
