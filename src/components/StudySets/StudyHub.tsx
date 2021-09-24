@@ -75,7 +75,6 @@ const StudyHub = () => {
   };
 
   return (
-    !user.isAuthenticated ? <Redirect to="/login" /> :
     <Row>
       <Col>
         {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
@@ -96,14 +95,26 @@ const StudyHub = () => {
               className="d-flex justify-content-center flex-nowrap"
               style={{ alignContent: "center" }}
             >
-              <Button
+              {user.isAuthenticated ? (
+                <>
+                <Button
+                  type="submit"
+                  style={{ padding: "5px", width: "100px", margin: "10px" }}
+                  onClick={ownedSetMode}
+                  className="study-button"
+                >
+                Your Sets
+                </Button>
+                <Button
                 type="submit"
                 style={{ padding: "5px", width: "100px", margin: "10px" }}
-                onClick={ownedSetMode}
+                onClick={createSet}
                 className="study-button"
-              >
-                Your Sets
-              </Button>
+                >
+                  Create a Set
+                </Button>
+              </>
+              ) : (<></>)}
               <Button
                 type="submit"
                 style={{ padding: "5px", width: "100px", margin: "10px" }}
@@ -111,14 +122,6 @@ const StudyHub = () => {
                 className="study-button"
               >
                 Public Sets
-              </Button>
-              <Button
-                type="submit"
-                style={{ padding: "5px", width: "100px", margin: "10px" }}
-                onClick={createSet}
-                className="study-button"
-              >
-                Create a Set
               </Button>
             </Row>
           </Col>
