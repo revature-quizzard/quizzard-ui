@@ -11,6 +11,7 @@ import {
   registerFormReducer,
 } from "../../state-slices/auth/auth-slice";
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../remote/login-register-service";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Navigation = () => {
   const handleLogout = () => {
     dispatch(logoutUserReducer());
     localStorage.removeItem("Authorization");
+    logout();
   };
 
   const handleLogin = () => {

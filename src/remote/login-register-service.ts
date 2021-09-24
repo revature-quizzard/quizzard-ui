@@ -1,10 +1,13 @@
+import React from "react";
 import { LoginModel } from "../models/login-model";
 import { RegisterModel } from "../models/register-model";
 import { quizzardApiClient } from "./api-client";
+import { authState, logoutUserReducer } from "../state-slices/auth/auth-slice";
 import {RegisterUserRequest} from "../dtos/register-user-request";
 import {Auth} from "aws-amplify";
 import {Credentials} from "../dtos/credentials";
 import {Principal} from "../dtos/principal";
+import { useDispatch, useSelector } from "react-redux";
 
 export const getCurrentUser = () => {
     return Auth.currentAuthenticatedUser();
@@ -48,7 +51,6 @@ export const authenticate = async (credentials: Credentials) => {
     };
 }
 
-export const logout = (setCurrentUser: (nextUser: Principal | undefined) => void) => {
-    localStorage.removeItem('api-token')
-    setCurrentUser(undefined);
+export const logout = () => {
+    Auth.signOut();
 }
