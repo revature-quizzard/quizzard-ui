@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     let response = await authenticate(loginUser);
 
-    dispatch(loginUserReducer({username: response.username, token: response.signInUserSession.idToken.jwtToken}));
+    dispatch(loginUserReducer(response.payload));
     // This is needed as a state change to force an update to the page. Any change in state should update the page.
     //setLoginUser({username: "", password: ""} as LoginModel);
     // getSubjects();

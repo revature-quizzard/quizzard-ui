@@ -4,10 +4,11 @@ import AddFlashcardModal from "./AddFlashcardModal";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import { useDispatch } from "react-redux";
+import { authState } from  "../../state-slices/auth/auth-slice"
+import { useDispatch, useSelector } from "react-redux";
 import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 /**
  * @author Sean Taba
@@ -21,6 +22,7 @@ const StudyHub = () => {
   const [useList, setUseList] = useState(false); //true = public, false = owned
 
   const state = useAppSelector(studySetState);
+  const user = useSelector(authState);
   const history = useHistory();
 
   useEffect(() => {
@@ -73,6 +75,8 @@ const StudyHub = () => {
   };
 
   return (
+    user.isAuthenticated
+    ?
     <Row>
       <Col>
         {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
@@ -194,6 +198,8 @@ const StudyHub = () => {
         )}
       </Col>
     </Row>
+    :
+    <Redirect to="/login" />
   );
 };
 

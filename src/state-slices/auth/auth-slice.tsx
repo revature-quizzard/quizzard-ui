@@ -4,7 +4,10 @@ import { RootState } from "../../store/store";
 interface State {
   isAuthenticated: boolean;
   isLoading: boolean;
+  id: string;
   username: string;
+  name: string;
+  email: string;
   token: string;
   showLogin: boolean;
 }
@@ -12,7 +15,10 @@ interface State {
 const initialState: State = {
   isAuthenticated: false,
   isLoading: false,
+  id: "",
   username: "",
+  name: "",
+  email: "",
   token: "",
   showLogin: false,
 };
@@ -29,14 +35,19 @@ export const authSlice = createSlice({
     },
 
     // this will have to be modified later once login and register compenents are pulled in to handle passing back a token and username
-    loginUserReducer: (state, action: PayloadAction<any>) => {
-      state.username = action.payload.username;
-      state.token = action.payload.token;
+    loginUserReducer: (state, response: any) => {
+      state.id = response.attributes.sub;
+      state.username = response.username;
+      state.email = response.email;
+      state.token = response.signInUserSession.idToken.jwtToken;
       state.isAuthenticated = true;
     },
+
     // Delete this?
     logoutUserReducer: (state) => {
+      state.id = "";
       state.username = "";
+      state.email = "";
       state.token = "";
       state.isLoading = false;
       state.isAuthenticated = false;
