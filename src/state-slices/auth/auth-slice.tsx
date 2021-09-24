@@ -36,14 +36,13 @@ export const authSlice = createSlice({
 
     // this will have to be modified later once login and register compenents are pulled in to handle passing back a token and username
     loginUserReducer: (state, response: any) => {
-      state.id = response.attributes.sub;
-      state.username = response.username;
-      state.email = response.email;
-      state.token = response.signInUserSession.idToken.jwtToken;
+      state.id = response.payload.attributes.sub;
+      state.username = response.payload.username;
+      state.email = response.payload.attributes.email;
+      state.token = response.payload.signInUserSession.idToken.jwtToken;
       state.isAuthenticated = true;
     },
-
-    // Delete this?
+    
     logoutUserReducer: (state) => {
       state.id = "";
       state.username = "";

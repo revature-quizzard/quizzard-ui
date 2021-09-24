@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     let response = await authenticate(loginUser);
 
-    dispatch(loginUserReducer(response.payload));
+    dispatch(loginUserReducer(response));
     // This is needed as a state change to force an update to the page. Any change in state should update the page.
     //setLoginUser({username: "", password: ""} as LoginModel);
     // getSubjects();

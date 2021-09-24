@@ -75,8 +75,7 @@ const StudyHub = () => {
   };
 
   return (
-    user.isAuthenticated
-    ?
+    !user.isAuthenticated ? <Redirect to="/login" /> :
     <Row>
       <Col>
         {showModal && <AddFlashcardModal onCloseModal={modalHandler} />}
@@ -198,8 +197,6 @@ const StudyHub = () => {
         )}
       </Col>
     </Row>
-    :
-    <Redirect to="/login" />
   );
 };
 
