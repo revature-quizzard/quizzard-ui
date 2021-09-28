@@ -9,6 +9,11 @@ function AddComment() {
         setInputText(e)
     }
 
+    let handleClick = async () => {
+        // make axios call here
+        // also probably set input text to empty string
+    }
+
     return (
         <>
             <Editor onChange={handleChange} placeholder='Write your comment here...' />
