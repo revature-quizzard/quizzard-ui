@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import Editor from 'rich-markdown-editor';
 
 function AddComment() {
+    const [inputText, setInputText] = useState('');
+
+    let handleChange = (e: any) => {
+        setInputText(e)
+    }
+
     return (
         <>
-            <Editor placeholder='Write your comment here...' />
+            <Editor onChange={handleChange} placeholder='Write your comment here...' />
         </>
     )
 }
