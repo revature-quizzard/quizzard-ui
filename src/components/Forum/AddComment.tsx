@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Editor from 'rich-markdown-editor';
+import Button from '@mui/material/Button';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');
@@ -11,6 +12,7 @@ function AddComment() {
     return (
         <>
             <Editor onChange={handleChange} placeholder='Write your comment here...' />
+            <Button onClick={handleClick}>Create</Button>
         </>
     )
 }
