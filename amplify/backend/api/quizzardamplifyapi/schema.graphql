@@ -1,5 +1,37 @@
-type Game @model {
+type Game @model 
+  @key(name: "gbn", fields: ["name"], queryField: "gameByName") {
   id: ID!
   name: String!
-  description: String
+  match_state: Int
+  question_index: Int
+  capacity: Int
+  set: Set
+  players: [Player]
+}
+
+type Set @model {
+  id: ID!
+  name: String!
+  creator: String!
+  card_list: [Card]
+}
+
+type Player @model {
+  id: ID!
+  username: String!
+  answered: Boolean!
+  answered_at: AWSDate!
+  answered_correctly: Boolean!
+  points: Int
+}
+
+type Card @model {
+  id: ID!
+  question: String!
+  answer: String
+}
+
+type Subscription {
+  onUpdateGameById(id: ID!): Game
+    @aws_subscribe(mutations: ["updateGame"])
 }
