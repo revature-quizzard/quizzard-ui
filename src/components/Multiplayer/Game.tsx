@@ -7,45 +7,122 @@ import { onCreateGame, onDeleteGame, onUpdateGame } from '../../graphql/subscrip
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
-import { Button } from 'react-bootstrap';
+import { Button, InputGroup } from 'react-bootstrap';
 import { GraphQLTime } from 'graphql-iso-date';
+import Questions from './Questions';
+import Leaderboard from './Leaderboard';
 
 Amplify.configure(config);
 
+/**
+ *  This React component is a splash screen/container for the multiplayer quiz game.
+ *  Different components will be rendered within this container based on user input.
+ *  This is a MONSTROSITY!!!
+ * 
+ *  Conditional Rendering:
+ *      + Does game exist?
+ *      + What state is game in? (0 = waiting, 1 = question...)
+ *      + Is user host?
+ *      + Is user logged in?
+ * 
+ *  If no game is currently defined, a lobby will be rendered which allows users to 
+ *      define game settings and create a new game or join an existing game by ID.
+ *  If a game is defined, with match state 0, a room will be rendered, in an idle state,
+ *      waiting for the host of the game to start. Users will see a player list.
+ *  If a game is defined, with match state 1, the room will be rendered with a question displayed
+ *      in the top half of the screen, with multiple choice answers being displayed on the 
+ *      bottom half.
+ *  If a game is defined, with match state 2, the room will be rendered with a question displayed
+ *      in the top half of the screen, with multiple choice answers being displayed on the 
+ *      bottom half. In this state, answers will be color coordinated (green=correct, red=incorrect).
+ *  If a game is defined, with match state 3, the room will be rendered with a leaderboard
+ *      displaying players and their scores.
+ * 
+ *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
+ */
 function Game() {
 
-    // This method creates a game object and inserts it into DynamoDB
-  const CreateGame = async () => {
-    // console.log(testGameName, testGameDesc);
-    // if (testGameName === '' || testGameDesc === '') return;
-
-    try {
-        const newPlayer = {
-            id: '1',
-            username: 'newuser',
-            answered: false,
-            answered_correctly: false,
-            points: 0
-        }
-        const game = {name: 'testGameName2', match_state: 0, players: [newPlayer]};
-        console.log(game)
-        await API.graphql(graphqlOperation(createGame, {input: game}));
-        console.log('Game successfully created', game)
-    } catch (err) {
-      console.log('Error creating game ', err);
-    }
-  }
-
     return (
+        <>
+        {
+            (true) // If game is defined (Using redux slice)
+            ?
+            <>
+                {
+                    (0) // If match state is 0 (waiting for start)
+                    ?
+                    <>
+                        {/* <Players />
+                        <Button >Host Start Game Button</Button> */}
+                    </>
+                    :
+                    <>
+                        {
+                            (1) // If match state is 1 (Question is displayed)
+                            ?
+                            <>
+                                {/* <Players />
+                                <Timer />
+                                <Questions />
+                                <Answers /> */}
+                            </>
+                            :
+                            <>
+                                {
+                                    (2) // If match state is 2 (Correct Answer is displayed)
+                                    ?
+                                    <>
+                                        {/* <Players />
+                                        <Questions />
+                                        <Answers /> */}
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            (3) // If match state is 3 (LeaderBoard is displayed)
+                                            ?
+                                            <>
+                                                {/* <Leaderboard /> */}
+                                            </>
+                                            :
+                                            <> </>
+                                        }
+                                    </>
+                                }
+                            </>
+                        }
+                    </>
+                }
+            </>
+            
+            :
+
+            <>
+            {/* // Game Settings Modal
+            // <GameSettings />
+
+            // // Button which loads game based on settings set in modal
+            // <Button >Create Game</Button>
+
+            // // Input for Game ID for existing game
+            // <InputGroup />
+
+            // // Button which joins existing game according to input id
+            // <Button >Join Game</Button> */}
+            </>
+        }
+
         <div className="App">
         <header className="App-header">
             Hello React!
             <br></br>
             <br></br>
             <br></br>
-            <Button onClick={CreateGame} >Create New Game</Button>
+            <Button >Create New Game</Button>
         </header>
+        
         </div>
+        </>
   );
 }
 
