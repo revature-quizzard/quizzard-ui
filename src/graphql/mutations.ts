@@ -10,7 +10,27 @@ export const createGame = /* GraphQL */ `
     createGame(input: $input, condition: $condition) {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }
@@ -24,7 +44,27 @@ export const updateGame = /* GraphQL */ `
     updateGame(input: $input, condition: $condition) {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }
@@ -38,7 +78,27 @@ export const deleteGame = /* GraphQL */ `
     deleteGame(input: $input, condition: $condition) {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }

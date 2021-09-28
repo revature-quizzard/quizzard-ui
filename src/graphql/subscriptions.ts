@@ -2,12 +2,63 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onUpdateGameById = /* GraphQL */ `
+  subscription OnUpdateGameById($id: ID!) {
+    onUpdateGameById(id: $id) {
+      id
+      name
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGame = /* GraphQL */ `
   subscription OnCreateGame {
     onCreateGame {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }
@@ -18,7 +69,27 @@ export const onUpdateGame = /* GraphQL */ `
     onUpdateGame {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }
@@ -29,7 +100,27 @@ export const onDeleteGame = /* GraphQL */ `
     onDeleteGame {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }

@@ -5,12 +5,40 @@
 export type CreateGameInput = {
   id?: string | null,
   name: string,
-  description?: string | null,
+  match_state?: number | null,
+  question_index?: number | null,
+  capacity?: number | null,
+  set?: SetInput | null,
+  players?: Array< PlayerInput | null > | null,
+};
+
+export type SetInput = {
+  id: string,
+  name: string,
+  creator: string,
+  card_list?: Array< CardInput | null > | null,
+};
+
+export type CardInput = {
+  id: string,
+  question: string,
+  answer?: string | null,
+};
+
+export type PlayerInput = {
+  id: string,
+  username: string,
+  answered: boolean,
+  answered_at: string,
+  answered_correctly: boolean,
+  points?: number | null,
 };
 
 export type ModelGameConditionInput = {
   name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
+  match_state?: ModelIntInput | null,
+  question_index?: ModelIntInput | null,
+  capacity?: ModelIntInput | null,
   and?: Array< ModelGameConditionInput | null > | null,
   or?: Array< ModelGameConditionInput | null > | null,
   not?: ModelGameConditionInput | null,
@@ -56,19 +84,64 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Game = {
   __typename: "Game",
   id: string,
   name: string,
-  description?: string | null,
+  match_state?: number | null,
+  question_index?: number | null,
+  capacity?: number | null,
+  set?: Set | null,
+  players?:  Array<Player | null > | null,
   createdAt: string,
   updatedAt: string,
+};
+
+export type Set = {
+  __typename: "Set",
+  id: string,
+  name: string,
+  creator: string,
+  card_list?:  Array<Card | null > | null,
+};
+
+export type Card = {
+  __typename: "Card",
+  id: string,
+  question: string,
+  answer?: string | null,
+};
+
+export type Player = {
+  __typename: "Player",
+  id: string,
+  username: string,
+  answered: boolean,
+  answered_at: string,
+  answered_correctly: boolean,
+  points?: number | null,
 };
 
 export type UpdateGameInput = {
   id: string,
   name?: string | null,
-  description?: string | null,
+  match_state?: number | null,
+  question_index?: number | null,
+  capacity?: number | null,
+  set?: SetInput | null,
+  players?: Array< PlayerInput | null > | null,
 };
 
 export type DeleteGameInput = {
@@ -78,7 +151,9 @@ export type DeleteGameInput = {
 export type ModelGameFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
+  match_state?: ModelIntInput | null,
+  question_index?: ModelIntInput | null,
+  capacity?: ModelIntInput | null,
   and?: Array< ModelGameFilterInput | null > | null,
   or?: Array< ModelGameFilterInput | null > | null,
   not?: ModelGameFilterInput | null,
@@ -106,6 +181,12 @@ export type ModelGameConnection = {
   nextToken?: string | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateGameMutationVariables = {
   input: CreateGameInput,
   condition?: ModelGameConditionInput | null,
@@ -116,7 +197,30 @@ export type CreateGameMutation = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -132,7 +236,30 @@ export type UpdateGameMutation = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -148,7 +275,30 @@ export type DeleteGameMutation = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -163,7 +313,30 @@ export type GetGameQuery = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -182,11 +355,106 @@ export type ListGamesQuery = {
       __typename: "Game",
       id: string,
       name: string,
-      description?: string | null,
+      match_state?: number | null,
+      question_index?: number | null,
+      capacity?: number | null,
+      set?:  {
+        __typename: "Set",
+        id: string,
+        name: string,
+        creator: string,
+      } | null,
+      players?:  Array< {
+        __typename: "Player",
+        id: string,
+        username: string,
+        answered: boolean,
+        answered_at: string,
+        answered_correctly: boolean,
+        points?: number | null,
+      } | null > | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
+  } | null,
+};
+
+export type GameByNameQueryVariables = {
+  name?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGameFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GameByNameQuery = {
+  gameByName?:  {
+    __typename: "ModelGameConnection",
+    items?:  Array< {
+      __typename: "Game",
+      id: string,
+      name: string,
+      match_state?: number | null,
+      question_index?: number | null,
+      capacity?: number | null,
+      set?:  {
+        __typename: "Set",
+        id: string,
+        name: string,
+        creator: string,
+      } | null,
+      players?:  Array< {
+        __typename: "Player",
+        id: string,
+        username: string,
+        answered: boolean,
+        answered_at: string,
+        answered_correctly: boolean,
+        points?: number | null,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnUpdateGameByIdSubscriptionVariables = {
+  id: string,
+};
+
+export type OnUpdateGameByIdSubscription = {
+  onUpdateGameById?:  {
+    __typename: "Game",
+    id: string,
+    name: string,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -195,7 +463,30 @@ export type OnCreateGameSubscription = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -206,7 +497,30 @@ export type OnUpdateGameSubscription = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -217,7 +531,30 @@ export type OnDeleteGameSubscription = {
     __typename: "Game",
     id: string,
     name: string,
-    description?: string | null,
+    match_state?: number | null,
+    question_index?: number | null,
+    capacity?: number | null,
+    set?:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      card_list?:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        answer?: string | null,
+      } | null > | null,
+    } | null,
+    players?:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answered_at: string,
+      answered_correctly: boolean,
+      points?: number | null,
+    } | null > | null,
     createdAt: string,
     updatedAt: string,
   } | null,

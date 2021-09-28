@@ -7,7 +7,27 @@ export const getGame = /* GraphQL */ `
     getGame(id: $id) {
       id
       name
-      description
+      match_state
+      question_index
+      capacity
+      set {
+        id
+        name
+        creator
+        card_list {
+          id
+          question
+          answer
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answered_at
+        answered_correctly
+        points
+      }
       createdAt
       updatedAt
     }
@@ -23,7 +43,63 @@ export const listGames = /* GraphQL */ `
       items {
         id
         name
-        description
+        match_state
+        question_index
+        capacity
+        set {
+          id
+          name
+          creator
+        }
+        players {
+          id
+          username
+          answered
+          answered_at
+          answered_correctly
+          points
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const gameByName = /* GraphQL */ `
+  query GameByName(
+    $name: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelGameFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gameByName(
+      name: $name
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        match_state
+        question_index
+        capacity
+        set {
+          id
+          name
+          creator
+        }
+        players {
+          id
+          username
+          answered
+          answered_at
+          answered_correctly
+          points
+        }
         createdAt
         updatedAt
       }
