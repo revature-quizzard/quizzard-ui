@@ -7,7 +7,6 @@ import { onCreateGame, onDeleteGame, onUpdateGame } from '../../graphql/subscrip
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
-import { Button, InputGroup } from 'react-bootstrap';
 import { GraphQLTime } from 'graphql-iso-date';
 import Questions from './Questions';
 import Leaderboard from './Leaderboard';
@@ -113,7 +112,6 @@ function Game() {
             <br></br>
             <br></br>
             <br></br>
-            <Button >Create New Game</Button>
         </header>
         
         </div>
