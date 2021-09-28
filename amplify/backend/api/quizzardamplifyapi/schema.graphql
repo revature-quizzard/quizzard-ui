@@ -9,23 +9,23 @@ type Game @model
   players: [Player]
 }
 
-type Set @model {
+type Set {
   id: ID!
   name: String!
   creator: String!
   card_list: [Card]
 }
 
-type Player @model {
+type Player {
   id: ID!
   username: String!
   answered: Boolean!
-  answered_at: AWSDate!
+  answered_at: AWSTime!
   answered_correctly: Boolean!
   points: Int
 }
 
-type Card @model {
+type Card {
   id: ID!
   question: String!
   answer: String

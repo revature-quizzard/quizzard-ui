@@ -8,6 +8,7 @@ import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
 import { Button } from 'react-bootstrap';
+import { GraphQLTime } from 'graphql-iso-date';
 
 Amplify.configure(config);
 
@@ -20,9 +21,9 @@ function Game() {
 
     try {
         const newPlayer = {
+            id: '1',
             username: 'newuser',
             answered: false,
-            answered_at: new Date().toISOString(),
             answered_correctly: false,
             points: 0
         }
