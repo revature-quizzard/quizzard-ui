@@ -40,6 +40,45 @@ Amplify.configure(config);
  * 
  *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
  */
+
+// This function abstracts away some logic from the main return method and allows us to use
+// a switch statement in our conditional rendering.
+function render() {
+    let match_state = 0;
+    switch(match_state) {
+        case 0:
+            return (
+                <>
+                    {/* <Players />
+                    <Button >Host Start Game Button</Button> */}
+                </>
+            )
+        case 1:
+            return (
+                <>
+                    {/* <Players />
+                    <Timer />
+                    <Questions />
+                    <Answers /> */}
+                </>
+            )
+        case 2:
+            return (
+                <>
+                    {/* <Players />
+                    <Questions />
+                    <Answers /> */}
+                </>
+            )
+        case 3: 
+            return (
+                <>
+                    {/* <Leaderboard /> */}
+                </>
+            )
+    }
+}
+
 function Game() {
 
     return (
@@ -48,51 +87,7 @@ function Game() {
             (true) // If game is defined (Using redux slice)
             ?
             <>
-                {
-                    (0) // If match state is 0 (waiting for start)
-                    ?
-                    <>
-                        {/* <Players />
-                        <Button >Host Start Game Button</Button> */}
-                    </>
-                    :
-                    <>
-                        {
-                            (1) // If match state is 1 (Question is displayed)
-                            ?
-                            <>
-                                {/* <Players />
-                                <Timer />
-                                <Questions />
-                                <Answers /> */}
-                            </>
-                            :
-                            <>
-                                {
-                                    (2) // If match state is 2 (Correct Answer is displayed)
-                                    ?
-                                    <>
-                                        {/* <Players />
-                                        <Questions />
-                                        <Answers /> */}
-                                    </>
-                                    :
-                                    <>
-                                        {
-                                            (3) // If match state is 3 (LeaderBoard is displayed)
-                                            ?
-                                            <>
-                                                {/* <Leaderboard /> */}
-                                            </>
-                                            :
-                                            <> </>
-                                        }
-                                    </>
-                                }
-                            </>
-                        }
-                    </>
-                }
+                { render() }
             </>
             
             :
