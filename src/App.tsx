@@ -12,6 +12,7 @@ import StudyHub from "./components/StudySets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
+import Game from "./components/Multiplayer/Game";
 import { FlipCard } from "./components/Flashcards/FlipCard";
 
 
@@ -46,6 +47,9 @@ function App() {
           </Route>
           <Route exact path="/study">
             <StudyHub />
+          </Route>
+          <Route exact path="/multiplayer">
+            <Game />
           </Route>
         </Switch>
       </Container>

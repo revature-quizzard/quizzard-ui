@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Row, Col } from "react-bootstrap";
 import Welcome from "./Welcome";
 import Register from "../Register/Register"
@@ -17,6 +18,9 @@ const Main = () => {
       <aside className="col-md-4">
         { !auth.showLogin ? <Register /> : <Login /> }
       </aside>
+      <Link to="/multiplayer" >
+        Go to Multiplayer
+      </Link>
     </Row>
   );
 };
