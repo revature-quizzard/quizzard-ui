@@ -10,8 +10,12 @@ function AddComment() {
     }
 
     let handleClick = async () => {
-        // make axios call here
-        // also probably set input text to empty string
+        try {
+            // make axios call here
+            setInputText('');
+        } catch (e: any) {
+            // set an error message / toast here
+        }
     }
 
     return (
