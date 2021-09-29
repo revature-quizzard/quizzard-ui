@@ -14,12 +14,6 @@ describe('GameContainer Test Suite', () => {
         expect(wrapper).toBeTruthy;
     });
 
-    it('Game Container renders splash screen when no game exists', () => {
-        const wrapper = mount(<Game />);
-
-        expect(wrapper).toBeTruthy;
-    });
-
     it('Game Container renders correctly when match state is 0', () => {
         const wrapper = mount(<Game />);
 

@@ -22,5 +22,5 @@ describe('GameSettings Test Suite', () => {
         let mockSetShowFn = jest.fn();
 
         const wrapper = mount(<GameSettings show={false} setShow={mockSetShowFn}/>);
-    })
+    });
 })
