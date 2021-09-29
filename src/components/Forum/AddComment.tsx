@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { authState } from '../../state-slices/auth/auth-slice';
+import { useSelector } from 'react-redux';
 import Editor from 'rich-markdown-editor';
 import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');
+    const auth = useSelector(authState);
 
     let handleChange = (e: any) => {
         setInputText(e)
@@ -13,7 +16,6 @@ function AddComment() {
     let handleClick = async () => {
         try {
             // make axios call here
-            setInputText('');
         } catch (e: any) {
             // set an error message / toast here
         }
