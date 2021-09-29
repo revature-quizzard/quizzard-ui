@@ -4,8 +4,8 @@
  * interface for User entity
  */
 export interface User {
-    id: number;
-    firstName: string;
-    lastName: string;
+    id: string;
+    username: string;
+    name: string;
     email: string;
 }
