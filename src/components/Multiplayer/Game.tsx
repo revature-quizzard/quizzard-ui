@@ -40,6 +40,7 @@ Amplify.configure(config);
  *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
  */
 
+
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render() {
