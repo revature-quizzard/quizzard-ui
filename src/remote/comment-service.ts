@@ -1,4 +1,5 @@
 import { quizzardApiClientTokenAuthorized as QuizzardClient } from "./api-client";
+import { Comment } from '../models/comment';
 
 export async function addComment(comment: Comment) {
     let response = await QuizzardClient.post('/forum/comment');
