@@ -10,7 +10,7 @@ interface ILeaderboardProps {
 }
 
 /**
- *  The leaderboard component will display a ranked list of players from the game
+ *  The leaderboard component will display a ranked list of players from the game.
  * 
  *  @author Sean Dunn
  */
