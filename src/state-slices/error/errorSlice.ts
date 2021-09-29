@@ -19,10 +19,15 @@ class errorInput {
     severity: AlertColor;
 }
 
+/**
+ * Slice of state for errors. note: DO NOT USE showErrorMessage, it will be deprecated within the week
+ * @author 'Luna Haines'
+ */
 export const errorSlice = createSlice({
     name: "error",
     initialState,
     reducers: {
+        // BEING DEPRECATED SOON! DO NOT USE!
         showErrorMessage: (state, action: PayloadAction<string>) => {
             state.errorMsg = action.payload; 
             state.showError = true;
