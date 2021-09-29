@@ -9,15 +9,15 @@ export class Comment {
     owner: String;
     tags: string[]
 
-    constructor(id: string, subject: string, ancestors: string[], parent: string, description: string, child_count: number, date_created: string, owner: string, tags: string[]) {
-        this.id = id;
-        this.subject = subject;
+    constructor(ancestors: string[], parent: string, description: string, owner: string, id?: string, subject?: string, child_count?: number, date_created?: string, tags?: string[]) {
         this.ancestors = ancestors;
         this.parent = parent;
         this.description = description;
-        this.child_count = child_count;
-        this.date_created = date_created;
         this.owner = owner;
-        this.tags = tags;
+        if (id) { this.id = id; }
+        if (subject) { this.subject = subject; }
+        if (child_count) { this.child_count = child_count; }
+        if (date_created) { this.date_created = date_created; }
+        if (tags) { this.tags = tags; }
     }
 }
