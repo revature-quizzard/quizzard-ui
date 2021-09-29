@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Subforum } from '../../models/subforum';
 import { Thread } from '../../models/thread';
+import { RootState } from '../../store/store';
 
 
 interface State {
@@ -25,3 +26,9 @@ export const forumSlice = createSlice({
         }
     }
 })
+
+export const { setCurrentSubforum, setCurrentThread } = forumSlice.actions;
+
+export const forumState = (state: RootState) => {state.forum}
+
+export default forumSlice.reducer;
