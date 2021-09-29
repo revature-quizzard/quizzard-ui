@@ -25,6 +25,7 @@ function Game() {
             username: 'newuser',
             answered: false,
             answered_correctly: false,
+            answered_at: new Date().toISOString(),
             points: 0
         }
         const game = {name: 'testGameName2', match_state: 0, players: [newPlayer]};
