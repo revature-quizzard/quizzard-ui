@@ -40,7 +40,7 @@ export const errorSlice = createSlice({
     }
 });
 
-export const { showErrorMessage, hideErrorMessage } = errorSlice.actions;
+export const { showErrorMessage, showSnackbar, hideErrorMessage } = errorSlice.actions;
 
 export const errorState = (state: RootState) => state.error;
 
