@@ -1,10 +1,4 @@
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 
 /**
  * React component that renders the current players username and their points of an active game.
@@ -12,12 +6,25 @@
  * 
  * @author Colby Wall
  */
+
+ function createData(username: string, points: number) {
+    return { username, points };
+  }
+  
+  const rows = [
+    createData('Yozur', 159),
+    createData('John', 237),
+    createData('Tommy', 262),
+    createData('Cupcake', 305),
+    createData('Sam', 134),
+  ];
+
 function Players() {
 
     return (
         <>
-        {/* <TableContainer component={Paper}>
-            <Table sx={{ maxWidth: 200 }} aria-label="simple table">
+        <TableContainer component={Paper}>
+            <Table aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
                 <TableRow>
                     <TableCell>Players</TableCell>
@@ -28,11 +35,10 @@ function Players() {
                 <TableBody>
                 {rows.map((row) => (
                     <TableRow
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    key={row.username}      
                     >
                     <TableCell component="th" scope="row">
-                        {row.name}
+                        {row.username}
                     </TableCell>
                     <TableCell align="right">{row.username}</TableCell>
                     <TableCell align="right">{row.points}</TableCell>
@@ -40,7 +46,7 @@ function Players() {
                 ))}
                 </TableBody>
             </Table>
-            </TableContainer> */}
+            </TableContainer> 
         </>
     )
 }

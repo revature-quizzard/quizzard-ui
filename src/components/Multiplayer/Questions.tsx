@@ -1,1 +1,9 @@
-export default {}
+ function Questions() {
+
+    return (
+        <>
+        </>
+    );
+ }
+
+export default Questions
