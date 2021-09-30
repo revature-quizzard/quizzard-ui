@@ -1,15 +1,21 @@
-import {render} from '@testing-library/react';
-import {SubforumDTO} from '../../models/subforum';
-import { Grid, Box, ButtonBase, Typography, useTheme, makeStyles } from '@material-ui/core';
-import {Link} from 'react-router-dom';
+import { getAllSubForums } from '../../remote/sub-forum-service';
 import { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { Typography } from '@material-ui/core';
 
 const Subforum = ()=> {
     
+    useEffect(() => {
+   
+        const getSubforums = async () => {
+          let subforums = await getAllSubForums();
+        };
+        getSubforums();
+    
+      }, []);
 
-    return (
-        <>
-            {}
+      return (
+        <> 
         </>
     );
 }
