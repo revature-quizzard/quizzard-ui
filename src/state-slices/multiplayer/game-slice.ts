@@ -53,7 +53,15 @@ export const gameSlice = createSlice({
         
         // Used when establishing a new game
         setGame: (state, action) => {
-            state = action.payload;
+            // state = action.payload;
+            state.id = action.payload.id;
+            state.name = action.payload.name;
+            state.match_state = action.payload.match_state;
+            state.question_index = action.payload.question_index;
+            state.capacity = action.payload.capacity;
+            state.set = action.payload.set;
+            state.players = action.payload.players;
+            console.log('Setting ', state, ' to ', action.payload)
         }
 
 

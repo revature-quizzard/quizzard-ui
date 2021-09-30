@@ -127,12 +127,13 @@ function Game() {
 
     const game = useSelector(gameState);
     const dispatch = useDispatch();
+    const [trigger, setTrigger] = useState(false);
 
     // TODO: Change to be actual values
     let dummyGameId = 1;
     // let dummyGame = undefined;
     let dummyGame = {
-        id: '1',
+        id: '7',
         name: '',
         match_state: 0,
         question_index: 0,
@@ -145,10 +146,17 @@ function Game() {
         players: []
     }
 
+    async function test() {
+        await dispatch(setGame(dummyGame));
+        console.log('game after dispatch: ', game);
+    }
+
     useEffect(() => {
         // TODO: Remove when connecting to GameLounge
-        dispatch(setGame(dummyGame));
-        console.log(game)
+        console.log('game before dispatch: ', game)
+        test();
+        setTrigger(!trigger);
+        
 
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
@@ -172,12 +180,12 @@ function Game() {
     return (
         <>
         {
-            // (game) // If game is defined (Using redux slice)
-            // ?
-            // <>
-            //     { render() }
-            // </>            
-            // : <Redirect to="lounge" />
+            (game.id != '-1') // If game is defined (Using redux slice)
+            ?
+            <>
+                { render() }
+            </>            
+            : <Redirect to="lounge" />
         }
         </>
   );

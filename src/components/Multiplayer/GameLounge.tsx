@@ -4,6 +4,7 @@ import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 import { gameStateState } from '../../state-slices/multiplayer/game-state-slice';
 
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -41,6 +42,7 @@ function GameLounge() {
 
         // // Button which joins existing game according to input id
         // <Button >Join Game</Button> */}
+        <Link to="/multiplayer">Go Back To Multiplayer</Link>
         </>
     )
 }
