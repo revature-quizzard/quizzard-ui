@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { gameState, setNewGame, changeMatchState } from '../../state-slices/multiplayer/game-slice';
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 import { gameStateState } from '../../state-slices/multiplayer/game-state-slice';
 
 import { Button } from '@material-ui/core';
@@ -27,8 +27,6 @@ function GameLounge() {
                 <br></br>
                 <br></br>
                 {/* <h1>{game.id}</h1> */}
-                <Button onClick={() => console.log(game)}>Create New Game</Button>
-                <Button onClick={() => dispatch(changeMatchState(3))}>Change Match State to 3</Button>
             </header>
             
             </div>

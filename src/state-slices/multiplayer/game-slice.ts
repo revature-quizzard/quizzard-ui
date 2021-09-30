@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
+import gameStateSlice from "./game-state-slice";
 
 
 interface Player {
@@ -53,27 +54,8 @@ export const gameSlice = createSlice({
         // Define action names here: pass in the state, define how the state is manipulated within the reducer
         
         // Used when establishing a new game
-        setNewGame: (state, action: PayloadAction<Game>) => {
-            state.game.id = action.payload.id;
-            state.game.name = action.payload.name;
-            state.game.capacity = action.payload.capacity;
-            state.game.set = action.payload.set;
-            state.game.players = action.payload.players;
-        },
-
-        // Used for changing to next state of game (question -> answer, etc)
-        changeMatchState: (state, action) => {
-            state.game.match_state = action.payload;
-        },
-
-        // Used for adding a new player
-        addPlayer: (state, action: PayloadAction<Player>) => {
-            state.game.players.push(action.payload);
-        },
-
-        // Used to remove a player
-        removePlayer: (state, action: PayloadAction<Player>) => {
-            state.game.players = state.game.players.filter(player => player.id != action.payload.id);
+        setGame: (state, action) => {
+            state.game = action.payload;
         }
 
 
@@ -82,10 +64,7 @@ export const gameSlice = createSlice({
 
 // Export the actions/reducers to be imported into a component and dispatched from component
 export const {
-    setNewGame,
-    changeMatchState,
-    addPlayer,
-    removePlayer
+    setGame
 } = gameSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
