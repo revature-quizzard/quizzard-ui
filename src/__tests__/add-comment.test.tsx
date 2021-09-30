@@ -5,7 +5,6 @@ import { Subforum } from '../models/subforum';
 import { Thread } from '../models/thread';import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { addComment } from '../remote/comment-service';
-
 jest.mock('../remote/comment-service');
 
 interface TempState {
@@ -49,6 +48,12 @@ describe('Add Comment Component Test Suite', () => {
 
     it('Component calls addComment (POST request to quizzard api) when given valid information', () => {
         // configure mock redux store
+        initialState = {
+            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
+            currentThread: new Thread(['subforumId'], 'subforumId', 'description', 'subject', 1, 'username', 'threadId', '2021-09-28T12:42:56.789')
+        }
+        const configureMockStore = createMockStore();
+        
         // adding something here
     })
 
