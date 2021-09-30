@@ -34,6 +34,14 @@ const Login = () => {
     e.preventDefault();
     let response = await authenticate(loginUser);
 
+    if (response === undefined) {
+      dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
+      setTimeout(() => {
+        dispatch(hideErrorMessage);
+      }, 5000);
+      return;
+    }
+
     dispatch(loginUserReducer(response));
     // This is needed as a state change to force an update to the page. Any change in state should update the page.
     //setLoginUser({username: "", password: ""} as LoginModel);
