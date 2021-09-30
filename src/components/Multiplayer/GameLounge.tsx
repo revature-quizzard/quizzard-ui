@@ -26,7 +26,6 @@ function GameLounge() {
                 <br></br>
                 <br></br>
                 <br></br>
-                {/* <h1>{game.id}</h1> */}
             </header>
             
             </div>
