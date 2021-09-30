@@ -17,7 +17,7 @@ interface Card {
     answer: String
 }
 
-interface Game {
+interface State {
     id: String,
     name: String,
     match_state: number,
@@ -27,22 +27,16 @@ interface Game {
     players: Player[]
 }
 
-interface State {
-    game: Game
-}
-
 const initialState: State = {
-    game: {
-        id: '-1',
-        name: '',
-        match_state: 0,
-        question_index: 0,
-        capacity: 0,
-        set: {
-            card_list: []
-        },
-        players: []
-    }
+    id: '-1',
+    name: '',
+    match_state: 0,
+    question_index: 0,
+    capacity: 0,
+    set: {
+        card_list: []
+    },
+    players: []
 };
 
 // Create the actual slice
@@ -59,7 +53,7 @@ export const gameSlice = createSlice({
         
         // Used when establishing a new game
         setGame: (state, action) => {
-            state.game = action.payload;
+            state = action.payload;
         }
 
 
