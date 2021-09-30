@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
-import { gameStateState } from '../../state-slices/multiplayer/game-state-slice';
 
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import gameStateSlice from "./game-state-slice";
 
 
 interface Player {
