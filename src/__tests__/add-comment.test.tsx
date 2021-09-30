@@ -2,8 +2,10 @@ import { shallow, configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import AddComment from '../components/Forum/AddComment';
 import { Subforum } from '../models/subforum';
-import { Thread } from '../models/thread';
+import { Thread } from '../models/thread';import { Provider } from 'react-redux';
+import createMockStore from 'redux-mock-store';
 import { addComment } from '../remote/comment-service';
+
 jest.mock('../remote/comment-service');
 
 interface TempState {
@@ -11,7 +13,7 @@ interface TempState {
     currentThread: Thread | undefined;
 }
 
-let initialState: TempState
+let initialState: any;
 
 describe('Add Comment Component Test Suite', () => {
 
@@ -32,8 +34,14 @@ describe('Add Comment Component Test Suite', () => {
     })
 
     it('Component renders successfully', () => {
+        // configure mock store
+        const configureMockStore = createMockStore();
+        const mockStore = configureMockStore(initialState);
+
         // set up wrapper class
-        const wrapper = shallow(<AddComment />);
+        const wrapper = shallow(<Provider store={mockStore}>
+                                    <AddComment />
+                                </Provider>);
 
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
