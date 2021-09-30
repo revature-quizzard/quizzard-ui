@@ -5,6 +5,10 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+<<<<<<< HEAD
+=======
+    "@mui/material": "^5.0.1",
+>>>>>>> e0b23e94c2d490850349c33ad3999fee5b305013
     "@material-ui/core": "^4.12.3",
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@material-ui/lab": "^4.0.0-alpha.60",
@@ -33,6 +37,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux-mock-store": "^1.5.4",
+    "rich-markdown-editor": "^11.18.4",
+    "styled-components": "^5.3.1",
     "typedoc": "^0.21.0",
     "typescript": "^4.3.4",
     "web-vitals": "^1.1.2"
