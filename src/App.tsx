@@ -13,9 +13,22 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
+import {ConfirmSignup} from "./components/Login/ConfirmSignup";
+import {Amplify} from "aws-amplify";
+import {COGNITO} from "./config/aws";
+import { Alert, Snackbar } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 
+Amplify.configure({
+    aws_cognito_region: COGNITO.REGION,
+    aws_user_pools_id: COGNITO.USER_POOL_ID,
+    aws_user_pools_web_client_id: COGNITO.APP_CLIENT_ID
+})
 
 function App() {
+  const error = useSelector(errorState);
+  const dispatch = useDispatch();
 
   // @ts-ignore
   return (
@@ -47,8 +60,16 @@ function App() {
           <Route exact path="/study">
             <StudyHub />
           </Route>
+          <Route exact path="/confirmation">
+            <ConfirmSignup />
+          </Route>
         </Switch>
       </Container>
+      <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
+        <Alert onClose={() => {dispatch(hideErrorMessage())}} severity={error.errorSeverity} sx={{ width: '100%' }}>
+          {error.errorMsg}
+        </Alert>
+      </Snackbar>
       <footer>
         <Row className="bg-dark text-light">
           <Col>
