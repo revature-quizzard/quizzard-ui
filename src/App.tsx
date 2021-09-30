@@ -13,9 +13,20 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
+<<<<<<< HEAD
+=======
+import {ConfirmSignup} from "./components/Login/ConfirmSignup";
+import {Amplify} from "aws-amplify";
+import {COGNITO} from "./config/aws";
+import { Alert, Snackbar } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+>>>>>>> fe25ea77cf857e462feff816dc63d2ea2d71333c
 
 
 function App() {
+  const error = useSelector(errorState);
+  const dispatch = useDispatch();
 
   // @ts-ignore
   return (
@@ -49,6 +60,11 @@ function App() {
           </Route>
         </Switch>
       </Container>
+      <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
+        <Alert onClose={() => {dispatch(hideErrorMessage())}} severity={error.errorSeverity} sx={{ width: '100%' }}>
+          {error.errorMsg}
+        </Alert>
+      </Snackbar>
       <footer>
         <Row className="bg-dark text-light">
           <Col>
