@@ -1,4 +1,4 @@
-import { shallow, configure } from 'enzyme';
+import { shallow, configure, mount } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import AddComment from '../components/Forum/AddComment';
 import { Subforum } from '../models/subforum';
@@ -53,8 +53,12 @@ describe('Add Comment Component Test Suite', () => {
             currentThread: new Thread(['subforumId'], 'subforumId', 'description', 'subject', 1, 'username', 'threadId', '2021-09-28T12:42:56.789')
         }
         const configureMockStore = createMockStore();
-        
-        // adding something here
+        const mockStore = configureMockStore(initialState);
+
+        // set up the wrapper
+        const wrapper = mount(  <Provider store={mockStore}>
+                                    <AddComment />
+                                </Provider>)
     })
 
     
