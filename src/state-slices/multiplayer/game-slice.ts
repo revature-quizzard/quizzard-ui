@@ -8,11 +8,13 @@ interface Player {
 }
 
 interface Set {
-
+    card_list: Card[]
 }
 
 interface Card {
-
+    id: String,
+    question: String,
+    answer: String
 }
 
 interface Game {
@@ -36,7 +38,9 @@ const initialState: State = {
         match_state: 0,
         question_index: 0,
         capacity: 0,
-        set: {},
+        set: {
+            card_list: []
+        },
         players: []
     }
 };
