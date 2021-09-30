@@ -58,7 +58,18 @@ describe('Add Comment Component Test Suite', () => {
         // set up the wrapper
         const wrapper = mount(  <Provider store={mockStore}>
                                     <AddComment />
-                                </Provider>)
+                                </Provider>);
+
+        let markdownWrapper = wrapper.find('#addNewComment').at(0);
+        let createButtonWrapper = wrapper.find('#createCommentButton').at(0);
+
+        markdownWrapper.simulate('change', 'this is a test deciription');
+        createButtonWrapper.simulate('click');
+        console.log(markdownWrapper.debug());
+        
+        // expect certain methods to be called
+        expect(addComment).toBeCalled();
+        
     })
 
     

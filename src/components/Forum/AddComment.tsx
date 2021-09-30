@@ -30,8 +30,8 @@ function AddComment() {
     return (
         <Paper elevation={3} style={{'margin': '4rem'}}>
             <div style={{'margin': '2rem'}}>
-                <Editor onChange={handleChange} placeholder='Write your comment here...' />
-                <Button onClick={handleClick} style={{'color':'#75BC3E'}}>Create</Button>
+                <Editor id='addNewComment' onChange={handleChange} placeholder='Write your comment here...' />
+                <Button id='createCommentButton' onClick={handleClick} style={{'color':'#75BC3E'}}>Create</Button>
             </div>
         </Paper>
     )
