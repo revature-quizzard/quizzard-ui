@@ -7,25 +7,27 @@ export const getGame = /* GraphQL */ `
     getGame(id: $id) {
       id
       name
-      match_state
-      question_index
+      matchState
+      questionIndex
       capacity
+      host
       set {
         id
         name
         creator
-        card_list {
+        cardList {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {
         id
         username
         answered
-        answered_at
-        answered_correctly
+        answeredAt
+        answeredCorrectly
         points
       }
       createdAt
@@ -43,9 +45,10 @@ export const listGames = /* GraphQL */ `
       items {
         id
         name
-        match_state
-        question_index
+        matchState
+        questionIndex
         capacity
+        host
         set {
           id
           name
@@ -55,8 +58,8 @@ export const listGames = /* GraphQL */ `
           id
           username
           answered
-          answered_at
-          answered_correctly
+          answeredAt
+          answeredCorrectly
           points
         }
         createdAt
@@ -84,9 +87,10 @@ export const gameByName = /* GraphQL */ `
       items {
         id
         name
-        match_state
-        question_index
+        matchState
+        questionIndex
         capacity
+        host
         set {
           id
           name
@@ -96,8 +100,8 @@ export const gameByName = /* GraphQL */ `
           id
           username
           answered
-          answered_at
-          answered_correctly
+          answeredAt
+          answeredCorrectly
           points
         }
         createdAt

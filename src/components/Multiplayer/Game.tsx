@@ -89,8 +89,8 @@ function postGameRecords() {
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render() {
-    let match_state = 0;
-    switch(match_state) {
+    let matchState = 0;
+    switch(matchState) {
         case 0:
             return (
                 <>
@@ -137,12 +137,12 @@ function Game() {
     let dummyGame = {
         id: '13',
         name: '',
-        match_state: 0,
-        question_index: 0,
+        matchState: 0,
+        questionIndex: 0,
         capacity: 0,
         set: {
             //@ts-ignore
-            card_list: []
+            cardList: []
         },
         //@ts-ignore
         players: []
@@ -173,12 +173,12 @@ function Game() {
         let newgame = {
             id: game.id,
             name: '',
-            match_state: 0,
-            question_index: 0,
+            matchState: 0,
+            questionIndex: 0,
             capacity: 0,
             set: {
                 //@ts-ignore
-                card_list: []
+                cardList: []
             },
             //@ts-ignore
             players: []
