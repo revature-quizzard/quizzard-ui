@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
@@ -125,11 +127,30 @@ function render() {
 
 function Game() {
 
+    const game = useSelector(gameState);
+    const dispatch = useDispatch();
+
     // TODO: Change to be actual values
     let dummyGameId = 1;
-    let dummyGame = undefined;
+    // let dummyGame = undefined;
+    let dummyGame = {
+        id: '13',
+        name: '',
+        match_state: 0,
+        question_index: 0,
+        capacity: 0,
+        set: {
+            //@ts-ignore
+            card_list: []
+        },
+        //@ts-ignore
+        players: []
+    }
 
     useEffect(() => {
+
+        dispatch(setGame(dummyGame));
+
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
             graphqlOperation(onUpdateGameById, {id: dummyGameId})
@@ -147,17 +168,38 @@ function Game() {
         }
     }, [])
 
+    function test(game: any) {
+        let newgame = {
+            id: game.id,
+            name: '',
+            match_state: 0,
+            question_index: 0,
+            capacity: 0,
+            set: {
+                //@ts-ignore
+                card_list: []
+            },
+            //@ts-ignore
+            players: []
+        }
+        newgame.id = parseInt(game.id) + 1;
+        return newgame;
+    }
+
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
         <>
+        <h1>{game.id}</h1>
+        <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         {
-            (dummyGame) // If game is defined (Using redux slice)
-            ?
-            <>
-                { render() }
-            </>            
-            : <Redirect to="lounge" />
+            console.log(game)
+            // (game.id != '-1') // If game is defined (Using redux slice)
+            // ?
+            // <>
+            //     { render() }
+            // </>            
+            // : <Redirect to="lounge" />
         }
         </>
   );
