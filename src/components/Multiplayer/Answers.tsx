@@ -1,5 +1,8 @@
 import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import { Row } from 'react-bootstrap';
+import React from 'react';
+import { API, graphqlOperation } from 'aws-amplify';
+import * as queries from '../../graphql/queries';
 
 
 /**
@@ -17,6 +20,7 @@ import { Row } from 'react-bootstrap';
  */
 
 function generateAnswers(): string[] {
+
  //pull answer from current question +
  //pull 3 random answers from the set
  //randomize them

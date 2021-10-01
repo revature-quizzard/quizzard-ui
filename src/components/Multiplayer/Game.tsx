@@ -14,6 +14,8 @@ import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
+import * as queries from '../../graphql/queries';
+import {createWrongAnswerArray} from '../../utilities/quiz-utility'
 
 Amplify.configure(config);
 
@@ -185,12 +187,33 @@ function Game() {
         return newgame;
     }
 
+    async function testAnswers(){
+        const getAnswers = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}))
+        console.log(getAnswers);
+        getJustAnswers(getAnswers)
+    }
+
+    let getJustAnswers = (getAnswers: any) => {
+        let cardList = getAnswers.data.getGame.set.card_list;
+        let answerBank: Array<string> = [];
+        for (let item of cardList) {
+            answerBank.push(item.answer);
+        }
+        console.log(answerBank);
+        createWrongAnswerArray(answerBank);
+        console.log(createWrongAnswerArray(answerBank))
+    
+    }
+
+   
+    
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
         <>
         <h1>{game.id}</h1>
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
+        <Button onClick={testAnswers}>Test Me</Button>
         {
             console.log(game)
             // (game.id != '-1') // If game is defined (Using redux slice)
