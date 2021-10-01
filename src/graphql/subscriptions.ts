@@ -7,15 +7,15 @@ export const onUpdateGameById = /* GraphQL */ `
     onUpdateGameById(id: $id) {
       id
       name
-      match_state
-      question_index
+      matchState
+      questionIndex
       capacity
       host
       set {
         id
         name
         creator
-        card_list {
+        cardList {
           id
           question
           correctAnswer
@@ -26,8 +26,8 @@ export const onUpdateGameById = /* GraphQL */ `
         id
         username
         answered
-        answered_at
-        answered_correctly
+        answeredAt
+        answeredCorrectly
         points
       }
       createdAt
@@ -40,15 +40,15 @@ export const onCreateGame = /* GraphQL */ `
     onCreateGame {
       id
       name
-      match_state
-      question_index
+      matchState
+      questionIndex
       capacity
       host
       set {
         id
         name
         creator
-        card_list {
+        cardList {
           id
           question
           correctAnswer
@@ -59,8 +59,8 @@ export const onCreateGame = /* GraphQL */ `
         id
         username
         answered
-        answered_at
-        answered_correctly
+        answeredAt
+        answeredCorrectly
         points
       }
       createdAt
@@ -73,15 +73,15 @@ export const onUpdateGame = /* GraphQL */ `
     onUpdateGame {
       id
       name
-      match_state
-      question_index
+      matchState
+      questionIndex
       capacity
       host
       set {
         id
         name
         creator
-        card_list {
+        cardList {
           id
           question
           correctAnswer
@@ -92,8 +92,8 @@ export const onUpdateGame = /* GraphQL */ `
         id
         username
         answered
-        answered_at
-        answered_correctly
+        answeredAt
+        answeredCorrectly
         points
       }
       createdAt
@@ -106,15 +106,15 @@ export const onDeleteGame = /* GraphQL */ `
     onDeleteGame {
       id
       name
-      match_state
-      question_index
+      matchState
+      questionIndex
       capacity
       host
       set {
         id
         name
         creator
-        card_list {
+        cardList {
           id
           question
           correctAnswer
@@ -125,8 +125,8 @@ export const onDeleteGame = /* GraphQL */ `
         id
         username
         answered
-        answered_at
-        answered_correctly
+        answeredAt
+        answeredCorrectly
         points
       }
       createdAt

@@ -2,8 +2,8 @@ type Game @model
   @key(name: "gbn", fields: ["name"], queryField: "gameByName") {
   id: ID!
   name: String!
-  match_state: Int!
-  question_index: Int!
+  matchState: Int!
+  questionIndex: Int!
   capacity: Int!
   host: String!
   set: Set!
@@ -14,15 +14,15 @@ type Set {
   id: String!
   name: String!
   creator: String!
-  card_list: [Card]!
+  cardList: [Card]!
 }
 
 type Player {
   id: ID!
   username: String!
   answered: Boolean!
-  answered_at: AWSDateTime!
-  answered_correctly: Boolean!
+  answeredAt: AWSDateTime!
+  answeredCorrectly: Boolean!
   points: Int!
 }
 
