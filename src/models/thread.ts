@@ -1,4 +1,4 @@
-export class Subforum {
+export class Thread {
     id: string;
     subject: string;
     ancestors: string[];
@@ -9,7 +9,7 @@ export class Subforum {
     owner: String;
     tags: string[]
 
-    constructor(ancestors: string[], parent: string, description: string, id: string, subject: string, child_count: number, date_created?: string, owner?: string, tags?: string[]) {
+    constructor(ancestors: string[], parent: string, description: string, subject: string, child_count: number, owner: string, id?: string, date_created?: string, tags?: string[]) {
         this.ancestors = ancestors;
         this.parent = parent;
         this.description = description;

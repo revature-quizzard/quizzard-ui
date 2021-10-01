@@ -4,10 +4,11 @@ import AddFlashcardModal from "./AddFlashcardModal";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import { useDispatch } from "react-redux";
+import { authState } from  "../../state-slices/auth/auth-slice"
+import { useDispatch, useSelector } from "react-redux";
 import StudyListTable from "./StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 /**
  * @author Sean Taba
@@ -21,6 +22,7 @@ const StudyHub = () => {
   const [useList, setUseList] = useState(false); //true = public, false = owned
 
   const state = useAppSelector(studySetState);
+  const user = useSelector(authState);
   const history = useHistory();
 
   useEffect(() => {
@@ -93,14 +95,26 @@ const StudyHub = () => {
               className="d-flex justify-content-center flex-nowrap"
               style={{ alignContent: "center" }}
             >
-              <Button
+              {user.isAuthenticated ? (
+                <>
+                <Button
+                  type="submit"
+                  style={{ padding: "5px", width: "100px", margin: "10px" }}
+                  onClick={ownedSetMode}
+                  className="study-button"
+                >
+                Your Sets
+                </Button>
+                <Button
                 type="submit"
                 style={{ padding: "5px", width: "100px", margin: "10px" }}
-                onClick={ownedSetMode}
+                onClick={createSet}
                 className="study-button"
-              >
-                Your Sets
-              </Button>
+                >
+                  Create a Set
+                </Button>
+              </>
+              ) : (<></>)}
               <Button
                 type="submit"
                 style={{ padding: "5px", width: "100px", margin: "10px" }}
@@ -108,14 +122,6 @@ const StudyHub = () => {
                 className="study-button"
               >
                 Public Sets
-              </Button>
-              <Button
-                type="submit"
-                style={{ padding: "5px", width: "100px", margin: "10px" }}
-                onClick={createSet}
-                className="study-button"
-              >
-                Create a Set
               </Button>
             </Row>
           </Col>
