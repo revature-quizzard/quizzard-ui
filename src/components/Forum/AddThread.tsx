@@ -50,6 +50,8 @@ function AddThread() {
     let handleClick = async () => {
         try {
             let threadAncestors: string[] = ["114687543"];
+            
+            //CHANGE THESE VALUES
             let toAdd = new Thread(
                 threadAncestors,
                 "114687543",

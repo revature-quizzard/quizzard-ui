@@ -20,6 +20,8 @@ import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 
+import AddThread from './components/Forum/AddThread';
+
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
     aws_user_pools_id: COGNITO.USER_POOL_ID,
@@ -62,6 +64,10 @@ function App() {
           </Route>
           <Route exact path="/confirmation">
             <ConfirmSignup />
+          </Route>
+          {/* for testing */}
+          <Route exact path="/addThread"> 
+            <AddThread />
           </Route>
         </Switch>
       </Container>
