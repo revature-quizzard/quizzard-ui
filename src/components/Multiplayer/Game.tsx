@@ -13,8 +13,12 @@ import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import Players from './Players';
+import { useSelector } from 'react-redux';
+import { authState } from '../../state-slices/auth/auth-slice';
+import { gameState } from '../../state-slices/multiplayer/game-slice';
 
 Amplify.configure(config);
+
 
 /**
  *  This React component is a container for the multiplayer quiz game.
@@ -85,14 +89,19 @@ function postGameRecords() {
 
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
-function render() {
+function render(auth: any, game: any) {
     let match_state = 0;
     switch(match_state) {
         case 0:
             return (
                 <>
                     <Players />
+                    {/* This needs to be the username of the player who made the game! */}
+                    { (auth?.username == game.name) 
+                    ?
                     <Button> Host Start Game Button </Button>
+                    :
+                    <></> }
                 </>
             )
         case 1:
@@ -128,6 +137,8 @@ function Game() {
     // TODO: Change to be actual values
     let dummyGameId = 1;
     let dummyGame = undefined;
+    const auth = useSelector(authState);
+    const game = useSelector(gameState);
 
     useEffect(() => {
         // Subscribe to changes in current game in DynamoDB
@@ -155,7 +166,7 @@ function Game() {
             // (dummyGame) // If game is defined (Using redux slice)
             // ?
             <>
-                { render() }
+                { render(auth, game) }
             </>            
             // : <Redirect to="lounge" />
         }

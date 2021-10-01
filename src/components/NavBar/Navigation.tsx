@@ -80,6 +80,10 @@ const Navigation = () => {
                   Create
                 </Link>
 
+                <Link className="text-light ml-2 mr-2 navlink" to="/multiplayer">
+                  Multiplayer
+                </Link>
+
                 <Link
                   id="logout"
                   className="text-light ml-2 mr-2 navLink authLink"
