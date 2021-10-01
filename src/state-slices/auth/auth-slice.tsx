@@ -13,8 +13,8 @@ interface State {
 const initialState: State = {
   isAuthenticated: false,
   isLoading: false,
-  authUser: undefined,
-  token: "",
+  authUser: new User('','','',''),
+  token: '',
   showLogin: false,
 };
 
