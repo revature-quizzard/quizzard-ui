@@ -1,26 +1,23 @@
 import { getAllSubForums } from '../../remote/sub-forum-service';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { Subforum } from '../../models/subforum';
 
 const SubforumHandler = ()=> {
     
-    let subforums: Subforum[] | undefined;
-    subforums = [new Subforum([], "NULL", "Subforum about Core Java", "id", "Core Java", 1), 
-    new Subforum([], "NULL", "Subforum about React", "id", "React", 1),
-    new Subforum([], "NULL", "Subforum about Spring", "id", "Spring", 1)];
+    let [subforums,setSubforums] = useState(undefined as Subforum[] | undefined);
     useEffect(() => {
    
-        // const getSubforums = async () => {
-        //   try{
-        //   subforums = await getAllSubForums();
-        //   }catch(error)
-        //   {
-        //     console.log(error);
-        //   }
-        // };
-        // getSubforums();
-    
+        const getSubforums = async () => {
+          try{
+          setSubforums(await getAllSubForums());
+          console.log('in component: ' + subforums[0]);
+          }catch(error)
+          {
+            console.log(error);
+          }
+        };
+        getSubforums();
       }, []);
 
     return (

@@ -6,6 +6,6 @@ export const getAllSubForums = async () => {
     if(resp.status >= 400 && resp.status <= 599) {
         throw resp.data;
     }
-
+    console.log(resp.data);
     return resp.data;
 }
