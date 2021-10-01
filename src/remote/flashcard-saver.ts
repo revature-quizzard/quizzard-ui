@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SetFlashcardDTO} from "../models/flashcard";
+import { SetFlashcardDTO} from "../models/cards";
 import apiUrl from './api-url';
 
 /**

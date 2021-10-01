@@ -53,7 +53,7 @@ const Login = () => {
 
     return (
         <>
-        <Form style={{color:"#ffffff"}}>
+        <Form className='crud-form'>
         <h2>Login</h2>
           <Form.Group>
             <Form.Label>Username: </Form.Label>

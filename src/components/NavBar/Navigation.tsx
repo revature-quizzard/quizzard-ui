@@ -1,7 +1,13 @@
 /**
  * @Co-Author: Sean Taba
  */
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuIcon from '@material-ui/icons/Menu';
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import {
@@ -10,11 +16,15 @@ import {
   loginFormReducer,
   registerFormReducer,
 } from "../../state-slices/auth/auth-slice";
+
+
 import { useSelector, useDispatch } from "react-redux";
+import { Menu } from '@material-ui/core';
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const auth = useSelector(authState);
+  let cueIco ='https://iconifier.net/iconified/20210929013103_Qwizzard/favicon.ico';
   // bring authState into nav bar to show hide compenents
 
   const handleLogout = () => {
@@ -30,33 +40,46 @@ const Navigation = () => {
     dispatch(registerFormReducer());
   }
 
+  // for menu pop up
+  const handleClick = () => {
+    dispatch(registerFormReducer());
+  }
+
   return (
-    <Navbar style={{background: "#4F3F63"}} expand="md">
-      <Container id="nav-container">
-        <Navbar.Brand href="#" style={{ color: "white" }}>
-          <img
-            src="https://i.imgur.com/PAm216P.png"
-            width="30"
-            height="30"
+    <>
+    
+    
+
+    <AppBar id='sidebar'  >
+      <Toolbar className="sidebar-header">
+        <Navbar.Brand href="#"  style={{ color: "#7D7687" }}>
+        {/* <img
+            src= "https://iconifier.net/iconified/20210929014910_Screenshot%202021-09-28%20114743/favicon.ico"
+            width="20"
+            height="20"
             className="d-inline-block align-top"
             alt="Qwizzard Hat Logo"
-          />{" "}
+          />{" "} */}
           Q W I Z Z A R D
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+      
+        </Toolbar>
+          <Nav  id='nav-login-reg'>
             {!auth.isAuthenticated && (
               <>
-                <div
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  onClick={handleLogin}
+                 <div
+              
+                 // onClick={handleLogin}
                 >
-                  Login
-                </div>
+                   <Link to="/game">
+                  game
+                </Link>
+                 
+                  </div>
 
                 <div
-                  className="text-light ml-2 mr-2 navLink authLink"
+              
+             
                   onClick={handleRegister}
                 >
                   Register
@@ -87,11 +110,18 @@ const Navigation = () => {
                 </Link>
               </>
             )}
+            
           </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      
+    </AppBar>
+    
+   
+    </>
   );
 };
 
 export default Navigation;
+function anchorEl(anchorEl: any): boolean {
+  throw new Error('Function not implemented.');
+}
+

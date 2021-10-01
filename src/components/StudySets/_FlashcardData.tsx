@@ -1,5 +1,5 @@
 
-import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../../models/flashcard";
+import {Flashcard, FlashcardDTO, SetFlashcardDTO} from "../../models/cards";
 import {useAppSelector} from "../../store/hooks";
 import {studySetState} from "../../state-slices/study-set/study-set-slice";
 

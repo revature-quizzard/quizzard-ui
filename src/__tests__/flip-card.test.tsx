@@ -3,7 +3,7 @@ import Adaptor from "@wojtekmaj/enzyme-adapter-react-17";
 import  configureStore  from "redux-mock-store";
 import {FlipCard} from "../components/Flashcards/FlipCard";
 import { Provider } from "react-redux";
-import {Flashcard} from "../models/Flashcard"
+import {Flashcard} from "../models/cards"
 
 /**
  * Uses Jest and Enzyme to test the rendering of FlipCard

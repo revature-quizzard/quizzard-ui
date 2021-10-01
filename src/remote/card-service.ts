@@ -9,22 +9,18 @@ import { quizzardClient } from "./quizzard-client";
  * @param subjectId A string representing the subjectId
  * @returns The flashcard that was saved to the database with an updated id
  * @author 'Kevin Chang'
- * @author 'Giancarlo Tomasello'
+ * @author 'Alfonso Holmes'
+ * @author 'Bill Thomas'
+ * @author 'Kim Tran'
+ * @author 'Jose Tejada'
  */
 
-export async function createCard(
-  question: String,
-  answer: string,
-  reviewable: boolean,
-  isPublic: boolean,
-  subjectId: number
-) {
-  let response = await quizzardClient.post("/card/newcard", {
+export async function createCard(question: String, answer: string, card_id: string, set_id: string ) {
+  let response = await quizzardClient.post("/sets/card", {
     question,
     answer,
-    reviewable,
-    isPublic,
-    subjectId,
+    card_id,
+    set_id,
   });
 
   return await response.data;
@@ -37,7 +33,7 @@ export async function createCard(
  * @author 'Giancarlo Tomasello'
  */
 
-export async function getCards() {
-  let response = await quizzardClient.get("/card/all");
+export async function getCards( set_id: string ) {
+  let response = await quizzardClient.get(`/cards?set_id=${set_id}`);
   return await response.data;
 }

@@ -1,5 +1,5 @@
 
-import { SetFlashcardDTO} from "./flashcard";
+import { SetFlashcardDTO} from "./cards";
 import {Account} from "./account";
 
 /**

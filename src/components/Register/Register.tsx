@@ -1,4 +1,4 @@
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form,  Alert } from "react-bootstrap";
 import { useState } from 'react';
 import { register } from "../../remote/login-register-service";
 import { RegisterModel } from "../../models/register-model";
@@ -10,8 +10,15 @@ import {
   hideErrorMessage,
   errorState,
 } from "../../state-slices/error/errorSlice";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
 import {getSubs} from "../../remote/subject-service";
 import {setSubjects} from "../../state-slices/subject/subject-slice";
+import { Fab } from "@material-ui/core";
 
 const Register = () => {
   const [newUser, setNewUser] = useState({username: "", password: "", email: "", firstName: "", lastName: ""} as RegisterModel)
@@ -55,9 +62,9 @@ const Register = () => {
 
   return (
     <>
-      <Form  style={{color:"#4E3E61"}} >
-        <h2>Registration</h2>
-        <Form.Group>
+    <Form  className='crud-form' >
+        <h2><b>Registration</b></h2>
+        <Form.Group >
           <Form.Label>Username: </Form.Label>
           <Form.Control
             name="username"
@@ -108,13 +115,13 @@ const Register = () => {
           />
         </Form.Group>
         <Form.Group className="text-center">
-          <Button onClick={registerNewUser} style={{background: "#4F3F63"}} type="submit">
-            Register
-          </Button>
+        <Fab variant="extended" onClick={registerNewUser}  style={{color:"#7D7687" , background: "#4E3E61"}} > 
+        Register
+        </Fab>
         </Form.Group>
         {error.showError && <Alert variant="danger">{error.errorMsg}</Alert>}
       </Form>
-    </>
+   </>
   );
 };
 

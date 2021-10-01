@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 import SubjectDropDown from "./SubjectDropDown";
-import { SetFlashcardDTO } from "../../models/flashcard";
+import { SetFlashcardDTO } from "../../models/cards";
 import { flashcardSaver } from "../../remote/flashcard-saver";
 import { Subject } from "../../models/subject";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";

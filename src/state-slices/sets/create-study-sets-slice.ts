@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { Flashcard } from "../../models/flashcard";
+import { Flashcard } from "../../models/cards";
 
 //Create interface for state
 interface State {

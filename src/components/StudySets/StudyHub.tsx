@@ -6,7 +6,7 @@ import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
 import { useDispatch } from "react-redux";
 import StudyListTable from "./StudyListTable";
-import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
+import { isLoading } from "../../state-slices/flashcard/Set-slice";
 import { useHistory } from "react-router-dom";
 
 /**

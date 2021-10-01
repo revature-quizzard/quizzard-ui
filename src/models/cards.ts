@@ -6,28 +6,14 @@ import {Subject} from "./subject";
  * @author Sean Taba
  * interface for Flashcard entity
  */
-export interface Flashcard {
-    id: number,
-    subject: Subject,
-    creator: Account,
+export interface CreateCard {
     question: string,
     answer: string,
-    reviewable: boolean,
-    public: boolean
+    set_id: string
 }
 
-export interface FlashcardDTO {
-    id: number,
-    subjectId: number,
-    accountId: number,
-    question: string,
-    answer: string,
-    reviewable: boolean,
-    isPublic: boolean
-}
 
 export interface SetFlashcardDTO {
-    id: number,
     subject: Subject,
     creator: Account,
     question: string,

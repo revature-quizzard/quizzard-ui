@@ -7,7 +7,7 @@ import {
   filterCurrentCard
 } from '../utilities/quiz-utility';
 import { studySet } from "../utilities/dummy-data";
-import { Flashcard } from "../models/flashcard";
+import { Flashcard } from "../models/cards";
 
 let flashCard1 : Flashcard;
 let flashCard2 : Flashcard;

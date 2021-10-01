@@ -1,4 +1,4 @@
-import { SetFlashcardDTO } from "./flashcard";
+import { SetFlashcardDTO } from "./cards";
 
   /**
    * interface for runtime enviornment

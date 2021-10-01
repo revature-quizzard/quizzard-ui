@@ -3,7 +3,7 @@ import {StudySet} from "../models/study-set";
 import apiUrl from './api-url';
 
 /**
- * @author Sean Taba
+ * 
  * @returns: Public flashcards
  * retrieves public flashcards from DB
  */

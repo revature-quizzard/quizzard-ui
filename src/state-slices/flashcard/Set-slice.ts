@@ -1,32 +1,37 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CardDto } from "../../models/request-models/card-dto";
+import { Card } from "../../models/response-models/card";
+import { Set } from "../../models/set";
+import { Tag } from "../../models/tag";
 import { RootState } from "../../store/store";
-import { FlashcardDTO, SetFlashcardDTO} from "../../models/flashcard";
+
 
 // Create an interface for the state object
 interface State {
     isLoading: boolean;
     isLoaded: boolean;
-    flashCards: Array<FlashcardDTO>;
-    flashCardsForStudy: Array<SetFlashcardDTO>;
-    count: number;
+    isPublic: boolean;
+    cardsIsShowing: boolean; // toggles card vissibility
+    currentSet: Set;
+   
 }
 
 //Declare the initial state values that extends the State interface
 const initialState: State = {
-    flashCards: [],
-    flashCardsForStudy: [],
     isLoading: false,
     isLoaded: false,
+    isPublic: false,
+    cardsIsShowing: false,
+    currentSet: undefined,
     //If you are using test cards, start at count: 426, so you can see the 'end of flashcards' component
     //Which provides the button to go back to the start
-    count: 0
 }
 
 // Create the actual slice useing createSlice from the @reduxjs/toolkit dependency
 export const flashcardsSlice = createSlice({
     
     // Name the slice
-    name: "flashcards",
+    name: "sets",
     
     // Pass in the initial state
     initialState,
@@ -44,24 +49,18 @@ export const flashcardsSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addFlashcard: (state, action: PayloadAction<FlashcardDTO>) =>{
-           state.flashCards.push(action.payload)
+        setCards: (state, action: PayloadAction<Card[]>) => {
         },
-        setFlashcards: (state, action: PayloadAction<FlashcardDTO[]>) => {
-            state.flashCards = action.payload
+        setCurrentSet: (state, action: PayloadAction<Set>) => {
+            state.currentSet = action.payload
         },
-        setFlashcardsForStudy: (state, action: PayloadAction<SetFlashcardDTO[]>) => {
-            state.flashCardsForStudy = action.payload
-        },
-        nextCard: (state) => {
-            state.count += 1;
+        toggleCards: (state) => {
+            state.cardsIsShowing = !state.cardsIsShowing;
           },
         prevCard: (state) => {
-        state.count -= 1;
         },
 
         resetCount: (state) => {
-            state.count = 0;
         }
         
 
@@ -69,10 +68,10 @@ export const flashcardsSlice = createSlice({
 })
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { isLoading, isLoaded, addFlashcard, setFlashcards, setFlashcardsForStudy, nextCard, prevCard, resetCount } = flashcardsSlice.actions;
+export const { isLoading, isLoaded,  prevCard, resetCount } = flashcardsSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
-export const flashcardsState = (state: RootState) => state.flashcards;
+export const SetState = (state: RootState) => state.sets;
 
 // Export the entire slice to be included in the configureStore inside of store.ts
 export default flashcardsSlice.reducer;

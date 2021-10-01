@@ -318,8 +318,8 @@ td {
   overflow-x: hidden;
   
   max-width: none;
-  padding-bottom: 2rem;
-  padding: 1rem 10%;
+  padding-bottom: 0rem;
+  padding: 10rem 10%;
   flex-grow: 1;
 }
 
@@ -356,6 +356,17 @@ td {
 }
 
 
+#crud-form{
+  color:"#7D7687" ;
+  justify-content : 'center';
+}
+
+#nav-login-reg{
+  margin-top: 35em;
+  margin-left: 6em;
+ 
+  display: flex;
+}
 
 
 .auth-form{
@@ -366,11 +377,7 @@ td {
   align-items: stretch;
 }
 
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  min-height: 100vh;
-}
+
 
 #sidebar.active {
   margin-left: -250px;
@@ -395,20 +402,26 @@ a, a:hover, a:focus {
 }
 
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #4E3E61;
+  
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 190vh;
+    background: #332347 ; /* #4E3E61 */
     color: #fff;
     transition: all 0.3s;
+    margin-right: 83.52%;
+   
+    
 }
 
 #sidebar .sidebar-header {
     padding:1px;
-    background: #4E3E61;
+    background: #4E3E61; /* #332347 */
 }
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+    border-bottom: 1px solid #332347;
 }
 
 #sidebar ul p {
@@ -416,11 +429,12 @@ a, a:hover, a:focus {
     padding: 10px;
 }
 
-#sidebar ul li a {
+#sidebar ul li a Nav {
     padding: 10px;
     font-size: 1.1em;
     display: block;
 }
+
 #sidebar ul li a:hover {
     color: #7386D5;
     background: #fff;

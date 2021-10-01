@@ -1,6 +1,6 @@
 
 import {StudySet} from "../../models/study-set";
-import {Flashcard, SetFlashcardDTO} from "../../models/flashcard";
+import {Flashcard, SetFlashcardDTO} from "../../models/cards";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "../../store/store";
 import {Account} from "../../models/account";

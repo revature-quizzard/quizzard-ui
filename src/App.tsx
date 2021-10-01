@@ -11,17 +11,24 @@ import Register from "./components/Register/Register";
 import StudyHub from "./components/StudySets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
-import Sets from "./components/Sets/Sets";
+import CreateSetComponent from "./components/Sets/CreateSetComponent";
 import { FlipCard } from "./components/Flashcards/FlipCard";
-
+import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
+import MenuIcon from '@material-ui/icons/Menu';
+import GameComponent from "./components/GameComponent/GameComponent";
 
 function App() {
 
   // @ts-ignore
   return (
+
+    <>
+    
+      
+    
     <Router>
       <Navigation />
-      <Container className="app-container" id="app-container" style={{background: "white"}}>
+      <Container className="app-container" id="app-container" style={{background: "white" }}>
         <Switch>
           <Route exact path="/">
             <Main />
@@ -33,7 +40,7 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/sets">
-            <Sets />
+            <CreateSetComponent />
           </Route>
           <Route exact path="/update">
             <UpdateAccountInfo />
@@ -47,6 +54,9 @@ function App() {
           <Route exact path="/study">
             <StudyHub />
           </Route>
+          <Route exact path="/game">
+            <GameComponent />
+          </Route>
         </Switch>
       </Container>
       <footer>
@@ -57,6 +67,7 @@ function App() {
         </Row>
       </footer>
     </Router>
+    </>
   );
 }
 

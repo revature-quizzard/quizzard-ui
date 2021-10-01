@@ -1,7 +1,8 @@
-import { CardSetRequest } from "../models/request-models/card-set-request";
+import { SetDto } from "../models/set-dto";
 import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 
-export async function createStudySet(studySet: CardSetRequest) {
+
+export async function createSet(studySet: SetDto , token : string) {
   let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
     "/sets/newset",
     studySet
@@ -10,24 +11,5 @@ export async function createStudySet(studySet: CardSetRequest) {
   return await response.data;
 }
 
-/**
- * Added on a refactor to include token header for user integration. Copy pasted code
- * just in case, as editing above may have been cusing bugs... though we don't know why.
- * @author Kyle, Ej, Everett, Rich
- * @param studySet
- */
-export async function createStudySetWithToken(
-  studySet: CardSetRequest,
-  headers: any
-) {
-  let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
-    "/sets/newset",
-    studySet,
-    {
-      headers: headers,
-    }
-  );
 
-  return await response.data;
-}
 
