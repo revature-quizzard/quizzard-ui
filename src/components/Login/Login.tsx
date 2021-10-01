@@ -3,7 +3,7 @@ import { useState } from "react";
 import { authenticate } from "../../remote/login-register-service";
 import { LoginModel } from "../../models/login-model";
 import {  useDispatch, useSelector } from 'react-redux';
-import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
+import { hideErrorMessage, errorState, showSnackbar, setErrorSeverity } from "../../state-slices/error/errorSlice";
 import { useHistory } from "react-router-dom";
 import { authState, loginUserReducer } from "../../state-slices/auth/auth-slice";
 import {getSubs} from "../../remote/subject-service";
@@ -35,7 +35,8 @@ const Login = () => {
     let response = await authenticate(loginUser);
 
     if (response === undefined) {
-      dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
+      dispatch(setErrorSeverity("error"));
+      dispatch(showSnackbar("Invalid Credentials, Please try again!"));
       setTimeout(() => {
         dispatch(hideErrorMessage);
       }, 5000);
@@ -43,9 +44,6 @@ const Login = () => {
     }
 
     dispatch(loginUserReducer(response));
-    // This is needed as a state change to force an update to the page. Any change in state should update the page.
-    //setLoginUser({username: "", password: ""} as LoginModel);
-    // getSubjects();
   }
 
     return (
@@ -64,9 +62,6 @@ const Login = () => {
           <Form.Group className="text-center">
             <Button onClick={logUserIn} type="submit" >Login</Button>
           </Form.Group>
-          {error.showError && 
-          <Alert variant="danger">{error.errorMsg}</Alert>
-          }
         </Form>
       </>
     )
