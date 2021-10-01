@@ -3,6 +3,7 @@ import { Row } from 'react-bootstrap';
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
+import { createWrongAnswerArray } from '../../utilities/quiz-utility';
 
 
 /**
@@ -19,12 +20,23 @@ import * as queries from '../../graphql/queries';
  * @authors Heather Guilfoyle, Sean Dunn, Colby Wall
  */
 
-function generateAnswers(): string[] {
 
- //pull answer from current question +
- //pull 3 random answers from the set
- //randomize them
- return []
+ async function generateAnswers() {
+    const getAnswers = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
+    let answerBank = getJustAnswers(getAnswers);
+    //pull answer from current question +
+    //pull 3 random answers from the set
+    //randomize them
+    return answerBank;
+}
+
+let getJustAnswers = (getAnswers: any) => {
+    let cardList = getAnswers.data.getGame.set.card_list;
+    let answerBank: Array<string> = [];
+    for (let item of cardList) {
+        answerBank.push(item.answer);
+    }
+    createWrongAnswerArray(answerBank);
 }
 
 function submit() {
@@ -38,7 +50,7 @@ function renderColors() {
 
 function Answers() {
 
-    let answers = generateAnswers()
+    let answers: any = generateAnswers()
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     return (
         <>

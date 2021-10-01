@@ -189,7 +189,6 @@ function Game() {
 
     async function testAnswers(){
         const getAnswers = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}))
-        console.log(getAnswers);
         getJustAnswers(getAnswers)
     }
 
@@ -199,10 +198,8 @@ function Game() {
         for (let item of cardList) {
             answerBank.push(item.answer);
         }
-        console.log(answerBank);
         createWrongAnswerArray(answerBank);
-        console.log(createWrongAnswerArray(answerBank))
-    
+
     }
 
    
