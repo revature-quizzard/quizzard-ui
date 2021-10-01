@@ -3,15 +3,20 @@ import { RootState } from "../../store/store";
 import {Subject} from "../../models/subject"
 import UserProfile from "../../components/UserProfile/UserProfile";
 import { UserData } from "../../models/user-data";
+import { isLoading } from "../sets/create-study-sets-slice";
+import { loading } from "../auth/auth-slice";
+import { getUser } from "../../remote/user-service";
 
 // Create an interface for the state object
 interface State {
-    userProfile: UserData;
+    userProfile: UserData | undefined;
+    isLoading: boolean;
 }
 
 //Declare the initial state values that extends the State interface
 const initialState: State = {
-    userProfile: new UserData,
+    userProfile: undefined,
+    isLoading: false,
 }
   /**
    * Creates a slice for current user with a reducer to set the user state for existing users.
@@ -27,13 +32,24 @@ export const profileSlice = createSlice({
 
     // Define the reducers/actions to be called by the dispatcher within the components
     reducers: {
+        loading: (state) => {
+            state.isLoading = true;
+        },
+        isLoaded: (state) => {
+            state.isLoading = false;
+        },
 
         // Define action names here: pass in the state, define how the state is manipulated within the reducer
-        setProfile: (state, action: PayloadAction<UserData>) => {
-            state.userProfile = action.payload
+        setProfile: (state, action: PayloadAction<string>) => {
+            loading();
+            getUser(action.payload).then(resp => {
+                console.log(resp);
+                state.userProfile = resp;
+            });
+            // state.userProfile = action.payload;
         },
         clearProfile: (state) =>{
-            state.userProfile = new UserData
+            state.userProfile = undefined;
         }
     }
 })
@@ -43,7 +59,7 @@ export const profileSlice = createSlice({
 export const { setProfile } = profileSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
-export const subjectsState = (state: RootState) => state.subjects;
+export const profileState = (state: RootState) => state.profile;
 
 // Export the entire slice to be included in the configureStore inside of store.ts
 export default profileSlice.reducer;
