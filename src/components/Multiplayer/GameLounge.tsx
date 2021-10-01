@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
-
-import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { createStyles, Input, InputLabel, Theme, makeStyles, Button, MenuItem, Select, Grid, Typography, FormControl } from "@material-ui/core";
+import { getCards } from '../../remote/card-service';
+import Game from './Game';
+import { FlashcardDTO } from '../../models/flashcard';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -13,10 +12,39 @@ import { Link } from 'react-router-dom';
  *  @author Sean Dunn, Colby Wall, Heather Guilfoyle
  **/
 
-function GameLounge() {
+type Set = {
+    id: string,
+    author: string,
+    cards: FlashcardDTO[],
+    favorites: number,
+    isPublic: boolean,
+    name: string,       //Name of the type of set
+    plays: number,
+    setName: string,
+    tags: object[],
+    views: number
+}
 
-    const game = useSelector(gameState);
-    const dispatch = useDispatch();
+export default function GameLounge() {
+    let [cards, setCards] = useState(undefined as Set[] | undefined)
+    const [formData, setFormData] = useState({
+        set: []
+    })
+
+    let handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData({...formData, [name]: value});
+        console.log(formData);
+    }
+
+    async function asyncSets(){
+        setCards(await getCards());
+        console.log(cards);
+    }
+
+    asyncSets();
+
+        
 
     return (
         <>
@@ -29,20 +57,26 @@ function GameLounge() {
             </header>
             
             </div>
-        {/* // Game Settings Modal
-        // <GameSettings />
+                {console.log(cards)}
+                {/* <Game/> */}
+                <FormControl margin="normal" fullWidth>
+                    <InputLabel htmlFor="set">Sets</InputLabel>
+                        {console.log(cards)}
+                        <Select
+                            id="set"
+                            name="set"
+                            label="Sets"
+                            onChange={handleChange}
+                            value={formData.set[0]}
+                        >  {cards?.map(
+                            (item: any, index: any) =>
+                            (
+                                <MenuItem value={item}>item.name</MenuItem>
+                            )
+                        )}
 
-        // // Button which loads game based on settings set in modal
-        // <Button >Create Game</Button>
-
-        // // Input for Game ID for existing game
-        // <Input />
-
-        // // Button which joins existing game according to input id
-        // <Button >Join Game</Button> */}
-        <Link to="/multiplayer">Go Back To Multiplayer</Link>
+                        </Select>
+                    </FormControl>
         </>
     )
 }
-
-export default GameLounge

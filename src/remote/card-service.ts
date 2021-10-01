@@ -38,6 +38,6 @@ export async function createCard(
  */
 
 export async function getCards() {
-  let response = await quizzardClient.get("/card/all");
-  return await response.data;
+  let response = await quizzardClient.get("/sets");
+  return response.data;
 }
