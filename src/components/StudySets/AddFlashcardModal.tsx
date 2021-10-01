@@ -49,7 +49,7 @@ const AddFlashcardModal = (props: any) => {
       id: 0,
       subject: subject,
       creator: {
-        username: auState.username,
+        username: auState.authUser.username,
         password: "",
         id: 0,
         points: 0,

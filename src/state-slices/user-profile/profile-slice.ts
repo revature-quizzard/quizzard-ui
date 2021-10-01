@@ -35,10 +35,10 @@ export const profileSlice = createSlice({
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setSubjects } = subjectsSlice.actions;
+export const { setSubjects } = profileSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const subjectsState = (state: RootState) => state.subjects;
 
 // Export the entire slice to be included in the configureStore inside of store.ts
-export default subjectsSlice.reducer;
+export default profileSlice.reducer;
