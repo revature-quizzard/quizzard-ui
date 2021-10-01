@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
  * React component that renders the current players username and their points of an active game.
  * Props: gets the list of users and their points
  * 
- * @author Colby Wall
+ * @author Colby Wall, Sean Dunn, John Callahan
  */
 
  function createData(username: string, points: number) {

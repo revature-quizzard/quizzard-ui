@@ -11,6 +11,8 @@ import { GraphQLTime } from 'graphql-iso-date';
 import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
+import { Button } from '@material-ui/core';
+import Players from './Players';
 
 Amplify.configure(config);
 
@@ -89,8 +91,8 @@ function render() {
         case 0:
             return (
                 <>
-                    {/* <Players />
-                    <Button> Host Start Game Button </Button> */}
+                    <Players />
+                    <Button> Host Start Game Button </Button>
                 </>
             )
         case 1:
