@@ -1,7 +1,7 @@
 
 /**
  * @author Sean Taba
- * interface for User entity
+ * Interface for User entity
  */
 export interface User {
     id: string;

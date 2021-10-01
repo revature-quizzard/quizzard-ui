@@ -22,8 +22,7 @@ export const store = configureStore({
         subjects: subjectsReducer,
         result: quizResultsReducer,
         auth: authReducer,
-        error: errorReducer,
-        userInfo: userReducer
+        error: errorReducer
     }
 })
 
