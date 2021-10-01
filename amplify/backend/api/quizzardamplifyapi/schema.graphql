@@ -5,6 +5,7 @@ type Game @model
   match_state: Int!
   question_index: Int!
   capacity: Int!
+  host: String!
   set: Set!
   players: [Player]!
 }
@@ -28,7 +29,8 @@ type Player {
 type Card {
   id: String!
   question: String!
-  answer: String!
+  correctAnswer: String!
+  multiAnswers: [String]!
 }
 
 type Subscription {

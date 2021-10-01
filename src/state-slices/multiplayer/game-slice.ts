@@ -13,7 +13,8 @@ interface Set {
 interface Card {
     id: String,
     question: String,
-    answer: String
+    correctAnswer: String,
+    multiAnswers: String[]
 }
 
 interface State {
@@ -22,6 +23,7 @@ interface State {
     match_state: number,
     question_index: number,
     capacity: number,
+    host: String,
     set: Set,
     players: Player[]
 }
@@ -32,6 +34,7 @@ const initialState: State = {
     match_state: 0,
     question_index: 0,
     capacity: 0,
+    host: '',
     set: {
         card_list: []
     },
@@ -58,6 +61,7 @@ export const gameSlice = createSlice({
             state.match_state = action.payload.match_state;
             state.question_index = action.payload.question_index;
             state.capacity = action.payload.capacity;
+            state.host = action.payload.host;
             state.set = action.payload.set;
             state.players = action.payload.players;
             console.log('Setting ', state, ' to ', action.payload)
