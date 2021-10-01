@@ -34,6 +34,7 @@ export const authSlice = createSlice({
       state.authUser.id = response.payload.attributes.sub;
       state.authUser.username = response.payload.username;
       state.authUser.email = response.payload.attributes.email;
+      state.authUser.name = response.payload.attributes.name;
       state.token = response.payload.signInUserSession.idToken.jwtToken;
       state.isAuthenticated = true;
     },
