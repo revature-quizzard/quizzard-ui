@@ -3,6 +3,7 @@ import { createStyles, Input, InputLabel, Theme, makeStyles, Button, MenuItem, S
 import { getCards } from '../../remote/card-service';
 import Game from './Game';
 import { FlashcardDTO } from '../../models/flashcard';
+import { constants } from 'buffer';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -26,7 +27,7 @@ type Set = {
 }
 
 export default function GameLounge() {
-    let [cards, setCards] = useState(undefined as Set[] | undefined)
+    const [cards, setCards] = useState(undefined as Set[] | undefined)
     const [formData, setFormData] = useState({
         set: []
     })
@@ -37,12 +38,13 @@ export default function GameLounge() {
         console.log(formData);
     }
 
-    async function asyncSets(){
-        setCards(await getCards());
-        console.log(cards);
-    }
+    
+    // async function asyncSets(){
+    //     setCards(await getCards());
+    //     console.log(cards);
+    // }
 
-    asyncSets();
+    // asyncSets();
 
         
 
@@ -68,12 +70,25 @@ export default function GameLounge() {
                             label="Sets"
                             onChange={handleChange}
                             value={formData.set[0]}
-                        >  {cards?.map(
+                        >  
+
+                        {cards == null // check if cards are null
+                        ?
+                        <MenuItem>No sets found</MenuItem> // displays this if no sets found
+                        :
+                        // maps the cards if it's found
+                        cards.map(
+                            (item: any, index: any) => (
+                                <MenuItem value={item}>{item.name}</MenuItem>
+                            )
+                        )}
+
+                        {/* {cards?.map(
                             (item: any, index: any) =>
                             (
                                 <MenuItem value={item}>item.name</MenuItem>
                             )
-                        )}
+                        )} */}
 
                         </Select>
                     </FormControl>
