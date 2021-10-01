@@ -4,7 +4,8 @@ import apiUrl from './api-url';
 export const quizzardApiClient = axios.create({
     baseURL: apiUrl,
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Get-Preflight': 'true'
     }
 })
 

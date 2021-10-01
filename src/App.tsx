@@ -13,7 +13,7 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
-import Subforum from "./components/Forum/Subforum";
+import SubforumHandler from "./components/Forum/Subforum";
 import {ConfirmSignup} from "./components/Login/ConfirmSignup";
 import {Amplify} from "aws-amplify";
 import {COGNITO} from "./config/aws";
@@ -64,6 +64,9 @@ function App() {
           </Route>
           <Route exact path="/confirmation">
             <ConfirmSignup />
+          </Route>
+          <Route exact path ="/forum">
+            <SubforumHandler />
           </Route>
         </Switch>
       </Container>
