@@ -38,24 +38,24 @@ function AddThread() {
     const forumInfo = useSelector(forumState);
 
     
-    let handleSubjectChange = (e: any) => {
-        setSubject(e);
+    const handleSubjectChange = (e: any) => {
+        setSubject(e.currentTarget.value);
     }
 
     let handleDescriptionChange = (e: any) => {
+        console.log(e);
         setDescription(e);
     }
 
     let handleClick = async () => {
         try {
-            let threadAncestors: string[] = [forumInfo.currentSubforum.id];
+            let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
                 threadAncestors,
-                forumInfo.currentSubforum.id,
+                "114687543",
                 description,
                 subject,
-                0,
-                auth.username,
+                "cmettee",
             );
             let resp = await addThread(toAdd);
         } catch (e: any) {
@@ -74,7 +74,6 @@ function AddThread() {
                     <Input className={classes.input}
                         onChange={handleSubjectChange}
                         placeholder="Enter the thread title"
-                        fullWidth
                     />
                 </FormControl>
 
