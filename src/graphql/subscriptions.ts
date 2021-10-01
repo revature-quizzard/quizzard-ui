@@ -10,6 +10,7 @@ export const onUpdateGameById = /* GraphQL */ `
       match_state
       question_index
       capacity
+      host
       set {
         id
         name
@@ -17,7 +18,8 @@ export const onUpdateGameById = /* GraphQL */ `
         card_list {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {
@@ -41,6 +43,7 @@ export const onCreateGame = /* GraphQL */ `
       match_state
       question_index
       capacity
+      host
       set {
         id
         name
@@ -48,7 +51,8 @@ export const onCreateGame = /* GraphQL */ `
         card_list {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {
@@ -72,6 +76,7 @@ export const onUpdateGame = /* GraphQL */ `
       match_state
       question_index
       capacity
+      host
       set {
         id
         name
@@ -79,7 +84,8 @@ export const onUpdateGame = /* GraphQL */ `
         card_list {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {
@@ -103,6 +109,7 @@ export const onDeleteGame = /* GraphQL */ `
       match_state
       question_index
       capacity
+      host
       set {
         id
         name
@@ -110,7 +117,8 @@ export const onDeleteGame = /* GraphQL */ `
         card_list {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {

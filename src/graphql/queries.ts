@@ -10,6 +10,7 @@ export const getGame = /* GraphQL */ `
       match_state
       question_index
       capacity
+      host
       set {
         id
         name
@@ -17,7 +18,8 @@ export const getGame = /* GraphQL */ `
         card_list {
           id
           question
-          answer
+          correctAnswer
+          multiAnswers
         }
       }
       players {
@@ -46,6 +48,7 @@ export const listGames = /* GraphQL */ `
         match_state
         question_index
         capacity
+        host
         set {
           id
           name
@@ -87,6 +90,7 @@ export const gameByName = /* GraphQL */ `
         match_state
         question_index
         capacity
+        host
         set {
           id
           name
