@@ -1,7 +1,13 @@
+import { Tag } from "./tag";
+
+/**
+ * Simple interface for SetDocuments, simplified Sets held by user =.
+ */
+
 export interface SetDocument {
     id: string;
     setName: string;
-    tags: [];
+    tags: Array<Tag>;
     isPublic: boolean;
     author: string;
     views: number;
