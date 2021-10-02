@@ -116,8 +116,8 @@ function render() {
         case 3: 
             return (
                 <>
-                    {/* <Leaderboard /> 
-                    <Button> Host Close Game Button </Button>
+                    <Leaderboard />
+                    {/* <Button> Host Close Game Button </Button>
                     Host Trigger Lambda for posting game record*/}
                 </>
             )

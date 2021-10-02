@@ -3,7 +3,12 @@ import { RootState } from "../../store/store";
 
 
 interface Player {
-    id: String
+    id: string,
+    username: string,
+    points: number,
+    answered: boolean,
+    answeredAt: string,
+    answeredCorrectly: boolean
 }
 
 interface Set {
