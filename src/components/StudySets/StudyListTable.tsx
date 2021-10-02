@@ -26,7 +26,7 @@ export default function StudyListTable(props: any) {
     dispatch(takeAnotherQuizCreate());
     if (props.content === "public-sets") {
       dispatch(currentlyLoading());
-      publicSetsFetcher(auth.token)
+      publicSetsFetcher(auth.authUser.token)
         .then((data) => {
           dispatch(saveStudySets(data));
           dispatch(finishedLoading());
@@ -36,7 +36,7 @@ export default function StudyListTable(props: any) {
 
     if (props.content === "owned-sets") {
       dispatch(currentlyLoading());
-      ownedSetsFetcher(auth.token)
+      ownedSetsFetcher(auth.authUser.token)
         .then((data) => {
           dispatch(saveStudySets(data));
           dispatch(finishedLoading());
