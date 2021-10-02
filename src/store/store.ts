@@ -12,7 +12,11 @@ import authReducer from "../state-slices/auth/auth-slice";
 import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
 import studySetReducer from "../state-slices/study-set/study-set-slice"
 import errorReducer from "../state-slices/error/errorSlice";
+<<<<<<< HEAD
 import forumReducer from "../state-slices/forum/forum-slice"
+=======
+import profileReducer from "../state-slices/user-profile/profile-slice";
+>>>>>>> 1aed06fdd7a52002654a96d791f2ecc24831ec8e
 
 export const store = configureStore({
     reducer: {
@@ -24,7 +28,11 @@ export const store = configureStore({
         result: quizResultsReducer,
         auth: authReducer,
         error: errorReducer,
+<<<<<<< HEAD
         forum: forumReducer
+=======
+        profile: profileReducer
+>>>>>>> 1aed06fdd7a52002654a96d791f2ecc24831ec8e
     }
 })
 

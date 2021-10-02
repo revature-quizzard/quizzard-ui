@@ -1,25 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../../models/user";
 import { RootState } from "../../store/store";
 
 interface State {
   isAuthenticated: boolean;
   isLoading: boolean;
-  id: string;
-  username: string;
-  name: string;
-  email: string;
-  token: string;
+  authUser : User | undefined;
   showLogin: boolean;
 }
 
 const initialState: State = {
   isAuthenticated: false,
   isLoading: false,
-  id: "",
-  username: "",
-  name: "",
-  email: "",
-  token: "",
+  authUser: undefined,
   showLogin: false,
 };
 
@@ -36,18 +29,18 @@ export const authSlice = createSlice({
 
     // this will have to be modified later once login and register compenents are pulled in to handle passing back a token and username
     loginUserReducer: (state, response: any) => {
-      state.id = response.payload.attributes.sub;
-      state.username = response.payload.username;
-      state.email = response.payload.attributes.email;
-      state.token = response.payload.signInUserSession.idToken.jwtToken;
+      let id = response.payload.attributes.sub;
+      let username = response.payload.username;
+      let name = response.payload.attributes.name;
+      let email = response.payload.attributes.email;
+      let token = response.payload.signInUserSession.idToken.jwtToken;
+
+      state.authUser = new User(id, username, name, email, token);
       state.isAuthenticated = true;
     },
     
     logoutUserReducer: (state) => {
-      state.id = "";
-      state.username = "";
-      state.email = "";
-      state.token = "";
+      state.authUser = undefined;
       state.isLoading = false;
       state.isAuthenticated = false;
       state.showLogin = false;

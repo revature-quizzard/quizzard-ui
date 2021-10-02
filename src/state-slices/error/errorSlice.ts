@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { AlertColor } from '@mui/material';
+import { AlertColor, Color } from '@mui/material';
 
 interface State {
     errorMsg: string;
@@ -32,10 +32,12 @@ export const errorSlice = createSlice({
             state.errorMsg = action.payload; 
             state.showError = true;
         },
-        showSnackbar: (state, action: PayloadAction<errorInput>) => {
-            state.errorMsg = action.payload.message;
-            state.errorSeverity = action.payload.severity;
+        showSnackbar: (state, action: PayloadAction<string>) => {
+            state.errorMsg = action.payload;
             state.showError = true;
+        },
+        setErrorSeverity: (state, action: PayloadAction<AlertColor>) => {
+            state.errorSeverity = action.payload;
         },
         hideErrorMessage: (state) => {
             state.errorMsg = "";
@@ -45,7 +47,7 @@ export const errorSlice = createSlice({
     }
 });
 
-export const { showErrorMessage, showSnackbar, hideErrorMessage } = errorSlice.actions;
+export const { showErrorMessage, showSnackbar, hideErrorMessage, setErrorSeverity } = errorSlice.actions;
 
 export const errorState = (state: RootState) => state.error;
 
