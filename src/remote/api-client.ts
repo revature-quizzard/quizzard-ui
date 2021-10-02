@@ -1,6 +1,7 @@
 import axios from 'axios';
 import apiUrl from './api-url';
 
+
 export const quizzardApiClient = axios.create({
     baseURL: apiUrl,
     headers: {
@@ -13,7 +14,7 @@ export const quizzardApiClientTokenAuthorized = axios.create({
     baseURL: apiUrl,
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem("Authorization"),
+        'Authorization': localStorage.getItem("authorization"),
     }
 })
 

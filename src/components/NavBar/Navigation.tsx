@@ -80,6 +80,10 @@ const Navigation = () => {
                   Create
                 </Link>
 
+                <Link id="" className="text-light ml-2 mr-2 navLink" to="/lounge">
+                  Lounge
+                </Link>
+
                 <Link
                   id="logout"
                   className="text-light ml-2 mr-2 navLink authLink"

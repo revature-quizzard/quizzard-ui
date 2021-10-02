@@ -3,6 +3,9 @@ import { createStyles, Input, InputLabel, Theme, makeStyles, Button, MenuItem, S
 import { getCards } from '../../remote/card-service';
 import Game from './Game';
 import { FlashcardDTO } from '../../models/flashcard';
+import { constants } from 'buffer';
+import { useSelector } from 'react-redux';
+import { authState } from '../../state-slices/auth/auth-slice';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -26,10 +29,11 @@ type Set = {
 }
 
 export default function GameLounge() {
-    let [cards, setCards] = useState(undefined as Set[] | undefined)
+    const [cards, setCards] = useState(undefined as Set[] | undefined)
     const [formData, setFormData] = useState({
         set: []
     })
+
 
     let handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -37,22 +41,18 @@ export default function GameLounge() {
         console.log(formData);
     }
 
-    const getCards = async function () {
+    const getData = async function () {
         try{
-            let cards = await getCards();
+            setCards(await getCards());
         } catch (e: any){
             console.log(e);
         }
-        
     }
 
     useEffect(() => {
-        getCards();
-        console.log(cards);
-    });
+        getData();
+    },[]);
     
-
-        
 
     return (
         <>
@@ -68,20 +68,28 @@ export default function GameLounge() {
                 {console.log(cards)}
                 {/* <Game/> */}
                 <FormControl margin="normal" fullWidth>
-                    <InputLabel htmlFor="set">Sets</InputLabel>
+                    <InputLabel htmlFor="set">Set</InputLabel>
                         {console.log(cards)}
                         <Select
                             id="set"
                             name="set"
                             label="Sets"
                             onChange={handleChange}
-                            value={formData.set[0]}
-                        >  {cards?.map(
-                            (item: any, index: any) =>
-                            (
-                                <MenuItem value={item}>item.name</MenuItem>
+                            value={formData?.set[0]}
+                            placeholder="Choose a set"
+                        >
+
+                        {cards == null // check if cards are null
+                        ?
+                        <MenuItem>No sets found</MenuItem> // displays this if no sets found
+                        :
+                        // maps the cards if it's found
+                        cards.map(
+                            (item: any, index: any) => (
+                                <MenuItem value={item}>{item.setName}</MenuItem>
                             )
                         )}
+
                         </Select>
                     </FormControl>
         </>

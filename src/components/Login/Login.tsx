@@ -33,6 +33,7 @@ const Login = () => {
   let logUserIn = async (e: any) => {
     e.preventDefault();
     let response = await authenticate(loginUser);
+    localStorage.setItem('authorization',response.signInUserSession.idToken.jwtToken)
 
     dispatch(loginUserReducer(response));
     // This is needed as a state change to force an update to the page. Any change in state should update the page.
