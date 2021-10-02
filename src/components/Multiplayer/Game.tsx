@@ -133,7 +133,7 @@ function Game() {
     let dummyGameId = 1;
     // let dummyGame = undefined;
     let dummyGame = {
-        id: '13',
+        id: '',
         name: '',
         matchState: 0,
         questionIndex: 0,
@@ -148,7 +148,8 @@ function Game() {
 
     useEffect(() => {
 
-        dispatch(setGame(dummyGame));
+        // This line undoes any attempt to persist a session because anytime the page updates....
+        // dispatch(setGame(dummyGame));
 
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(

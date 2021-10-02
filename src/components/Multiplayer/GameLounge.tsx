@@ -32,7 +32,7 @@ function GameLounge() {
         console.log(id.current);
         let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
         // @ts-ignore
-        let game: Game = resp.data.getGame;
+        let game: Game = {...resp.data.getGame};
 
         // Set the user into the list of players
         // IF YOU AREN'T LOGGED IN, THIS BREAKS!
@@ -44,13 +44,21 @@ function GameLounge() {
             answeredCorrectly: false,
             points: 0
         };
-
-        console.log(game);
         
-        
+        var clone = Object.assign({}, {...game});
+        delete clone.createdAt;
+        delete clone.updatedAt;
         game.players.push(baseUser);
-        (API.graphql(graphqlOperation(updateGame, {input: game})));
+        console.log(clone);
+        (API.graphql(graphqlOperation(updateGame, {input: clone})));
 
+        console.log("Successfully updated GraphQL!");
+        
+        let newResp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
+        // @ts-ignore
+        let newGame: Game = newResp.data.getGame;
+        console.log(newGame);
+        
         dispatch(setGame(game));
     }
     
@@ -61,7 +69,7 @@ function GameLounge() {
 
     return (
         <>
-        { (game.id)
+        { (!game.host)
         ?
         <>
         <div className="App">
