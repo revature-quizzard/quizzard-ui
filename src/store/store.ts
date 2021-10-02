@@ -15,7 +15,6 @@ import errorReducer from "../state-slices/error/errorSlice";
 import forumReducer from "../state-slices/forum/forum-slice"
 import profileReducer from "../state-slices/user-profile/profile-slice";
 
-
 export const store = configureStore({
     reducer: {
         createQuiz: createQuizReducer,
@@ -26,6 +25,7 @@ export const store = configureStore({
         result: quizResultsReducer,
         auth: authReducer,
         error: errorReducer,
+        forum: forumReducer,
         profile: profileReducer
     }
 })
