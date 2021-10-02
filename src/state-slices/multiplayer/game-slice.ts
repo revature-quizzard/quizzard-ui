@@ -3,7 +3,12 @@ import { RootState } from "../../store/store";
 
 
 interface Player {
-    id: String
+    id: string,
+    username: string,
+    points: number,
+    answered: boolean,
+    answeredAt: string,
+    answeredCorrectly: boolean
 }
 
 interface Set {
@@ -29,7 +34,7 @@ interface State {
 }
 
 const initialState: State = {
-    id: '-1',
+    id: '',
     name: '',
     matchState: 0,
     questionIndex: 0,
@@ -65,15 +70,19 @@ export const gameSlice = createSlice({
             state.set = action.payload.set;
             state.players = action.payload.players;
             console.log('Setting ', state, ' to ', action.payload)
+        },
+
+        // Used when resetting the statee
+        resetGame: (state) => {
+            state = initialState;
         }
-
-
     }
 });
 
 // Export the actions/reducers to be imported into a component and dispatched from component
 export const {
-    setGame
+    setGame,
+    resetGame
 } = gameSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
