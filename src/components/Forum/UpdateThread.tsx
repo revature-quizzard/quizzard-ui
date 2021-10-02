@@ -6,7 +6,7 @@ import { Button, Box, FormControl, Input, Typography, makeStyles } from '@materi
 import { authState } from '../../state-slices/auth/auth-slice';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
-import { addThread } from '../../remote/thread-service';
+import { updateThread } from '../../remote/thread-service';
 
 const useStyles = makeStyles({
     addThreadContainer: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     }
 });
 
-function AddThread() {
+function UpdateThread() {
     const classes = useStyles();
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
@@ -50,16 +50,19 @@ function AddThread() {
     let handleClick = async () => {
         try {
             let threadAncestors: string[] = ["114687543"];
-            
-            //CHANGE THESE VALUES
             let toAdd = new Thread(
                 threadAncestors,
                 "114687543",
                 description,
                 subject,
                 "cmettee",
+                "310f67a1-822c-4fab-9b7f-8313686f7fb2",
+                1,
+                "2021-10-01T21:59:02.879",
+                ["tag1id", "tag2id"]
             );
-            let resp = await addThread(toAdd);
+            console.log(toAdd);
+            let resp = await updateThread(toAdd);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
@@ -68,21 +71,21 @@ function AddThread() {
 
     return (
         <div id="add-thread-component" className={classes.addThreadContainer}>
-                <Typography align="center" variant="h5">Create Thread</Typography>
+                <Typography align="center" variant="h5">Update Thread</Typography>
                 <br />
-                <Typography>Thread Title</Typography>
+                <Typography>Update Thread Title</Typography>
                 <FormControl style={{'margin': '1rem'}}>
                     <Input className={classes.input}
                         onChange={handleSubjectChange}
-                        placeholder="Enter the thread title"
+                        placeholder={forumInfo?.currentThread?.subject}
                     />
                 </FormControl>
 
-                <Typography>Enter Your Post</Typography>
+                <Typography>Update Your Post</Typography>
                 <Paper style={{'margin': '1rem'}}>
                     <Editor
                         onChange={handleDescriptionChange}
-                        placeholder='Enter the first post here...' />
+                        placeholder={forumInfo?.currentThread?.description} />
                 </Paper>
                 <br />
                 <Box textAlign='center'>
@@ -93,4 +96,4 @@ function AddThread() {
 
 }
 
-export default AddThread;
+export default UpdateThread;

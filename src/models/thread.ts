@@ -2,11 +2,11 @@ export class Thread {
     id: string;
     subject: string;
     ancestors: string[];
-    parent: String;
-    description: String;
+    parent: string;
+    description: string;
     child_count: number;
-    date_created: String;
-    owner: String;
+    date_created: string;
+    owner: string;
     tags: string[]
 
     constructor(ancestors: string[], parent: string, description: string, subject: string, owner: string, id?: string, child_count?: number, date_created?: string, tags?: string[]) {
