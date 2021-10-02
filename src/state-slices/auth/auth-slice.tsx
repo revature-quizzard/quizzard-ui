@@ -6,7 +6,6 @@ interface State {
   isAuthenticated: boolean;
   isLoading: boolean;
   authUser : User | undefined;
-  token: string;
   showLogin: boolean;
 }
 
@@ -14,7 +13,6 @@ const initialState: State = {
   isAuthenticated: false,
   isLoading: false,
   authUser: undefined,
-  token: "",
   showLogin: false,
 };
 
@@ -35,16 +33,14 @@ export const authSlice = createSlice({
       let username = response.payload.username;
       let name = response.payload.attributes.name;
       let email = response.payload.attributes.email;
+      let token = response.payload.signInUserSession.idToken.jwtToken;
 
-      state.authUser = new User(id, username, name, email);
-      state.token = response.payload.signInUserSession.idToken.jwtToken;
-
+      state.authUser = new User(id, username, name, email, token);
       state.isAuthenticated = true;
     },
     
     logoutUserReducer: (state) => {
       state.authUser = undefined;
-      state.token = "";
       state.isLoading = false;
       state.isAuthenticated = false;
       state.showLogin = false;

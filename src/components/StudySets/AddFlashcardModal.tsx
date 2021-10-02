@@ -62,7 +62,7 @@ const AddFlashcardModal = (props: any) => {
       studySetId: stState.selectedStudySet.id,
     };
 
-    flashcardSaver(newCard, auState.token).then((card) => {
+    flashcardSaver(newCard, auState.authUser.token).then((card) => {
       dispatch(appendCardToStudySet(card));
     });
 
