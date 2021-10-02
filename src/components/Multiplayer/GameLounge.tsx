@@ -7,6 +7,9 @@ import { gameByName, getGame } from '../../graphql/queries';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import config from '../../aws-exports';
+import { updateGame } from '../../graphql/mutations';
+import { Game } from '../../models/game';
+import { authState } from '../../state-slices/auth/auth-slice';
 
 Amplify.configure(config);
 
@@ -21,18 +24,39 @@ Amplify.configure(config);
 function GameLounge() {
 
     const game = useSelector(gameState);
+    const user = useSelector(authState);
     const dispatch = useDispatch();
     let id = useRef('');
     
     async function fetchGame() {
         console.log(id.current);
-        let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>)
-        dispatch(setGame(resp.data));
+        let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
+        // @ts-ignore
+        let game: Game = resp.data.getGame;
+
+        // Set the user into the list of players
+        // IF YOU AREN'T LOGGED IN, THIS BREAKS!
+        let baseUser = {
+            id: user.id,
+            username: user.username,
+            answered: false,
+            answeredAt: new Date().toISOString(),
+            answeredCorrectly: false,
+            points: 0
+        };
+
+        console.log(game);
+        
+        
+        game.players.push(baseUser);
+        (API.graphql(graphqlOperation(updateGame, {input: game})));
+
+        dispatch(setGame(game));
     }
     
     function handleUpdate(e: any) {
         id.current = e.target.value;
-        console.log(id);
+        console.log(id.current);
     }
 
     return (
