@@ -7,7 +7,7 @@ import { Thread } from "../models/thread";
  * @author Charles Mettee
  */
 export async function addThread(thread: Thread){
-    let response = await QuizzardClient.post('/forum/thread');
+    let response = await QuizzardClient.post('/forum/thread', thread);
 
     if(response.status >= 400){
         throw response.data;
