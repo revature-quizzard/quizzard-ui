@@ -37,12 +37,20 @@ export default function GameLounge() {
         console.log(formData);
     }
 
-    async function asyncSets(){
-        setCards(await getCards());
-        console.log(cards);
+    const getCards = async function () {
+        try{
+            let cards = await getCards();
+        } catch (e: any){
+            console.log(e);
+        }
+        
     }
 
-    asyncSets();
+    useEffect(() => {
+        getCards();
+        console.log(cards);
+    });
+    
 
         
 
@@ -74,7 +82,6 @@ export default function GameLounge() {
                                 <MenuItem value={item}>item.name</MenuItem>
                             )
                         )}
-
                         </Select>
                     </FormControl>
         </>
