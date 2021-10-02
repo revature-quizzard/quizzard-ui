@@ -5,31 +5,11 @@ import { User } from "../../models/user";
 import { UserData } from "../../models/user-data";
 import { getUserData } from "../../remote/user-service";
 import { authState } from "../../state-slices/auth/auth-slice";
-import { profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
+import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
 
 const UserProfile = () => {
     const state = useSelector(profileState);
-    const user: User = useSelector(authState).authUser;
-
-    const dispatch = useDispatch();
-
-    const getData = async function(){
-        try{
-            let userProfile = await getUserData(user.id);
-            console.log(userProfile);
-            dispatch(setProfile(userProfile as UserData));
-           } catch(e:any){
-               console.log(e);
-           }
-    }
-
-    // componentDidMount lifecycle
-    useEffect(() => {
-       getData();
-    }, []);
-
-
-    
+    const user: User = useSelector(authState).authUser; 
 
     return (
         <>

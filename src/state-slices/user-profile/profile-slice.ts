@@ -6,13 +6,13 @@ import { UserData } from "../../models/user-data";
 // Create an interface for the state object
 interface State {
     userProfile: UserData | undefined;
-    isLoading: boolean;
+    isLoaded: boolean;
 }
 
 //Declare the initial state values that extends the State interface
 const initialState: State = {
     userProfile: undefined,
-    isLoading: false,
+    isLoaded: false,
 }
   /**
    * Creates a slice for current user with a reducer to set the user state for existing users.
@@ -29,10 +29,10 @@ export const profileSlice = createSlice({
     // Define the reducers/actions to be called by the dispatcher within the components
     reducers: {
         loading: (state) => {
-            state.isLoading = true;
+            state.isLoaded = false;
         },
         isLoaded: (state) => {
-            state.isLoading = false;
+            state.isLoaded = true;
         },
 
         // Define action names here: pass in the state, define how the state is manipulated within the reducer
@@ -47,7 +47,7 @@ export const profileSlice = createSlice({
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setProfile } = profileSlice.actions;
+export const { setProfile, loading, isLoaded, clearProfile } = profileSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const profileState = (state: RootState) => state.profile;

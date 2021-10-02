@@ -1,9 +1,36 @@
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
+import { useEffect } from "react";
+import { getUserData } from "../../remote/user-service";
+import { UserData } from "../../models/user-data";
+import { User } from "../../models/user";
+import { authState } from "../../state-slices/auth/auth-slice";
 
 const UserProfileContainer = (props: any) => {
+  const state = useSelector(profileState);
+  const dispatch = useDispatch();
+  const user: User = useSelector(authState).authUser;
 
+
+  const getData = async function(){
+      try{
+          dispatch(loading());
+          let userProfile = await getUserData(user.id);
+          console.log(userProfile);
+          dispatch(setProfile(userProfile as UserData));
+          dispatch(isLoaded());
+         } catch(e:any){
+             console.log(e);
+         }
+  }
+
+  // componentDidMount lifecycle
+  useEffect(() => {
+     getData();
+  }, []);
 
 
     return (
@@ -17,7 +44,7 @@ const UserProfileContainer = (props: any) => {
               <Typography>My Profile</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <UserProfile/>
+              {state.isLoaded? <UserProfile/> : 'Loading...'}
             </AccordionDetails>
           </Accordion>
           <Accordion>
