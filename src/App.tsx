@@ -51,9 +51,9 @@ function App() {
           <Route exact path="/update">
             <UpdateAccountInfo />
           </Route>
-          <Route exact path="/card">
+          {/* <Route exact path="/card">
             <FlipCard />
-          </Route>
+          </Route> */}
           <Route exact path="/quiz">
             <CreateQuiz />
           </Route>

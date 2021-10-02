@@ -39,6 +39,7 @@ export function NavigationComponent(){
 
     },
     appBar: {
+      background: '#332347',
       zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -54,6 +55,7 @@ export function NavigationComponent(){
       }),
     },
     menuButton: {
+      
       marginRight: 36,
     },
     hide: {
@@ -83,6 +85,7 @@ export function NavigationComponent(){
       },
     },
     toolbar: {
+      background: '#4E3E61',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
@@ -114,6 +117,8 @@ export function NavigationComponent(){
           <CssBaseline/>
           <AppBar
               position="fixed"
+              color="inherit"
+
               className={clsx(classes.appBar, {
                 [classes.appBarShift]: open,
               })}
@@ -185,7 +190,7 @@ export function NavigationComponent(){
 
           </Drawer>
           <main className={classes.content}>
-            <div className={classes.toolbar}/>
+            <div />
             <Typography paragraph>
             </Typography>
             <Typography paragraph>

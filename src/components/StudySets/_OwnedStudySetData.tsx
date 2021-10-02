@@ -25,7 +25,7 @@ const OwnedStudySetData = (props: any) => {
   }
 
   const clickHandler = (e: any) => {
-    dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
+    // dispatch(setStudySet(state.availableStudySets[e.currentTarget.id - 1]));
     props.onStudySetChange();
   };
 

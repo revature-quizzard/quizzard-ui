@@ -70,7 +70,7 @@ function Sets() {
    */
   let handleLocalFlashcards = () => {
     checkedBoxes.forEach((element) => {
-      localFlashcards.push(stateFlashcards.flashCards[parseInt(element)]);
+      // localFlashcards.push(stateFlashcards.flashCards[parseInt(element)]);
     });
   };
 
@@ -169,38 +169,7 @@ function Sets() {
         </Row>
         <Row>
           <CardDeck>
-            {stateFlashcards.flashCards.map((card, index: any) => {
-              return (
-                <Col key={index} xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
-                  <Card>
-                    <Card.Header>{card.question}</Card.Header>
-                    <Card.Body>
-                      <Card.Title>
-                        <Card.Subtitle>Answer:</Card.Subtitle>
-                      </Card.Title>
-                      <Card.Body>
-                        <Card.Text>{card.answer}</Card.Text>
-                      </Card.Body>
-                    </Card.Body>
-                    <Card.Footer className="text-center">
-                      {/* This is under the assumption that ID's match with the index */}
-                      <Card.Text>{handleSubject(card)}</Card.Text>
-                      <Form.Check
-                        id={"" + stateFlashcards.flashCards.indexOf(card)}
-                        className="add-card-checkbox"
-                        name={
-                          "Question" + stateFlashcards.flashCards.indexOf(card)
-                        }
-                        key={"Key" + stateFlashcards.flashCards.indexOf(card)}
-                        type="checkbox"
-                        label="Add Card"
-                        onChange={handleChecked}
-                      ></Form.Check>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              );
-            })}
+           
           </CardDeck>
         </Row>
       </Container>
@@ -209,3 +178,35 @@ function Sets() {
 }
 
 export default Sets;
+// {stateFlashcards.flashCards.map((card, index: any) => {
+//   return (
+//     <Col key={index} xs={12} md={6} lg={4} style={{ padding: "1rem" }}>
+//       <Card>
+//         <Card.Header>{card.question}</Card.Header>
+//         <Card.Body>
+//           <Card.Title>
+//             <Card.Subtitle>Answer:</Card.Subtitle>
+//           </Card.Title>
+//           <Card.Body>
+//             <Card.Text>{card.answer}</Card.Text>
+//           </Card.Body>
+//         </Card.Body>
+//         <Card.Footer className="text-center">
+//           {/* This is under the assumption that ID's match with the index */}
+//           <Card.Text>{handleSubject(card)}</Card.Text>
+//           <Form.Check
+//             id={"" + stateFlashcards.flashCards.indexOf(card)}
+//             className="add-card-checkbox"
+//             name={
+//               "Question" + stateFlashcards.flashCards.indexOf(card)
+//             }
+//             key={"Key" + stateFlashcards.flashCards.indexOf(card)}
+//             type="checkbox"
+//             label="Add Card"
+//             onChange={handleChecked}
+//           ></Form.Check>
+//         </Card.Footer>
+//       </Card>
+//     </Col>
+//   );
+// })}

@@ -15,7 +15,7 @@ const CreateQuiz = () => {
   const quizState = useSelector(createQuizState);
   const goToQuiz = (e: any) => { 
     //dispatch(loadQuiz(createQuiz(studySet.availablePublicStudySets[e.target.name].cards)));
-    dispatch(loadQuiz(createQuiz(studySet.selectedStudySet.cards)));
+   // dispatch(loadQuiz(createQuiz(studySet.selectedStudySet.cards)));
     dispatch(showQuiz());
   };
 

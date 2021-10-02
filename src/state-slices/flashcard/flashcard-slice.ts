@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { FlashcardDTO, SetFlashcardDTO} from "../../models/flashcard";
+import { Card } from "../../dtos/Card";
 
 // Create an interface for the state object
 interface State {
     isLoading: boolean;
     isLoaded: boolean;
-    flashCards: Array<FlashcardDTO>;
-    flashCardsForStudy: Array<SetFlashcardDTO>;
+    flashCards: Array<Card>;
+    flashCardsForStudy: Array<Card>;
     count: number;
 }
 
@@ -44,13 +45,13 @@ export const flashcardsSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addFlashcard: (state, action: PayloadAction<FlashcardDTO>) =>{
+        addFlashcard: (state, action: PayloadAction<Card>) =>{
            state.flashCards.push(action.payload)
         },
-        setFlashcards: (state, action: PayloadAction<FlashcardDTO[]>) => {
+        setFlashcards: (state, action: PayloadAction<Card[]>) => {
             state.flashCards = action.payload
         },
-        setFlashcardsForStudy: (state, action: PayloadAction<SetFlashcardDTO[]>) => {
+        setFlashcardsForStudy: (state, action: PayloadAction<Card[]>) => {
             state.flashCardsForStudy = action.payload
         },
         nextCard: (state) => {
