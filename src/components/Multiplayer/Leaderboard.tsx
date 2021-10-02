@@ -19,6 +19,7 @@ function Leaderboard() {
 
     return (
         <>
+        <p>this is text.</p>
             <Table>
                 {game.players.map((player) => {
                     return <TableRow>{player.username} | {player.points}</TableRow>

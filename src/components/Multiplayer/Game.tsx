@@ -90,7 +90,7 @@ function postGameRecords() {
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render(auth: any, game: any) {
-    let match_state = 0;
+    let match_state = 3;
     switch(match_state) {
         case 0:
             return (
