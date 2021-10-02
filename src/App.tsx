@@ -20,6 +20,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import UpdateThread from "./components/Forum/UpdateThread";
+import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -63,6 +64,9 @@ function App() {
           </Route>
           <Route exact path="/confirmation">
             <ConfirmSignup />
+          </Route>
+          <Route exact path="/profile">
+            <UserProfileContainer />
           </Route>
         </Switch>
       </Container>
