@@ -16,6 +16,9 @@ import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import * as queries from '../../graphql/queries';
 import {createWrongAnswerArray} from '../../utilities/quiz-utility'
+import { Card } from 'react-bootstrap';
+import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import Answers from './Answers';
 
 Amplify.configure(config);
 
@@ -42,16 +45,14 @@ Amplify.configure(config);
  *  If a game is defined, with match state 3, the room will be rendered with a leaderboard
  *      displaying players and their scores.
  * 
- *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
+ *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
-
 
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
 async function startGame() {
-
 }
 
 /**
@@ -60,7 +61,6 @@ async function startGame() {
  *  automatically closed when the last player leaves the lobby.
  */
 function closeGame() {
-
 }
 
 /**
@@ -187,19 +187,38 @@ function Game() {
         return newgame;
     }
 
-    async function testAnswers(){
-        const getAnswers = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}))
-        getJustAnswers(getAnswers)
+    async function testAnswers() {
+        let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
+        getCardList(response);
     }
 
-    let getJustAnswers = (getAnswers: any) => {
-        let cardList = getAnswers.data.getGame.set.card_list;
+    let getCardList = (response: any) => {
+        let cardList = response.data.getGame.set.cardList;
         let answerBank: Array<string> = [];
-        for (let item of cardList) {
-            answerBank.push(item.answer);
-        }
-        createWrongAnswerArray(answerBank);
+        console.log(cardList);
 
+        for (let card of cardList) {
+            answerBank.push(card.correctAnswer);
+        }
+
+        for (let card of cardList) {
+            let wrongAnswers = generateWrongAnswers(card, answerBank);
+            card.multiAnswers = wrongAnswers;
+        }
+        console.log(cardList);
+    }
+
+    let generateWrongAnswers = (card: any, questions: Array<string>) => {
+        let listAnswers: Array<string>;
+        do {
+            listAnswers = createWrongAnswerArray(questions);
+        } while (listAnswers.includes(card.correctAnswer));
+        listAnswers.push(card.correctAnswer);
+        return listAnswers;
+    }
+
+    let wtf = () => {
+        console.log(Math.floor(Math.random() * 4));
     }
 
    
@@ -211,8 +230,9 @@ function Game() {
         <h1>{game.id}</h1>
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         <Button onClick={testAnswers}>Test Me</Button>
+        <Button onClick={wtf}>Something</Button>
         {
-            console.log(game)
+            // console.log(game)
             // (game.id != '-1') // If game is defined (Using redux slice)
             // ?
             // <>
