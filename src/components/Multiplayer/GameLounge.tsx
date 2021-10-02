@@ -2,8 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
-import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Button, Input } from '@material-ui/core';
+import { Link, Redirect } from 'react-router-dom';
+import { getGame } from '../../graphql/queries';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -13,6 +14,11 @@ import { Link } from 'react-router-dom';
  *  @author Sean Dunn, Colby Wall, Heather Guilfoyle
  **/
 
+function joinGame(id: string) {
+    // let game = getGame(id); FIND THE GRAPH QL NOTATION!
+
+}
+
 function GameLounge() {
 
     const game = useSelector(gameState);
@@ -20,27 +26,31 @@ function GameLounge() {
 
     return (
         <>
+        { (game.id)
+        ?
+        <>
         <div className="App">
             <header className="App-header">
                 Welcome to the looounnnge...
                 <br></br>
                 <br></br>
                 <br></br>
-            </header>
-            
-            </div>
-        {/* // Game Settings Modal
-        // <GameSettings />
+            </header>    
+        </div>
+        {/* Game Settings Modal */}
+        {/* <GameSettings /> */}
 
-        // // Button which loads game based on settings set in modal
-        // <Button >Create Game</Button>
+        {/* Button which loads game based on settings set in modal */}
+        {/* <Button >Create Game</Button> */}
 
-        // // Input for Game ID for existing game
-        // <Input />
+        {/* Input field for the join game ID */}
+        <Input />
 
-        // // Button which joins existing game according to input id
-        // <Button >Join Game</Button> */}
-        <Link to="/multiplayer">Go Back To Multiplayer</Link>
+        {/* Button which joins existing game according to input id */}
+        <Button >Join Game</Button>
+        <Link to="/multiplayer">Go Back To Multiplayer</Link> 
+        </>
+        : <Redirect to="/multiplayer" /> }
         </>
     )
 }
