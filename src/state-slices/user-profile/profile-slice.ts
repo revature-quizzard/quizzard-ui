@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import {Subject} from "../../models/subject"
-import UserProfile from "../../components/UserProfile/UserProfile";
 import { UserData } from "../../models/user-data";
-import { isLoading } from "../sets/create-study-sets-slice";
-import { loading } from "../auth/auth-slice";
+
 
 // Create an interface for the state object
 interface State {
@@ -41,7 +38,6 @@ export const profileSlice = createSlice({
         // Define action names here: pass in the state, define how the state is manipulated within the reducer
         setProfile: (state, action: PayloadAction<UserData>) => {
             state.userProfile = action.payload;
-            console.log(state.userProfile);
         },
         clearProfile: (state) =>{
             state.userProfile = undefined;

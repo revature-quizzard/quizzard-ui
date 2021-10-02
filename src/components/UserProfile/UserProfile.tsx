@@ -16,6 +16,7 @@ const UserProfile = () => {
     const getData = async function(){
         try{
             let userProfile = await getUserData(user.id);
+            console.log(userProfile);
             dispatch(setProfile(userProfile as UserData));
            } catch(e:any){
                console.log(e);
