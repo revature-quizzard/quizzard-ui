@@ -1,4 +1,7 @@
-import {Modal} from '@material-ui/core';
+import {FormControl, InputLabel, MenuItem, Modal, Select} from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { FlashcardDTO } from '../../models/flashcard';
+import { getCards } from '../../remote/card-service';
 
 /*
     Redux Props:
@@ -11,10 +14,23 @@ import {Modal} from '@material-ui/core';
         }
  */
 
-// Props necessary for managing a modal
-interface IGameSettings {
-    show: boolean;
-    setShow: (val: boolean) => void
+// Might not use modal?
+// interface IGameSettings {
+//     show: boolean;
+//     setShow: (val: boolean) => void
+// }
+
+type Set = {
+    id: string,
+    author: string,
+    cards: FlashcardDTO[],
+    favorites: number,
+    isPublic: boolean,
+    name: string,       //Name of the type of set
+    plays: number,
+    setName: string,
+    tags: object[],
+    views: number
 }
 
 /**
@@ -31,26 +47,69 @@ interface IGameSettings {
  * 
  * @author Sean Dunn, Colby Wall, Heather Guilfoyle
  */
-function GameSettings(props: IGameSettings) {
+function GameSettings() {
+    const [cards, setCards] = useState(undefined as Set[] | undefined)
+    const [formData, setFormData] = useState({
+        set: []
+    })
 
-    const handleClose = () => {
-
+    let handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setFormData({...formData, [name]: value});
+        console.log(formData);
     }
 
+    const getData = async function () {
+        try{
+            setCards(await getCards());
+        } catch (e: any){
+            console.log(e);
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    },[]);
+
+
+    /*      - name
+            - set
+            - capacity
+            - timer */
     return (
         <>
-            {/* <Modal>
-                // When each of these fields change, update their info in Redux
-                <Input>Enter Game Name</Input>
-                <Table>
-                    sets.map() <Button> Select This Set </Button>
-                </Table>
-                <Input>Enter Game Capacity</Input>
-                <Input>Enter Game Timer</Input>
-            </Modal> */}
+            <div>
+                <h1>Create Game</h1>
+            </div>
+                {console.log(cards)}
+                {/* <Game/> */}
+                <FormControl margin="normal" fullWidth>
+                    <InputLabel htmlFor="set">Set</InputLabel>
+                        {console.log(cards)}
+                        <Select
+                            id="set"
+                            name="set"
+                            label="Sets"
+                            onChange={handleChange}
+                            value={formData?.set[0]}
+                            placeholder="Choose a set"
+                        >
+
+                        {cards == null // check if cards are null
+                        ?
+                        <MenuItem>No sets found</MenuItem> // displays this if no sets found
+                        :
+                        // maps the cards if it's found
+                        cards.map(
+                            (item: any, index: any) => (
+                                <MenuItem value={item}>{item.setName}</MenuItem>
+                            )
+                        )}
+
+                        </Select>
+                    </FormControl>
         </>
     );
 }
-
 
 export default GameSettings;
