@@ -19,6 +19,7 @@ import {COGNITO} from "./config/aws";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+import UpdateThread from "./components/Forum/UpdateThread";
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -65,6 +66,7 @@ function App() {
           </Route>
         </Switch>
       </Container>
+      <UpdateThread />
       <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
         <Alert onClose={() => {dispatch(hideErrorMessage())}} severity={error.errorSeverity} sx={{ width: '100%' }}>
           {error.errorMsg}

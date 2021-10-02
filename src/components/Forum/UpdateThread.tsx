@@ -51,16 +51,17 @@ function UpdateThread() {
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
-                forumInfo.currentThread.ancestors,
-                forumInfo.currentThread.parent,
+                threadAncestors,
+                "114687543",
                 description,
                 subject,
-                forumInfo.currentThread.owner,
-                forumInfo.currentThread.id,
-                forumInfo.currentThread.child_count,
-                forumInfo.currentThread.date_created,
-                forumInfo.currentThread.tags
+                "cmettee",
+                "310f67a1-822c-4fab-9b7f-8313686f7fb2",
+                1,
+                "2021-10-01T21:59:02.879",
+                ["tag1id", "tag2id"]
             );
+            console.log(toAdd);
             let resp = await updateThread(toAdd);
         } catch (e: any) {
             console.log(e);
@@ -76,7 +77,7 @@ function UpdateThread() {
                 <FormControl style={{'margin': '1rem'}}>
                     <Input className={classes.input}
                         onChange={handleSubjectChange}
-                        placeholder={forumInfo.currentThread.subject}
+                        placeholder={forumInfo?.currentThread?.subject}
                     />
                 </FormControl>
 
@@ -84,7 +85,7 @@ function UpdateThread() {
                 <Paper style={{'margin': '1rem'}}>
                     <Editor
                         onChange={handleDescriptionChange}
-                        placeholder={forumInfo.currentThread.description} />
+                        placeholder={forumInfo?.currentThread?.description} />
                 </Paper>
                 <br />
                 <Box textAlign='center'>
