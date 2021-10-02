@@ -19,6 +19,7 @@ import {COGNITO} from "./config/aws";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 
 import AddThread from './components/Forum/AddThread';
 
@@ -65,9 +66,8 @@ function App() {
           <Route exact path="/confirmation">
             <ConfirmSignup />
           </Route>
-          {/* for testing */}
-          <Route exact path="/addThread"> 
-            <AddThread />
+          <Route exact path="/profile">
+            <UserProfileContainer />
           </Route>
         </Switch>
       </Container>

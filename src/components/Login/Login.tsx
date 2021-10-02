@@ -18,10 +18,7 @@ const Login = () => {
 
   const error = useSelector(errorState);
 
-  const getSubjects = async () => {
-    let subjects = await getSubs();
-    dispatch(setSubjects(subjects));
-  }
+
 
   let onChange = (e: any) => {
     const {name, value} = e.target;
