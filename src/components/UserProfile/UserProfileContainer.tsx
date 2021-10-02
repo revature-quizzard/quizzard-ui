@@ -1,22 +1,22 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
-import { useEffect } from "react";
-import { getUserData } from "../../remote/user-service";
-import { UserData } from "../../models/user-data";
-import { User } from "../../models/user";
-import { authState } from "../../state-slices/auth/auth-slice";
+import {useDispatch, useSelector} from "react-redux";
+import {isLoaded, loading, profileState, setProfile} from "../../state-slices/user-profile/profile-slice";
+import {useEffect} from "react";
+import {getUserData} from "../../remote/user-service";
+import {UserData} from "../../models/user-data";
+import {User} from "../../models/user";
+import {authState} from "../../state-slices/auth/auth-slice";
 import UserSets from "./UserSets";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserGameRecords from "./UserGameRecords";
 
 
 const UserProfileContainer = (props: any) => {
-  const state = useSelector(profileState);
-  const dispatch = useDispatch();
-  const user: User = useSelector(authState).authUser;
+    const state = useSelector(profileState);
+    const dispatch = useDispatch();
+    const user: User = useSelector(authState).authUser;
 
 
     const getData = async function () {

@@ -1,8 +1,8 @@
-import { Container } from "@mui/material";
-import { useSelector } from "react-redux";
-import { User } from "../../models/user";
-import { authState } from "../../state-slices/auth/auth-slice";
-import { profileState } from "../../state-slices/user-profile/profile-slice";
+import {Container} from "@mui/material";
+import {useSelector} from "react-redux";
+import {User} from "../../models/user";
+import {authState} from "../../state-slices/auth/auth-slice";
+import {profileState} from "../../state-slices/user-profile/profile-slice";
 
 const UserProfile = () => {
     const state = useSelector(profileState);
