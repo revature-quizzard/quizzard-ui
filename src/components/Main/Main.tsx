@@ -18,7 +18,7 @@ const Main = () => {
       <aside className="col-md-4">
         { !auth.showLogin ? <Register /> : <Login /> }
       </aside>
-      <Link to="/multiplayer" >
+      <Link to="/lounge" >
         Go to Multiplayer
       </Link>
     </Row>
