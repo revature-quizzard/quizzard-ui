@@ -42,6 +42,7 @@ export const authenticate = async (credentials: Credentials) => {
 
     try {
         let response = await Auth.signIn(credentials.username, credentials.password);
+        localStorage.setItem('api-token', response.signInUserSession.idToken.jwtToken);
         return response;
     } catch (err: any) {
         if (err.name == "UserNotConfirmedException")

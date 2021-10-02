@@ -13,6 +13,7 @@ import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
 import studySetReducer from "../state-slices/study-set/study-set-slice";
 import gameReducer from "../state-slices/multiplayer/game-slice";
 import errorReducer from "../state-slices/error/errorSlice";
+import profileReducer from "../state-slices/user-profile/profile-slice";
 
 export const store = configureStore({
     reducer: {
@@ -24,7 +25,8 @@ export const store = configureStore({
         result: quizResultsReducer,
         auth: authReducer,
         game: gameReducer,
-        error: errorReducer
+        error: errorReducer,
+        profile: profileReducer
     }
 })
 
