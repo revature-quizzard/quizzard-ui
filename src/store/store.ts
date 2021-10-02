@@ -24,13 +24,9 @@ export const store = configureStore({
         subjects: subjectsReducer,
         result: quizResultsReducer,
         auth: authReducer,
-<<<<<<< HEAD
         game: gameReducer,
-        error: errorReducer
-=======
         error: errorReducer,
         profile: profileReducer
->>>>>>> 1aed06fdd7a52002654a96d791f2ecc24831ec8e
     }
 })
 
