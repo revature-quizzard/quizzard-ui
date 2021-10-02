@@ -216,12 +216,6 @@ function Game() {
         listAnswers.push(card.correctAnswer);
         return listAnswers;
     }
-
-    let wtf = () => {
-        console.log(Math.floor(Math.random() * 4));
-    }
-
-   
     
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
@@ -230,7 +224,6 @@ function Game() {
         <h1>{game.id}</h1>
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         <Button onClick={testAnswers}>Test Me</Button>
-        <Button onClick={wtf}>Something</Button>
         {
             // console.log(game)
             // (game.id != '-1') // If game is defined (Using redux slice)
