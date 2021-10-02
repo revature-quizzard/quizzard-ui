@@ -2,10 +2,13 @@ import { getAllSubForums } from '../../remote/sub-forum-service';
 import { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { Subforum } from '../../models/subforum';
+import { NavigateNextOutlined } from '@material-ui/icons';
+import { useHistory } from 'react-router';
 
 const SubforumHandler = ()=> {
     
     let [subforums,setSubforums] = useState(undefined as Subforum[] | undefined);
+    const history = useHistory();
     useEffect(() => {
    
         const getSubforums = async () => {
@@ -20,6 +23,11 @@ const SubforumHandler = ()=> {
         getSubforums();
       }, []);
 
+    function Navigate(id: string){
+      console.log("Navigating to " + id);
+      history.push("/forum/" + id);
+    }
+
     return (
       <TableContainer component={Paper}>
         <Table>
@@ -33,8 +41,16 @@ const SubforumHandler = ()=> {
           <TableBody>
             {subforums?.map((sub) => (
               <TableRow>
-                <TableCell align="left">{sub.subject}</TableCell>
-                <TableCell align="left">{sub.description}</TableCell>
+                <TableCell
+                align="left"
+                onClick={() => Navigate(sub.subject)}>
+                {sub.subject}
+                </TableCell>
+                <TableCell
+                align="left"
+                onClick={() => Navigate(sub.subject)}>
+                {sub.description}
+                </TableCell>
                 <TableCell align="left">{sub.child_count}</TableCell>
               </TableRow>
             ))}
