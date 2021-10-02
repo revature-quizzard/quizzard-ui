@@ -86,11 +86,9 @@ const Navigation = () => {
                 <Link id="" className="text-light ml-2 mr-2 navLink" to="/sets">
                   Create
                 </Link>
-
                 <Link onClick={() => dispatch(resetGame)} className="text-light ml-2 mr-2 navLink" to="/lounge">
                   Lounge
                 </Link>
-
                 <ButtonBase
                   className="text-light ml-2 mr-2 navLink authLink"
                   component={Link} to="/profile"
