@@ -66,7 +66,6 @@ function App() {
           </Route>
         </Switch>
       </Container>
-      <UpdateThread />
       <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
         <Alert onClose={() => {dispatch(hideErrorMessage())}} severity={error.errorSeverity} sx={{ width: '100%' }}>
           {error.errorMsg}
