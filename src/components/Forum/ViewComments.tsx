@@ -22,6 +22,24 @@ function ViewComment() {
             // set an error message / toast here
         }
     }
+    let rd = function(comment: Comment) {
+        return <>
+            <Paper style={{ padding: "40px 20px" }}>
+                <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item xs zeroMinWidth>
+                    <h5 style={{ margin: 0, textAlign: "left" }}>{comment.owner}</h5>
+                    <p style={{ textAlign: "left" }}>
+                        {comment.description}
+                    </p>
+                    <p style={{ textAlign: "left", color: "gray" }}>
+                        {comment.date_created}
+                    </p>
+                    </Grid>
+                </Grid>
+            </Paper>
+            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+        </>
+    }
 
     return (
         <>
@@ -39,27 +57,8 @@ function ViewComment() {
 
              <br></br>
 
-           
-            {testArray.map( (comment : Comment) => {
-                <>
-                    <Paper style={{ padding: "40px 20px" }}>
-                        <Grid container wrap="nowrap" spacing={2}>
-                            <Grid item xs zeroMinWidth>
-                            <h5 style={{ margin: 0, textAlign: "left" }}>comment.username</h5>
-                            <p style={{ textAlign: "left" }}>
-                                comment.description
-                            </p>
-                            <p style={{ textAlign: "left", color: "gray" }}>
-                                comment.date_created
-                            </p>
-                            </Grid>
-                        </Grid>
-                    </Paper>
-                    <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-                </>
-            }) 
-            
-            }
+            {testArray.map( (comment : Comment) => rd(comment))}
+    
         </>
     )
 }
