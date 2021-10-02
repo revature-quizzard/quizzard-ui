@@ -20,17 +20,18 @@ export class UserData {
     gameRecords: Array<string>;
 
     constructor(id?: string, username?: string, favoriteSets?: Array<SetDocument>, createdSets?: Array<SetDocument>,
-        profilePicture?: string, points?: number, wins?: number, losses?: number, registrationDate?: string, gameRecords?: Array<string>){
-            this.id = id;
-            this.username = username;
-            this.favoriteSets = favoriteSets;
-            this.createdSets = createdSets;
-            this.profilePicture = profilePicture;
-            this.points = points;
-            this.wins = wins;
-            this.losses = losses;
-            this.registrationDate = registrationDate;
-            this.gameRecords = gameRecords;
-        }
+                profilePicture?: string, points?: number, wins?: number, losses?: number, registrationDate?: string,
+                gameRecords?: Array<string>) {
+        this.id = id;
+        this.username = username;
+        this.favoriteSets = favoriteSets;
+        this.createdSets = createdSets;
+        this.profilePicture = profilePicture;
+        this.points = points;
+        this.wins = wins;
+        this.losses = losses;
+        this.registrationDate = registrationDate;
+        this.gameRecords = gameRecords;
+    }
 
 }

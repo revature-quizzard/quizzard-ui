@@ -15,82 +15,81 @@ const UserProfileContainer = (props: any) => {
   const user: User = useSelector(authState).authUser;
 
 
-  const getData = async function(){
-      try{
-          dispatch(loading());
-          let userProfile = await getUserData(user.id);
-          console.log(userProfile);
-          dispatch(setProfile(userProfile as UserData));
-          dispatch(isLoaded());
-         } catch(e:any){
-             console.log(e);
-         }
-  }
+    const getData = async function () {
+        try {
+            dispatch(loading());
+            let userProfile = await getUserData(user.id);
+            dispatch(setProfile(userProfile as UserData));
+            dispatch(isLoaded());
+        } catch (e: any) {
+            console.log(e);
+        }
+    }
 
-  // componentDidMount lifecycle
-  useEffect(() => {
-     getData();
-  }, []);
+    // componentDidMount lifecycle
+    useEffect(() => {
+        getData();
+    }, []);
 
 
     return (
         <div>
-          <Accordion expanded>
-            <AccordionSummary
-              aria-controls="panel1a-content"
-              aria-label="Expand"
-              id="panel1a-header"
-            >
-              <Typography>My Profile</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {state.isLoaded? <UserProfile/> : 'Loading...'}
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography>My Sets</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Placeholder
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3a-content"
-              id="panel3a-header"
-            >
-              <Typography>My Favorite Sets</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Placeholder
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3a-content"
-              id="panel3a-header"
-            >
-              <Typography>My Game Records</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Placeholder
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+            <Accordion expanded>
+                <AccordionSummary
+                    aria-controls="panel1a-content"
+                    aria-label="Expand"
+                    id="panel1a-header"
+                >
+                    <Typography>My Profile</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    {state.isLoaded ? <UserProfile/> : 'Loading...'}
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel2a-content"
+                    id="panel2a-header"
+                >
+                    <Typography>My Sets</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Placeholder
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>My Favorite Sets</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Placeholder
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>My Game Records</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Placeholder
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
         </div>
-      );
-    }
+    );
+}
 
 export default UserProfileContainer;
