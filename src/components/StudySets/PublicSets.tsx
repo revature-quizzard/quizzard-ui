@@ -1,5 +1,12 @@
 // import {DataGrid} from "@material-ui/data-grid";
 import { DataGrid } from '@mui/x-data-grid';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 function PublicSets() {
@@ -44,15 +51,35 @@ function PublicSets() {
         <>
 
             <h1>inside the public set component</h1>
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                />
-            </div>
+            <TableContainer component={Paper}>
+                <Table sx={{ width: 20 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Dessert (100g serving)</TableCell>
+                            <TableCell align="right">Calories</TableCell>
+                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
+                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.lastName}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {row.lastName}
+                                </TableCell>
+                                <TableCell align="right">{row.lastName}</TableCell>
+                                <TableCell align="right">{row.lastName}</TableCell>
+                                <TableCell align="right">{row.lastName}</TableCell>
+                                <TableCell align="right">{row.lastName}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
         </>
     )

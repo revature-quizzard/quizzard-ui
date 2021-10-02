@@ -20,13 +20,14 @@ import {
   ListItemIcon,
   useTheme,
 } from "@mui/material";
+
 import React from "react";
 
 export function NavigationComponent(){
 
   const drawerWidth = 240;
-  const theme = useTheme();
-  const useStyles = makeStyles((theme:Theme) => ({
+
+  const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
       textAlign: "center",
@@ -97,17 +98,15 @@ export function NavigationComponent(){
   }));
 
   const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-  const [open, setOpen] = React.useState(false)
-  let is_drawer_open : boolean = false;
-
-  const handleDrawerOpen = () => {
-    setOpen(!is_drawer_open);
+  const handleDrawerToggle
+      = () => {
+    console.log("Notopen")
+    setOpen(!open);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(true);
-  };
   return (
       <>
         <div className={classes.root}>
@@ -122,7 +121,7 @@ export function NavigationComponent(){
               <IconButton
                   color="inherit"
                   aria-label="open drawer"
-                  onClick={handleDrawerOpen}
+                  onClick={handleDrawerToggle}
                   edge="start"
                   className={clsx(classes.menuButton, {
                     [classes.hide]: open,
@@ -144,18 +143,18 @@ export function NavigationComponent(){
           <Drawer
               variant="permanent"
               className={clsx(classes.drawer, {
-                [classes.drawerOpen]: is_drawer_open,
+                [classes.drawerOpen]: open,
                 [classes.drawerClose]: !open,
               })}
               classes={{
                 paper: clsx({
-                  [classes.drawerOpen]: is_drawer_open,
+                  [classes.drawerOpen]: open,
                   [classes.drawerClose]: !open,
                 }),
               }}
           >
             <div className={classes.toolbar}>
-              <IconButton onClick={handleDrawerOpen}>
+              <IconButton onClick={handleDrawerToggle}>
                 {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
               </IconButton>
             </div>
@@ -195,6 +194,6 @@ export function NavigationComponent(){
         </div>
       </>
   );
-};
+}
 
 export default NavigationComponent;

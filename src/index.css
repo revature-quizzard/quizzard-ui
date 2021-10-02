@@ -38,15 +38,15 @@ body {
 }
 
 /* NAVIGATION STYLES */
-.navLink {
-  text-decoration: none;
-  cursor: pointer;
-}
+/*.navLink {*/
+/*  text-decoration: none;*/
+/*  cursor: pointer;*/
+/*}*/
 
-.navLink:hover {
-  text-decoration: none;
-  color: var(--navy);
-}
+/*.navLink:hover {*/
+/*  text-decoration: none;*/
+/*  color: var(--navy);*/
+/*}*/
 
 @media (min-width: 768px){
   .navLink:hover {
@@ -316,7 +316,7 @@ td {
 
 #app-container {
   overflow-x: hidden;
-  
+
   max-width: none;
   padding-bottom: 2rem;
   padding: 1rem 10%;
@@ -354,18 +354,18 @@ td {
 #add-flashcard-button {
   margin: 2.5rem;
 }
-#sidebar {
+/*#sidebar {*/
 
-  min-width: 250px;
-  max-width: 250px;
-  min-height: 190vh;
-  background: #332347 ;
-    color: #fff;
-    transition: all 0.3s;
-    margin-right: 83.52%;
-}
+/*  min-width: 250px;*/
+/*  max-width: 250px;*/
+/*  min-height: 190vh;*/
+/*  background: #332347 ;*/
+/*    color: #fff;*/
+/*    transition: all 0.3s;*/
+/*    margin-right: 83.52%;*/
+/*}*/
 
-#sidebar .sidebar-header {
-    padding:1px;
-    background: #4E3E61;
-}
+/*#sidebar .sidebar-header {*/
+/*    padding:1px;*/
+/*    background: #4E3E61;*/
+/*}*/
