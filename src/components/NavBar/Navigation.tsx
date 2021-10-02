@@ -64,6 +64,12 @@ const Navigation = () => {
                 >
                   Register
                 </ButtonBase>
+                <ButtonBase
+                  className="text-light ml-2 mr-2 navLink authLink"
+                  component={Link} to="/profile"
+                >
+                  My Profile
+                </ButtonBase>
               </>
             )}
             {auth.isAuthenticated && (
@@ -79,7 +85,12 @@ const Navigation = () => {
                 <Link id="" className="text-light ml-2 mr-2 navLink" to="/sets">
                   Create
                 </Link>
-
+                <ButtonBase
+                  className="text-light ml-2 mr-2 navLink authLink"
+                  component={Link} to="/profile"
+                >
+                  My Profile
+                </ButtonBase>
                 <Link
                   id="logout"
                   className="text-light ml-2 mr-2 navLink authLink"

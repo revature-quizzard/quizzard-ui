@@ -19,7 +19,7 @@ const PublicStudySetData = (props: any) => {
   const dispatch = useAppDispatch();
 
   if (!state.finishedLoading) {
-    publicSetsFetcher(auState.token).then((data) => {
+    publicSetsFetcher(auState.authUser.token).then((data) => {
       dispatch(saveStudySets(data));
     });
   }
