@@ -18,8 +18,9 @@ function UpdateComment() {
     }
 
     let handleClick = async () => {
+        console.log("button clicked!");
         try {
-            let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
+            // let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             // let toAdd = new Comment(
             //     forumInfo.currentComment.ancestors,
             //     forumInfo.currentComment.parent,
@@ -38,12 +39,14 @@ function UpdateComment() {
                 "cmettee",
                 "1234567890",
                 "subject",
-                0,
-                "2021-10-01T00:01:09.805"
+                1,
+                "2021-10-01T00:01:09.805",
+                []
             );
+            console.log(toAdd);
             let resp = await updateComment(toAdd);
         } catch (e: any) {
-            // set an error message / toast here
+            console.log(e);
         }
     }
 
