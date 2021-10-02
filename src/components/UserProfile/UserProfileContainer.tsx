@@ -8,6 +8,9 @@ import { getUserData } from "../../remote/user-service";
 import { UserData } from "../../models/user-data";
 import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
+import UserSets from "./UserSets";
+import UserFavoriteSets from "./UserFavoriteSets";
+import UserGameRecords from "./UserGameRecords";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -56,7 +59,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                        {state.isLoaded ? <UserSets/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -70,7 +73,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                        {state.isLoaded ? <UserFavoriteSets/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -84,7 +87,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                        {state.isLoaded ? <UserGameRecords/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>

@@ -4,24 +4,17 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { profileState } from "../../state-slices/user-profile/profile-slice";
 
-const UserProfile = () => {
+const UserSets = () => {
     const state = useSelector(profileState);
-    const user: User = useSelector(authState).authUser;
 
     return (
         <>
             <Container fixed maxWidth='md' id='register-component'>
                 <br/><br/>
-                Username: {user.username}<br/>
-                Name: {user.name}<br/>
-                User since: {state.userProfile.registrationDate.substring(0, 10)}<br/>
-                Points: {state.userProfile.points}<br/>
-                Wins: {state.userProfile.wins}<br/>
-                Losses: {state.userProfile.losses}<br/>
-
+                MySets: {state.userProfile.createdSets}<br/>
             </Container>
         </>
     )
 };
 
-export default UserProfile;
+export default UserSets;
