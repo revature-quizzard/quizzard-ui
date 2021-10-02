@@ -1,11 +1,20 @@
 
 /**
  * @author Sean Taba
- * interface for User entity
+ * Interface for User entity
  */
-export interface User {
+export class User {
     id: string;
     username: string;
     name: string;
     email: string;
+    token: string;
+
+    constructor(id:string, username: string, name: string, email: string, token: string){
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.token = token;
+    }
 }
