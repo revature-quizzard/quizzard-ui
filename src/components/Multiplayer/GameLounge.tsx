@@ -44,20 +44,11 @@ function GameLounge() {
             answeredCorrectly: false,
             points: 0
         };
-        
-        var clone = Object.assign({}, {...game});
-        delete clone.createdAt;
-        delete clone.updatedAt;
+
         game.players.push(baseUser);
-        console.log(clone);
-        (API.graphql(graphqlOperation(updateGame, {input: clone})));
+        (API.graphql(graphqlOperation(updateGame, {input: {players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
-        
-        let newResp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-        // @ts-ignore
-        let newGame: Game = newResp.data.getGame;
-        console.log(newGame);
         
         dispatch(setGame(game));
     }
