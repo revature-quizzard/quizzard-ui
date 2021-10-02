@@ -66,6 +66,9 @@ function App() {
           <Route exact path="/confirmation">
             <ConfirmSignup />
           </Route>
+          <Route exact path="/forum">
+            <SubforumHandler />
+          </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
           </Route>
