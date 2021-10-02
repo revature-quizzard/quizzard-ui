@@ -37,27 +37,18 @@ function GameLounge() {
         // Set the user into the list of players
         // IF YOU AREN'T LOGGED IN, THIS BREAKS!
         let baseUser = {
-            id: user.id,
-            username: user.username,
+            id: user.authUser.id,
+            username: user.authUser.username,
             answered: false,
             answeredAt: new Date().toISOString(),
             answeredCorrectly: false,
             points: 0
         };
-        
-        var clone = Object.assign({}, {...game});
-        delete clone.createdAt;
-        delete clone.updatedAt;
+
         game.players.push(baseUser);
-        console.log(clone);
-        (API.graphql(graphqlOperation(updateGame, {input: clone})));
+        (API.graphql(graphqlOperation(updateGame, {input: {players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
-        
-        let newResp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-        // @ts-ignore
-        let newGame: Game = newResp.data.getGame;
-        console.log(newGame);
         
         dispatch(setGame(game));
     }

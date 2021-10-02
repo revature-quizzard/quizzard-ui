@@ -49,7 +49,7 @@ const AddFlashcardModal = (props: any) => {
       id: 0,
       subject: subject,
       creator: {
-        username: auState.username,
+        username: auState.authUser.username,
         password: "",
         id: 0,
         points: 0,
@@ -62,7 +62,7 @@ const AddFlashcardModal = (props: any) => {
       studySetId: stState.selectedStudySet.id,
     };
 
-    flashcardSaver(newCard, auState.token).then((card) => {
+    flashcardSaver(newCard, auState.authUser.token).then((card) => {
       dispatch(appendCardToStudySet(card));
     });
 
