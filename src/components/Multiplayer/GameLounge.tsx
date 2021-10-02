@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
+
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
@@ -9,6 +14,9 @@ import { useState, useEffect, useRef } from 'react';
  **/
 
 function GameLounge() {
+
+    const game = useSelector(gameState);
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -32,6 +40,7 @@ function GameLounge() {
 
         // // Button which joins existing game according to input id
         // <Button >Join Game</Button> */}
+        <Link to="/multiplayer">Go Back To Multiplayer</Link>
         </>
     )
 }

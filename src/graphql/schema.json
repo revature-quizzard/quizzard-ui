@@ -172,24 +172,32 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "match_state",
+          "name" : "matchState",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "question_index",
+          "name" : "questionIndex",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -198,9 +206,28 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "host",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -209,9 +236,13 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "OBJECT",
-            "name" : "Set",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "OBJECT",
+              "name" : "Set",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -220,12 +251,16 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "OBJECT",
-              "name" : "Player",
-              "ofType" : null
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "Player",
+                "ofType" : null
+              }
             }
           },
           "isDeprecated" : false,
@@ -305,7 +340,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "ID",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -342,16 +377,20 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "card_list",
+          "name" : "cardList",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "OBJECT",
-              "name" : "Card",
-              "ofType" : null
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "Card",
+                "ofType" : null
+              }
             }
           },
           "isDeprecated" : false,
@@ -374,7 +413,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "ID",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -396,13 +435,36 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "answer",
+          "name" : "correctAnswer",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "multiAnswers",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "String",
+                "ofType" : null
+              }
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -461,7 +523,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "answered_at",
+          "name" : "answeredAt",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -476,7 +538,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "answered_correctly",
+          "name" : "answeredCorrectly",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -495,9 +557,13 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -583,7 +649,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "match_state",
+          "name" : "matchState",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -592,7 +658,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "question_index",
+          "name" : "questionIndex",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -606,6 +672,15 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "host",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1292,51 +1367,84 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "match_state",
+          "name" : "matchState",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
-          "name" : "question_index",
+          "name" : "questionIndex",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
           "name" : "capacity",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "host",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
           "name" : "set",
           "description" : null,
           "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "SetInput",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "SetInput",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
           "name" : "players",
           "description" : null,
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "PlayerInput",
-              "ofType" : null
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "PlayerInput",
+                "ofType" : null
+              }
             }
           },
           "defaultValue" : null
@@ -1357,7 +1465,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "ID",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -1389,15 +1497,19 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "card_list",
+          "name" : "cardList",
           "description" : null,
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "CardInput",
-              "ofType" : null
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "CardInput",
+                "ofType" : null
+              }
             }
           },
           "defaultValue" : null
@@ -1418,7 +1530,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "ID",
+              "name" : "String",
               "ofType" : null
             }
           },
@@ -1437,12 +1549,33 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "answer",
+          "name" : "correctAnswer",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "multiAnswers",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "String",
+                "ofType" : null
+              }
+            }
           },
           "defaultValue" : null
         } ],
@@ -1494,7 +1627,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "answered_at",
+          "name" : "answeredAt",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1507,7 +1640,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "answered_correctly",
+          "name" : "answeredCorrectly",
           "description" : null,
           "type" : {
             "kind" : "NON_NULL",
@@ -1523,9 +1656,13 @@
           "name" : "points",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         } ],
@@ -1547,7 +1684,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "match_state",
+          "name" : "matchState",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1556,7 +1693,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "question_index",
+          "name" : "questionIndex",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1570,6 +1707,15 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "host",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1640,7 +1786,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "match_state",
+          "name" : "matchState",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -1649,7 +1795,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "question_index",
+          "name" : "questionIndex",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -1663,6 +1809,15 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "host",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2799,6 +2954,23 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_publish",
         "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
         "locations" : [ "FIELD_DEFINITION" ],
@@ -2824,23 +2996,6 @@
         "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
