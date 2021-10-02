@@ -48,6 +48,20 @@ const UserProfileContainer = (props: any) => {
               </Typography>
             </AccordionDetails>
           </Accordion>
+          <Accordion >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel3a-content"
+              id="panel3a-header"
+            >
+              <Typography>My Game Records</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Placeholder
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </div>
       );
     }
