@@ -19,7 +19,7 @@ const OwnedStudySetData = (props: any) => {
   const dispatch = useAppDispatch();
 
   if (!state.finishedLoading) {
-    ownedSetsFetcher(auth.token).then((data) => {
+    ownedSetsFetcher(auth.authUser.token).then((data) => {
       dispatch(saveStudySets(data));
     });
   }
