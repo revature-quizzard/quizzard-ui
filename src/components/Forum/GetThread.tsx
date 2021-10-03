@@ -15,6 +15,7 @@ const GetThreads = ()=> {
    
         const getThreads = async () => {
           try{
+          console.log("Current Subforum: " + forumInfo.currentSubforum);
           setThread(await getAllThreads(forumInfo.currentSubforum?.id));
           console.log('in component: ' + threadName[0]);
           }catch(error)
@@ -23,12 +24,14 @@ const GetThreads = ()=> {
           }
         };
         getThreads();
+        
       }, []);
 
     function Navigate(id: string){
       console.log("Navigating to " + id);
       history.push("/forum/thread/" + id);
     }
+
 
     return (
       <TableContainer component={Paper}>
