@@ -10,6 +10,7 @@ import config from '../../aws-exports';
 import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
+import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
 
 Amplify.configure(config);
 
@@ -22,9 +23,10 @@ Amplify.configure(config);
  **/
 
 function GameLounge() {
-
+    
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
     let history = useHistory();
@@ -72,9 +74,11 @@ function GameLounge() {
         console.log(id.current);
         let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
         // @ts-ignore
+        
         let game: Game = {...resp.data.getGame};
-
+        if(!resp === undefined){
         // Set the user into the list of players
+        
         let baseUser: any;
         if (user.authUser) {
             baseUser = {
@@ -105,8 +109,14 @@ function GameLounge() {
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
-        
+
         dispatch(setGame(game));
+        } else {
+            console.log('Here!')
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game ID does not exist"));
+            return;
+        }
     }
     
     function handleUpdate(e: any) {
