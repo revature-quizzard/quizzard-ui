@@ -7,6 +7,8 @@ import createMockStore from 'redux-mock-store';
 import { addComment } from '../remote/comment-service';
 import { assert } from 'console';
 jest.mock('../remote/comment-service');
+import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
+jest.mock('../state-slices/error/errorSlice')
 
 interface TempState {
     currentSubforum: Subforum | undefined;
@@ -69,8 +71,9 @@ describe('Add Comment Component Test Suite', () => {
         buttonWrapper.simulate('click');
 
         // expectations
-        
-
+        expect(addComment).toBeCalled();
+        expect(setErrorSeverity).toBeCalled();
+        expect(showSnackbar).toBeCalled();
     })
 
     /*
