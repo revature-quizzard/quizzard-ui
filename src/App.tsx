@@ -8,7 +8,7 @@ import Main from "./components/Main/Main";
 import Navigation from "./components/NavBar/Navigation";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import StudyHub from "./components/StudySets/StudyHub";
+import StudyHub from "./components/DiscoverSets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
@@ -20,6 +20,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
+import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -47,7 +48,7 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/sets">
-            <Sets />
+            <ViewSetPage/>
           </Route>
           <Route exact path="/update">
             <UpdateAccountInfo />
@@ -67,6 +68,9 @@ function App() {
           <Route exact path="/profile">
             <UserProfileContainer />
           </Route>
+
+
+
         </Switch>
       </Container>
       <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
