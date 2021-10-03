@@ -39,8 +39,8 @@ const GetThreads = ()=> {
           <TableHead>
             <TableRow>
               <TableCell>Subject</TableCell>
-              <TableCell align="left">Description&nbsp;</TableCell>
-              <TableCell align="left">Number of Threads&nbsp;</TableCell>
+              <TableCell align="left">Author&nbsp;</TableCell>
+              <TableCell align="left">Number of Comments&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -54,7 +54,7 @@ const GetThreads = ()=> {
                 <TableCell
                 align="left"
                 onClick={() => Navigate(sub.subject)}>
-                {sub.description}
+                {sub.owner}
                 </TableCell>
                 <TableCell align="left">{sub.child_count}</TableCell>
               </TableRow>
