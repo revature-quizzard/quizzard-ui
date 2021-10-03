@@ -3,6 +3,14 @@
  */
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import LoginIcon from '@mui/icons-material/Login';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import ForumIcon from '@mui/icons-material/Forum';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -31,10 +39,15 @@ export function NavigationComponent(){
     root: {
       display: 'flex',
       textAlign: "center",
+      flexDirection: "row",
+      flexWrap: "wrap"
       
     },
     typography:{
       paddingLeft: "12rem"
+    },
+    typographyIcons:{
+      paddingLeft: "3rem"
     },
     alert: {
       textAlign: 'center',
@@ -173,32 +186,35 @@ export function NavigationComponent(){
 
               <ListItem button component = {Link} to={'/'}>
 
-                <Typography color="inherit" variant="h6">Logout</Typography>
-              </ListItem>
-              <ListItem button component={Link} to={'/profile'}>
-
-                <Typography color="inherit" variant="h6">Dashboard</Typography>
+                <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
               </ListItem>
 
               <ListItem button component={Link} to={'/login'}>
 
-                <Typography color="inherit" variant="h6">Login</Typography>
+                <ExitToAppIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Login</Typography>
+              </ListItem>
+              <ListItem button component={Link} to={'/profile'}>
+
+                <AccountBoxIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Dashboard</Typography>
               </ListItem>
               <ListItem button component={Link} to={'/register'}>
 
-                <Typography color="inherit" variant="h6">Register</Typography>
+                <AppRegistrationIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Register</Typography>
               </ListItem>
+
               <ListItem button component={Link} to={'/study'}>
 
-                <Typography color="inherit" variant="h6">Discover Sets</Typography>
+                <LibraryBooksIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Discover Sets</Typography>
               </ListItem>
+
               <ListItem button component={Link} to={'/register'}>
 
-                <Typography color="inherit" variant="h6">Forum</Typography>
+                <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
+
               <ListItem button component={Link} to={'/register'}>
 
-                <Typography color="inherit" variant="h6">Game</Typography>
+                <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
               </ListItem>
 
 

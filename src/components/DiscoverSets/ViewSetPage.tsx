@@ -19,12 +19,8 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Backdrop from '@mui/material/Backdrop';
 
 
 /**
@@ -32,43 +28,47 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
  * @constructor
  */
 function ViewSetPage() {
+    const [open, setOpen] = React.useState(false);
 
     const s: Set = useSelector(StudySetState).aSet;
-    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(event.currentTarget)
-        setAnchorEl(event.currentTarget);
-    };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
     };
 
     const useStyles = makeStyles((theme:Theme) => ({
 
 
+        tableContainer:{
+            borderStyle: "ridge",
+            borderColor:"#4e3e61"
+        },
+        button:{
+            textAlign:"center"
+
+        },
         divTable: {
             display:"flex",
             marginTop: 20,
 
-
         },
         paper: {
-
-
             backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[5],
             padding: theme.spacing(4, 3),
+            borderStyle: "ridge",
+
         },
         cardStyle: {
 
             width:"fit-content",
             marginLeft: 10,
-
-
+            borderStyle: "groove",
+            textAlign:"center"
 
             }
     }));
@@ -83,7 +83,10 @@ function ViewSetPage() {
         <>
 
 
-        <TableContainer component={Paper}>
+            <Button onClick={() => {alert('clicked');}} startIcon={<AddBoxIcon />} color="success">
+                Add to favorites
+            </Button>
+        <TableContainer component={Paper} className={classes.tableContainer}>
             <Table sx={{minWidth: 700}} aria-label="customized table">
                 <TableHead>
                     <TableRow>
@@ -122,19 +125,10 @@ function ViewSetPage() {
                             {card.answer}
                         </Typography>
                     </CardContent>
-                        {/*<Button size="small" onClick={handleClick} color="secondary">View Answer</Button>*/}
-                        {/*<Popover*/}
-                        {/*    id={card.id}*/}
-                        {/*    open={open}*/}
-                        {/*    anchorEl={anchorEl}*/}
-                        {/*    onClose={handleClose}*/}
-                        {/*    anchorOrigin={{*/}
-                        {/*        vertical: 'bottom',*/}
-                        {/*        horizontal: 'left',*/}
-                        {/*    }}*/}
-                        {/*>*/}
-                        {/*    <Typography sx={{ p: 2 }}>{card.answer}</Typography>*/}
-                        {/*</Popover>*/}
+
+
+                        <Button size="small" onClick={() => {alert(<h1>{card.answer}</h1>);}} color="secondary">View Answer</Button>
+
 
                 </Card>))}
             </div>
