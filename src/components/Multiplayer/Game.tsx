@@ -131,18 +131,40 @@ function Game() {
 
     /**
      *  Every time the timer runs out of time, the client will invoke this callback function.
-     *  If the invoking user is the host of the game, perform matchState change.
+     *  If the invoking user is the host of the game:
+     *      + Calculate points based on timing, streak, etc
+     *      + Send updated player info and matchState change to Dynamo.
      */
-    function onTimeout() {
+    async function onTimeout() {
         console.log('onTimeout called');
         // TODO: Change to check redux state, bit weird rn as guests don't use state
         let currentUser = 'nobody';
         if (currentUser == game.host) {
-            // Calculate points
-            // Update player information
-            // Update matchState
-            // Update questionIndex
             console.log('Host is in onTimeout');
+            // TODO: Utilize placing and streak fields for scoring
+            // Sort temp player list by time answered
+            // console.log('players before sort: ', game.players);
+            // let players = [].concat(game.players).sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
+            // console.log('players after sort: ', players);
+            let players = game.players.map(player => ({...player}))
+
+            // Calculate points
+            players.forEach(player => {
+                if (player.answered == true && player.answeredCorrectly == true) {
+                    player.points += 1000;
+                }
+                player.answered = false;
+                player.answeredCorrectly = false;
+            });
+            // Update matchState
+            let matchState = 2;
+            
+            // Push update to DynamoDB
+            await API.graphql(graphqlOperation(updateGame, {input: {
+                id: game.id,
+                matchState: matchState,
+                players: players
+            }}))
         }
     }
 
