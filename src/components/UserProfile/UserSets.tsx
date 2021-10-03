@@ -13,7 +13,7 @@ const UserSets = () => {
                 <br/><br/>
                 {userCreatedSets.length ?
                     <Typography>
-                        MySets : {userCreatedSets}<br/>
+                        MySets : {JSON.stringify(userCreatedSets)}<br/>
                     </Typography>
                     :
                     // TODO: Hook this up when create set component is made

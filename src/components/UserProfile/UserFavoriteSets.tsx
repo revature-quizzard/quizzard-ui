@@ -12,7 +12,7 @@ const UserFavoriteSets = () => {
             <Container fixed maxWidth='md' id='register-component'>
                 {userFavorites.length ?
                     <Typography>
-                        {userFavorites}<br/>
+                        {JSON.stringify(userFavorites)}<br/>
                     </Typography>
                     :
                     <Typography>
