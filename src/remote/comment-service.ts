@@ -8,7 +8,7 @@ import { Comment } from '../models/comment';
  * @author 'Luna Haines'
  */
 export async function addComment(comment: Comment) {
-    let response = await QuizzardClient.post('/forum/comment');
+    let response = await QuizzardClient.post('/forum/comment', comment);
 
     if (response.status >= 400 && response.status <= 599) {
         throw response.data;
