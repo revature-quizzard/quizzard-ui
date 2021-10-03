@@ -59,6 +59,9 @@ describe('Add Comment Component Test Suite', () => {
         const wrapper = shallow(<Provider store={mockStore}>
                                     <AddComment />
                                 </Provider>);
+        let buttonWrapper = wrapper.find('#createCommentButton');
+
+        
 
     })
 
