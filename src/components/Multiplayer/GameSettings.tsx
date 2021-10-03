@@ -1,4 +1,4 @@
-import {FormControl, Input, InputLabel, MenuItem, Modal, Select} from '@material-ui/core';
+import {FormControl, Input, InputLabel, MenuItem, Select} from '@mui/material';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,6 @@ import { setGame } from '../../state-slices/multiplayer/game-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button } from '@mui/material';
-import { userInfo } from 'os';
 import { authState } from '../../state-slices/auth/auth-slice';
 
 /*
@@ -97,7 +96,7 @@ function GameSettings() {
 
     // Creates a game, pushes it to DynamoDB, and
     // reroutes user to /multiplayer
-    const createGame = async() => {
+    const createNewGame = async() => {
         if(!isFormValid()){
             //Snack bar error message to user 
             // props.setMessage('Please fill in all fields');
@@ -138,7 +137,7 @@ function GameSettings() {
                 }
             }
             console.log(inputGame);
-            let resp = await (API.graphql(graphqlOperation(createGame, {input: inputGame})) as Promise<GraphQLResult>);
+            let resp = await API.graphql(graphqlOperation(createGame, {input: inputGame })) as Promise<GraphQLResult>;
             dispatch(setGame(inputGame));
             history.push('/multiplayer');
         }
@@ -216,7 +215,7 @@ function GameSettings() {
                         </Select>
                     </FormControl>
 
-                    <Button onClick = {createGame}>Create Game </Button>
+                    <Button onClick = {createNewGame}>Create Game </Button>
         </>
     );
 }

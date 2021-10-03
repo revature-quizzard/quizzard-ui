@@ -77,7 +77,7 @@ function GameLounge() {
         
         {/*Create Game contains create game button*/}
         <GameSettings />
-
+        <br></br>
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} />
 
