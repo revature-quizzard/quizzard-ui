@@ -13,6 +13,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../remote/login-register-service";
 import { ButtonBase } from "@material-ui/core";
+import { gameState, resetGame } from "../../state-slices/multiplayer/game-slice";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,9 @@ const Navigation = () => {
 
                 <Link id="" className="text-light ml-2 mr-2 navLink" to="/sets">
                   Create
+                </Link>
+                <Link onClick={() => dispatch(resetGame)} className="text-light ml-2 mr-2 navLink" to="/lounge">
+                  Lounge
                 </Link>
                 <ButtonBase
                   className="text-light ml-2 mr-2 navLink authLink"

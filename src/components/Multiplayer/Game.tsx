@@ -1,6 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
@@ -19,8 +17,13 @@ import {createWrongAnswerArray} from '../../utilities/quiz-utility'
 import { Card } from 'react-bootstrap';
 import { ConsoleLogger } from 'typedoc/dist/lib/utils';
 import Answers from './Answers';
+import { useDispatch, useSelector } from 'react-redux';
+import Players from './Players';
+import { authState } from '../../state-slices/auth/auth-slice';
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
 Amplify.configure(config);
+
 
 /**
  *  This React component is a container for the multiplayer quiz game.
@@ -88,14 +91,19 @@ function postGameRecords() {
 
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
-function render() {
-    let matchState = 0;
-    switch(matchState) {
+function render(auth: any, game: any) {
+    let match_state = 3;
+    switch(match_state) {
         case 0:
             return (
                 <>
-                    {/* <Players />
-                    <Button> Host Start Game Button </Button> */}
+                    <Players />
+                    {/* This needs to be the username of the player who made the game! */}
+                    { (auth?.username == game.name) 
+                    ?
+                    <Button> Host Start Game Button </Button>
+                    :
+                    <></> }
                 </>
             )
         case 1:
@@ -118,8 +126,8 @@ function render() {
         case 3: 
             return (
                 <>
-                    {/* <Leaderboard /> 
-                    <Button> Host Close Game Button </Button>
+                    <Leaderboard />
+                    {/* <Button> Host Close Game Button </Button>
                     Host Trigger Lambda for posting game record*/}
                 </>
             )
@@ -128,30 +136,14 @@ function render() {
 
 function Game() {
 
-    const game = useSelector(gameState);
-    const dispatch = useDispatch();
-
     // TODO: Change to be actual values
     let dummyGameId = 1;
-    // let dummyGame = undefined;
-    let dummyGame = {
-        id: '13',
-        name: '',
-        matchState: 0,
-        questionIndex: 0,
-        capacity: 0,
-        set: {
-            //@ts-ignore
-            cardList: []
-        },
-        //@ts-ignore
-        players: []
-    }
+    let dummyGame = undefined;
+    const dispatch = useDispatch();
+    const auth = useSelector(authState);
+    const game = useSelector(gameState);
 
     useEffect(() => {
-
-        dispatch(setGame(dummyGame));
-
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
             graphqlOperation(onUpdateGameById, {id: dummyGameId})
@@ -220,6 +212,7 @@ function Game() {
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
+        // buttons for test (remove this after testing)
         <>
         <h1>{game.id}</h1>
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
@@ -227,10 +220,12 @@ function Game() {
         {
             // console.log(game)
             // (game.id != '-1') // If game is defined (Using redux slice)
+
+            // (dummyGame) // If game is defined (Using redux slice)
             // ?
-            // <>
-            //     { render() }
-            // </>            
+            <>
+                { render(auth, game) }
+            </>            
             // : <Redirect to="lounge" />
         }
         </>
