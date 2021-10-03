@@ -20,7 +20,7 @@ function AddComment() {
     let handleClick = async () => {
         try {
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
-            let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.username)
+            let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
         } catch (e: any) {
             // set an error message / toast here
