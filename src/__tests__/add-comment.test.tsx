@@ -61,7 +61,7 @@ describe('Add Comment Component Test Suite', () => {
                                 </Provider>);
         let buttonWrapper = wrapper.find('#createCommentButton');
 
-        
+        buttonWrapper.simulate('click');
 
     })
 
