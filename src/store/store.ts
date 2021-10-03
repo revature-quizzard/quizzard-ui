@@ -25,7 +25,7 @@ export const store = configureStore({
         result: quizResultsReducer,
         auth: authReducer,
         error: errorReducer,
-        forum: forumReducer
+        forum: forumReducer,
         profile: profileReducer
     }
 })
