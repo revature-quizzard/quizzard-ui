@@ -24,6 +24,8 @@ type Player {
   answered: Boolean!
   answeredAt: AWSDateTime!
   answeredCorrectly: Boolean!
+  placing: Int!
+  streak: Int!
   points: Int!
 }
 

@@ -8,7 +8,9 @@ interface Player {
     points: number,
     answered: boolean,
     answeredAt: string,
-    answeredCorrectly: boolean
+    answeredCorrectly: boolean,
+    placing: number,
+    streak: number
 }
 
 interface Set {
