@@ -30,3 +30,13 @@ export async function updateComment(comment: Comment) {
     }
     return response.data;
 }
+
+
+export async function viewComments(threadID: String){
+    let response = await QuizzardClient.get(`/forum/${threadID}`);
+
+    if(response.status >= 400){
+        throw response.data;
+    }
+    return response.data;
+}

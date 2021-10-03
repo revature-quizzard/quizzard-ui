@@ -20,10 +20,14 @@ import {COGNITO} from "./config/aws";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+
+import ViewComment from "./components/Forum/ViewComments";
+
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 import AddThread from './components/Forum/AddThread';
 import GetThreads from "./components/Forum/GetThread";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
+
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -73,6 +77,9 @@ function App() {
           </Route>
           <Route path="/forum/*">
             <GetThreads />
+          </Route>
+          <Route exact path="/forum/thread/*">
+            <ViewComment />
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
