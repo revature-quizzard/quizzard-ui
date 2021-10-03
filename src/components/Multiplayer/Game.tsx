@@ -91,8 +91,8 @@ function postGameRecords() {
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render(auth: any, game: any) {
-    let match_state = 3;
-    switch(match_state) {
+    console.log('game in render: ', game)
+    switch(game.matchState) {
         case 0:
             return (
                 <>
@@ -138,7 +138,7 @@ function Game() {
     // TODO: Change to be actual values
     let dummyGameId = 1;
     let dummyGame = undefined;
-    const auth = useSelector(authState);
+    const user = useSelector(authState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -149,7 +149,7 @@ function Game() {
 
         // Get initial game state
         (API.graphql(graphqlOperation(getGame, {id: game.id})) as Promise<GraphQLResult>).then(resp => {
-            console.log(resp);
+            console.log('Initial state', resp);
             //@ts-ignore
             dispatch(setGame({...resp.data.getGame}))
         });
@@ -159,7 +159,8 @@ function Game() {
             graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
-                console.log({ provider, value });
+                console.log('onUpdate:', { provider, value });
+                dispatch(setGame({...value.data.onUpdateGameById}))
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -171,6 +172,14 @@ function Game() {
         }
     }, [])
 
+    async function incrementState() {
+        let temp = game.matchState;
+        if (temp == 3) temp = 0;
+        else temp += 1;
+        console.log('Inside incrementState, temp:', temp)
+        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
+    }
+
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
@@ -179,8 +188,8 @@ function Game() {
             (game) // If game is defined (Using redux slice)
             ?
             <>
-                { render(auth, game) }
-
+                { render(user, game) }
+                <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
             : <Redirect to="lounge" />
         }

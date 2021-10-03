@@ -92,10 +92,10 @@ function GameLounge() {
                 points: 0
             }
         }
-
+        console.log('Base User: ', baseUser);
 
         game.players.push(baseUser);
-        (API.graphql(graphqlOperation(updateGame, {input: {players: game.players}})));
+        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
         
