@@ -82,7 +82,9 @@ function GameLounge() {
         console.log(resp)
         if(game.id !== undefined){
 
-            if(game.players.length < game.capacity){
+            if(game.matchState === 0){
+                //check to see if game capacity is full
+                if(game.players.length < game.capacity){
         // Set the user into the list of players
         let baseUser: any;
         if (user.authUser) {
@@ -116,11 +118,16 @@ function GameLounge() {
         console.log("Successfully updated GraphQL!");
 
         dispatch(setGame(game));
+                } else {
+                  dispatch(setErrorSeverity("error"));
+                  dispatch(showSnackbar("Game Full"));
+                  return;  
+                } 
             } else {
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Game Full"));
-            return;  
-            }  
+              dispatch(setErrorSeverity("error"));
+              dispatch(showSnackbar("Game started already"));
+              return;   
+            }     
         } else {
             dispatch(setErrorSeverity("error"));
             dispatch(showSnackbar("Game ID does not exist"));
