@@ -17,6 +17,7 @@ import * as queries from '../../graphql/queries';
 import { Card } from 'react-bootstrap';
 import { ConsoleLogger } from 'typedoc/dist/lib/utils';
 import Answers from './Answers';
+import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState } from '../../state-slices/auth/auth-slice';
@@ -89,56 +90,9 @@ function postGameRecords() {
 
 }
 
-// This function abstracts away some logic from the main return method and allows us to use
-// a switch statement in our conditional rendering.
-function render(auth: any, game: any) {
-    console.log('game in render: ', game)
-    switch(game.matchState) {
-        case 0:
-            return (
-                <>
-                    <Players />
-                    {/* This needs to be the username of the player who made the game! */}
-                    { (auth?.username == game.name) 
-                    ?
-                    <Button> Host Start Game Button </Button>
-                    :
-                    <></> }
-                </>
-            )
-        case 1:
-            return (
-                <>
-                    <Players />
-                    {/* <Timer /> */}
-                    <Questions />
-                    {<Answers />}
-                </>
-            )
-        case 2:
-            return (
-                <>
-                    <Players />
-                    <Questions />
-                    {<Answers />}
-                </>
-            )
-        case 3: 
-            return (
-                <>
-                    <Leaderboard />
-                    {/* <Button> Host Close Game Button </Button>
-                    Host Trigger Lambda for posting game record*/}
-                </>
-            )
-    }
-}
 
 function Game() {
 
-    // TODO: Change to be actual values
-    let dummyGameId = 1;
-    let dummyGame = undefined;
     const user = useSelector(authState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
@@ -173,6 +127,167 @@ function Game() {
         }
     }, [])
 
+    // This function abstracts away some logic from the main return method and allows us to use
+    // a switch statement in our conditional rendering.
+    function render() {
+        console.log('game in render: ', game)
+        let currentUser = 'nobody';
+        switch(game.matchState) {
+            case 0:
+                return (
+                    <>
+                        <Players />
+                        {/* This needs to be the username of the player who made the game! */}
+                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+                        { (currentUser == game.host) 
+                        ?
+                        <Button onClick={startGame}> Host Start Game Button </Button>
+                        :
+                        <></> }
+                    </>
+                )
+            case 1:
+                return (
+                    <>
+                        <Players />
+                        <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                        <Questions />
+                        {/* <Answers /> */}
+                    </>
+                )
+            case 2:
+                return (
+                    <>
+                        <Players />
+                        <Questions />
+                        {/* <Answers /> */}
+                        {/* This needs to be the username of the player who made the game! */}
+                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+                        { (currentUser == game.host) 
+                        ?
+                        <Button onClick={nextCard}> Host Next Card Button </Button>
+                        :
+                        <></> }
+                    </>
+                )
+            case 3: 
+                return (
+                    <>
+                        <Leaderboard />
+                        {/* This needs to be the username of the player who made the game! */}
+                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+                        { (currentUser == game.host) 
+                        ?
+                        <Button onClick={closeGame}> Host Close Game Button </Button>
+                        :
+                        <></> }
+                    </>
+                )
+        }
+    }
+
+    /**
+     *  Every time the timer runs out of time (question ends), the client will invoke this callback function.
+     *  If the invoking user is the host of the game:
+     *      + Calculate points based on timing, streak, etc
+     *          - Currently get 1000 points - 100 for every lower place
+     *              + ie 1st: 1000, 2nd: 900, etc
+     *          - Which is multiplied by .1 * the current streak
+     *              + ie 1000 * 1.1 for streak of 1, 1000 * 1.2 for streak of 2
+     *      + Send updated player info and matchState change to Dynamo.
+     */
+    async function onTimeout() {
+        console.log('onTimeout called');
+        // TODO: Change to check redux state, bit weird rn as guests don't use state
+        let currentUser = 'nobody';
+        if (currentUser == game.host) {
+            console.log('Host is in onTimeout');
+            // TODO: Utilize placing and streak fields for scoring
+            
+            
+            console.log('players before sort: ', game.players);
+            // Need to clone players array in order to mutate fields
+            // Sort temp player list by time answered
+            let players = [].concat(game.players.map(player => ({...player})))
+                            .sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
+            console.log('players after sort: ', players);
+
+            // Calculate points
+            let count = 0;
+            let points = 0;
+            players.forEach(player => {
+                points = 0;
+                if (player.answered == true && player.answeredCorrectly == true) {
+                    count++;
+                    // Points from placing
+                    player.placing = count;
+                    points = 1000 - ((count - 1) * 100);
+
+                    // Points from streak
+                    player.streak++;
+                    points *= 1 + (.1 * player.streak);
+
+                    // Update points
+                    player.points += points;
+                }
+            });
+            // Give bonus points if only one player answered correctly
+            if (count == 1) {
+                players.forEach(player => {
+                    if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
+                })
+            }
+            // Update matchState
+            let matchState = 2;
+            
+            // Push update to DynamoDB
+            await API.graphql(graphqlOperation(updateGame, {input: {
+                id: game.id,
+                matchState: matchState,
+                players: players
+            }}))
+        }
+    }
+
+    /**
+     *  This method is invoked by the host at the end of each round to progress to the next card.
+     *  The logic:
+     *      + Reset player.answered and player.answeredCorrectly
+     *      + Increment questionIndex
+     *      + Change matchState either to 1 or 3
+     *          - If the game is already on the last card, progress to matchState 3.     * 
+     */
+    async function nextCard() {
+        // Need to clone players array in order to mutate fields
+        let players = game.players.map(player => ({...player}))
+        let matchState;
+        let questionIndex;
+
+        // Reset fields
+        players.forEach(player => {
+            player.answered = false;
+            player.answeredCorrectly = false;
+        });
+
+        // Check if game is on last card and update matchState
+        (game.questionIndex == game.set.cardList.length - 1) ? matchState = 3 : matchState = 1
+        
+        // Increment questionIndex
+        questionIndex = game.questionIndex + 1;
+
+        // Push update to DynamoDB
+        await API.graphql(graphqlOperation(updateGame, {input: {
+            id: game.id,
+            matchState: matchState,
+            questionIndex: questionIndex,
+            players: players
+        }}))
+    }
+
+    /**
+     *  Utility function to aid in testing.
+     *  Simply progresses game to next state, looping back to 0 from 3.
+     */
     async function incrementState() {
         let temp = game.matchState;
         if (temp == 3) temp = 0;
@@ -212,7 +327,7 @@ function Game() {
             (game) // If game is defined (Using redux slice)
             ?
             <>
-                { render(user, game) }
+                { render() }
                 <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
             : <Redirect to="lounge" />
