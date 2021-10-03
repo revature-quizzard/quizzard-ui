@@ -30,7 +30,6 @@ const Login = () => {
   let logUserIn = async (e: any) => {
     e.preventDefault();
     let response = await authenticate(loginUser);
-    localStorage.setItem('authorization',response.signInUserSession.idToken.jwtToken)
 
     if (response === undefined) {
       dispatch(setErrorSeverity("error"));
