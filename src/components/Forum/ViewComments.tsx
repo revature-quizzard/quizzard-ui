@@ -10,11 +10,11 @@ import  Editor  from 'rich-markdown-editor';
 
 function ViewComment() {
     const forumInfo = useSelector(forumState);
-    let testArray = [
-        new Comment(["ancestor1", "ancestor2"], "parent1ID", "### This is a comment!", "hax0r", "ID1", "Subject1", 0, "dateCreated"),
-        new Comment(["ancestor1", "ancestor2"], "parent2ID", "This is another comment!", "LukesUsername", "ID2", "Subject1", 0, "dateCreated"),
-        new Comment(["ancestor1", "ancestor2"], "parent3ID", "This is a third comment!", "negativeNancy", "ID3", "Subject1", 0, "dateCreated")
-    ];
+    // let testArray = [
+    //     new Comment(["ancestor1", "ancestor2"], "parent1ID", "### This is a comment!", "hax0r", "ID1", "Subject1", 0, "dateCreated"),
+    //     new Comment(["ancestor1", "ancestor2"], "parent2ID", "This is another comment!", "LukesUsername", "ID2", "Subject1", 0, "dateCreated"),
+    //     new Comment(["ancestor1", "ancestor2"], "parent3ID", "This is a third comment!", "negativeNancy", "ID3", "Subject1", 0, "dateCreated")
+    // ];
     let resp: Comment[] | undefined;
     let handleClick = async () => {
         try{
