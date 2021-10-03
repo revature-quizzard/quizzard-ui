@@ -192,6 +192,10 @@ function Game() {
      *  Every time the timer runs out of time (question ends), the client will invoke this callback function.
      *  If the invoking user is the host of the game:
      *      + Calculate points based on timing, streak, etc
+     *          - Currently get 1000 points - 100 for every lower place
+     *              + ie 1st: 1000, 2nd: 900, etc
+     *          - Which is multiplied by .1 * the current streak
+     *              + ie 1000 * 1.1 for streak of 1, 1000 * 1.2 for streak of 2
      *      + Send updated player info and matchState change to Dynamo.
      */
     async function onTimeout() {
@@ -201,19 +205,40 @@ function Game() {
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
             // TODO: Utilize placing and streak fields for scoring
-            // Sort temp player list by time answered
-            // console.log('players before sort: ', game.players);
-            // let players = [].concat(game.players).sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
-            // console.log('players after sort: ', players);
-
+            
+            
+            console.log('players before sort: ', game.players);
             // Need to clone players array in order to mutate fields
-            let players = game.players.map(player => ({...player}))
+            // Sort temp player list by time answered
+            let players = [].concat(game.players.map(player => ({...player})))
+                            .sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
+            console.log('players after sort: ', players);
 
             // Calculate points
+            let count = 0;
+            let points = 0;
             players.forEach(player => {
-                if (player.answered == true && player.answeredCorrectly == true)
-                    player.points += 1000;
+                points = 0;
+                if (player.answered == true && player.answeredCorrectly == true) {
+                    count++;
+                    // Points from placing
+                    player.placing = count;
+                    points = 1000 - ((count - 1) * 100);
+
+                    // Points from streak
+                    player.streak++;
+                    points *= 1 + (.1 * player.streak);
+
+                    // Update points
+                    player.points += points;
+                }
             });
+            // Give bonus points if only one player answered correctly
+            if (count == 1) {
+                players.forEach(player => {
+                    if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
+                })
+            }
             // Update matchState
             let matchState = 2;
             
