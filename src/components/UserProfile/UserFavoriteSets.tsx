@@ -3,6 +3,12 @@ import {useSelector} from "react-redux";
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 import {Link} from "react-router-dom";
 
+/**
+ * Component for rendering a user's Favorite sets.
+ * Each set will have a link to the corresponding set and a button to remove the set from favorites.
+ * @author Cody McDonald
+ * */
+
 const UserFavoriteSets = () => {
     const state = useSelector(profileState);
     const userFavorites = state.userProfile.favoriteSets;
