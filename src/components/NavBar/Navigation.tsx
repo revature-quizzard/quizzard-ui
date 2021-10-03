@@ -33,6 +33,9 @@ export function NavigationComponent(){
       textAlign: "center",
       
     },
+    typography:{
+      paddingLeft: "12rem"
+    },
     alert: {
       textAlign: 'center',
       width: '30%',
@@ -138,7 +141,7 @@ export function NavigationComponent(){
               </IconButton>
               <ButtonBase component={Link} to='/'>
 
-                <Typography variant="h6" noWrap>
+                <Typography className={classes.typography} variant="h6" noWrap>
                   Flashback
                 </Typography>
               </ButtonBase>
@@ -184,6 +187,18 @@ export function NavigationComponent(){
               <ListItem button component={Link} to={'/register'}>
 
                 <Typography color="inherit" variant="h6">Register</Typography>
+              </ListItem>
+              <ListItem button component={Link} to={'/study'}>
+
+                <Typography color="inherit" variant="h6">Discover Sets</Typography>
+              </ListItem>
+              <ListItem button component={Link} to={'/register'}>
+
+                <Typography color="inherit" variant="h6">Forum</Typography>
+              </ListItem>
+              <ListItem button component={Link} to={'/register'}>
+
+                <Typography color="inherit" variant="h6">Game</Typography>
               </ListItem>
 
 

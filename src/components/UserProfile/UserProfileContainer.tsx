@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,9 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createSetState } from "../../state-slices/study-set/create-set-model-slice";
 import CreateSetModal from "./CreateSetModal";
+import UserGameRecords from "./UserGameRecords";
+import UserFavoriteSets from "./UserFavoriteSets";
+import UserSets from "./UserSets";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -17,6 +20,15 @@ const UserProfileContainer = (props: any) => {
   const user: User = useSelector(authState).authUser;
   const createState = useSelector(createSetState);
  
+
+
+
+/**
+ * Main parent component for user profile. Retrieves user data and persists it to profile state.
+ * Renders UserProfile, UserSets, UserFavoriteSets, and UserGameRecords upon successful retrieval.
+ * @author Cody McDonald
+ * */
+
 
    
     const getData = async function () {
@@ -61,7 +73,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                        {state.isLoaded ? <UserSets/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -75,7 +87,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                        {state.isLoaded ? <UserFavoriteSets/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -90,6 +102,8 @@ const UserProfileContainer = (props: any) => {
                 <AccordionDetails>
                     <Typography>
                       <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span></b> 
+
+                        {state.isLoaded ? <UserGameRecords/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>

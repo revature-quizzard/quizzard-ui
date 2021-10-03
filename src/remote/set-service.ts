@@ -12,7 +12,7 @@ export async function createStudySet(studySet: SetDto , token: string) {
         Authorization: token
     }
 }
-  let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
+  let response = await quizzardApiClientTokenAuthorized.post(
     "/sets/newset",
     studySet
   );
