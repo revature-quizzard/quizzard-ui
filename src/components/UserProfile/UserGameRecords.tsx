@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 
+/**
+ * Component for rendering a user's game records.
+ * @author Cody McDonald
+ * */
+
 const UserGameRecords = () => {
     const state = useSelector(profileState);
     const userGameRecords = state.userProfile.gameRecords;

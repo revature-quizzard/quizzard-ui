@@ -4,6 +4,11 @@ import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 
+/**
+ * Component for rendering a user's information.
+ * @author Cody McDonald
+ * */
+
 const UserProfile = () => {
     const state = useSelector(profileState);
     const user: User = useSelector(authState).authUser;
