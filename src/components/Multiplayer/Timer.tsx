@@ -12,14 +12,15 @@ interface RemainingTime {
     remainingTime: number
 }
 interface ITimerProps{
-    start: number
+    start: number;
+    onTimeout: (() => void);
 }
 
 function Timer(props: ITimerProps) {
     const [currentTime, setCurrentTime] = useState(0);
     const [prevTime, setPrevTime] = useState(null);
     const isNewTimeFirstTick = useRef(false);           //Come back to this later
-    const [, setOneLastRerender] = useState(0);
+    const [oneLastRerender, setOneLastRerender] = useState(false);
 
     const renderTime = (time:RemainingTime) => {
       
@@ -32,10 +33,16 @@ function Timer(props: ITimerProps) {
         }
       
         // force one last re-render when the time is over to trigger the last animation
-        if (time.remainingTime === 0) {
-          setTimeout(() => {
-            setOneLastRerender(val => val + 1);
-          }, 20);
+        if (!oneLastRerender && time.remainingTime === 0) {
+          
+          // setTimeout(() => {            
+            
+          setOneLastRerender(true);
+          console.log('Calling after timeout');
+          props.onTimeout();
+          // }, 20);
+          
+          
         }
       
         const isTimeUp = isNewTimeFirstTick.current;
@@ -43,7 +50,7 @@ function Timer(props: ITimerProps) {
         return (
           <div className="time-wrapper">
             <div key={time.remainingTime} className={`time ${isTimeUp ? "up" : ""}` }>
-              {time.remainingTime}
+              {time.remainingTime }
             </div>
           </div>
         );
@@ -57,14 +64,19 @@ function Timer(props: ITimerProps) {
         Timer Yay
       </h1>
       <div className="timer-wrapper">
-        {/*@ts-ignore*/}
-        <CountdownCircleTimer
-          isPlaying
-          duration={props.start}
-          colors={arrayOColors}
-        >
-          {renderTime}
-        </CountdownCircleTimer>
+        {
+          // (!oneLastRerender) ?
+          <>
+          {/*@ts-ignore*/}
+          <CountdownCircleTimer
+            isPlaying
+            duration={props.start}
+            colors={arrayOColors}
+          >
+            {renderTime}
+          </CountdownCircleTimer> </>
+          // : <> </>
+        }
       </div>
     </div>
   );

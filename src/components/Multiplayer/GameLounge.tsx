@@ -59,6 +59,8 @@ function GameLounge() {
                 points: 0,
                 answered: false,
                 answeredAt: new Date().toISOString(),
+                placing: -1,
+                streak: 0,
                 answeredCorrectly: false
             }]
         }
@@ -75,7 +77,7 @@ function GameLounge() {
         let game: Game = {...resp.data.getGame};
 
         // Set the user into the list of players
-        let baseUser;
+        let baseUser: any;
         if (user.authUser) {
             baseUser = {
                 id: user.authUser.id,
@@ -83,6 +85,8 @@ function GameLounge() {
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
+                placing: -1,
+                streak: 0,
                 points: 0
             };
         } else {
@@ -92,6 +96,8 @@ function GameLounge() {
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
+                placing: -1,
+                streak: 0,
                 points: 0
             }
         }
