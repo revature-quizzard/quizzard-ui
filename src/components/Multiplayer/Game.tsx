@@ -189,6 +189,8 @@ function Game() {
             matchState: 0,
             questionIndex: 0,
             capacity: 0,
+            host: '',
+            questionTimer: 10,
             set: {
                 //@ts-ignore
                 cardList: []

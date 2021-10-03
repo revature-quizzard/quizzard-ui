@@ -6,6 +6,7 @@ type Game @model
   questionIndex: Int!
   capacity: Int!
   host: String!
+  questionTimer: Int!
   set: Set!
   players: [Player]!
 }

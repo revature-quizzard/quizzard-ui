@@ -29,6 +29,7 @@ interface State {
     questionIndex: number,
     capacity: number,
     host: String,
+    questionTimer: number,
     set: Set,
     players: Player[]
 }
@@ -40,6 +41,7 @@ const initialState: State = {
     questionIndex: 0,
     capacity: 0,
     host: '',
+    questionTimer: 10,
     set: {
         cardList: []
     },
@@ -67,6 +69,7 @@ export const gameSlice = createSlice({
             state.questionIndex = action.payload.questionIndex;
             state.capacity = action.payload.capacity;
             state.host = action.payload.host;
+            state.questionTimer = action.payload.questionTimer;
             state.set = action.payload.set;
             state.players = action.payload.players;
             console.log('Setting ', state, ' to ', action.payload)
