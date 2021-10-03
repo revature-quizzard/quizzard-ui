@@ -23,7 +23,6 @@ import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 import AddThread from './components/Forum/AddThread';
 import GetThreads from "./components/Forum/GetThread";
-
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
 
 Amplify.configure({

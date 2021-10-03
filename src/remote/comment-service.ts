@@ -10,7 +10,7 @@ import { Comment } from '../models/comment';
 export async function addComment(comment: Comment) {
     let response = await QuizzardClient.post('/forum/comment', comment);
 
-    if (response.status >= 400 && response.status < 599) {
+    if (response.status >= 400 && response.status <= 599) {
         throw response.data;
     }
     return response.data;
