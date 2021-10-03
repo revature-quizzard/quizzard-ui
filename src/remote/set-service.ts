@@ -1,3 +1,4 @@
+import { SetDto } from "../dtos/set-dto";
 import { CardSetRequest } from "../models/request-models/card-set-request";
 import {
   quizzardApiClient,
@@ -5,7 +6,7 @@ import {
   quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
 
-export async function createStudySet(studySet: CardSetRequest) {
+export async function createStudySet(studySet: SetDto) {
   let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
     "/sets/newset",
     studySet

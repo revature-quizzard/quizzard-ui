@@ -13,6 +13,10 @@ import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
 import studySetReducer from "../state-slices/study-set/study-set-slice"
 import errorReducer from "../state-slices/error/errorSlice";
 import profileReducer from "../state-slices/user-profile/profile-slice";
+import createSetReducer  from "../state-slices/study-set/create-set-model-slice";
+import {createStore, combineReducers} from 'redux'
+
+
 
 export const store = configureStore({
     reducer: {
@@ -24,7 +28,8 @@ export const store = configureStore({
         result: quizResultsReducer,
         auth: authReducer,
         error: errorReducer,
-        profile: profileReducer
+        profile: profileReducer, 
+        createSet: createSetReducer 
     }
 })
 

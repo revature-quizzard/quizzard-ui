@@ -8,13 +8,16 @@ import { getUserData } from "../../remote/user-service";
 import { UserData } from "../../models/user-data";
 import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
+import { createSetState } from "../../state-slices/study-set/create-set-model-slice";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
+  const createState = useSelector(createSetState);
+ 
 
-
+   
     const getData = async function () {
         try {
             dispatch(loading());
@@ -88,6 +91,7 @@ const UserProfileContainer = (props: any) => {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
+          
         </div>
     );
 }

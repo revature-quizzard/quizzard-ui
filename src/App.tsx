@@ -21,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
+import CreateSetModal from "./components/UserProfile/CreateSetModal";
+
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -36,6 +38,7 @@ function App() {
   return (
     <Router>
       <Navigation />
+     
       <Container className="app-container" id="app-container">
         <Switch>
           <Route exact path="/">
@@ -67,6 +70,7 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
+           
           </Route>
 
 
