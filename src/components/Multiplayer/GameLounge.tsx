@@ -40,7 +40,7 @@ function GameLounge() {
             name: 'Test Game',
             matchState: 0,
             questionIndex: 0,
-            capacity: 5,
+            capacity: 1,
             host: 'nobody',
             questionTimer: 10,
             set: {
@@ -77,9 +77,13 @@ function GameLounge() {
         // @ts-ignore
         
         let game: Game = {...resp.data.getGame};
-        if(!resp === undefined){
-        // Set the user into the list of players
         
+        //game already exists
+        console.log(resp)
+        if(game.id !== undefined){
+
+            if(game.players.length < game.capacity){
+        // Set the user into the list of players
         let baseUser: any;
         if (user.authUser) {
             baseUser = {
@@ -112,8 +116,12 @@ function GameLounge() {
         console.log("Successfully updated GraphQL!");
 
         dispatch(setGame(game));
+            } else {
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game Full"));
+            return;  
+            }  
         } else {
-            console.log('Here!')
             dispatch(setErrorSeverity("error"));
             dispatch(showSnackbar("Game ID does not exist"));
             return;
