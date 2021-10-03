@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router';
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
@@ -92,8 +93,8 @@ function postGameRecords() {
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render(auth: any, game: any) {
-    let match_state = 3;
-    switch(match_state) {
+    console.log('game in render: ', game)
+    switch(game.matchState) {
         case 0:
             return (
                 <>
@@ -109,18 +110,18 @@ function render(auth: any, game: any) {
         case 1:
             return (
                 <>
-                    {/* <Players />
-                    <Timer />
+                    <Players />
+                    {/* <Timer /> */}
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 2:
             return (
                 <>
-                    {/* <Players />
+                    <Players />
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 3: 
@@ -139,17 +140,29 @@ function Game() {
     // TODO: Change to be actual values
     let dummyGameId = 1;
     let dummyGame = undefined;
-    const dispatch = useDispatch();
-    const auth = useSelector(authState);
+    const user = useSelector(authState);
     const game = useSelector(gameState);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
+        // If game does not exist, reroute to /lounge
+        if (!game.id) history.push('/lounge');
+
+        // Get initial game state
+        (API.graphql(graphqlOperation(getGame, {id: game.id})) as Promise<GraphQLResult>).then(resp => {
+            console.log('Initial state', resp);
+            //@ts-ignore
+            dispatch(setGame({...resp.data.getGame}))
+        });
+
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
-            graphqlOperation(onUpdateGameById, {id: dummyGameId})
+            graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
-                console.log({ provider, value });
+                console.log('onUpdate:', { provider, value });
+                dispatch(setGame({...value.data.onUpdateGameById}))
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -160,6 +173,14 @@ function Game() {
             updateSubscription.unsubscribe();
         }
     }, [])
+
+    async function incrementState() {
+        let temp = game.matchState;
+        if (temp == 3) temp = 0;
+        else temp += 1;
+        console.log('Inside incrementState, temp:', temp)
+        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
+    }
 
     function test(game: any) {
         let newgame = {
@@ -218,15 +239,13 @@ function Game() {
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         <Button onClick={testAnswers}>Test Me</Button>
         {
-            // console.log(game)
-            // (game.id != '-1') // If game is defined (Using redux slice)
-
-            // (dummyGame) // If game is defined (Using redux slice)
-            // ?
+            (game) // If game is defined (Using redux slice)
+            ?
             <>
-                { render(auth, game) }
+                { render(user, game) }
+                <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
-            // : <Redirect to="lounge" />
+            : <Redirect to="lounge" />
         }
         </>
   );
