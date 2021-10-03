@@ -14,7 +14,6 @@ import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import * as queries from '../../graphql/queries';
-import {createWrongAnswerArray} from '../../utilities/quiz-utility'
 import { Card } from 'react-bootstrap';
 import { ConsoleLogger } from 'typedoc/dist/lib/utils';
 import Answers from './Answers';
@@ -113,7 +112,7 @@ function render(auth: any, game: any) {
                     <Players />
                     {/* <Timer /> */}
                     <Questions />
-                    {/* <Answers /> */}
+                    {<Answers />}
                 </>
             )
         case 2:
@@ -121,7 +120,7 @@ function render(auth: any, game: any) {
                 <>
                     <Players />
                     <Questions />
-                    {/* <Answers /> */}
+                    {<Answers />}
                 </>
             )
         case 3: 
@@ -201,36 +200,6 @@ function Game() {
         newgame.id = parseInt(game.id) + 1;
         return newgame;
     }
-
-    async function testAnswers() {
-        let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
-        getCardList(response);
-    }
-
-    let getCardList = (response: any) => {
-        let cardList = response.data.getGame.set.cardList;
-        let answerBank: Array<string> = [];
-        console.log(cardList);
-
-        for (let card of cardList) {
-            answerBank.push(card.correctAnswer);
-        }
-
-        for (let card of cardList) {
-            let wrongAnswers = generateWrongAnswers(card, answerBank);
-            card.multiAnswers = wrongAnswers;
-        }
-        console.log(cardList);
-    }
-
-    let generateWrongAnswers = (card: any, questions: Array<string>) => {
-        let listAnswers: Array<string>;
-        do {
-            listAnswers = createWrongAnswerArray(questions);
-        } while (listAnswers.includes(card.correctAnswer));
-        listAnswers.push(card.correctAnswer);
-        return listAnswers;
-    }
     
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
@@ -239,7 +208,6 @@ function Game() {
         <>
         <h1>{game.id}</h1>
         <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
-        <Button onClick={testAnswers}>Test Me</Button>
         {
             (game) // If game is defined (Using redux slice)
             ?

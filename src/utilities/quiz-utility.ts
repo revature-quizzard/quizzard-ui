@@ -45,29 +45,29 @@ export const createQuiz = (studySet: Array<SetFlashcardDTO>) => {
   return questionArray;
 };
 
-export const createWrongAnswerArray = (answers: string[]) => {
-    let  answerArray: string[] = [];
+// export const createWrongAnswerArray = (answers: string[]) => {
+//     let  answerArray: string[] = [];
   
-    // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
-    let ranNum: number = generateRandom(answers.length);
+//     // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
+//     let ranNum: number = generateRandom(answers.length);
   
-    // Build an array of potential wrong answers from all other answers in study set.
-  while (answerArray.length < 3) {
+//     // Build an array of potential wrong answers from all other answers in study set.
+//   while (answerArray.length < 3) {
     
-    if (!answerArray.includes(answers[ranNum])) {
+//     if (!answerArray.includes(answers[ranNum])) {
       
-      answerArray.push(answers[ranNum]);
+//       answerArray.push(answers[ranNum]);
       
-    } else {
+//     } else {
       
-      ranNum = generateRandom(answers.length);
+//       ranNum = generateRandom(answers.length);
       
-      }
-    }
+//       }
+//     }
   
   
-  return answerArray;
-}
+//   return answerArray;
+// }
 
 export const filterCurrentCard = (currentCard: SetFlashcardDTO, studySet: Array<SetFlashcardDTO>) => {
   

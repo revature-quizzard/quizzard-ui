@@ -1,9 +1,8 @@
 import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
-import { Row } from 'react-bootstrap';
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
-import { createWrongAnswerArray } from '../../utilities/quiz-utility';
+import { createWrongAnswerArray, generateWrongAnswers } from '../../utilities/game-utility';
 import { Card } from '../../API';
 
 
@@ -21,10 +20,6 @@ import { Card } from '../../API';
  * @authors Heather Guilfoyle, Sean Dunn, Colby Wall, Robert Ni
  */
 
-interface IAnswers {
-    card: Card | undefined
-}
-
 let testCard = {
     id: "1",
     question: "What are you doing?",
@@ -36,6 +31,28 @@ let testCard = {
         "Sleeping"
     ]
 }
+
+ export async function createAnswers() {
+    let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
+    getCardList(response);
+}
+
+let getCardList = (response: any) => {
+    let cardList = response.data.getGame.set.cardList;
+    let answerBank: Array<string> = [];
+    console.log(cardList);
+
+    for (let card of cardList) {
+        answerBank.push(card.correctAnswer);
+    }
+
+    for (let card of cardList) {
+        let wrongAnswers = generateWrongAnswers(card, answerBank);
+        card.multiAnswers = wrongAnswers;
+    }
+    console.log(cardList);
+}
+
 
 // @ts-ignore
 function randomizeAnswers(card): string[] {
@@ -72,11 +89,13 @@ function renderColors() {
 }
 
 
-function Answers(props: IAnswers) {
+function Answers() {
     let answers: string[] = randomizeAnswers(testCard);
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     return (
         <>
+        <Button onClick={createAnswers}>Test Me</Button>
+        {
         <TableContainer>
             <Table>
                 <TableHead>
@@ -92,6 +111,7 @@ function Answers(props: IAnswers) {
                 </TableHead>
             </Table>
         </TableContainer>
+        }       
         </>
 
     );
