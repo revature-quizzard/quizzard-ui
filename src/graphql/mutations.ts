@@ -14,6 +14,7 @@ export const createGame = /* GraphQL */ `
       questionIndex
       capacity
       host
+      questionTimer
       set {
         id
         name
@@ -50,6 +51,7 @@ export const updateGame = /* GraphQL */ `
       questionIndex
       capacity
       host
+      questionTimer
       set {
         id
         name
@@ -86,6 +88,7 @@ export const deleteGame = /* GraphQL */ `
       questionIndex
       capacity
       host
+      questionTimer
       set {
         id
         name

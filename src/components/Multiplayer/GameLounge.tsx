@@ -39,6 +39,7 @@ function GameLounge() {
             questionIndex: 0,
             capacity: 5,
             host: 'nobody',
+            questionTimer: 10,
             set: {
                 id: '10',
                 name: 'Test Set',
