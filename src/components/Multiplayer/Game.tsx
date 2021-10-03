@@ -135,7 +135,9 @@ function Game() {
      */
     function onTimeout() {
         console.log('onTimeout called');
-        if (user.authUser.username == game.host) {
+        // TODO: Change to check redux state, bit weird rn as guests don't use state
+        let currentUser = 'nobody';
+        if (currentUser == game.host) {
             // Calculate points
             // Update player information
             // Update matchState
@@ -148,13 +150,15 @@ function Game() {
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
+        let currentUser = 'nobody';
         switch(game.matchState) {
             case 0:
                 return (
                     <>
                         <Players />
                         {/* This needs to be the username of the player who made the game! */}
-                        { (user?.authUser.username == game.host) 
+                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+                        { (currentUser == game.host) 
                         ?
                         <Button> Host Start Game Button </Button>
                         :

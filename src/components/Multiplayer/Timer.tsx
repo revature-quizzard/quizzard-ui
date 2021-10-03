@@ -34,10 +34,15 @@ function Timer(props: ITimerProps) {
       
         // force one last re-render when the time is over to trigger the last animation
         if (!oneLastRerender && time.remainingTime === 0) {
-          setTimeout(() => {
-            setOneLastRerender(true);
-          }, 20);
+          
+          // setTimeout(() => {            
+            
+          setOneLastRerender(true);
+          console.log('Calling after timeout');
           props.onTimeout();
+          // }, 20);
+          
+          
         }
       
         const isTimeUp = isNewTimeFirstTick.current;
@@ -45,7 +50,7 @@ function Timer(props: ITimerProps) {
         return (
           <div className="time-wrapper">
             <div key={time.remainingTime} className={`time ${isTimeUp ? "up" : ""}` }>
-              {time.remainingTime}
+              {time.remainingTime }
             </div>
           </div>
         );
@@ -60,7 +65,7 @@ function Timer(props: ITimerProps) {
       </h1>
       <div className="timer-wrapper">
         {
-          (!oneLastRerender) ?
+          // (!oneLastRerender) ?
           <>
           {/*@ts-ignore*/}
           <CountdownCircleTimer
@@ -70,7 +75,7 @@ function Timer(props: ITimerProps) {
           >
             {renderTime}
           </CountdownCircleTimer> </>
-          : <> </>
+          // : <> </>
         }
       </div>
     </div>
