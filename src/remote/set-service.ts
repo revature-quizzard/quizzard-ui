@@ -1,5 +1,9 @@
 import { CardSetRequest } from "../models/request-models/card-set-request";
-import { quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
+import {
+  quizzardApiClient,
+  quizzardApiClientTokenAuthorized,
+  quizzardApiClientTokenAuthorizedSynchronous
+} from "./api-client";
 
 export async function createStudySet(studySet: CardSetRequest) {
   let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
@@ -16,6 +20,8 @@ export async function createStudySet(studySet: CardSetRequest) {
  * @author Kyle, Ej, Everett, Rich
  * @param studySet
  */
+
+
 export async function createStudySetWithToken(
   studySet: CardSetRequest,
   headers: any
@@ -31,3 +37,14 @@ export async function createStudySetWithToken(
   return await response.data;
 }
 
+export const getAllSets = async () =>{
+
+  let resp = await quizzardApiClientTokenAuthorized.get('/sets')
+
+
+  if (resp.status >= 400 && resp.status <= 599) {
+    throw resp.data;
+  }
+  console.log(resp.data)
+  return resp.data;
+}
