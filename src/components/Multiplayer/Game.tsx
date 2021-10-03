@@ -96,7 +96,7 @@ function postGameRecords() {
  *  If the invoking user is the host of the game, perform matchState change.
  */
 function onTimeout() {
-
+    console.log('onTimeout called');
 }
 
 // This function abstracts away some logic from the main return method and allows us to use
