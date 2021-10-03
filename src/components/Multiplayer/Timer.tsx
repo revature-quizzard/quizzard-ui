@@ -12,7 +12,8 @@ interface RemainingTime {
     remainingTime: number
 }
 interface ITimerProps{
-    start: number
+    start: number;
+    onTimeout: (() => void);
 }
 
 function Timer(props: ITimerProps) {

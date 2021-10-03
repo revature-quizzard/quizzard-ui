@@ -18,6 +18,7 @@ import {createWrongAnswerArray} from '../../utilities/quiz-utility'
 import { Card } from 'react-bootstrap';
 import { ConsoleLogger } from 'typedoc/dist/lib/utils';
 import Answers from './Answers';
+import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState } from '../../state-slices/auth/auth-slice';
@@ -90,6 +91,14 @@ function postGameRecords() {
 
 }
 
+/**
+ *  Every time the timer runs out of time, the client will invoke this callback function.
+ *  If the invoking user is the host of the game, perform matchState change.
+ */
+function onTimeout() {
+
+}
+
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render(auth: any, game: any) {
@@ -111,7 +120,7 @@ function render(auth: any, game: any) {
             return (
                 <>
                     <Players />
-                    {/* <Timer /> */}
+                    <Timer start={15} onTimeout={onTimeout}/>
                     <Questions />
                     {/* <Answers /> */}
                 </>
