@@ -108,18 +108,18 @@ function render(auth: any, game: any) {
         case 1:
             return (
                 <>
-                    {/* <Players />
-                    <Timer />
+                    <Players />
+                    {/* <Timer /> */}
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 2:
             return (
                 <>
-                    {/* <Players />
+                    <Players />
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 3: 
