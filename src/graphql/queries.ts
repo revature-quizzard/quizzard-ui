@@ -29,6 +29,8 @@ export const getGame = /* GraphQL */ `
         answered
         answeredAt
         answeredCorrectly
+        placing
+        streak
         points
       }
       createdAt
@@ -62,6 +64,8 @@ export const listGames = /* GraphQL */ `
           answered
           answeredAt
           answeredCorrectly
+          placing
+          streak
           points
         }
         createdAt
@@ -105,6 +109,8 @@ export const gameByName = /* GraphQL */ `
           answered
           answeredAt
           answeredCorrectly
+          placing
+          streak
           points
         }
         createdAt

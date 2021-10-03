@@ -81,6 +81,8 @@ function GameLounge() {
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
+                placing: -1,
+                streak: 0,
                 points: 0
             };
         } else {
@@ -90,6 +92,8 @@ function GameLounge() {
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
+                placing: -1,
+                streak: 0,
                 points: 0
             }
         }

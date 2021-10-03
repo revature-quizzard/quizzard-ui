@@ -32,6 +32,8 @@ export const createGame = /* GraphQL */ `
         answered
         answeredAt
         answeredCorrectly
+        placing
+        streak
         points
       }
       createdAt
@@ -69,6 +71,8 @@ export const updateGame = /* GraphQL */ `
         answered
         answeredAt
         answeredCorrectly
+        placing
+        streak
         points
       }
       createdAt
@@ -106,6 +110,8 @@ export const deleteGame = /* GraphQL */ `
         answered
         answeredAt
         answeredCorrectly
+        placing
+        streak
         points
       }
       createdAt
