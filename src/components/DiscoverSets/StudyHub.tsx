@@ -1,15 +1,16 @@
 
 import { Button, Col, Row } from "react-bootstrap";
-import AddFlashcardModal from "./AddFlashcardModal";
+import AddFlashcardModal from "../StudySets/AddFlashcardModal";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { clearStudySet, currentlyLoading, studySetState } from "../../state-slices/study-set/study-set-slice";
-import { authState } from  "../../state-slices/auth/auth-slice"
+import { authState } from "../../state-slices/auth/auth-slice"
 import { useDispatch, useSelector } from "react-redux";
-import StudyListTable from "./StudyListTable";
+import StudyListTable from "../StudySets/StudyListTable";
 import { isLoading } from "../../state-slices/flashcard/flashcard-slice";
 import { Redirect, useHistory } from "react-router-dom";
 import PublicSets from "./PublicSets";
+import {makeStyles, Theme} from "@material-ui/core/styles";
 
 /**
  * @author Sean Taba
@@ -25,6 +26,21 @@ const StudyHub = () => {
   const state = useAppSelector(studySetState);
   const user = useSelector(authState);
   const history = useHistory();
+
+  const useStyles = makeStyles((theme:Theme) => ({
+    divTable: {
+      textAlign: 'center',
+      width: '70%',
+      marginLeft: 200,
+    },
+    paper: {
+
+
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    }
+  }));
 
   useEffect(() => {
     if (showCards) {
@@ -74,13 +90,14 @@ const StudyHub = () => {
     e.preventDefault();
     history.push("/sets");
   };
+  const classes = useStyles();
 
   return (
 
       <>
-        <div>set page</div>
+        <div className={classes.divTable}>
         <PublicSets/>
-
+      </div>
       </>
 
 

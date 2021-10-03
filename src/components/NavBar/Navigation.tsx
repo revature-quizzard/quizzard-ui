@@ -108,7 +108,7 @@ export function NavigationComponent(){
   };
 
   return (
-<<<<<<< HEAD
+
       <>
         <div className={classes.root}>
           <CssBaseline/>
@@ -166,7 +166,7 @@ export function NavigationComponent(){
 
                 <Typography color="inherit" variant="h6">Logout</Typography>
               </ListItem>
-              <ListItem button component={Link} to={'/dashboard'}>
+              <ListItem button component={Link} to={'/profile'}>
 
                 <Typography color="inherit" variant="h6">Dashboard</Typography>
               </ListItem>
@@ -194,79 +194,7 @@ export function NavigationComponent(){
           </main>
         </div>
       </>
-=======
-    <Navbar bg="dark" expand="md">
-      <Container id="nav-container">
-        <Navbar.Brand href="#" style={{ color: "white" }}>
-          <img
-            src="https://i.imgur.com/PAm216P.png"
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-            alt="Qwizzard Hat Logo"
-          />{" "}
-          Q W I Z Z A R D
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {!auth.isAuthenticated && (
-              <>
-                <ButtonBase
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/login"
-                >
-                  Login
-                </ButtonBase>
 
-                <ButtonBase
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/register"
-                >
-                  Register
-                </ButtonBase>
-                <ButtonBase
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/profile"
-                >
-                  My Profile
-                </ButtonBase>
-              </>
-            )}
-            {auth.isAuthenticated && (
-              <>
-                <Link className="text-light ml-2 mr-2 navLink" to="/study">
-                  Study
-                </Link>
-
-                <Link className="text-light ml-2 mr-2 navLink" to="/update">
-                  Update
-                </Link>
-
-                <Link id="" className="text-light ml-2 mr-2 navLink" to="/sets">
-                  Create
-                </Link>
-                <ButtonBase
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  component={Link} to="/profile"
-                >
-                  My Profile
-                </ButtonBase>
-                <Link
-                  id="logout"
-                  className="text-light ml-2 mr-2 navLink authLink"
-                  onClick={handleLogout}
-                  to="/"
-                >
-                  Logout
-                </Link>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
->>>>>>> 1aed06fdd7a52002654a96d791f2ecc24831ec8e
   );
 }
 

@@ -182,46 +182,46 @@ td {
 }
 
 
-@media (min-width: 768px) {
-  .authLink {
-    float: right;
-  }
+/*@media (min-width: 768px) {*/
+/*  .authLink {*/
+/*    float: right;*/
+/*  }*/
 
-  .navLink {
-    width: fit-content;
-  }
+/*  .navLink {*/
+/*    width: fit-content;*/
+/*  }*/
 
-  .navbar-nav {
-    display: block;
-    width: 100%;
-  }
+/*  .navbar-nav {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*  }*/
 
-  div {
-    margin: 0;
-  }
+/*  div {*/
+/*    margin: 0;*/
+/*  }*/
 
-}
+/*}*/
 
-  nav a {
-    color: white;
-  }
+/*  nav a {*/
+/*    color: white;*/
+/*  }*/
 
-  nav a:hover {
-    color: white;
-    text-decoration: none;
-  }
+/*  nav a:hover {*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*  }*/
 
-.navbrand {
-  transform:scale(0.8);
-}
-.navbrand img {
-  float: left;
-}
-.navbrand h1 {
-  float: left;
-  text-transform:uppercase;
-  font-size: 30px;
-}
+/*.navbrand {*/
+/*  transform:scale(0.8);*/
+/*}*/
+/*.navbrand img {*/
+/*  float: left;*/
+/*}*/
+/*.navbrand h1 {*/
+/*  float: left;*/
+/*  text-transform:uppercase;*/
+/*  font-size: 30px;*/
+/*}*/
 
 .sticky-top {
   background-color: white;
@@ -240,16 +240,16 @@ td {
 
 
 /* Study set container Styling */
-.tile-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  padding: 1rem 1rem;
-  margin: 1rem 1rem;
-}
+/*.tile-container {*/
+/*  display: flex;*/
+/*  flex-flow: row wrap;*/
+/*  justify-content: flex-start;*/
+/*  align-items: center;*/
+/*  width: 100%;*/
+/*  height: auto;*/
+/*  padding: 1rem 1rem;*/
+/*  margin: 1rem 1rem;*/
+/*}*/
 
 .tile-card {
   width: 14rem;
@@ -314,14 +314,14 @@ td {
   margin: 1rem 0;
 }
 
-#app-container {
-  overflow-x: hidden;
+/*#app-container {*/
+/*  overflow-x: hidden;*/
 
-  max-width: none;
-  padding-bottom: 2rem;
-  padding: 1rem 10%;
-  flex-grow: 1;
-}
+/*  max-width: none;*/
+/*  padding-bottom: 2rem;*/
+/*  padding: 1rem 10%;*/
+/*  flex-grow: 1;*/
+/*}*/
 
 .answer div {
   padding: 20px 20px;
@@ -330,30 +330,30 @@ td {
   padding: 0 30px;
 }
 
-#nav-container {
-  max-width: none;
-  padding-left: 5%;
-  padding-right: 5%;
-}
+/*#nav-container {*/
+/*  max-width: none;*/
+/*  padding-left: 5%;*/
+/*  padding-right: 5%;*/
+/*}*/
 
-#submit-btn {
-  margin-top: 3rem;
-}
+/*#submit-btn {*/
+/*  margin-top: 3rem;*/
+/*}*/
 
-.flashcard-study-label-row {
-  margin-top: 5rem;
-}
+/*.flashcard-study-label-row {*/
+/*  margin-top: 5rem;*/
+/*}*/
 
-.study-button {
-  height: 4rem;
-  padding: "5px";
-  width: "100px";
-  margin: "10px";
-}
+/*.study-button {*/
+/*  height: 4rem;*/
+/*  padding: "5px";*/
+/*  width: "100px";*/
+/*  margin: "10px";*/
+/*}*/
 
-#add-flashcard-button {
-  margin: 2.5rem;
-}
+/*#add-flashcard-button {*/
+/*  margin: 2.5rem;*/
+/*}*/
 /*#sidebar {*/
 
 /*  min-width: 250px;*/
