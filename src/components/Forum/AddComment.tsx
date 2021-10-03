@@ -25,7 +25,8 @@ function AddComment() {
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
         } catch (e: any) {
-            // set an error message / toast here
+            setErrorSeverity('error');
+            showSnackbar('Your comment could not be added');
         }
     }
 
