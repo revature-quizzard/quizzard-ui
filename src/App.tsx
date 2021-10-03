@@ -75,11 +75,11 @@ function App() {
           <Route exact path="/forum">
             <SubforumHandler />
           </Route>
-          <Route path="/forum/*">
-            <GetThreads />
-          </Route>
           <Route exact path="/forum/thread/*">
             <ViewComment />
+          </Route>
+          <Route path="/forum/*">
+            <GetThreads />
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />

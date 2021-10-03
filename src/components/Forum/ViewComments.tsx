@@ -1,28 +1,27 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import { viewComments } from '../../remote/comment-service';
 import { Paper } from '@mui/material';
 import { Comment } from '../../models/comment';
 import { Divider, Avatar, Grid } from "@material-ui/core";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import  Editor  from 'rich-markdown-editor';
+import { Thread } from '../../models/thread';
 
 
 function ViewComment() {
-    const forumInfo = useSelector(forumState);
-    // let testArray = [
-    //     new Comment(["ancestor1", "ancestor2"], "parent1ID", "### This is a comment!", "hax0r", "ID1", "Subject1", 0, "dateCreated"),
-    //     new Comment(["ancestor1", "ancestor2"], "parent2ID", "This is another comment!", "LukesUsername", "ID2", "Subject1", 0, "dateCreated"),
-    //     new Comment(["ancestor1", "ancestor2"], "parent3ID", "This is a third comment!", "negativeNancy", "ID3", "Subject1", 0, "dateCreated")
-    // ];
-    let resp: Comment[] | undefined;
-    let handleClick = async () => {
+    const forumInfo: Thread = useSelector(forumState).currentThread;
+    const dispatch = useDispatch();
+    let [resp,setResp] = useState(undefined as Comment[] | undefined);
+    useEffect(() => {
+        const getComments = async () => {
         try{
-            resp = await viewComments(forumInfo.currentThread.id);
+            setResp(await viewComments(forumInfo?.id));
         } catch(e:any) {
             // set an error message / toast here
         }
     }
+    }, []);
     let rd = function(comment: Comment) {
         return <>
             <Paper style={{ padding: "40px 20px" }}>
@@ -48,10 +47,10 @@ function ViewComment() {
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
                 <div style={{'margin': '2rem'}}>
-                    <h1>forumInfo.currentThread.subject</h1>
+                    <h1>{forumInfo.subject}</h1>
                     <br></br>
                     <br></br>
-                    <p>forumInfo.currentThread.description</p>
+                    <p>{forumInfo.description}</p>
                     {/* <h1>forumInfo.currentThread.subject</h1>
                     <p>forumInfo.currentThread.description</p> */}
                 </div>    
@@ -59,7 +58,7 @@ function ViewComment() {
 
              <br></br>
 
-            {resp.map( (comment : Comment) => rd(comment))}
+            {resp?.map( (comment : Comment) => rd(comment))}
     
         </>
     )

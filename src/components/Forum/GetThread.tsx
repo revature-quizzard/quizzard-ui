@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { Thread } from '../../models/thread';
 import { useHistory } from 'react-router';
-import { forumState } from '../../state-slices/forum/forum-slice';
-import { useSelector } from 'react-redux';
+import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GetThreads = ()=> {
     let [threadName,setThread] = useState(undefined as Thread[] | undefined);
     const history = useHistory();
     const forumInfo = useSelector(forumState);
+    const dispatch = useDispatch();
 
     useEffect(() => {
    
@@ -27,7 +28,9 @@ const GetThreads = ()=> {
         
       }, []);
 
-    function Navigate(id: string){
+    function Navigate(id: string, thr: Thread){
+      dispatch(setCurrentThread(thr));
+      console.log(forumInfo);
       console.log("Navigating to " + id);
       history.push("/forum/thread/" + id);
     }
@@ -48,12 +51,12 @@ const GetThreads = ()=> {
               <TableRow>
                 <TableCell
                 align="left"
-                onClick={() => Navigate(sub.subject)}>
+                onClick={() => Navigate(sub.subject, sub)}>
                 {sub.subject}
                 </TableCell>
                 <TableCell
                 align="left"
-                onClick={() => Navigate(sub.subject)}>
+                onClick={() => Navigate(sub.subject, sub)}>
                 {sub.owner}
                 </TableCell>
                 <TableCell align="left">{sub.child_count}</TableCell>
