@@ -15,7 +15,7 @@ const GetThreads = ()=> {
    
         const getThreads = async () => {
           try{
-          console.log("Current Subforum: " + forumInfo.currentSubforum);
+          console.log("Current Subforum: " + forumInfo.currentSubforum.subject);
           setThread(await getAllThreads(forumInfo.currentSubforum?.id));
           console.log('in component: ' + threadName[0]);
           }catch(error)

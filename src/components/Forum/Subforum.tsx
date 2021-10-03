@@ -5,13 +5,14 @@ import { Subforum } from '../../models/subforum';
 import { useHistory } from 'react-router';
 import { setCurrentSubforum } from '../../state-slices/forum/forum-slice';
 import { forumState } from '../../state-slices/forum/forum-slice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SubforumHandler = ()=> {
     
     let [subforums,setSubforums] = useState(undefined as Subforum[] | undefined);
     const history = useHistory();
-    const forumInfo = useSelector(forumState);
+    const forumInfo: Subforum = useSelector(forumState).currentSubforum;
+    const dispatch = useDispatch();
     useEffect(() => {
    
         const getSubforums = async () => {
@@ -27,8 +28,7 @@ const SubforumHandler = ()=> {
       }, []);
 
     function Navigate(id: string, sub: Subforum){
-      setCurrentSubforum(sub);
-      console.log("Current Subforum: " + forumInfo.currentSubforum);
+      dispatch(setCurrentSubforum(sub));
       console.log("Navigating to " + id);
       history.push("/forum/" + id);
     }
