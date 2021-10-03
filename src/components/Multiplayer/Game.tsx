@@ -91,58 +91,7 @@ function postGameRecords() {
 
 }
 
-/**
- *  Every time the timer runs out of time, the client will invoke this callback function.
- *  If the invoking user is the host of the game, perform matchState change.
- */
-function onTimeout() {
-    console.log('onTimeout called');
-}
 
-// This function abstracts away some logic from the main return method and allows us to use
-// a switch statement in our conditional rendering.
-function render(auth: any, game: any) {
-    console.log('game in render: ', game)
-    switch(game.matchState) {
-        case 0:
-            return (
-                <>
-                    <Players />
-                    {/* This needs to be the username of the player who made the game! */}
-                    { (auth?.username == game.name) 
-                    ?
-                    <Button> Host Start Game Button </Button>
-                    :
-                    <></> }
-                </>
-            )
-        case 1:
-            return (
-                <>
-                    <Players />
-                    <Timer start={15} onTimeout={onTimeout}/>
-                    <Questions />
-                    {/* <Answers /> */}
-                </>
-            )
-        case 2:
-            return (
-                <>
-                    <Players />
-                    <Questions />
-                    {/* <Answers /> */}
-                </>
-            )
-        case 3: 
-            return (
-                <>
-                    <Leaderboard />
-                    {/* <Button> Host Close Game Button </Button>
-                    Host Trigger Lambda for posting game record*/}
-                </>
-            )
-    }
-}
 
 function Game() {
 
@@ -182,6 +131,59 @@ function Game() {
             updateSubscription.unsubscribe();
         }
     }, [])
+
+    /**
+     *  Every time the timer runs out of time, the client will invoke this callback function.
+     *  If the invoking user is the host of the game, perform matchState change.
+     */
+    function onTimeout() {
+        console.log('onTimeout called');
+    }
+
+    // This function abstracts away some logic from the main return method and allows us to use
+    // a switch statement in our conditional rendering.
+    function render() {
+        console.log('game in render: ', game)
+        switch(game.matchState) {
+            case 0:
+                return (
+                    <>
+                        <Players />
+                        {/* This needs to be the username of the player who made the game! */}
+                        { (user?.authUser.username == game.name) 
+                        ?
+                        <Button> Host Start Game Button </Button>
+                        :
+                        <></> }
+                    </>
+                )
+            case 1:
+                return (
+                    <>
+                        <Players />
+                        <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                        <Questions />
+                        {/* <Answers /> */}
+                    </>
+                )
+            case 2:
+                return (
+                    <>
+                        <Players />
+                        <Questions />
+                        {/* <Answers /> */}
+                    </>
+                )
+            case 3: 
+                return (
+                    <>
+                        <Leaderboard />
+                        {/* <Button> Host Close Game Button </Button>
+                        Host Trigger Lambda for posting game record*/}
+                    </>
+                )
+        }
+    }
 
     async function incrementState() {
         let temp = game.matchState;
@@ -253,7 +255,7 @@ function Game() {
             (game) // If game is defined (Using redux slice)
             ?
             <>
-                { render(user, game) }
+                { render() }
                 <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
             : <Redirect to="lounge" />
