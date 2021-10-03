@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router';
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
@@ -12,10 +13,15 @@ import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
+import * as queries from '../../graphql/queries';
+import {createWrongAnswerArray} from '../../utilities/quiz-utility'
+import { Card } from 'react-bootstrap';
+import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import Answers from './Answers';
+import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
-import { useSelector } from 'react-redux';
 import { authState } from '../../state-slices/auth/auth-slice';
-import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
 Amplify.configure(config);
 
@@ -43,16 +49,14 @@ Amplify.configure(config);
  *  If a game is defined, with match state 3, the room will be rendered with a leaderboard
  *      displaying players and their scores.
  * 
- *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
+ *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
-
 
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
 async function startGame() {
-
 }
 
 /**
@@ -61,7 +65,6 @@ async function startGame() {
  *  automatically closed when the last player leaves the lobby.
  */
 function closeGame() {
-
 }
 
 /**
@@ -90,8 +93,8 @@ function postGameRecords() {
 // This function abstracts away some logic from the main return method and allows us to use
 // a switch statement in our conditional rendering.
 function render(auth: any, game: any) {
-    let match_state = 3;
-    switch(match_state) {
+    console.log('game in render: ', game)
+    switch(game.matchState) {
         case 0:
             return (
                 <>
@@ -107,18 +110,18 @@ function render(auth: any, game: any) {
         case 1:
             return (
                 <>
-                    {/* <Players />
-                    <Timer />
+                    <Players />
+                    {/* <Timer /> */}
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 2:
             return (
                 <>
-                    {/* <Players />
+                    <Players />
                     <Questions />
-                    <Answers /> */}
+                    {/* <Answers /> */}
                 </>
             )
         case 3: 
@@ -137,16 +140,29 @@ function Game() {
     // TODO: Change to be actual values
     let dummyGameId = 1;
     let dummyGame = undefined;
-    const auth = useSelector(authState);
+    const user = useSelector(authState);
     const game = useSelector(gameState);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
+        // If game does not exist, reroute to /lounge
+        if (!game.id) history.push('/lounge');
+
+        // Get initial game state
+        (API.graphql(graphqlOperation(getGame, {id: game.id})) as Promise<GraphQLResult>).then(resp => {
+            console.log('Initial state', resp);
+            //@ts-ignore
+            dispatch(setGame({...resp.data.getGame}))
+        });
+
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
-            graphqlOperation(onUpdateGameById, {id: dummyGameId})
+            graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
-                console.log({ provider, value });
+                console.log('onUpdate:', { provider, value });
+                dispatch(setGame({...value.data.onUpdateGameById}))
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -158,17 +174,80 @@ function Game() {
         }
     }, [])
 
+    async function incrementState() {
+        let temp = game.matchState;
+        if (temp == 3) temp = 0;
+        else temp += 1;
+        console.log('Inside incrementState, temp:', temp)
+        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
+    }
+
+    function test(game: any) {
+        let newgame = {
+            id: game.id,
+            name: '',
+            matchState: 0,
+            questionIndex: 0,
+            capacity: 0,
+            host: '',
+            questionTimer: 10,
+            set: {
+                //@ts-ignore
+                cardList: []
+            },
+            //@ts-ignore
+            players: []
+        }
+        newgame.id = parseInt(game.id) + 1;
+        return newgame;
+    }
+
+    async function testAnswers() {
+        let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
+        getCardList(response);
+    }
+
+    let getCardList = (response: any) => {
+        let cardList = response.data.getGame.set.cardList;
+        let answerBank: Array<string> = [];
+        console.log(cardList);
+
+        for (let card of cardList) {
+            answerBank.push(card.correctAnswer);
+        }
+
+        for (let card of cardList) {
+            let wrongAnswers = generateWrongAnswers(card, answerBank);
+            card.multiAnswers = wrongAnswers;
+        }
+        console.log(cardList);
+    }
+
+    let generateWrongAnswers = (card: any, questions: Array<string>) => {
+        let listAnswers: Array<string>;
+        do {
+            listAnswers = createWrongAnswerArray(questions);
+        } while (listAnswers.includes(card.correctAnswer));
+        listAnswers.push(card.correctAnswer);
+        return listAnswers;
+    }
+    
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
+        // buttons for test (remove this after testing)
         <>
+        <h1>{game.id}</h1>
+        <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
+        <Button onClick={testAnswers}>Test Me</Button>
         {
-            // (dummyGame) // If game is defined (Using redux slice)
-            // ?
+            (game) // If game is defined (Using redux slice)
+            ?
             <>
-                { render(auth, game) }
+                { render(user, game) }
+                <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
-            // : <Redirect to="lounge" />
+            : <Redirect to="lounge" />
         }
         </>
   );

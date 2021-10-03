@@ -9,6 +9,7 @@ export type CreateGameInput = {
   questionIndex: number,
   capacity: number,
   host: string,
+  questionTimer: number,
   set: SetInput,
   players: Array< PlayerInput | null >,
 };
@@ -42,6 +43,7 @@ export type ModelGameConditionInput = {
   questionIndex?: ModelIntInput | null,
   capacity?: ModelIntInput | null,
   host?: ModelStringInput | null,
+  questionTimer?: ModelIntInput | null,
   and?: Array< ModelGameConditionInput | null > | null,
   or?: Array< ModelGameConditionInput | null > | null,
   not?: ModelGameConditionInput | null,
@@ -107,6 +109,7 @@ export type Game = {
   questionIndex: number,
   capacity: number,
   host: string,
+  questionTimer: number,
   set: Set,
   players:  Array<Player | null >,
   createdAt: string,
@@ -146,6 +149,7 @@ export type UpdateGameInput = {
   questionIndex?: number | null,
   capacity?: number | null,
   host?: string | null,
+  questionTimer?: number | null,
   set?: SetInput | null,
   players?: Array< PlayerInput | null > | null,
 };
@@ -161,6 +165,7 @@ export type ModelGameFilterInput = {
   questionIndex?: ModelIntInput | null,
   capacity?: ModelIntInput | null,
   host?: ModelStringInput | null,
+  questionTimer?: ModelIntInput | null,
   and?: Array< ModelGameFilterInput | null > | null,
   or?: Array< ModelGameFilterInput | null > | null,
   not?: ModelGameFilterInput | null,
@@ -208,6 +213,7 @@ export type CreateGameMutation = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -249,6 +255,7 @@ export type UpdateGameMutation = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -290,6 +297,7 @@ export type DeleteGameMutation = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -330,6 +338,7 @@ export type GetGameQuery = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -374,6 +383,7 @@ export type ListGamesQuery = {
       questionIndex: number,
       capacity: number,
       host: string,
+      questionTimer: number,
       set:  {
         __typename: "Set",
         id: string,
@@ -415,6 +425,7 @@ export type GameByNameQuery = {
       questionIndex: number,
       capacity: number,
       host: string,
+      questionTimer: number,
       set:  {
         __typename: "Set",
         id: string,
@@ -450,6 +461,7 @@ export type OnUpdateGameByIdSubscription = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -486,6 +498,7 @@ export type OnCreateGameSubscription = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -522,6 +535,7 @@ export type OnUpdateGameSubscription = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,
@@ -558,6 +572,7 @@ export type OnDeleteGameSubscription = {
     questionIndex: number,
     capacity: number,
     host: string,
+    questionTimer: number,
     set:  {
       __typename: "Set",
       id: string,

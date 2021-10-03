@@ -11,6 +11,7 @@ export const getGame = /* GraphQL */ `
       questionIndex
       capacity
       host
+      questionTimer
       set {
         id
         name
@@ -49,6 +50,7 @@ export const listGames = /* GraphQL */ `
         questionIndex
         capacity
         host
+        questionTimer
         set {
           id
           name
@@ -91,6 +93,7 @@ export const gameByName = /* GraphQL */ `
         questionIndex
         capacity
         host
+        questionTimer
         set {
           id
           name
