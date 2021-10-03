@@ -95,9 +95,6 @@ function postGameRecords() {
 
 function Game() {
 
-    // TODO: Change to be actual values
-    let dummyGameId = 1;
-    let dummyGame = undefined;
     const user = useSelector(authState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
@@ -138,6 +135,13 @@ function Game() {
      */
     function onTimeout() {
         console.log('onTimeout called');
+        if (user.authUser.username == game.host) {
+            // Calculate points
+            // Update player information
+            // Update matchState
+            // Update questionIndex
+            console.log('Host is in onTimeout');
+        }
     }
 
     // This function abstracts away some logic from the main return method and allows us to use
@@ -150,7 +154,7 @@ function Game() {
                     <>
                         <Players />
                         {/* This needs to be the username of the player who made the game! */}
-                        { (user?.authUser.username == game.name) 
+                        { (user?.authUser.username == game.host) 
                         ?
                         <Button> Host Start Game Button </Button>
                         :
