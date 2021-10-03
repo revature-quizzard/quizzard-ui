@@ -91,7 +91,7 @@ function PublicSets() {
 
 
             <div>
-                <h1>inside the public set component</h1>
+                <h1>Discover Set</h1>
             <TableContainer component={Paper}>
                 <Table size="small" aria-label="a dense table">
                     <TableHead>

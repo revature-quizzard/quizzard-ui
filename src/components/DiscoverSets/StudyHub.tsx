@@ -13,19 +13,12 @@ import PublicSets from "./PublicSets";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 
 /**
- * @author Sean Taba
+ * @author Jose Tejada
  * @returns {JSX.Element}
  * renders the studySets page
  */
 const StudyHub = () => {
-  const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
-  const [showCards, setShowCards] = useState(false);
-  const [useList, setUseList] = useState(false); //true = public, false = owned
 
-  const state = useAppSelector(studySetState);
-  const user = useSelector(authState);
-  const history = useHistory();
 
   const useStyles = makeStyles((theme:Theme) => ({
     divTable: {
@@ -38,58 +31,16 @@ const StudyHub = () => {
 
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      padding: theme.spacing(4, 3),
     }
   }));
 
-  useEffect(() => {
-    if (showCards) {
-      document.getElementById("selected-study-set-title").scrollIntoView();
-    }
-  });
 
-  const renderFlashcardTable = () => {
-    setShowCards(true);
-  };
 
-  const modalHandler = () => {
-    setShowModal((prevState) => !prevState);
-  };
 
-  // These functions set which list is displayed below based on button presses.
-  const publicSetMode = (e: any) => {
-    setShowCards(false);
-    dispatch(currentlyLoading());
-    dispatch(clearStudySet());
-    setUseList(true);
-  };
 
-  const ownedSetMode = (e: any) => {
-    setShowCards(false);
-    dispatch(currentlyLoading());
-    dispatch(clearStudySet());
-    setUseList(false);
-  };
 
-  const goToStudy = (e: any) => {
-    e.preventDefault();
-    dispatch(isLoading());
-    history.push("/card");
-  };
 
-  const goToQuiz = (e: any) => {
-    e.preventDefault();
-    if (state.selectedStudySet.cards.length < 4) {
-      alert("Quizzes need at least 4 questions. SORRY!!");
-    } else {
-      history.push("/quiz");
-    }
-  };
-
-  const createSet = (e: any) => {
-    e.preventDefault();
-    history.push("/sets");
-  };
   const classes = useStyles();
 
   return (

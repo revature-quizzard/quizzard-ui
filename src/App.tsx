@@ -78,13 +78,7 @@ function App() {
           {error.errorMsg}
         </Alert>
       </Snackbar>
-      <footer>
-        <Row className="bg-dark text-light">
-          <Col>
-            <div className="footerText">Copyright Revature LLC. &copy;</div>
-          </Col>
-        </Row>
-      </footer>
+
     </Router>
   );
 }
