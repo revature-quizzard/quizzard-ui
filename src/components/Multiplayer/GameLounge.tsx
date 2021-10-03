@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 import { Button, Input } from '@material-ui/core';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { gameByName, getGame } from '../../graphql/queries';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import config from '../../aws-exports';
-import { updateGame } from '../../graphql/mutations';
+import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState } from '../../state-slices/auth/auth-slice';
 
@@ -27,6 +27,43 @@ function GameLounge() {
     const user = useSelector(authState);
     const dispatch = useDispatch();
     let id = useRef('');
+    let history = useHistory();
+
+    // Creates a game using dummy data for now, pushes it to DynamoDB, and
+    // reroutes user to /multiplayer
+    async function makeGame() {
+        let testGame = {
+            id: Math.random().toString(36).substr(2, 5),
+            name: 'Test Game',
+            matchState: 0,
+            questionIndex: 0,
+            capacity: 5,
+            host: 'nobody',
+            set: {
+                id: '10',
+                name: 'Test Set',
+                creator: 'nobody',
+                cardList: [{
+                    id: '10',
+                    question: 'What is the answer to this question?',
+                    correctAnswer: "There isn't one",
+                    multiAnswers: ['wrong', 'correct', 'idk']
+                }]
+            },
+            players: [{
+                id: '10',
+                username: 'nobody',
+                points: 0,
+                answered: false,
+                answeredAt: new Date().toISOString(),
+                answeredCorrectly: false
+            }]
+        }
+        console.log(testGame)
+        let resp = await (API.graphql(graphqlOperation(createGame, {input: testGame})) as Promise<GraphQLResult>);
+        dispatch(setGame(game));
+        history.push('/multiplayer');
+    }
     
     async function fetchGame() {
         console.log(id.current);
@@ -75,7 +112,7 @@ function GameLounge() {
         {/* <GameSettings /> */}
 
         {/* Button which loads game based on settings set in modal */}
-        {/* <Button >Create Game</Button> */}
+        <Button onClick={() => makeGame()}>Create Game</Button>
 
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} />
