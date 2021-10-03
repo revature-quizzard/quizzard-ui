@@ -5,12 +5,13 @@ import { Paper } from '@mui/material';
 import { Comment } from '../../models/comment';
 import { Divider, Avatar, Grid } from "@material-ui/core";
 import React from 'react';
+import  Editor  from 'rich-markdown-editor';
 
 
 function ViewComment() {
     const forumInfo = useSelector(forumState);
     let testArray = [
-        new Comment(["ancestor1", "ancestor2"], "parent1ID", "This is a comment!", "hax0r", "ID1", "Subject1", 0, "dateCreated"),
+        new Comment(["ancestor1", "ancestor2"], "parent1ID", "### This is a comment!", "hax0r", "ID1", "Subject1", 0, "dateCreated"),
         new Comment(["ancestor1", "ancestor2"], "parent2ID", "This is another comment!", "LukesUsername", "ID2", "Subject1", 0, "dateCreated"),
         new Comment(["ancestor1", "ancestor2"], "parent3ID", "This is a third comment!", "negativeNancy", "ID3", "Subject1", 0, "dateCreated")
     ];
@@ -29,7 +30,8 @@ function ViewComment() {
                     <Grid item xs zeroMinWidth>
                     <h5 style={{ margin: 0, textAlign: "left" }}>{comment.owner}</h5>
                     <p style={{ textAlign: "left" }}>
-                        {comment.description}
+                        <Editor readOnly={true} value={comment.description} />
+                        
                     </p>
                     <p style={{ textAlign: "left", color: "gray" }}>
                         {comment.date_created}
@@ -46,10 +48,10 @@ function ViewComment() {
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
                 <div style={{'margin': '2rem'}}>
-                    <h1>Thread subject</h1>
+                    <h1>forumInfo.currentThread.subject</h1>
                     <br></br>
                     <br></br>
-                    <p>Thread description</p>
+                    <p>forumInfo.currentThread.description</p>
                     {/* <h1>forumInfo.currentThread.subject</h1>
                     <p>forumInfo.currentThread.description</p> */}
                 </div>    
@@ -57,7 +59,7 @@ function ViewComment() {
 
              <br></br>
 
-            {testArray.map( (comment : Comment) => rd(comment))}
+            {resp.map( (comment : Comment) => rd(comment))}
     
         </>
     )

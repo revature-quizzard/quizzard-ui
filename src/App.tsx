@@ -69,7 +69,7 @@ function App() {
           <Route exact path="/confirmation">
             <ConfirmSignup />
           </Route>
-          <Route exact path="/forum/thread/comment">
+          <Route exact path="/forum/thread/*">
             <ViewComment />
           </Route>
           <Route exact path="/profile">
