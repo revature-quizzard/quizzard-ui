@@ -3,37 +3,45 @@ import { RootState } from "../../store/store";
 
 
 interface Player {
-    id: String
+    id: string,
+    username: string,
+    points: number,
+    answered: boolean,
+    answeredAt: string,
+    answeredCorrectly: boolean
 }
 
 interface Set {
-    card_list: Card[]
+    cardList: Card[]
 }
 
 interface Card {
     id: String,
     question: String,
-    answer: String
+    correctAnswer: String,
+    multiAnswers: String[]
 }
 
 interface State {
     id: String,
     name: String,
-    match_state: number,
-    question_index: number,
+    matchState: number,
+    questionIndex: number,
     capacity: number,
+    host: String,
     set: Set,
     players: Player[]
 }
 
 const initialState: State = {
-    id: '-1',
+    id: '',
     name: '',
-    match_state: 0,
-    question_index: 0,
+    matchState: 0,
+    questionIndex: 0,
     capacity: 0,
+    host: '',
     set: {
-        card_list: []
+        cardList: []
     },
     players: []
 };
@@ -55,21 +63,26 @@ export const gameSlice = createSlice({
             // state = action.payload;
             state.id = action.payload.id;
             state.name = action.payload.name;
-            state.match_state = action.payload.match_state;
-            state.question_index = action.payload.question_index;
+            state.matchState = action.payload.matchState;
+            state.questionIndex = action.payload.questionIndex;
             state.capacity = action.payload.capacity;
+            state.host = action.payload.host;
             state.set = action.payload.set;
             state.players = action.payload.players;
             console.log('Setting ', state, ' to ', action.payload)
+        },
+
+        // Used when resetting the statee
+        resetGame: (state) => {
+            state = initialState;
         }
-
-
     }
 });
 
 // Export the actions/reducers to be imported into a component and dispatched from component
 export const {
-    setGame
+    setGame,
+    resetGame
 } = gameSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components

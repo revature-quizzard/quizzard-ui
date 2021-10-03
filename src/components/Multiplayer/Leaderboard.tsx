@@ -1,3 +1,6 @@
+import { Table, TableRow } from "@material-ui/core"
+import { useSelector } from "react-redux"
+import { gameState } from "../../state-slices/multiplayer/game-slice"
 
 /*  
     The Leaderboard will need to be passed a presorted list of players, which
@@ -5,22 +8,23 @@
     The Leaderboard may potentially be passed additional information such as game 
     length, statistics, etc.
  */
-interface ILeaderboardProps {
-    // players: Player[]
-}
 
 /**
  *  The leaderboard component will display a ranked list of players from the game.
  * 
  *  @author Sean Dunn
  */
-function Leaderboard(props: ILeaderboardProps) {
+function Leaderboard() {
+    const game = useSelector(gameState);
 
     return (
         <>
-            {/* <Table>
-                props.players.map(player.name | player.points)
-            </Table> */}
+        <p>this is text.</p>
+            <Table>
+                {game.players.map((player) => {
+                    return <TableRow>{player.username} | {player.points}</TableRow>
+                })}
+            </Table>
         </>
     )
 }
