@@ -12,6 +12,11 @@ import UserSets from "./UserSets";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserGameRecords from "./UserGameRecords";
 
+/**
+ * Main parent component for user profile. Retrieves user data and persists it to profile state.
+ * Renders UserProfile, UserSets, UserFavoriteSets, and UserGameRecords upon successful retrieval.
+ * @author Cody McDonald
+ * */
 
 const UserProfileContainer = (props: any) => {
     const state = useSelector(profileState);
