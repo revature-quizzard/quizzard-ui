@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
 import AddThread from './components/Forum/AddThread';
+import GetThreads from "./components/Forum/GetThread";
 
 
 Amplify.configure({
@@ -69,6 +70,9 @@ function App() {
           </Route>
           <Route exact path="/forum">
             <SubforumHandler />
+          </Route>
+          <Route path="/forum/*">
+            <GetThreads />
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />

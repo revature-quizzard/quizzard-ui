@@ -1,32 +1,33 @@
-import { getAllSubForums } from '../../remote/sub-forum-service';
+import { getAllThreads } from '../../remote/sub-forum-service';
 import { useEffect, useState } from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
-import { Subforum } from '../../models/subforum';
+import { Thread } from '../../models/thread';
 import { useHistory } from 'react-router';
-import { setCurrentSubforum } from '../../state-slices/forum/forum-slice';
+import { forumState } from '../../state-slices/forum/forum-slice';
+import { useSelector } from 'react-redux';
 
-const SubforumHandler = ()=> {
-    
-    let [subforums,setSubforums] = useState(undefined as Subforum[] | undefined);
+const GetThreads = ()=> {
+    let [threadName,setThread] = useState(undefined as Thread[] | undefined);
     const history = useHistory();
+    const forumInfo = useSelector(forumState);
+
     useEffect(() => {
    
-        const getSubforums = async () => {
+        const getThreads = async () => {
           try{
-          setSubforums(await getAllSubForums());
-          console.log('in component: ' + subforums[0]);
+          setThread(await getAllThreads(forumInfo.currentSubforum?.id));
+          console.log('in component: ' + threadName[0]);
           }catch(error)
           {
             console.log(error);
           }
         };
-        getSubforums();
+        getThreads();
       }, []);
 
-    function Navigate(id: string, sub: Subforum){
-      setCurrentSubforum(sub);
+    function Navigate(id: string){
       console.log("Navigating to " + id);
-      history.push("/forum/" + id);
+      history.push("/forum/thread/" + id);
     }
 
     return (
@@ -40,16 +41,16 @@ const SubforumHandler = ()=> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {subforums?.map((sub) => (
+            {threadName?.map((sub) => (
               <TableRow>
                 <TableCell
                 align="left"
-                onClick={() => Navigate(sub.subject, sub)}>
+                onClick={() => Navigate(sub.subject)}>
                 {sub.subject}
                 </TableCell>
                 <TableCell
                 align="left"
-                onClick={() => Navigate(sub.subject, sub)}>
+                onClick={() => Navigate(sub.subject)}>
                 {sub.description}
                 </TableCell>
                 <TableCell align="left">{sub.child_count}</TableCell>
@@ -59,6 +60,8 @@ const SubforumHandler = ()=> {
         </Table>
       </TableContainer>
     );
+
+
 }
 
-export default SubforumHandler;
+export default GetThreads;
