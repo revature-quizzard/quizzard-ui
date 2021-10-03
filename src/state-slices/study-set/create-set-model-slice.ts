@@ -8,6 +8,8 @@ import { User } from "../../models/user";
 import { Set  } from "../../dtos/Set";
 import { Tag } from "../../dtos/Tag";
 import { TagFormModel } from "../../models/new-tag-form";
+import { Card } from "../../dtos/Card";
+import { SaveTagFormModel } from "../../models/save-tag-form-model";
 
 
 
@@ -20,6 +22,7 @@ interface  State {
     currentUser: User;
     setToSave: Set;
     newTagForms: TagFormModel[];
+    tagLimit: number ;
 }
 
 /**
@@ -29,8 +32,9 @@ interface  State {
 const initialState: State = {
     IsShowing: false,
     currentUser: undefined,
-    setToSave: undefined,
-    newTagForms: [] as TagFormModel[]
+    setToSave: {setName: '', isPublic: false, author : '' , tags : [] as Tag[] , set_id : '' , favorites :0 , cards: [] as Card[] , views : 0  , plays : 0 ,studies : 0 } as Set,
+    newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
+    tagLimit: 0
 }
 
 /**
@@ -55,11 +59,22 @@ export const createSetSlice = createSlice({
             state.newTagForms.push(action.payload);
         },
         appendNewTag: (state, action : PayloadAction<Tag> ) => {
-            state.setToSave.tags.push({tagName: action.payload.tagName , tagColor: action.payload.tagColor } as Tag);
+            console.log(action.payload);
+            state.setToSave.tags.push(action.payload);
         },
+        incrementTagLimit: (state) => {
+            if(state.tagLimit < 10)
+            state.tagLimit += 1;
+        },
+        updateTagFormbyIndex: (state , action : PayloadAction<SaveTagFormModel> ) =>
+        {
+            state.newTagForms[action.payload.index].TagName = action.payload.currentTagForm.TagName;
+            state.newTagForms[action.payload.index].tagColor = action.payload.currentTagForm.tagColor;
+            state.newTagForms[action.payload.index].tagAdded = action.payload.currentTagForm.tagAdded;
+        }
         
     }
 })
-export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, appendNewTag } = createSetSlice.actions;
+export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, appendNewTag , incrementTagLimit , updateTagFormbyIndex} = createSetSlice.actions;
 export const createSetState = (state: RootState) => state.createSet;
 export default createSetSlice.reducer;

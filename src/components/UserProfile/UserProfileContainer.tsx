@@ -9,6 +9,7 @@ import { UserData } from "../../models/user-data";
 import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createSetState } from "../../state-slices/study-set/create-set-model-slice";
+import CreateSetModal from "./CreateSetModal";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -90,6 +91,26 @@ const UserProfileContainer = (props: any) => {
                         Placeholder
                     </Typography>
                 </AccordionDetails>
+            </Accordion>
+            <div>
+               
+            </div>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>create new set</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+
+                       <CreateSetModal />
+                      
+                    </Typography>
+                </AccordionDetails> 
+                 
             </Accordion>
           
         </div>
