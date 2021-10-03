@@ -11,6 +11,7 @@ import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
 import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
+import { createAnswers } from './Answers'
 
 Amplify.configure(config);
 
@@ -50,7 +51,7 @@ function GameLounge() {
                     id: '10',
                     question: 'What is the answer to this question?',
                     correctAnswer: "There isn't one",
-                    multiAnswers: ['wrong', 'correct', 'idk']
+                    multiAnswers: createAnswers()
                 }]
             },
             players: [{
