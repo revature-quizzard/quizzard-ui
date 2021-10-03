@@ -8,7 +8,7 @@ import Main from "./components/Main/Main";
 import Navigation from "./components/NavBar/Navigation";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import StudyHub from "./components/StudySets/StudyHub";
+import StudyHub from "./components/DiscoverSets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
@@ -23,7 +23,11 @@ import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
 import ViewComment from "./components/Forum/ViewComments";
 =======
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
+<<<<<<< HEAD
 >>>>>>> 4f432fa8393c06f91ea97533a56a1f6e213972b5
+=======
+import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
+>>>>>>> dev
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -51,7 +55,7 @@ function App() {
             <Register />
           </Route>
           <Route exact path="/sets">
-            <Sets />
+            <ViewSetPage/>
           </Route>
           <Route exact path="/update">
             <UpdateAccountInfo />
@@ -76,6 +80,9 @@ function App() {
             <UserProfileContainer />
 >>>>>>> 4f432fa8393c06f91ea97533a56a1f6e213972b5
           </Route>
+
+
+
         </Switch>
       </Container>
       <Snackbar open={error.showError} autoHideDuration={3000} onClose={() => {dispatch(hideErrorMessage())}}>
