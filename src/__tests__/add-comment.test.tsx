@@ -49,33 +49,6 @@ describe('Add Comment Component Test Suite', () => {
         expect(wrapper).toBeTruthy();
     })
 
-    it('Compnent shows error message, does not call addComment, when comment box is blank', () => {
-        // configure mock redux store
-        initialState = {
-            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
-            currentThread: new Thread(['subforumId'], 'subforumId', 'description', 'subject', 'username', 'threadId', 1, '2021-09-28T12:42:56.789')
-        }
-        const configureMockStore = createMockStore();
-        const mockStore = configureMockStore(initialState);
-
-        (addComment as jest.Mock).mockImplementation(() => {
-            throw 'empty body provided';
-        })
-
-        // set up the wrapper
-        const wrapper = shallow(<Provider store={mockStore}>
-                                    <AddComment />
-                                </Provider>);
-        let buttonWrapper = wrapper.find('#createCommentButton');
-
-        buttonWrapper.simulate('click');
-
-        // expectations
-        expect(addComment).toBeCalled();
-        expect(setErrorSeverity).toBeCalled();
-        expect(showSnackbar).toBeCalled();
-    })
-
     /*
     NOTE: test currently doesn't work. rich-markdown-editor's onChange function is strange.
     
