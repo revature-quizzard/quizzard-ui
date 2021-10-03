@@ -13,7 +13,7 @@ const UserGameRecords = () => {
             <Container fixed maxWidth='md' id='register-component'>
                 {userGameRecords.length ?
                     <Typography>
-                        {userGameRecords}<br/>
+                        {JSON.stringify(userGameRecords)}<br/>
                     </Typography>
                     :
                     <Typography>
