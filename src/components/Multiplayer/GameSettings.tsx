@@ -1,7 +1,16 @@
-import {FormControl, InputLabel, MenuItem, Modal, Select} from '@material-ui/core';
+import {FormControl, Input, InputLabel, MenuItem, Modal, Select} from '@material-ui/core';
+import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { useEffect, useState } from 'react';
+import { createGame } from '../../graphql/mutations';
 import { FlashcardDTO } from '../../models/flashcard';
 import { getCards } from '../../remote/card-service';
+import { setGame } from '../../state-slices/multiplayer/game-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { Button } from '@mui/material';
+import { userInfo } from 'os';
+import { authState } from '../../state-slices/auth/auth-slice';
 
 /*
     Redux Props:
@@ -50,8 +59,23 @@ type Set = {
 function GameSettings() {
     const [cards, setCards] = useState(undefined as Set[] | undefined)
     const [formData, setFormData] = useState({
-        set: []
+        gameName: '',
+        capacity: 15,
+        timer: 15,
+        set: {}
     })
+    const user = useSelector(authState);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    let isFormValid = () => {
+        for (const [key,value] of Object.entries(formData)) {
+            if (!value) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     let handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -59,7 +83,7 @@ function GameSettings() {
         console.log(formData);
     }
 
-    const getData = async function () {
+    const getData = async() => {
         try{
             setCards(await getCards());
         } catch (e: any){
@@ -71,6 +95,58 @@ function GameSettings() {
         getData();
     },[]);
 
+    // Creates a game, pushes it to DynamoDB, and
+    // reroutes user to /multiplayer
+    const createGame = async() => {
+        if(!isFormValid()){
+            //Snack bar error message to user 
+            // props.setMessage('Please fill in all fields');
+            // props.setSeverity('warning');
+            // props.setOpen(true)
+            // return;
+        }
+        try{
+            if(user.authUser){
+                var inputGame = {
+                    id: Math.random().toString(36).substr(2, 5),
+                    name: formData.gameName,
+                    matchState: 0,
+                    questionIndex: 0,
+                    capacity: formData.capacity,
+                    host: user.authUser.username,
+                    set: formData.set,
+                    timer: formData.timer,
+                    // set: {
+                    //     id: '10',
+                    //     name: 'Test Set',
+                    //     creator: 'nobody',
+                    //     cardList: [{
+                    //         id: '10',
+                    //         question: 'What is the answer to this question?',
+                    //         correctAnswer: "There isn't one",
+                    //         multiAnswers: ['wrong', 'correct', 'idk']
+                    //     }]
+                    // },
+                    players: [{
+                        id: '10',
+                        username: 'nobody',
+                        points: 0,
+                        answered: false,
+                        answeredAt: new Date().toISOString(),
+                        answeredCorrectly: false
+                    }]
+                }
+            }
+            console.log(inputGame);
+            let resp = await (API.graphql(graphqlOperation(createGame, {input: inputGame})) as Promise<GraphQLResult>);
+            dispatch(setGame(inputGame));
+            history.push('/multiplayer');
+        }
+        catch(e: any){
+            //SNACKBAR notis here uwu
+            console.log(e);
+        }
+    }
 
     /*      - name
             - set
@@ -81,8 +157,39 @@ function GameSettings() {
             <div>
                 <h1>Create Game</h1>
             </div>
-                {console.log(cards)}
-                {/* <Game/> */}
+                <FormControl margin='normal' fullWidth>
+                    <InputLabel htmlFor='gameName'>Game Name</InputLabel>
+                    <Input
+                        onChange={handleChange}
+                        id='gameName'
+                        name='gameName'
+                        type='text'
+                        placeholder='Enter a game name'
+                    />
+                </FormControl>
+
+                <FormControl margin='normal' fullWidth>
+                    <InputLabel htmlFor='capacity'>Capacity</InputLabel>
+                    <Input
+                        onChange={handleChange}
+                        id='capacity'
+                        name='capacity'
+                        type='number'
+                        placeholder='Enter a capacity'
+                    />
+                </FormControl>
+
+                <FormControl margin='normal' fullWidth>
+                    <InputLabel htmlFor='timer'>Timer</InputLabel>
+                    <Input
+                        onChange={handleChange}
+                        id='timer'
+                        name='timer'
+                        type='number'
+                        placeholder='Enter a timer for questions'
+                    />
+                </FormControl>
+
                 <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="set">Set</InputLabel>
                         {console.log(cards)}
@@ -91,7 +198,7 @@ function GameSettings() {
                             name="set"
                             label="Sets"
                             onChange={handleChange}
-                            value={formData?.set[0]}
+                            value={formData.set}
                             placeholder="Choose a set"
                         >
 
@@ -108,6 +215,8 @@ function GameSettings() {
 
                         </Select>
                     </FormControl>
+
+                    <Button onClick = {createGame}>Create Game </Button>
         </>
     );
 }
