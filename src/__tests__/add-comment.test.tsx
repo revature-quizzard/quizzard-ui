@@ -5,6 +5,7 @@ import { Subforum } from '../models/subforum';
 import { Thread } from '../models/thread';import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { addComment } from '../remote/comment-service';
+import { assert } from 'console';
 jest.mock('../remote/comment-service');
 
 interface TempState {
@@ -55,6 +56,10 @@ describe('Add Comment Component Test Suite', () => {
         const configureMockStore = createMockStore();
         const mockStore = configureMockStore(initialState);
 
+        (addComment as jest.Mock).mockImplementation(() => {
+            throw 'empty body provided';
+        })
+
         // set up the wrapper
         const wrapper = shallow(<Provider store={mockStore}>
                                     <AddComment />
@@ -62,6 +67,9 @@ describe('Add Comment Component Test Suite', () => {
         let buttonWrapper = wrapper.find('#createCommentButton');
 
         buttonWrapper.simulate('click');
+
+        // expectations
+        
 
     })
 
