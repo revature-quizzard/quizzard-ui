@@ -9,7 +9,7 @@ import { GraphQLResult } from '@aws-amplify/api-graphql';
 import config from '../../aws-exports';
 import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
-import { authState } from '../../state-slices/auth/auth-slice';
+import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
 
 Amplify.configure(config);
 
@@ -61,7 +61,7 @@ function GameLounge() {
         }
         console.log(testGame)
         let resp = await (API.graphql(graphqlOperation(createGame, {input: testGame})) as Promise<GraphQLResult>);
-        dispatch(setGame(game));
+        dispatch(setGame(testGame));
         history.push('/multiplayer');
     }
     
@@ -72,15 +72,27 @@ function GameLounge() {
         let game: Game = {...resp.data.getGame};
 
         // Set the user into the list of players
-        // IF YOU AREN'T LOGGED IN, THIS BREAKS!
-        let baseUser = {
-            id: user.authUser.id,
-            username: user.authUser.username,
-            answered: false,
-            answeredAt: new Date().toISOString(),
-            answeredCorrectly: false,
-            points: 0
-        };
+        let baseUser;
+        if (user.authUser) {
+            baseUser = {
+                id: user.authUser.id,
+                username: user.authUser.username,
+                answered: false,
+                answeredAt: new Date().toISOString(),
+                answeredCorrectly: false,
+                points: 0
+            };
+        } else {
+            baseUser = {
+                id: Math.random().toString(36).substr(2, 5),
+                username: 'Guest',
+                answered: false,
+                answeredAt: new Date().toISOString(),
+                answeredCorrectly: false,
+                points: 0
+            }
+        }
+
 
         game.players.push(baseUser);
         (API.graphql(graphqlOperation(updateGame, {input: {players: game.players}})));

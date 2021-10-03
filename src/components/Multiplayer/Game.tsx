@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router';
 
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
@@ -13,9 +14,9 @@ import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
 import Players from './Players';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authState } from '../../state-slices/auth/auth-slice';
-import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
 Amplify.configure(config);
 
@@ -139,11 +140,23 @@ function Game() {
     let dummyGame = undefined;
     const auth = useSelector(authState);
     const game = useSelector(gameState);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
+        // If game does not exist, reroute to /lounge
+        if (!game.id) history.push('/lounge');
+
+        // Get initial game state
+        (API.graphql(graphqlOperation(getGame, {id: game.id})) as Promise<GraphQLResult>).then(resp => {
+            console.log(resp);
+            //@ts-ignore
+            dispatch(setGame({...resp.data.getGame}))
+        });
+
         // Subscribe to changes in current game in DynamoDB
         const updateSubscription = (API.graphql(
-            graphqlOperation(onUpdateGameById, {id: dummyGameId})
+            graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
                 console.log({ provider, value });
@@ -163,12 +176,13 @@ function Game() {
     return (
         <>
         {
-            // (dummyGame) // If game is defined (Using redux slice)
-            // ?
+            (game) // If game is defined (Using redux slice)
+            ?
             <>
                 { render(auth, game) }
+
             </>            
-            // : <Redirect to="lounge" />
+            : <Redirect to="lounge" />
         }
         </>
   );
