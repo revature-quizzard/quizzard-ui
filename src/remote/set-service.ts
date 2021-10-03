@@ -6,7 +6,12 @@ import {
   quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
 
-export async function createStudySet(studySet: SetDto) {
+export async function createStudySet(studySet: SetDto , token: string) {
+  let config = {
+    headers: {
+        Authorization: token
+    }
+}
   let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
     "/sets/newset",
     studySet

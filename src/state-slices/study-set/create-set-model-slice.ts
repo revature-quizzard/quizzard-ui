@@ -68,13 +68,38 @@ export const createSetSlice = createSlice({
         },
         updateTagFormbyIndex: (state , action : PayloadAction<SaveTagFormModel> ) =>
         {
-            state.newTagForms[action.payload.index].TagName = action.payload.currentTagForm.TagName;
-            state.newTagForms[action.payload.index].tagColor = action.payload.currentTagForm.tagColor;
-            state.newTagForms[action.payload.index].tagAdded = action.payload.currentTagForm.tagAdded;
-        }
-        
+            state.newTagForms[action.payload.index].TagName = action.payload.tagName;
+            state.newTagForms[action.payload.index].tagColor = action.payload.tagColor;
+            state.newTagForms[action.payload.index].tagAdded = action.payload.tagAdded;
+        },
+        clearTags: (state) => {
+            state.newTagForms =  [{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel ]; 
+            state.setToSave.tags = [] ;      
+           },
+        deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
+
+
+            function isNotToBeDeleted(element: any)
+            { 
+               return element != undefined;
+            } 
+
+            state.newTagForms[action.payload.index] = undefined;
+            state.newTagForms = state.newTagForms.filter(isNotToBeDeleted);
+            state.newTagForms.filter(isNotToBeDeleted).forEach(e => {
+                console.log(e);
+            })
+            
+            state.setToSave.tags[action.payload.index] = undefined
+            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);      
+            state.setToSave.tags.filter(isNotToBeDeleted).forEach(e => {
+                console.log(e);
+            })
+        },
     }
+
+       
 })
-export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, appendNewTag , incrementTagLimit , updateTagFormbyIndex} = createSetSlice.actions;
+export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, appendNewTag , incrementTagLimit , updateTagFormbyIndex , clearTags , deleteTag} = createSetSlice.actions;
 export const createSetState = (state: RootState) => state.createSet;
 export default createSetSlice.reducer;

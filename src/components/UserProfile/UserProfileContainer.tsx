@@ -36,27 +36,28 @@ const UserProfileContainer = (props: any) => {
     }, []);
 
 
+
     return (
-        <div>
-            <Accordion expanded>
+        <div >
+            <Accordion expanded >
                 <AccordionSummary
                     aria-controls="panel1a-content"
                     aria-label="Expand"
                     id="panel1a-header"
                 >
-                    <Typography>My Profile</Typography>
+                    <Typography><h1>My Profile<span style={{color: 'red'}}> | </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     {state.isLoaded ? <UserProfile/> : 'Loading...'}
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion style={{background: "#FFFFFF " , color: 'black ' , opacity: '88%'}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography>My Sets</Typography>
+                    <Typography><span style={{color: 'red'}}> | </span>  My Sets</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -64,13 +65,13 @@ const UserProfileContainer = (props: any) => {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>My Favorite Sets</Typography>
+                    <Typography> <span style={{color: 'red'}}> | </span> My Favorite Sets</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -78,30 +79,30 @@ const UserProfileContainer = (props: any) => {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion>
+            <Accordion style={{background: "#332347 " , color: '#7D7687 '}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>My Game Records</Typography>
+                    <Typography> <span style={{color: '#75BC3E'}}> | </span> My Game Records</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        Placeholder
+                      <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span></b> 
                     </Typography>
                 </AccordionDetails>
             </Accordion>
             <div>
                
             </div>
-            <Accordion>
+            <Accordion >
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>create new set</Typography>
+                    <Typography  > <span style={{color: '#75BC3E'}}> | </span> Create New Set</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>

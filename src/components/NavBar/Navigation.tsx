@@ -31,6 +31,7 @@ export function NavigationComponent(){
     root: {
       display: 'flex',
       textAlign: "center",
+      
     },
     alert: {
       textAlign: 'center',
@@ -45,6 +46,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      background: "#7D7687 "
     },
     appBarShift: {
       marginLeft: drawerWidth,
@@ -53,6 +55,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      background: "#332347"
     },
     menuButton: {
       marginRight: 36,
@@ -71,6 +74,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      background: "#332347"
     },
     drawerClose: {
       transition: theme.transitions.create('width', {
@@ -82,6 +86,7 @@ export function NavigationComponent(){
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
+   
     },
     toolbar: {
       display: 'flex',
@@ -90,6 +95,7 @@ export function NavigationComponent(){
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
+   
     },
     content: {
       flexGrow: 1,
@@ -114,11 +120,10 @@ export function NavigationComponent(){
           <CssBaseline/>
           <AppBar
               position="fixed"
-              className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-              })}
+              style={{background: "#4E3E61" , color: '#7D7687 '}}
+           
           >
-            <Toolbar>
+            <Toolbar  >
               <IconButton
                   color="inherit"
                   aria-label="open drawer"
@@ -154,13 +159,14 @@ export function NavigationComponent(){
                 }),
               }}
           >
-            <div className={classes.toolbar}>
+            <div  className={classes.toolbar}>
               <IconButton onClick={handleDrawerToggle}>
                 {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
               </IconButton>
-            </div>
+            </div >
             <Divider/>
-            <List>
+            <div  >
+            <List   >
 
               <ListItem button component = {Link} to={'/'}>
 
@@ -182,7 +188,7 @@ export function NavigationComponent(){
 
 
             </List>
-
+        </div>
           </Drawer>
           <main className={classes.content}>
             <div className={classes.toolbar}/>
@@ -193,6 +199,7 @@ export function NavigationComponent(){
             </Typography>
           </main>
         </div>
+       
       </>
 
   );

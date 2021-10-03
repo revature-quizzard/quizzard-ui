@@ -13,7 +13,7 @@ const UserProfile = () => {
 
     return (
         <>
-            <Container fixed maxWidth='md' id='register-component'>
+            <Container  fixed maxWidth='md'>
                 <br/><br/>
                 Username: {user.username}<br/>
                 Name: {user.name}<br/>

@@ -8,10 +8,12 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createStudySet } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, closeModal, createSetState, incrementTagLimit, openModal, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
 import React, {Component}  from 'react'
 
-import { TextField } from "@material-ui/core";
+import { IconButton, TextField  } from "@material-ui/core";
+import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { SetDtoModel } from "../../models/create-set-model";
 import { Tag } from "../../dtos/Tag";
 import { TagFormModel } from "../../models/new-tag-form";
@@ -28,7 +30,7 @@ const CreateSetModal = (props: any) => {
   const _createSetState= useSelector(createSetState);
   let isAtTagLimit : boolean = false;
   let k : number = 0;
-  
+  let loc
   const handleChange = (e: any) => {
      
     setNewSet(e.target.value);
@@ -73,6 +75,18 @@ const CreateSetModal = (props: any) => {
        
     }
 
+    const ClearTags = (e: any ) => {  
+       
+        dispatch(clearTags);
+        console.log(_createSetState.setToSave.tags + " " + _createSetState.newTagForms );
+    }
+    const removeTag = (e: any , key: number) => {   
+
+        
+        let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor.toString(), tagName: tagName.toString() , tagAdded: true , index: key}
+        dispatch(deleteTag(formToSave_w_key));
+    }
+
     const addTag = (e: any , key: number) => {   
         // only allowing 10 or fewer tags per set
         
@@ -82,24 +96,26 @@ const CreateSetModal = (props: any) => {
            console.log(tag)
         dispatch(appendNewTag(tag));
         // saving form and weather ist been added or not for future reference
-        let formToSave: TagFormModel = { tagColor: tagColor.toString(), TagName: tagName.toString() , tagAdded: true};
-        dispatch(updateTagFormbyIndex(new SaveTagFormModel( formToSave , key)));
+        let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor.toString(), tagName: tagName.toString() , tagAdded: true , index: key}
+        dispatch(updateTagFormbyIndex(formToSave_w_key));
+        console.log(_createSetState.setToSave.tags);
         }
         
     }
 
     const applyChanges = async function () {
-        if(newSet)
-        {
+        
+        
             try {
                 dispatch(loading());
+                _createSetState.setToSave.setName = newSet;
                 _createSetState.setToSave.author = user.username;
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
-                
+                let newly_created_set = await createStudySet(_createSetState.setToSave , user.token);
+                _createSetState.newTagForms = [{ tagColor: '', TagName: '', tagAdded: false}];
             } catch (e: any) {
                 console.log(e);
             }
-        }
+        
        
     }
 
@@ -109,11 +125,15 @@ const CreateSetModal = (props: any) => {
         <div>
             
             <TextField label="set name" onChange={handleChange} value={newSet} />
+            <hr/>
             
-            { _createSetState.newTagForms.map((F : TagFormModel , i) =>
-               { return <div key={i}>
+           
+
+                    { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
+               { 
+                   return <div key={i}>
                     
-                    {_createSetState.newTagForms[i].tagAdded == false
+                    {_createSetState.newTagForms[i].tagAdded == false && _createSetState.newTagForms[i] != undefined
 
                     ? 
 
@@ -122,7 +142,10 @@ const CreateSetModal = (props: any) => {
                     <br/>
                     <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"  onChange={(e) => updateTagName(e)} value={tagName}/>
                     <br/>
-                    <Button key={i} onClick={(e) => addTag(e , i)}>Create Tag</Button>
+                    <Button key={i}  variant="contained" style={{background: 'white' , color: '#4E3E61'}} onClick={(e) => addTag(e , i)}>Create Tag</Button>
+                    <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => addTag(e , i)} startIcon={<CancelIcon />}>
+                       cancle
+                    </Button>
                     </>
                     
                     : 
@@ -130,19 +153,26 @@ const CreateSetModal = (props: any) => {
                     <>
                     <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tagColor} />
                     <br/>
-                    <TextField  name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].TagName}/>
-                    <br/>
-                    <Alert severity="success">Added!</Alert>
+                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].TagName}/>
+                  
+                    <br/> 
+                    <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
+                        Remove
+                    </Button>
+                  
+                    <Alert severity="success">Added!</Alert> 
+                    
                     <hr/>
                     <br/>
                      </> }
                 </div>
                 })
             }
-                   
-                {isAtTagLimit == false ? <Button onClick={createNewTagForm}>Add Tag</Button> : <></>}
+                      {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green'}} onClick={createNewTagForm}>Add New Tag</Button> : <></>}
+                    <Button variant="contained" style={{background: 'white' , color: '#4E3E61'}} onClick={(e) => ClearTags(e)}>Clear Tags</Button>
+               <br/>
 
-                <Button onClick={applyChanges}>Apply</Button>
+                <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
         </div>
     );
 }
