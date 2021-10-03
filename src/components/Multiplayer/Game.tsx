@@ -13,8 +13,13 @@ import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
 import { Button } from '@material-ui/core';
+import * as queries from '../../graphql/queries';
+import {createWrongAnswerArray} from '../../utilities/quiz-utility'
+import { Card } from 'react-bootstrap';
+import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import Answers from './Answers';
+import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
-import { useSelector, useDispatch } from 'react-redux';
 import { authState } from '../../state-slices/auth/auth-slice';
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 
@@ -44,16 +49,14 @@ Amplify.configure(config);
  *  If a game is defined, with match state 3, the room will be rendered with a leaderboard
  *      displaying players and their scores.
  * 
- *  @author Sean Dunn, Heather Guilfoyle, Colby Wall
+ *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
-
 
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
 async function startGame() {
-
 }
 
 /**
@@ -62,7 +65,6 @@ async function startGame() {
  *  automatically closed when the last player leaves the lobby.
  */
 function closeGame() {
-
 }
 
 /**
@@ -180,10 +182,62 @@ function Game() {
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
     }
 
+    function test(game: any) {
+        let newgame = {
+            id: game.id,
+            name: '',
+            matchState: 0,
+            questionIndex: 0,
+            capacity: 0,
+            set: {
+                //@ts-ignore
+                cardList: []
+            },
+            //@ts-ignore
+            players: []
+        }
+        newgame.id = parseInt(game.id) + 1;
+        return newgame;
+    }
+
+    async function testAnswers() {
+        let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
+        getCardList(response);
+    }
+
+    let getCardList = (response: any) => {
+        let cardList = response.data.getGame.set.cardList;
+        let answerBank: Array<string> = [];
+        console.log(cardList);
+
+        for (let card of cardList) {
+            answerBank.push(card.correctAnswer);
+        }
+
+        for (let card of cardList) {
+            let wrongAnswers = generateWrongAnswers(card, answerBank);
+            card.multiAnswers = wrongAnswers;
+        }
+        console.log(cardList);
+    }
+
+    let generateWrongAnswers = (card: any, questions: Array<string>) => {
+        let listAnswers: Array<string>;
+        do {
+            listAnswers = createWrongAnswerArray(questions);
+        } while (listAnswers.includes(card.correctAnswer));
+        listAnswers.push(card.correctAnswer);
+        return listAnswers;
+    }
+    
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
+        // buttons for test (remove this after testing)
         <>
+        <h1>{game.id}</h1>
+        <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
+        <Button onClick={testAnswers}>Test Me</Button>
         {
             (game) // If game is defined (Using redux slice)
             ?
