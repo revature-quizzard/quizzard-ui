@@ -4,6 +4,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
 import { createWrongAnswerArray, generateWrongAnswers } from '../../utilities/game-utility';
 import { Card } from '../../API';
+import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 /**
@@ -76,13 +78,7 @@ function randomizeAnswers(card): string[] {
     return answers;
 }
 
-function submit(e: any) {
-    if (e.target.id === testCard.correctAnswer) {
-        console.log('yes');
-    } else {
-        console.log('no');
-    }
-}
+
 
 function renderColors() {
     
@@ -92,6 +88,17 @@ function renderColors() {
 function Answers() {
     let answers: string[] = randomizeAnswers(testCard);
     // if redux.state-slices.store.game.match_state == 2 renderColors()
+    const game = useSelector(gameState);
+    const dispatch = useDispatch();
+    
+    function submit(e: any) {
+        if (e.target.id === testCard.correctAnswer) {
+            console.log('yes');
+        } else {
+            console.log('no');
+        }
+    }
+
     return (
         <>
         <Button onClick={createAnswers}>Test Me</Button>
