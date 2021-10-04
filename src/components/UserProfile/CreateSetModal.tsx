@@ -19,6 +19,7 @@ import { Tag } from "../../dtos/Tag";
 import { TagFormModel } from "../../models/new-tag-form";
 import { SaveTagFormModel } from "../../models/save-tag-form-model";
 import { errorState } from "../../state-slices/error/errorSlice";
+import LabelIcon from '@mui/icons-material/Label';
 
 
 import Backdrop from '@mui/material/Backdrop';
@@ -204,7 +205,7 @@ const CreateSetModal = (props: any) => {
                                             > 
                                   {allTags.map((T : Tag | undefined , i) =>{
 
-                                    return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><em>{T.tagName} </em> <FiberManualRecordIcon style={{color: T.tagColor}} /></MenuItem>
+                                    return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><LabelIcon style={{color: T.tagColor}}/><em>{T.tagName} </em>  </MenuItem>
                                           
                                     })}
 
@@ -217,13 +218,13 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    <p> <FiberManualRecordIcon style={{color: _createSetState.newTagForms[i].tagColor}} /> {_createSetState.newTagForms[i].TagName}</p>
+                    <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                  
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
                     </Button>
                   
-                    <Alert severity="success">Added!</Alert> 
+                    <Alert  severity="success">Added!</Alert> 
                     
                     <hr/>
                     <br/>
@@ -231,7 +232,7 @@ const CreateSetModal = (props: any) => {
                 </div>
                 })
             }
-                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<ControlPointIcon />}> New Tag</Button> : <></>}
+                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
                <br/>
 
                 <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
