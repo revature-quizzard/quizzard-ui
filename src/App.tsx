@@ -12,6 +12,8 @@ import StudyHub from "./components/DiscoverSets/StudyHub";
 import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
+import Game from "./components/Multiplayer/Game";
+import GameLounge from "./components/Multiplayer/GameLounge";
 import { FlipCard } from "./components/Flashcards/FlipCard";
 import SubforumHandler from "./components/Forum/Subforum";
 import {ConfirmSignup} from "./components/Login/ConfirmSignup";
@@ -72,6 +74,12 @@ function App() {
           <Route exact path="/study">
             <StudyHub />
           </Route>
+          <Route exact path="/lounge">
+            <GameLounge />
+          </Route>
+          <Route exact path="/multiplayer">
+            <Game />
+            </Route>
           <Route exact path="/confirmation">
             <ConfirmSignup />
           </Route>
