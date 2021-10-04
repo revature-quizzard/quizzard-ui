@@ -21,7 +21,7 @@ import { gameState, Player } from '../../state-slices/multiplayer/game-slice';
   const useStyles = makeStyles(() => ({
       root: {
         backgroundColor: "#b15fc2",
-        width: '18em',
+        width: '12em',
         borderStyle: 'solid',
         borderColor: '#7636a3',
         display: 'flex'

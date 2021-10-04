@@ -42,6 +42,10 @@ const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: 'rgb(240,240,240)'
         }
+    },
+
+    answerTable: {
+        
     }
 });
 
@@ -82,7 +86,7 @@ function Answers() {
 
     return (
         <>
-        <TableContainer>
+        <TableContainer className={classes.answerTable}>
             <Table style={{tableLayout: 'fixed'}}>
                 <TableHead>
                     <TableRow>

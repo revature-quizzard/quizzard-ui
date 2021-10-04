@@ -22,41 +22,48 @@ import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/ga
 const useStyles = makeStyles({
     gameContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'column',
+        position: 'relative',
+        margin: '0 3rem'
     },
+
     playerContainer: {
+        marginRight: '1rem'
+    },
+
+    topRow: {
         display: 'flex',
-        alignItems:'left',
-        justifyContent: "left",
-        marginLeft: "2em",
-        marginTop: "2em"
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
+    gameId: {
+        alignSelf: 'center',
+        paddingLeft: '2rem'
+    },
+
+    bottomRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'stretch'
     },
 
     qaContainer: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: "center",
-        marginLeft: "2em",
-        marginTop: "2em"
-
+        height: '35rem'
     },
 
     timerContainer: {
-        position: 'fixed',
-        top:'5rem',
-        right:'2rem',
         alignSelf: 'flex-start',
-        justifyContent: "right",
-        marginLeft: "2em",
-        marginTop: "2em"
-
+        justifyContent: 'right',
+        marginBottom: '1rem'
     },
 
     leaderContainer: {
         justifyContent: "center",
-        marginLeft: "2em",
-        marginTop: "2em"
+        marginLeft: '2em',
+        marginTop: '2em'
 
     }
 
@@ -216,17 +223,23 @@ function Game() {
             case 1:
                 return (
                     <>
-                        <div className= {classes.timerContainer}>
-                        <Timer start={game.questionTimer} onTimeout={onTimeout}/>
-                        </div>
+                    
                     <div className = {classes.gameContainer}>
-                        <div className= {classes.playerContainer}>
-                        <Players />
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <div className= {classes.timerContainer}>
+                                <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                            </div>
                         </div>
-                        <div className= {classes.qaContainer}>
-                        <Questions />
-                        <Answers />
-                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
                     </div>
                     </>
                 )
@@ -397,7 +410,6 @@ function Game() {
     return (
         // buttons for test (remove this after testing)
         <>
-        <h1>{game.id}</h1>
         {
             (game.id) // If game is defined (Using redux slice)
             ?
