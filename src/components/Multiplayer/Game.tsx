@@ -15,9 +15,9 @@ import Answers from './Answers';
 import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
-import { authState } from '../../state-slices/auth/auth-slice';
-import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
-import { flexbox } from '@mui/system';
+import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
+import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
+
 
 const useStyles = makeStyles({
     gameContainer: {
@@ -61,8 +61,7 @@ const useStyles = makeStyles({
     }
 
 });
-import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
-import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
+
 
 Amplify.configure(config);
 
