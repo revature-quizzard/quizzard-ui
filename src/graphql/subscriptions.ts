@@ -38,6 +38,42 @@ export const onUpdateGameById = /* GraphQL */ `
     }
   }
 `;
+export const onDeleteGameById = /* GraphQL */ `
+  subscription OnDeleteGameById($id: ID!) {
+    onDeleteGameById(id: $id) {
+      id
+      name
+      matchState
+      questionIndex
+      capacity
+      host
+      questionTimer
+      set {
+        id
+        name
+        creator
+        cardList {
+          id
+          question
+          correctAnswer
+          multiAnswers
+        }
+      }
+      players {
+        id
+        username
+        answered
+        answeredAt
+        answeredCorrectly
+        placing
+        streak
+        points
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGame = /* GraphQL */ `
   subscription OnCreateGame {
     onCreateGame {

@@ -39,4 +39,6 @@ type Card {
 type Subscription {
   onUpdateGameById(id: ID!): Game
     @aws_subscribe(mutations: ["updateGame"])
+  onDeleteGameById(id: ID!): Game
+    @aws_subscribe(mutations: ["deleteGame"])
 }

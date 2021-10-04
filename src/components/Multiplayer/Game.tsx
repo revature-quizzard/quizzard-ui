@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
 import { createGame, deleteGame, updateGame } from '../../graphql/mutations';
-import { onCreateGame, onDeleteGame, onUpdateGame, onUpdateGameById } from '../../graphql/subscriptions';
+import { onCreateGame, onDeleteGame, onUpdateGame, onUpdateGameById, onDeleteGameById } from '../../graphql/subscriptions';
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
@@ -121,9 +121,19 @@ function Game() {
             error: error => console.warn(error)
         })
 
+        // Handle when game is deleted from DynamoDB
+        const deleteSubscription = (API.graphql(
+            graphqlOperation(onDeleteGameById, {id: game.id})
+        ) as unknown as Observable<any>).subscribe({
+            next: ({ provider, value }) => {
+                console.log('onDelete:', { provider, value });
+            }
+        })
+
         return () => {
-            // Unsubscribe from subscription when component unmounts, to avoid memory leaks
+            // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
             updateSubscription.unsubscribe();
+            deleteSubscription.unsubscribe();
         }
     }, [])
 
