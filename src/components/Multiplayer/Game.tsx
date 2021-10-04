@@ -152,7 +152,7 @@ function Game() {
                         <Players />
                         <Timer start={game.questionTimer} onTimeout={onTimeout}/>
                         <Questions />
-                        {/* <Answers /> */}
+                        <Answers />
                     </>
                 )
             case 2:
@@ -160,7 +160,7 @@ function Game() {
                     <>
                         <Players />
                         <Questions />
-                        {/* <Answers /> */}
+                        <Answers />
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
