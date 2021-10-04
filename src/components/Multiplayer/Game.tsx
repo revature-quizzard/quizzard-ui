@@ -56,7 +56,12 @@ Amplify.configure(config);
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
-async function startGame() {
+async function startGame(game: any) {
+    if (game.matchState === 0) {
+        await API.graphql(graphqlOperation(
+            updateGame, {input: {id: game.id, matchState: 1}}
+        ));
+    }
 }
 
 /**
@@ -64,7 +69,12 @@ async function startGame() {
  *  in lobby will be redirected. If the game is not closed through this manner, it will be
  *  automatically closed when the last player leaves the lobby.
  */
-function closeGame() {
+async function closeGame(game: any) {
+    if (game.matchState === 3) {
+        await API.graphql(graphqlOperation(
+            deleteGame, {input: {id: game.id}}
+        ));
+    }
 }
 
 /**
@@ -152,7 +162,7 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={startGame}> Host Start Game Button </Button>
+                        <Button onClick={() => {startGame(game)}}> Host Start Game Button </Button>
                         :
                         <></> }
                     </>
@@ -189,7 +199,7 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={closeGame}> Host Close Game Button </Button>
+                        <Button onClick={() => {closeGame(game)}}> Host Close Game Button </Button>
                         :
                         <></> }
                     </>
