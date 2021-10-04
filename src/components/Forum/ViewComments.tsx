@@ -34,12 +34,10 @@ function ViewComment() {
         }
         }
         getComments();
-        dispatch(setReload(false));
+        if (reload) {
+            dispatch(setReload(false));
+        }
     }, [reload]);
-
-    useEffect(() => {
-        dispatch(setReload(true));
-    }, []);
 
     return (
         <>
