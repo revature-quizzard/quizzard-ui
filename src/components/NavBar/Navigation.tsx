@@ -155,7 +155,7 @@ export function NavigationComponent(){
               <ButtonBase component={Link} to='/'>
 
                 <Typography className={classes.typography} variant="h6" noWrap>
-                  Flashback
+                  <h2>KWIZZORD</h2>
                 </Typography>
               </ButtonBase>
 
@@ -212,7 +212,7 @@ export function NavigationComponent(){
                 <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
 
-              <ListItem button component={Link} to={'/register'}>
+              <ListItem button component={Link} to={'/lounge'}>
 
                 <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
               </ListItem>
