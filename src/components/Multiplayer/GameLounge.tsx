@@ -1,3 +1,5 @@
+import GameSettings from './GameSettings';
+
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
@@ -152,13 +154,12 @@ function GameLounge() {
                 <br></br>
                 <br></br>
             </header>    
+
         </div>
-        {/* Game Settings Modal */}
-        {/* <GameSettings /> */}
-
-        {/* Button which loads game based on settings set in modal */}
-        <Button onClick={() => makeGame()}>Create Game</Button>
-
+        
+        {/*Create Game contains create game button*/}
+        <GameSettings />
+        <br></br>
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} />
 
