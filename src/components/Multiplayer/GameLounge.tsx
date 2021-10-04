@@ -15,6 +15,7 @@ import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice'
 import * as gameUtil from '../../utilities/game-utility'
 import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
 import Players from './Players';
+import { guestState, setGuest } from '../../state-slices/multiplayer/guest-slice';
 
 Amplify.configure(config);
 
@@ -32,10 +33,23 @@ function GameLounge() {
     
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const guestUser = useSelector(guestState);
     const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
     let history = useHistory();
+
+    // Handle setting guest slice in Redux when nickname is set
+    useEffect(() => {
+        console.log('nickname: ', nickName)
+        dispatch(setGuest({
+            id: Math.random().toString(36).substr(2, 5),
+            nickName: nickName
+        }))
+        return () => {
+            
+        }
+    }, [nickName])
 
     async function fetchGame() {
         console.log(id.current);
@@ -45,14 +59,28 @@ function GameLounge() {
         let game: Game = {...resp.data.getGame};
         
         //game already exists
-        console.log(resp)
+        console.log('resp:', resp)
         if(game.id !== undefined){
-
             if(game.matchState === 0){
                 //check to see if game capacity is full
-                if(game.players.length < game.capacity){
+                if(game.players.length >= game.capacity){
+                    dispatch(setErrorSeverity("error"));
+                    dispatch(showSnackbar("Game Full"));
+                    return;  
+                } 
+            } else {
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Game started already"));
+                return;   
+            }     
+        } else {
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game ID does not exist"));
+            return;
+        }
         // Set the user into the list of players
         let baseUser: any;
+        // User is logged in
         if (user.authUser) {
             baseUser = {
                 id: user.authUser.id,
@@ -64,7 +92,8 @@ function GameLounge() {
                 streak: 0,
                 points: 0
             };
-        } else {
+        // User is not logged in, but has set a nickname
+        } else if (guestUser) {
             baseUser = {
                 id: Math.random().toString(36).substr(2, 5),
                 username: nickName,
@@ -75,30 +104,23 @@ function GameLounge() {
                 streak: 0,
                 points: 0
             }
+        // User is not logged in, and has not set a nickname
+        } else {
+            console.log('guest: ', guestUser)
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Please set a nickname."));
+            return;
         }
         console.log('Base User: ', baseUser);
 
         game.players.push(baseUser);
-        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
+        let updateresp = await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
 
-        console.log("Successfully updated GraphQL!");
+        console.log("Successfully updated GraphQL!", updateresp);
 
         dispatch(setGame(game));
-                } else {
-                  dispatch(setErrorSeverity("error"));
-                  dispatch(showSnackbar("Game Full"));
-                  return;  
-                } 
-            } else {
-              dispatch(setErrorSeverity("error"));
-              dispatch(showSnackbar("Game started already"));
-              return;   
-            }     
-        } else {
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Game ID does not exist"));
-            return;
-        }
+
+        
     }
     
     function handleUpdate(e: any) {
