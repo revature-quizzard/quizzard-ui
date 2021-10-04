@@ -1,4 +1,4 @@
-import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
@@ -23,15 +23,34 @@ import { updateGame } from '../../graphql/mutations';
  * @authors Heather Guilfoyle, Sean Dunn, Colby Wall, Robert Ni
  */
 
-function renderColors() {
-    
+
+let previousRenderColor = '';
+function renderColors(id: string) {
+    if (previousRenderColor !== '') {
+        document.getElementById(previousRenderColor).style.border = '3px solid rgba(0,0,0,0)';
+    }
+    previousRenderColor = id;
+    document.getElementById(id).style.border = '3px solid rgb(90, 50, 180)';
 }
+
+const useStyles = makeStyles({
+    roundedBorder: {
+        padding: '10px 0px 10px 0px',
+        borderRadius: '10px',
+        textAlign: 'center',
+        border: '3px solid rgba(0,0,0,0)',
+        '&:hover': {
+            backgroundColor: 'rgb(240,240,240)'
+        }
+    }
+});
 
 function Answers() {
     
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     const game = useSelector(gameState);
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     let answers: string[] = gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]);
 
@@ -52,20 +71,38 @@ function Answers() {
         }
         playerList.push(currentPlayer);
         await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
+        
+        renderColors(e.target.id);
     }
 
     return (
         <>
         <TableContainer>
-            <Table>
+            <Table style={{tableLayout: 'fixed'}}>
                 <TableHead>
                     <TableRow>
-                        <TableCell id={answers[0]} onClick={submit}>{answers[0]}</TableCell>
-                        <TableCell id={answers[1]} onClick={submit}>{answers[1]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[0]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[0]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[1]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[1]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell id={answers[2]} onClick={submit}>{answers[2]}</TableCell>
-                        <TableCell id={answers[3]} onClick={submit}>{answers[3]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[2]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[2]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[3]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[3]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
             </Table>
@@ -75,3 +112,4 @@ function Answers() {
     );
 }
 export default Answers; 
+
