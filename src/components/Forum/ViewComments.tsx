@@ -34,9 +34,9 @@ function ViewComment() {
         <>
             {(auth.authUser?.username == forumInfo.owner)
             ?
-            <UpdateThread />
+                <UpdateThread />
             :
-            <div />
+                <div />
             }
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
