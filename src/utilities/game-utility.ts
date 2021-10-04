@@ -10,10 +10,10 @@
  * @author Robert Ni, Heather Guilfoyle
  */
 export function randomizeAnswers(card: any): string[] {
-  let allAnswers = card.multiAnswers;
+  let allAnswers = card.multiAnswers.concat(card.correctAnswer);
   console.log(allAnswers)
-  allAnswers.push(card.correctAnswer)
-  console.log(allAnswers)
+  // allAnswers.push(card.correctAnswer)
+  // console.log(allAnswers)
   let answers: string[] | undefined = [];
   let order: number[] = [];
   let ranNum: number = Math.floor(Math.random() * 4);

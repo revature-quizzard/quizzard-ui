@@ -1,5 +1,5 @@
 import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles, TextField, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
 import * as gameUtil from '../../utilities/game-utility';
@@ -51,14 +51,19 @@ function Answers() {
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const classes = useStyles();
+    const [answers, setAnswers] = useState([])
+    
 
-    let answers: string[] = gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]);
+    useEffect(() => {
+        setAnswers(gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]));
+    }, [])
 
     async function submit(e: any) {
-        let currentPlayer : Player;
-        let playerList : Player[] = game.players;
+        //@ts-ignore
+        let currentPlayer : Player = {};
+        let playerList : Player[] = [].concat(game.players);
         playerList.forEach(player => {
-            if (player.username == 'nobody') currentPlayer = player;
+            if (player.username == 'nobody') Object.assign(currentPlayer, player);
         })
         playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
         if (!currentPlayer || currentPlayer.answered) return;        
