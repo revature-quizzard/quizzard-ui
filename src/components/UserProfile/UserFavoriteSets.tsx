@@ -1,9 +1,10 @@
-import {Container, Typography} from "@mui/material";
+import {Container, IconButton, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 import {Link} from "react-router-dom";
-import {DataGrid} from "@mui/x-data-grid";
+import {DataGrid, GridApi, GridColDef} from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 /**
  * Component for rendering a user's Favorite sets.
@@ -14,7 +15,10 @@ import {SetDocument} from "../../models/set-document";
 const UserFavoriteSets = () => {
     const state = useSelector(profileState);
     const userFavorites = state.userProfile.favoriteSets;
-    const columns = [
+
+    const columns : GridColDef[] = [
+        {field: 'id', headerName: 'index', hide: true},
+        {field: 'setId', headerName: 'setId', hide: true},
         {field: 'setName', headerName: 'Name', flex: 1},
         {field: 'author', headerName: 'Author', flex: 1},
         {field: 'tags', headerName: 'Tags', flex: 1},
@@ -22,16 +26,39 @@ const UserFavoriteSets = () => {
         {field: 'views', headerName: 'Views', flex: 1},
         {field: 'plays', headerName: 'Plays', flex: 1},
         {field: 'studies', headerName: 'Studies', flex: 1},
-        {field: 'favorites', headerName: 'Faves', flex: 1}
-    ]
+        {field: 'favorites', headerName: 'Faves', flex: 1},
+        {
+            field: "",
+            headerName: " ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const removeSetFromUserFavorites = () => {
+                    const api: GridApi = params.api;
+                    console.log(api.getRow(params.id).setId);
+                    // axios call here
+                    api.updateRows([{
+                        id: params.id,
+                        _action: 'delete'
+                    }]);
+                };
+
+                return <IconButton onClick={() => {
+                    removeSetFromUserFavorites()
+                }}>
+                    <DeleteIcon/>
+                </IconButton>;
+            }
+        }
+    ];
 
     const rows = userFavorites.map((set: SetDocument, index: any) => (
             {
-                id: set.id,
-                index: index,
+                id: index,
+                setId: set.id,
                 setName: set.setName,
                 author: set.author,
-                tags: set.tags.map((x)=>(x.tagName)),
+                tags: set.tags.map((x) => (x.tagName)),
                 isPublic: set.isPublic,
                 views: set.views,
                 plays: set.plays,
@@ -45,22 +72,22 @@ const UserFavoriteSets = () => {
 
     return (
         <>
-                {userFavorites.length ?
-                    <DataGrid
-                        columns={columns}
-                        rows={rows}
-                        autoHeight={true}
-                        disableExtendRowFullWidth={true}
-                        pagination={true}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                    />
-                    :
-                    <Typography>
-                        You haven't added any sets to your favorites yet!<br/>
-                        Go to the <Link to="/study">Discovery Page</Link> to find some!
-                    </Typography>
-                }
+            {userFavorites.length ?
+                <DataGrid
+                    columns={columns}
+                    rows={rows}
+                    autoHeight={true}
+                    disableExtendRowFullWidth={true}
+                    pagination={true}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                />
+                :
+                <Typography>
+                    You haven't added any sets to your favorites yet!<br/>
+                    Go to the <Link to="/study">Discovery Page</Link> to find some!
+                </Typography>
+            }
         </>
     )
 };
