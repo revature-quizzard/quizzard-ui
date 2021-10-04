@@ -9,7 +9,7 @@ import {Thread } from '../../models/thread';
 import { updateThread } from '../../remote/thread-service';
 
 const useStyles = makeStyles({
-    addThreadContainer: {
+    updateThreadContainer: {
         justifyContent: "center",
         margin: 'auto',
         padding: 20,
@@ -70,14 +70,14 @@ function UpdateThread() {
     }
 
     return (
-        <div id="add-thread-component" className={classes.addThreadContainer}>
+        <div id="update-thread-component" className={classes.updateThreadContainer}>
                 <Typography align="center" variant="h5">Update Thread</Typography>
                 <br />
                 <Typography>Update Thread Title</Typography>
                 <FormControl style={{'margin': '1rem'}}>
                     <Input className={classes.input}
                         onChange={handleSubjectChange}
-                        placeholder={forumInfo?.currentThread?.subject}
+                        placeholder={forumInfo.currentThread?.subject}
                     />
                 </FormControl>
 
@@ -85,11 +85,11 @@ function UpdateThread() {
                 <Paper style={{'margin': '1rem'}}>
                     <Editor
                         onChange={handleDescriptionChange}
-                        placeholder={forumInfo?.currentThread?.description} />
+                        placeholder={forumInfo.currentThread?.description} />
                 </Paper>
                 <br />
                 <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
+                    <Button variant="contained" className={classes.button} onClick={handleClick}>Update Thread</Button>
                 </Box>
         </div>
     )

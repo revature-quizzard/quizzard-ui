@@ -19,6 +19,8 @@ function ViewComment() {
     const auth = useSelector(authState);
     const dispatch = useDispatch();
     const [showEditComment, setShowEditComment] = useState(false);
+    const [showEditThread, setShowEditThread] = useState(false);
+
     let [comments,setComments] = useState(undefined as Comment[] | undefined);
 
 
@@ -35,13 +37,16 @@ function ViewComment() {
         getComments();
     }, []);
 
+
     return (
         <>
-            {(auth.authUser?.username == forumInfo.owner)
-            ?
-            <UpdateThread />
-            :
-            <div />
+            {(forumInfo.owner === auth.authUser?.username)
+            ? 
+                <Button onClick={() => {setShowEditThread(true);}}>
+                    Update Thread
+                </Button> 
+            : 
+                <></>
             }
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
@@ -82,6 +87,9 @@ function ViewComment() {
             {(auth.isAuthenticated) ? <AddComment /> : <></>}
             <Modal open={showEditComment} onClose={() => {setShowEditComment(false)}}>
                 <UpdateComment close={setShowEditComment}/>
+            </Modal>
+            <Modal open={showEditThread} onClose={() => {setShowEditThread(false)}}>
+                <UpdateThread />
             </Modal>
         </>
     )
