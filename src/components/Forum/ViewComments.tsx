@@ -11,11 +11,12 @@ import { authState } from '../../state-slices/auth/auth-slice';
 import AddComment from './AddComment';
 import UpdateComment from './UpdateComment';
 import Modal from '@mui/material/Modal'
-import { setCurrentComment } from '../../state-slices/forum/forum-slice';
+import { setCurrentComment, setReload } from '../../state-slices/forum/forum-slice';
 import UpdateThread from './UpdateThread';
 
 function ViewComment() {
     const forumInfo: Thread = useSelector(forumState).currentThread;
+    const reload = useSelector(forumState).reload;
     const auth = useSelector(authState);
     const dispatch = useDispatch();
     const [showEditComment, setShowEditComment] = useState(false);
@@ -33,6 +34,11 @@ function ViewComment() {
         }
         }
         getComments();
+        dispatch(setReload(false));
+    }, [reload]);
+
+    useEffect(() => {
+        dispatch(setReload(true));
     }, []);
 
     return (
