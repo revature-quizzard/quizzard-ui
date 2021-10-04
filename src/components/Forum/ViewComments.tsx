@@ -86,10 +86,10 @@ function ViewComment() {
             ))}
             {(auth.isAuthenticated) ? <AddComment /> : <></>}
             <Modal open={showEditComment} onClose={() => {setShowEditComment(false)}}>
-                <UpdateComment close={setShowEditComment}/>
+                <UpdateComment close={setShowEditComment} />
             </Modal>
             <Modal open={showEditThread} onClose={() => {setShowEditThread(false)}}>
-                <UpdateThread />
+                <UpdateThread close={setShowEditThread} />
             </Modal>
         </>
     )

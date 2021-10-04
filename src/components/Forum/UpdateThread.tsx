@@ -30,7 +30,11 @@ const useStyles = makeStyles({
     }
 });
 
-function UpdateThread() {
+interface IUpdateThreadProps {
+    close: (input: boolean) => void;
+}
+
+function UpdateThread(props: IUpdateThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
@@ -48,6 +52,7 @@ function UpdateThread() {
     }
 
     let handleClick = async () => {
+        props.close(false);
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
