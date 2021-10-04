@@ -7,10 +7,12 @@ import { Divider, Avatar, Grid, Button } from "@material-ui/core";
 import React, { useEffect, useState } from 'react';
 import  Editor  from 'rich-markdown-editor';
 import { Thread } from '../../models/thread';
-
+import UpdateThread from './UpdateThread';
+import { authState } from '../../state-slices/auth/auth-slice';
 
 function ViewComment() {
     const forumInfo: Thread = useSelector(forumState).currentThread;
+    const auth = useSelector(authState);
     const dispatch = useDispatch();
     let [comments,setComments] = useState(undefined as Comment[] | undefined);
 
@@ -19,25 +21,23 @@ function ViewComment() {
         console.log(forumInfo);
         const getComments = async () => {
         try{
-            console.log("ABOUT TO FETCH COMMENTS");
-            console.log(forumInfo.id);
             setComments(await viewComments(forumInfo.id));
         } catch(e:any) {
             // set an error message / toast here
-            console.log("AN ERROR OCCURED WHILE TRYING TO GET COMMENTS");
             console.log(e);
         }
         }
         getComments();
     }, []);
 
-    function showComments(){
-        console.log(comments);
-    }
-
     return (
         <>
-            <Button onClick={() => showComments()}>Click me</Button>
+            {(auth.authUser?.username == forumInfo.owner)
+            ?
+            <UpdateThread />
+            :
+            <div />
+            }
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
                 <div style={{'margin': '2rem'}}>
