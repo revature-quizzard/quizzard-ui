@@ -46,9 +46,7 @@ function Players() {
 
     const executeKick = async (user: Player) => {
         let copylist: Player[] = [].concat(game.players);
-        let index = copylist.findIndex((player) => {
-            player.id == user.id;
-        });
+        let index = copylist.findIndex((player) => player.id === user.id);
         copylist.splice(index, 1);
         (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
     }
