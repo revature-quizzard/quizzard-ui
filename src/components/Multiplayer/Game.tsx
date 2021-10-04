@@ -223,7 +223,6 @@ function Game() {
             case 1:
                 return (
                     <>
-                    
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
                             <h1 className={classes.gameId}>{game.id}</h1>
@@ -246,11 +245,23 @@ function Game() {
             case 2:
                 return (
                     <>
-                        <Players />
-                        <Questions />
-                        <Answers />
+                    <div className = {classes.gameContainer}>
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>
+                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+
                         { (currentUser == game.host) 
                         ?
                         <Button onClick={nextCard}> Host Next Card Button </Button>
