@@ -12,6 +12,8 @@ import config from '../../aws-exports';
 import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
+import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
+import { createAnswers } from './Answers'
 
 Amplify.configure(config);
 
@@ -24,9 +26,10 @@ Amplify.configure(config);
  **/
 
 function GameLounge() {
-
+    
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
     let history = useHistory();
@@ -39,7 +42,7 @@ function GameLounge() {
             name: 'Test Game',
             matchState: 0,
             questionIndex: 0,
-            capacity: 5,
+            capacity: 1,
             host: 'nobody',
             questionTimer: 10,
             set: {
@@ -50,7 +53,7 @@ function GameLounge() {
                     id: '10',
                     question: 'What is the answer to this question?',
                     correctAnswer: "There isn't one",
-                    multiAnswers: ['wrong', 'correct', 'idk']
+                    multiAnswers: createAnswers()
                 }]
             },
             players: [{
@@ -74,8 +77,16 @@ function GameLounge() {
         console.log(id.current);
         let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
         // @ts-ignore
+        
         let game: Game = {...resp.data.getGame};
+        
+        //game already exists
+        console.log(resp)
+        if(game.id !== undefined){
 
+            if(game.matchState === 0){
+                //check to see if game capacity is full
+                if(game.players.length < game.capacity){
         // Set the user into the list of players
         let baseUser: any;
         if (user.authUser) {
@@ -107,8 +118,23 @@ function GameLounge() {
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
-        
+
         dispatch(setGame(game));
+                } else {
+                  dispatch(setErrorSeverity("error"));
+                  dispatch(showSnackbar("Game Full"));
+                  return;  
+                } 
+            } else {
+              dispatch(setErrorSeverity("error"));
+              dispatch(showSnackbar("Game started already"));
+              return;   
+            }     
+        } else {
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game ID does not exist"));
+            return;
+        }
     }
     
     function handleUpdate(e: any) {
