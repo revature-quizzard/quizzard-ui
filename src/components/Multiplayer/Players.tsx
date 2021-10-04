@@ -45,10 +45,10 @@ function Players() {
     const user = useSelector(authState);
 
     const executeKick = async (user: Player) => {
-        let copylist = [].concat(game.players);
-        let index = copylist.find((player) => {
+        let copylist: Player[] = [].concat(game.players);
+        let index = copylist.findIndex((player) => {
             player.id == user.id;
-        })
+        });
         copylist.splice(index, 1);
         (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
     }

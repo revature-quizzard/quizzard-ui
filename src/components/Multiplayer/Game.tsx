@@ -20,8 +20,8 @@ import Answers from './Answers';
 import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
-import { authState } from '../../state-slices/auth/auth-slice';
-import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
+import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
+import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
 
 Amplify.configure(config);
 
@@ -114,8 +114,11 @@ function Game() {
             graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
+                let ingame = game.players.some((player) => {
+                    player.id == user.authUser.id;
+                });
                 console.log('onUpdate:', { provider, value });
-                dispatch(setGame({...value.data.onUpdateGameById}))
+                ingame ? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame);
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -322,9 +325,8 @@ function Game() {
         // buttons for test (remove this after testing)
         <>
         <h1>{game.id}</h1>
-        <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         {
-            (game) // If game is defined (Using redux slice)
+            (game.id) // If game is defined (Using redux slice)
             ?
             <>
                 { render() }

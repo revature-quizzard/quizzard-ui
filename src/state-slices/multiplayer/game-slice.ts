@@ -77,7 +77,7 @@ export const gameSlice = createSlice({
             console.log('Setting ', state, ' to ', action.payload)
         },
 
-        // Used when resetting the statee
+        // Used when resetting the state
         resetGame: (state) => {
             state = initialState;
         }
