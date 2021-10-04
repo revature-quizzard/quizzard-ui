@@ -69,7 +69,7 @@ function ViewComment() {
                             <p style={{ textAlign: "left", color: "gray" }}>
                                 {comment.date_created.replace('T', ' ').substring(0,16)}
                             </p>
-                            {(comment.owner === auth.authUser.username) ? <Button onClick={() => {
+                            {(comment.owner === auth.authUser?.username) ? <Button onClick={() => {
                                 dispatch(setCurrentComment(comment));
                                 setShowEditComment(true);
                             }}>edit</Button> : <></>}
