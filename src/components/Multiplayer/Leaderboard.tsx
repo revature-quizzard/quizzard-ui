@@ -1,4 +1,5 @@
-import { Table, TableRow } from "@material-ui/core"
+import { makeStyles, Paper, Table, TableContainer, TableRow } from "@material-ui/core"
+import { TableBody, TableCell, TableHead, Typography } from "@mui/material";
 import { useSelector } from "react-redux"
 import { gameState } from "../../state-slices/multiplayer/game-slice"
 
@@ -17,14 +18,47 @@ import { gameState } from "../../state-slices/multiplayer/game-slice"
 function Leaderboard() {
     const game = useSelector(gameState);
 
+    const useStyles = makeStyles(() => ({
+        root: {
+          backgroundColor: "#b15fc2",
+          width: '18em',
+          borderStyle: 'solid',
+          borderColor: '#7636a3',
+          display: 'flex'
+        },
+        table: {
+            verticalAlign: 'middle',
+            msAlignSelf: 'left'
+        },
+        text: {
+            color: 'white'
+        }
+    }))
+
+    const styles = useStyles();
+
     return (
-        <>
-        <p>this is text.</p>
-            <Table>
-                {game.players.map((player) => {
-                    return <TableRow>{player.username} | {player.points}</TableRow>
-                })}
+        <>        
+            <TableContainer className={styles.root} component={Paper}>
+            <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
+                <TableHead>
+                <TableRow>
+                    <TableCell className={styles.text} align="left">Username</TableCell>
+                    <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {game.players.map((player) => (
+                    <TableRow
+                    key={player.username}      
+                    >
+                    <TableCell className={styles.text} align="left">{player.username}</TableCell>
+                    <TableCell className={styles.text} align="right">{player.points}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
             </Table>
+            </TableContainer> 
         </>
     )
 }

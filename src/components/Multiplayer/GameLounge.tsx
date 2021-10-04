@@ -1,3 +1,5 @@
+import GameSettings from './GameSettings';
+
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
@@ -10,6 +12,7 @@ import config from '../../aws-exports';
 import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
+import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
 import { createAnswers } from './Answers'
 import { UsernameAttributes } from 'aws-amplify-react';
 import Players from './Players';
@@ -27,8 +30,10 @@ Amplify.configure(config);
 function GameLounge() {
 
     const [nickName, setNickName] = useState("");
+    
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
     let history = useHistory();
@@ -41,7 +46,7 @@ function GameLounge() {
             name: 'Test Game',
             matchState: 0,
             questionIndex: 0,
-            capacity: 5,
+            capacity: 1,
             host: 'nobody',
             questionTimer: 10,
             set: {
@@ -76,8 +81,16 @@ function GameLounge() {
         console.log(id.current);
         let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
         // @ts-ignore
+        
         let game: Game = {...resp.data.getGame};
+        
+        //game already exists
+        console.log(resp)
+        if(game.id !== undefined){
 
+            if(game.matchState === 0){
+                //check to see if game capacity is full
+                if(game.players.length < game.capacity){
         // Set the user into the list of players
         let baseUser: any;
         if (user.authUser) {
@@ -109,8 +122,23 @@ function GameLounge() {
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
 
         console.log("Successfully updated GraphQL!");
-        
+
         dispatch(setGame(game));
+                } else {
+                  dispatch(setErrorSeverity("error"));
+                  dispatch(showSnackbar("Game Full"));
+                  return;  
+                } 
+            } else {
+              dispatch(setErrorSeverity("error"));
+              dispatch(showSnackbar("Game started already"));
+              return;   
+            }     
+        } else {
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game ID does not exist"));
+            return;
+        }
     }
     
     function handleUpdate(e: any) {
@@ -134,13 +162,12 @@ function GameLounge() {
                 <br></br>
                 <br></br>
             </header>    
+
         </div>
-        {/* Game Settings Modal */}
-        {/* <GameSettings /> */}
-
-        {/* Button which loads game based on settings set in modal */}
-        <Button onClick={() => makeGame()}>Create Game</Button>
-
+        
+        {/*Create Game contains create game button*/}
+        <GameSettings />
+        <br></br>
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} />
 
