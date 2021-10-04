@@ -14,7 +14,7 @@ import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
 import * as gameUtil from '../../utilities/game-utility'
 import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
-
+import Players from './Players';
 
 Amplify.configure(config);
 
@@ -27,6 +27,8 @@ Amplify.configure(config);
  **/
 
 function GameLounge() {
+
+    const [nickName, setNickName] = useState("");
     
     const game = useSelector(gameState);
     const user = useSelector(authState);
@@ -108,7 +110,7 @@ function GameLounge() {
         } else {
             baseUser = {
                 id: Math.random().toString(36).substr(2, 5),
-                username: 'Guest',
+                username: nickName,
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
@@ -147,6 +149,10 @@ function GameLounge() {
         console.log(id.current);
     }
 
+    function changeNickName(e: any) {
+         setNickName(e.target.value);
+    }
+
     return (
         <>
         { (!game.host)
@@ -166,7 +172,11 @@ function GameLounge() {
         <GameSettings />
         <br></br>
         {/* Input field for the join game ID */}
-        <Input onKeyUp={handleUpdate} />
+        <Input onKeyUp={handleUpdate} 
+               placeholder = 'Game ID'/> {       }
+
+        <Input onKeyUp={changeNickName}
+               placeholder = 'Nickname' /> 
 
         {/* Button which joins existing game according to input id */}
         <Button onClick={fetchGame}>Join Game</Button>
