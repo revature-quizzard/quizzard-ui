@@ -51,15 +51,15 @@ function UpdateThread() {
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
-                threadAncestors,
-                "114687543",
+                forumInfo.currentThread.ancestors,
+                forumInfo.currentThread.parent,
                 description,
                 subject,
-                "cmettee",
-                "310f67a1-822c-4fab-9b7f-8313686f7fb2",
-                1,
-                "2021-10-01T21:59:02.879",
-                ["tag1id", "tag2id"]
+                forumInfo.currentThread.owner,
+                forumInfo.currentThread.id,
+                forumInfo.currentThread.child_count,
+                forumInfo.currentThread.date_created,
+                forumInfo.currentThread.tags
             );
             console.log(toAdd);
             let resp = await updateThread(toAdd);
