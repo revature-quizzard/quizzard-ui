@@ -87,7 +87,7 @@ function ViewComment() {
             ))}
             {(auth.isAuthenticated) ? <AddComment /> : <></>}
             <Modal open={showEditComment} onClose={() => {setShowEditComment(false)}}>
-                <UpdateComment />
+                <UpdateComment close={setShowEditComment}/>
             </Modal>
         </>
     )

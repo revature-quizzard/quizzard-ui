@@ -8,7 +8,11 @@ import { forumState } from '../../state-slices/forum/forum-slice';
 import { Comment } from '../../models/comment';
 import { updateComment } from '../../remote/comment-service';
 
-function UpdateComment() {
+interface IUpdateCommentProps {
+    close: (input: boolean) => void;
+}
+
+function UpdateComment(props: IUpdateCommentProps) {
     const [description, setDescription] = useState('');
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
