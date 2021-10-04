@@ -34,6 +34,9 @@ body {
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
+  margin-left: 500px;
+  width: 60%;
+  align-content: center;
 
 }
 

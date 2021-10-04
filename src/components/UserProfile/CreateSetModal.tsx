@@ -135,9 +135,9 @@ const CreateSetModal = (props: any) => {
                 dispatch(loading());
                 let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave));
-                let newly_created_set = await createStudySet(_createSetState.setToSave , user.token);
+                // let newly_created_set = await createStudySet(_createSetState.setToSave , user.token);
                 dispatch(clearTags);
-                console.log(newly_created_set);
+                // console.log(newly_created_set);
             } catch (e: any) {
                 console.log(e);
             }
