@@ -10,7 +10,7 @@ import config from '../../aws-exports';
 import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
-import { createAnswers } from './Answers'
+import * as gameUtil from '../../utilities/game-utility'
 
 Amplify.configure(config);
 
@@ -49,7 +49,7 @@ function GameLounge() {
                     id: '10',
                     question: 'What is the answer to this question?',
                     correctAnswer: "There isn't one",
-                    multiAnswers: createAnswers()
+                    multiAnswers: ['']
                 }]
             },
             players: [{
@@ -63,6 +63,10 @@ function GameLounge() {
                 answeredCorrectly: false
             }]
         }
+        testGame.set.cardList.forEach((card, i) => {
+            card.multiAnswers = gameUtil.generateWrongAnswers(card.correctAnswer, testGame.set.cardList);
+        })
+
         console.log(testGame)
         let resp = await (API.graphql(graphqlOperation(createGame, {input: testGame})) as Promise<GraphQLResult>);
         dispatch(setGame(testGame));

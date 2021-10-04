@@ -2,7 +2,7 @@ import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRo
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
-import { createWrongAnswerArray, generateWrongAnswers } from '../../utilities/game-utility';
+import * as gameUtil from '../../utilities/game-utility';
 import { Card } from '../../API';
 import { gameState } from '../../state-slices/multiplayer/game-slice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -34,49 +34,7 @@ let testCard = {
     ]
 }
 
- export async function createAnswers() {
-    let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
-    getCardList(response);
-}
 
-let getCardList = (response: any) => {
-    let cardList = response.data.getGame.set.cardList;
-    let answerBank: Array<string> = [];
-    console.log(cardList);
-
-    for (let card of cardList) {
-        answerBank.push(card.correctAnswer);
-    }
-
-    for (let card of cardList) {
-        let wrongAnswers = generateWrongAnswers(card, answerBank);
-        card.multiAnswers = wrongAnswers;
-    }
-    console.log(cardList);
-}
-
-
-// @ts-ignore
-function randomizeAnswers(card): string[] {
-    let answers: string[] | undefined = [];
-    let order: number[] = [];
-    let ranNum: number = Math.floor(Math.random() * 4);
-    while (order.length < 4) {
-        if (!order.includes(ranNum)) {
-            order.push(ranNum);
-        }
-        ranNum = Math.floor(Math.random() * 4);
-    }
-
-    let i: number = 0;
-    while (answers.length < 4) {
-        answers.push(card.multiAnswers[order[i++]]);
-    }
-
-    console.log(answers);
-
-    return answers;
-}
 
 
 
@@ -86,13 +44,15 @@ function renderColors() {
 
 
 function Answers() {
-    let answers: string[] = randomizeAnswers(testCard);
+    
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     const game = useSelector(gameState);
     const dispatch = useDispatch();
-    
+
+    let answers: string[] = gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]);
+
     function submit(e: any) {
-        if (e.target.id === testCard.correctAnswer) {
+        if (e.target.id === game.set.cardList[game.questionIndex].correctAnswer) {
             console.log('yes');
         } else {
             console.log('no');
@@ -101,8 +61,6 @@ function Answers() {
 
     return (
         <>
-        <Button onClick={createAnswers}>Test Me</Button>
-        {
         <TableContainer>
             <Table>
                 <TableHead>
@@ -117,8 +75,7 @@ function Answers() {
                     </TableRow>
                 </TableHead>
             </Table>
-        </TableContainer>
-        }       
+        </TableContainer>      
         </>
 
     );
