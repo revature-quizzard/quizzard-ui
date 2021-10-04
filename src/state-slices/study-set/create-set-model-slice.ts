@@ -21,7 +21,7 @@ import { SetDto } from "../../dtos/set-dto";
 interface  State {
     IsShowing: boolean; 
     currentUser: User;
-    setToSave: Set;
+    setToSave: SetDto;
     newTagForms: TagFormModel[];
     tagLimit: number ;
 }
@@ -33,8 +33,8 @@ interface  State {
 const initialState: State = {
     IsShowing: false,
     currentUser: undefined,
-    setToSave: {setName: '', isPublic: false, author : '' , tags : [] as Tag[] , set_id : '' , favorites :0 , cards: [] as Card[] , views : 0  , plays : 0 ,studies : 0 } as Set,
-    newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
+    setToSave: {setName: '', isPublic: false, author : '' , tags : [] as String[] } as SetDto,
+    newTagForms: [ { tags: [], tagAdded: false} as TagFormModel ] as TagFormModel[],
     tagLimit: 0
 }
 
@@ -59,9 +59,9 @@ export const createSetSlice = createSlice({
         {
             state.newTagForms.push(action.payload);
         },
-        appendNewTag: (state, action : PayloadAction<Tag> ) => {
+        appendNewTag: (state, action : PayloadAction<string> ) => {
             console.log(action.payload);
-            state.setToSave.tags.push({tagColor: action.payload.tagColor  , tagName : action.payload.tagName} as Tag);
+            state.setToSave.tags.push(action.payload);
         },
         incrementTagLimit: (state) => {
             if(state.tagLimit < 10)
@@ -69,12 +69,11 @@ export const createSetSlice = createSlice({
         },
         updateTagFormbyIndex: (state , action : PayloadAction<SaveTagFormModel> ) =>
         {
-            state.newTagForms[action.payload.index].TagName = action.payload.tagName;
-            state.newTagForms[action.payload.index].tagColor = action.payload.tagColor;
+            state.newTagForms[action.payload.index].tags = [];
             state.newTagForms[action.payload.index].tagAdded = action.payload.tagAdded;
         },
         clearTags: (state) => {
-            state.newTagForms =  [{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel ]; 
+            state.newTagForms =  [{ tags: [], tagAdded: false} as TagFormModel ]; 
             state.setToSave.tags = [] ;      
            },
         deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
@@ -89,8 +88,7 @@ export const createSetSlice = createSlice({
            
         },
         clearTagFrombyIndex: (state , action : PayloadAction<SaveTagFormModel>) => {
-            state.newTagForms[action.payload.index].TagName = '';
-            state.newTagForms[action.payload.index].tagColor = '';
+            state.newTagForms[action.payload.index].tags = [];
             state.newTagForms[action.payload.index].tagAdded = false;
            },
            saveSet: (state , action : PayloadAction<SetDto>) => {

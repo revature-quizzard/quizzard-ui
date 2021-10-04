@@ -1,12 +1,12 @@
+import { Tag } from "./tag";
+
 export class TagFormModel {
-    tagColor: string;
-    TagName: string;
+    tags: Tag[]
     tagAdded: boolean;
 
-    constructor(tagColor : string , TagName : string , tagAdded: boolean)
+    constructor(tags: Tag[] , tagAdded: boolean)
     {
-        this.tagColor = tagColor;
-        this.TagName = TagName;
+        this.tags = tags;
         this.tagAdded = tagAdded;
     }
 }

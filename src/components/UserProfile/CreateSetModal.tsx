@@ -1,18 +1,16 @@
 import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, makeStyles, Typography } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import UserProfile from "./UserProfile";
+
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
 import { useEffect, useState } from "react";
 import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
-import { createStudySet } from "../../remote/set-service";
+import { createStudySet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { createStyles,Theme } from '@material-ui/core/styles'
 import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
-import React, {Component}  from 'react'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
-import { IconButton, TextField  } from "@material-ui/core";
+import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -30,6 +28,7 @@ import Fade from '@mui/material/Fade';
 import Popover from '@mui/material/Popover';
 import { style } from "@mui/system";
 import { ClassNames, useTheme } from "@emotion/react";
+import { getJSDocTags } from "typescript";
 
 
 
@@ -44,7 +43,7 @@ const CreateSetModal = (props: any) => {
   const [newSet, setNewSet] = useState('')
   const [tagColor, setTagColor] = useState('');
   const [tagName, setTagName] = useState('');
-  const [newTagFromState , setNewTagFromState] = useState([{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel] as TagFormModel[]);
+  const [allTags , setAllTags] = useState([] as Tag[]);
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
   const _createSetState= useSelector(createSetState);
@@ -52,14 +51,28 @@ const CreateSetModal = (props: any) => {
   let isAtTagLimit : boolean = false;
   let k : number = 0;
   let loc
+
+
   const handleChange = (e: any) => {
      
     setNewSet(e.target.value);
   }
  
-//   const updateTagColor = (e: any) => {
-//     setTagColor(e.target.value);
-//   }
+
+  useEffect(() => {
+    async function getTags()
+    {
+        try{
+              let response = await getSetTags(user.token);  
+        setAllTags(response);
+        }catch(e: any){
+          console.log(e);
+        }
+      
+    }
+
+    getTags();
+  }, []); // <-- empty array means 'run once'
 
 //   const updateTagName = (e: any) => {
 //     setTagName(e.target.value);
@@ -83,9 +96,9 @@ const CreateSetModal = (props: any) => {
         console.log(_createSetState.tagLimit);
         if( _createSetState.tagLimit < 10)
         {
-            setNewTagFromState( _createSetState.newTagForms as TagFormModel[]);
+          //  setNewTagFromState( _createSetState.newTagForms as TagFormModel[]);
            
-            let ntf : TagFormModel = { tagColor: '', TagName: '', tagAdded: false};
+            let ntf : TagFormModel = { tags: [], tagAdded: false};
             dispatch(appendNewTagForm(ntf)); 
             isAtTagLimit = false;
         }else{
@@ -104,7 +117,7 @@ const CreateSetModal = (props: any) => {
     const removeTag = (e: any , key: number) => {   
 
         
-        let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor.toString(), tagName: tagName.toString() , tagAdded: true , index: key}
+        let formToSave_w_key: SaveTagFormModel = { tags: allTags ,  tagAdded: true , index: key}
         dispatch(deleteTag(formToSave_w_key));
     }
 
@@ -113,11 +126,10 @@ const CreateSetModal = (props: any) => {
         
         if(tagName && tagColor)
         {
-           let tag = {tagName: tagName.toString() , tagColor: tagColor.toString() } as Tag;
-           console.log(tag)
-        dispatch(appendNewTag(tag));
+           
+        dispatch(appendNewTag(tagName));
         // saving form and weather ist been added or not for future reference
-        let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor.toString(), tagName: tagName.toString() , tagAdded: true , index: key}
+        let formToSave_w_key: SaveTagFormModel = { tags: allTags, tagAdded: true , index: key}
         dispatch(updateTagFormbyIndex(formToSave_w_key));
         console.log(_createSetState.setToSave.tags);
         }
@@ -131,7 +143,7 @@ const CreateSetModal = (props: any) => {
         // only allowing 10 or fewer tags per set
         
        
-        let cleard_form_w_key: SaveTagFormModel = { tagColor: '', tagName: '' , tagAdded: false , index: key}
+        let cleard_form_w_key: SaveTagFormModel = { tags: allTags , tagAdded: false , index: key}
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
    
@@ -157,39 +169,13 @@ const CreateSetModal = (props: any) => {
 
     return (
         <div>
-                    <Button style={{background: 'white'  , color: 'green'}} onClick={handleOpen} startIcon={<ControlPointIcon />}></Button>
-            
-              <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={_createSetState.IsShowing}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-            <Fade in={_createSetState.IsShowing == true}>
-          <Box >
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-            
-            </Typography>
-          </Box>
-        </Fade>
-            
-          </Modal>
+                
 
-           <TextField label="set name" onChange={handleChange} value={newSet} />
-            <hr/>
-            
-           
+            <TextField label="set name" onChange={handleChange} value={newSet} />
+                <hr/>
 
                     { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
-               { 
+                     { 
                    return <div key={i}>
                     
                     {_createSetState.newTagForms[i].tagAdded == false 
@@ -197,10 +183,24 @@ const CreateSetModal = (props: any) => {
                     ? 
 
                     <>
-                    <TextField  name="tag color"   style={{width:'15em'}} label="tag color" variant="standard"   onChange={(e) => updateTagColor(e)} value={tagColor} />
-                    <br/>
-                    <TextField  name="tag name"  style={{width:'15em'}} label="tag name" variant="standard"  onChange={(e) => updateTagName(e)} value={tagName}/>
-                    <br/>
+                    <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
+                        <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
+                         
+                                  {allTags.map((T : Tag | undefined , i) =>{
+
+                                    return   <Select
+                                            key={i}
+                                            labelId="demo-simple-select-standard-label"
+                                            id="demo-simple-select-standard"
+                                            value={allTags[i].tagName.toString()}
+                                            onChange={updateTagName}
+                                            label="Age"
+                                            > <MenuItem value={T.tagName} ><em>None</em> <FiberManualRecordIcon style={{color: T.tagColor}} /></MenuItem>
+                                            </Select>
+                                    })}
+
+                            
+                    </FormControl>
                     <Button key={i}  variant="contained" style={{background: 'white' , color: '#4E3E61'}} onClick={(e) => addTag(e , i)}>Create Tag</Button>
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => clearTargetForm(e , i)} startIcon={<CancelIcon />}>
                        cancle
@@ -210,9 +210,9 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tagColor} />
+                    <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tags[i].tagColor} />
                     <br/>
-                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].TagName}/>
+                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].tags[i].tagName}/>
                   
                     <br/> 
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>

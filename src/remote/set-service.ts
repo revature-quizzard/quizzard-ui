@@ -14,12 +14,27 @@ export async function createStudySet(studySet: SetDto , token: string) {
 }
   let response = await quizzardApiClientTokenAuthorized.post(
     "/sets/",
-    studySet
+    studySet,
+    config
   );
 
   return await response.data;
 }
 
+
+export async function getSetTags(token: string) {
+  let config = {
+    headers: {
+        Authorization: token
+    }
+}
+  let response = await quizzardApiClientTokenAuthorized.get(
+    "/tags",
+    config
+  );
+
+  return await response.data;
+}
 /**
  * Added on a refactor to include token header for user integration. Copy pasted code
  * just in case, as editing above may have been cusing bugs... though we don't know why.
