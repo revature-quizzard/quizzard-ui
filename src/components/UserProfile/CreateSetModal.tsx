@@ -31,6 +31,14 @@ import Popover from '@mui/material/Popover';
 import { style } from "@mui/system";
 import { ClassNames, useTheme } from "@emotion/react";
 
+
+
+/**
+ * Allows user to create set with multiple tags.
+ * Renders itself.
+ * @author Alfonso Holmes
+ * */
+
 const CreateSetModal = (props: any) => {
 
   const [newSet, setNewSet] = useState('')

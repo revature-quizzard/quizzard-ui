@@ -15,7 +15,7 @@ import { SetDto } from "../../dtos/set-dto";
 
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * interface for the state
  */
 interface  State {
@@ -27,7 +27,7 @@ interface  State {
 }
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * initial state values
  */
 const initialState: State = {
@@ -39,7 +39,7 @@ const initialState: State = {
 }
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * state definition, name, initial state, reducers
  */
 export const createSetSlice = createSlice({
