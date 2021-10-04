@@ -3,7 +3,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { useEffect, useState } from 'react';
 import { createGame } from '../../graphql/mutations';
-import { getSets } from '../../remote/sets-fetcher';
+import { getAllSets } from '../../remote/set-service';
 import { setGame } from '../../state-slices/multiplayer/game-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -68,7 +68,7 @@ function GameSettings() {
 
     const getData = async() => {
         try{
-            setSets(await getSets());
+            setSets(await getAllSets());
         } catch (e: any){
             console.log(e);
         }
