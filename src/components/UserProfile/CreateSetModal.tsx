@@ -67,6 +67,11 @@ const CreateSetModal = (props: any) => {
         setAllTags(response);
         }catch(e: any){
           console.log(e);
+          setAllTags([{tagName: 'oop' , tagColor: 'blue'} ,
+           {tagName: 'java' , tagColor: 'red'} ,
+           {tagName: 'lisov substitution' , tagColor: 'yellow'} ,
+           {tagName: 'python' , tagColor: 'black'}
+          ] as Tag[])
         }
       
     }
@@ -78,10 +83,13 @@ const CreateSetModal = (props: any) => {
 //     setTagName(e.target.value);
 //   }
   const updateTagColor = (e: any) => {
-    setTagColor(e.target.value);
+   
   }
-  const updateTagName = (e: any) => {
-    setTagName(e.target.value);
+  const updateTagNameAndColor = (e: any , key: number) => {
+    setTagName(allTags[key].tagName);
+    setTagColor(allTags[key].tagColor);
+    console.log(tagName);
+    console.log(tagColor);
   }
     const handleClose = () => {
         dispatch(closeModal);
@@ -98,7 +106,7 @@ const CreateSetModal = (props: any) => {
         {
           //  setNewTagFromState( _createSetState.newTagForms as TagFormModel[]);
            
-            let ntf : TagFormModel = { tags: [], tagAdded: false};
+            let ntf : TagFormModel = { tagColor: '' , TagName: '' , tagAdded: false};
             dispatch(appendNewTagForm(ntf)); 
             isAtTagLimit = false;
         }else{
@@ -117,7 +125,7 @@ const CreateSetModal = (props: any) => {
     const removeTag = (e: any , key: number) => {   
 
         
-        let formToSave_w_key: SaveTagFormModel = { tags: allTags ,  tagAdded: true , index: key}
+        let formToSave_w_key: SaveTagFormModel = { tagColor: '' , tagName: '' ,  tagAdded: true , index: key}
         dispatch(deleteTag(formToSave_w_key));
     }
 
@@ -129,7 +137,8 @@ const CreateSetModal = (props: any) => {
            
         dispatch(appendNewTag(tagName));
         // saving form and weather ist been added or not for future reference
-        let formToSave_w_key: SaveTagFormModel = { tags: allTags, tagAdded: true , index: key}
+        
+        let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor , tagName: tagName , tagAdded: true , index: key};
         dispatch(updateTagFormbyIndex(formToSave_w_key));
         console.log(_createSetState.setToSave.tags);
         }
@@ -143,7 +152,7 @@ const CreateSetModal = (props: any) => {
         // only allowing 10 or fewer tags per set
         
        
-        let cleard_form_w_key: SaveTagFormModel = { tags: allTags , tagAdded: false , index: key}
+        let cleard_form_w_key: SaveTagFormModel = {tagColor: '' , tagName: '' , tagAdded: false , index: key}
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
    
@@ -185,34 +194,32 @@ const CreateSetModal = (props: any) => {
                     <>
                     <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
                         <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
-                         
-                                  {allTags.map((T : Tag | undefined , i) =>{
-
-                                    return   <Select
-                                            key={i}
+                         <Select
+                                           
                                             labelId="demo-simple-select-standard-label"
                                             id="demo-simple-select-standard"
-                                            value={allTags[i].tagName.toString()}
-                                            onChange={updateTagName}
+                                            value={tagName}
+                                            //onChange={}
                                             label="Age"
-                                            > <MenuItem value={T.tagName} ><em>None</em> <FiberManualRecordIcon style={{color: T.tagColor}} /></MenuItem>
-                                            </Select>
+                                            > 
+                                  {allTags.map((T : Tag | undefined , i) =>{
+
+                                    return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><em>{T.tagName} </em> <FiberManualRecordIcon style={{color: T.tagColor}} /></MenuItem>
+                                          
                                     })}
 
-                            
+                              </Select>
                     </FormControl>
-                    <Button key={i}  variant="contained" style={{background: 'white' , color: '#4E3E61'}} onClick={(e) => addTag(e , i)}>Create Tag</Button>
-                    <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => clearTargetForm(e , i)} startIcon={<CancelIcon />}>
-                       cancle
-                    </Button>
+                    <br/>
+                    <Button key={i}  variant="contained" style={{background: 'green' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
                     </>
                     
                     : 
                     
                     <>
-                    <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tags[i].tagColor} />
+                    <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tagColor} />
                     <br/>
-                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].tags[i].tagName}/>
+                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].TagName}/>
                   
                     <br/> 
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
@@ -227,8 +234,7 @@ const CreateSetModal = (props: any) => {
                 </div>
                 })
             }
-                      <Button variant="contained" style={{background: 'white' , color: '#4E3E61' }} onClick={(e) => ClearTags(e)}>Clear Tags</Button>
-                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<ControlPointIcon />}> Tag</Button> : <></>}
+                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<ControlPointIcon />}> New Tag</Button> : <></>}
                <br/>
 
                 <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>

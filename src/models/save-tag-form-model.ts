@@ -1,14 +1,15 @@
-import { Tag } from "../dtos/Tag";
 import { TagFormModel } from "./new-tag-form";
 
 export class  SaveTagFormModel{
-    tags: Tag[]
+    tagName : string;
+    tagColor: string;
     tagAdded: boolean;
     index: number;
 
-    constructor( tags: Tag[], tagAdded: boolean ,  index: number)
+    constructor(tagColor : string , TagName : string , tagAdded: boolean ,  index: number)
     {
-        this.tags = tags
+        this.tagColor = tagColor;
+        this.tagName = TagName;
         this.tagAdded = tagAdded;
         this.index = index;
        
