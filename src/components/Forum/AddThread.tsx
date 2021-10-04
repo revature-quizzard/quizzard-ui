@@ -9,6 +9,10 @@ import {Thread } from '../../models/thread';
 import { addThread } from '../../remote/thread-service';
 import { Redirect } from 'react-router';
 
+interface IAddThreadProps {
+    close: (input: boolean) => void;
+}
+
 const useStyles = makeStyles({
     addThreadContainer: {
         justifyContent: "center",
@@ -31,7 +35,7 @@ const useStyles = makeStyles({
     }
 });
 
-function AddThread() {
+function AddThread(props: IAddThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
     const [redirect, setRedirect] = useState(false);
@@ -50,6 +54,7 @@ function AddThread() {
     }
 
     let handleClick = async () => {
+        props.close(false);
         try {
             let threadAncestors: string[] = [forumInfo.currentSubforum.id]
             //CHANGE THESE VALUES
