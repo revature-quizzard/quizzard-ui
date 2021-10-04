@@ -5,12 +5,12 @@ import { RootState } from "../../store/store";
  * Slice of state for setting guests in the multiplayer game.
  * @author Heather Guilfoyle
  */
-interface State {
+export interface Guest {
     id: string,
-    nickname: string,
-
+    nickname: string
 }
-const initialState: State = {
+
+const initialState: Guest = {
     id: '',
     nickname: '',
 }
@@ -24,7 +24,6 @@ export const guestSlice = createSlice({
             state.id = Math.random().toString(36).substr(2, 5);
             state.nickname = action.payload.nickname;
         }
-
     }
 })
 
