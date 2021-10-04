@@ -88,8 +88,9 @@ const Login = () => {
                             Login
                         </Button>
                         <br/><br/>
-                        <p>No account yet? <span style={{color: "#0000EE", cursor: "pointer", textDecoration: "underline"}}
-                                                onClick={navToRegister}>Sign Up</span>!</p>
+                        <p>No account yet? <span
+                            style={{color: "#0000EE", cursor: "pointer", textDecoration: "underline"}}
+                            onClick={navToRegister}>Sign Up</span>!</p>
                     </div>
                 </Container>
             </>
