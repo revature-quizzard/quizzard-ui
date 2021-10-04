@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
 import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
+import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
 
 const useStyles = makeStyles({
@@ -126,19 +127,6 @@ async function closeGame(game: any) {
 }
 
 /**
- *  The host of a game can remove players from the game.
- * 
- *  This logic is run when the 'Kick Player' button is clicked next
- *  to a player's name. The given id will be removed from the game data and 
- *  the player list will be updated accordingly.
- * 
- * @param playerID - ID of player to be kicked from game
- */
-async function kickPlayer(playerID: string) {
-
-}
-
-/**
  *  The host of a game will invoke this function at the end of the game (match_state = 3)
  * 
  *  This function will trigger our AWS Lambda, which will post game records to DynamoDB, and pull info
@@ -152,6 +140,8 @@ function postGameRecords() {
 function Game() {
 
     const user = useSelector(authState);
+    //@ts-ignore
+    const guestUser = useSelector(guestState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -202,7 +192,8 @@ function Game() {
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
-        let currentUser = 'nobody';
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
         
         switch(game.matchState) {
             case 0:
@@ -298,8 +289,9 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
-        // TODO: Change to check redux state, bit weird rn as guests don't use state
-        let currentUser = 'nobody';
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
+        
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
             // TODO: Utilize placing and streak fields for scoring
@@ -394,26 +386,6 @@ function Game() {
         else temp += 1;
         console.log('Inside incrementState, temp:', temp)
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
-    }
-
-    function test(game: any) {
-        let newgame = {
-            id: game.id,
-            name: '',
-            matchState: 0,
-            questionIndex: 0,
-            capacity: 0,
-            host: '',
-            questionTimer: 10,
-            set: {
-                //@ts-ignore
-                cardList: []
-            },
-            //@ts-ignore
-            players: []
-        }
-        newgame.id = parseInt(game.id) + 1;
-        return newgame;
     }
     
     // The return renders components based on match state if game exists in redux,
