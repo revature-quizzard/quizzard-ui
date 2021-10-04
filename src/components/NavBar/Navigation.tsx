@@ -207,8 +207,7 @@ export function NavigationComponent(){
                 <LibraryBooksIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Discover Sets</Typography>
               </ListItem>
 
-              <ListItem button component={Link} to={'/register'}>
-
+              <ListItem button component={Link} to={'/forum'}>
                 <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
 
