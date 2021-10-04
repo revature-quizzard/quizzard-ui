@@ -37,6 +37,7 @@ function GameLounge() {
     const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
+    let firstRender = useRef(true);
     let history = useHistory();
 
     useEffect(() => {
@@ -122,8 +123,7 @@ function GameLounge() {
     
             
         }
-
-        fetchGame();
+        firstRender.current ? firstRender.current = false : fetchGame();
     }, [guestUser])
     
 
