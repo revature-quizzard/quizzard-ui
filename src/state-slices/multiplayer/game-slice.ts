@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 
 
-interface Player {
+export interface Player {
     id: string,
     username: string,
     points: number,
