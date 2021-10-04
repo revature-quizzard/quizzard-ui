@@ -132,7 +132,7 @@ export function NavigationComponent(){
   return (
 
       <>
-        <div className={classes.root}>
+        <div>
           <CssBaseline/>
           <AppBar
               position="fixed"
