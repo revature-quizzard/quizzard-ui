@@ -37,49 +37,6 @@ function GameLounge() {
     let id = useRef('');
     let history = useHistory();
 
-    // Creates a game using dummy data for now, pushes it to DynamoDB, and
-    // reroutes user to /multiplayer
-    async function makeGame() {
-        let testGame = {
-            id: Math.random().toString(36).substr(2, 5),
-            name: 'Test Game',
-            matchState: 0,
-            questionIndex: 0,
-            capacity: 1,
-            host: 'nobody',
-            questionTimer: 10,
-            set: {
-                id: '10',
-                name: 'Test Set',
-                creator: 'nobody',
-                cardList: [{
-                    id: '10',
-                    question: 'What is the answer to this question?',
-                    correctAnswer: "There isn't one",
-                    multiAnswers: ['']
-                }]
-            },
-            players: [{
-                id: '10',
-                username: 'nobody',
-                points: 0,
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                placing: -1,
-                streak: 0,
-                answeredCorrectly: false
-            }]
-        }
-        testGame.set.cardList.forEach((card, i) => {
-            card.multiAnswers = gameUtil.generateWrongAnswers(card.correctAnswer, testGame.set.cardList);
-        })
-
-        console.log(testGame)
-        let resp = await (API.graphql(graphqlOperation(createGame, {input: testGame})) as Promise<GraphQLResult>);
-        dispatch(setGame(testGame));
-        history.push('/multiplayer');
-    }
-    
     async function fetchGame() {
         console.log(id.current);
         let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
