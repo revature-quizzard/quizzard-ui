@@ -7,6 +7,7 @@ import { Paper } from '@mui/material';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import { Comment } from '../../models/comment';
 import { updateComment } from '../../remote/comment-service';
+import { Redirect } from 'react-router';
 
 interface IUpdateCommentProps {
     close: (input: boolean) => void;
@@ -14,6 +15,7 @@ interface IUpdateCommentProps {
 
 function UpdateComment(props: IUpdateCommentProps) {
     const [description, setDescription] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
 
@@ -39,9 +41,16 @@ function UpdateComment(props: IUpdateCommentProps) {
             );
             console.log(toAdd);
             let resp = await updateComment(toAdd);
+            setRedirect(true);
         } catch (e: any) {
             console.log(e);
         }
+    }
+
+    if (redirect) {
+        return (
+            <Redirect to='/forum' />
+        )
     }
 
     return (
