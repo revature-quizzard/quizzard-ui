@@ -8,7 +8,7 @@ import {
 
 export async function createStudySet(studySet: SetDto) {
 
-  let response = await quizzardApiClientTokenAuthorized.post("/sets",studySet);
+  let response = await quizzardApiClientTokenAuthorized.post("/sets", studySet);
 
   return await response.data;
 }
