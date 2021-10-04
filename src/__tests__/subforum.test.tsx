@@ -5,7 +5,8 @@ import { Subforum } from '../models/subforum';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { assert } from 'console';
-jest.mock('../remote/comment-service');
+import { getAllSubForums } from '../remote/sub-forum-service';
+jest.mock('../remote/sub-forum-service');
 import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
 jest.mock('../state-slices/error/errorSlice')
 
@@ -44,4 +45,25 @@ describe('View Subforum Component Test Suite', () => {
 
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
-    })})
+    })
+    it('', () => {
+        // configure mock store
+        const configureMockStore = createMockStore();
+        const mockStore = configureMockStore(initialState);
+        
+        (getAllSubForums as jest.Mock).mockImplementation(() => {
+            [
+                new Subforum([], "NULL", "Description", "ID", "Subject", 1)
+            ]
+        })
+
+        // set up wrapper class
+        const wrapper = shallow(<Provider store={mockStore}>
+                                    <SubforumHandler />
+                                </Provider>);
+
+        // expect it to be truthy (i.e. something renders)
+    }
+    
+    )
+})

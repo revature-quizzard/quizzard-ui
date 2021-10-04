@@ -5,7 +5,8 @@ import { Subforum } from '../models/subforum';
 import { Thread } from '../models/thread';import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { assert } from 'console';
-jest.mock('../remote/comment-service');
+import { getAllThreads } from '../remote/sub-forum-service';
+jest.mock('../remote/sub-forum-service');
 import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
 jest.mock('../state-slices/error/errorSlice')
 
@@ -45,4 +46,27 @@ describe('Get Threads Component Test Suite', () => {
 
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
-    })})
+    })
+
+    it('', () => {
+        // configure mock store
+        const configureMockStore = createMockStore();
+        const mockStore = configureMockStore(initialState);
+        
+        (getAllThreads as jest.Mock).mockImplementation(() => {
+            [
+                new Thread(["Ancestor"], "Parent", "Description", "ID", "Subject")
+            ]
+        })
+
+        // set up wrapper class
+        const wrapper = shallow(<Provider store={mockStore}>
+                                    <GetThreads />
+                                </Provider>);
+
+        // expect it to be truthy (i.e. something renders)
+    }
+    
+    )
+
+})
