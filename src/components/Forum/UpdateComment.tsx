@@ -20,28 +20,17 @@ function UpdateComment() {
     let handleClick = async () => {
         console.log("button clicked!");
         try {
-            // let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
-            // let toAdd = new Comment(
-            //     forumInfo.currentComment.ancestors,
-            //     forumInfo.currentComment.parent,
-            //     description,
-            //     auth.authUser.username,
-            //     forumInfo.currentComment.id,
-            //     forumInfo.currentComment.subject,
-            //     forumInfo.currentComment.child_count,
-            //     forumInfo.currentComment.date_created,
-            //     forumInfo.currentComment.tags
-            // );
+            let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(
-                ["114687543", "310f67a1-822c-4fab-9b7f-8313686f7fb2"],
-                "310f67a1-822c-4fab-9b7f-8313686f7fb2",
+                forumInfo.currentComment.ancestors,
+                forumInfo.currentComment.parent,
                 description,
-                "cmettee",
-                "1234567890",
-                "subject",
-                1,
-                "2021-10-01T00:01:09.805",
-                []
+                auth.authUser.username,
+                forumInfo.currentComment.id,
+                forumInfo.currentComment.subject,
+                forumInfo.currentComment.child_count,
+                forumInfo.currentComment.date_created,
+                forumInfo.currentComment.tags
             );
             console.log(toAdd);
             let resp = await updateComment(toAdd);
