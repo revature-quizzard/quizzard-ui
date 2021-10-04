@@ -56,7 +56,14 @@ Amplify.configure(config);
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
-async function startGame() {
+async function startGame(game: any) {
+    if (game.matchState === 0) {
+        await API.graphql(
+            graphqlOperation(
+                updateGame, {input: {id: game.id, matchState: 1}}
+            )
+        );
+    }
 }
 
 /**
