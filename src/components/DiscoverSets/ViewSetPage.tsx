@@ -25,6 +25,7 @@ import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {addSetToFavorites} from "../../remote/user-service";
 import {useHistory} from "react-router-dom";
+import {profileState} from "../../state-slices/user-profile/profile-slice";
 
 
 
@@ -40,6 +41,10 @@ function ViewSetPage() {
     const [answer, setAnswer] = React.useState(false);
     const user: User = useSelector(authState).authUser;
     const history = useHistory();
+
+    const state = useSelector(profileState);
+    const favorites = state.userProfile.favoriteSets;
+
 
     function handleOpen(a:any){
         setAnswer(a)
@@ -105,6 +110,8 @@ function ViewSetPage() {
     };
 
     async function addTofavoriets(){
+
+
 
         let setId={
             id:s.id
