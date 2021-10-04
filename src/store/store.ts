@@ -30,10 +30,8 @@ export const store = configureStore({
         auth: authReducer,
         error: errorReducer,
         profile: profileReducer, 
-        createSet: createSetReducer 
-        forum: forumReducer,
-        profile: profileReducer
-
+        createSet: createSetReducer,
+        forum: forumReducer
     }
 })
 
