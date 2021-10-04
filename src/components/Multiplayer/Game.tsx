@@ -20,22 +20,34 @@ import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
 import { flexbox } from '@mui/system';
 
 const useStyles = makeStyles({
+    gameContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
     playerContainer: {
-        justifyContent: "center",
+        display: 'flex',
+        alignItems:'left',
+        justifyContent: "left",
         marginLeft: "2em",
         marginTop: "2em"
     },
 
-    gameContainer: {
+    qaContainer: {
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: "center",
-        marginLeft: "20em",
+        marginLeft: "2em",
         marginTop: "2em"
 
     },
 
     timerContainer: {
-        justifyContent: "center",
+        position: 'fixed',
+        top:'5rem',
+        right:'2rem',
+        alignSelf: 'flex-start',
+        justifyContent: "right",
         marginLeft: "2em",
         marginTop: "2em"
 
@@ -192,16 +204,18 @@ function Game() {
             case 1:
                 return (
                     <>
-                        <div className= {classes.playerContainer}>
-                        <Players />
-                        </div>
                         <div className= {classes.timerContainer}>
                         <Timer start={game.questionTimer} onTimeout={onTimeout}/>
                         </div>
-                        <div className= {classes.gameContainer}>
+                    <div className = {classes.gameContainer}>
+                        <div className= {classes.playerContainer}>
+                        <Players />
+                        </div>
+                        <div className= {classes.qaContainer}>
                         <Questions />
                         <Answers />
                         </div>
+                    </div>
                     </>
                 )
             case 2:
