@@ -12,6 +12,7 @@ import authReducer from "../state-slices/auth/auth-slice";
 import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
 import studySetReducer from "../state-slices/study-set/study-set-slice"
 import errorReducer from "../state-slices/error/errorSlice";
+import forumReducer from "../state-slices/forum/forum-slice"
 import profileReducer from "../state-slices/user-profile/profile-slice";
 import createSetReducer  from "../state-slices/study-set/create-set-model-slice";
 import {createStore, combineReducers} from 'redux'
@@ -30,6 +31,9 @@ export const store = configureStore({
         error: errorReducer,
         profile: profileReducer, 
         createSet: createSetReducer 
+        forum: forumReducer,
+        profile: profileReducer
+
     }
 })
 

@@ -13,15 +13,22 @@ import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import { FlipCard } from "./components/Flashcards/FlipCard";
+import SubforumHandler from "./components/Forum/Subforum";
 import {ConfirmSignup} from "./components/Login/ConfirmSignup";
 import {Amplify} from "aws-amplify";
 import {COGNITO} from "./config/aws";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+
+import ViewComment from "./components/Forum/ViewComments";
+
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
+import AddThread from './components/Forum/AddThread';
+import GetThreads from "./components/Forum/GetThread";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
 import CreateSetModal from "./components/UserProfile/CreateSetModal";
+
 
 
 Amplify.configure({
@@ -67,6 +74,15 @@ function App() {
           </Route>
           <Route exact path="/confirmation">
             <ConfirmSignup />
+          </Route>
+          <Route exact path="/forum">
+            <SubforumHandler />
+          </Route>
+          <Route exact path="/forum/thread/*">
+            <ViewComment />
+          </Route>
+          <Route path="/forum/*">
+            <GetThreads />
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
