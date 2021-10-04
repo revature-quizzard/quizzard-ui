@@ -46,7 +46,7 @@ function Players() {
 
     const executeKick = async (user: Player) => {
         let copylist: Player[] = [].concat(game.players);
-        let index = copylist.findIndex((player) => player.id === user.id);
+        let index = copylist.findIndex((player) => player.id == user.id);
         copylist.splice(index, 1);
         (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
     }
@@ -57,12 +57,23 @@ function Players() {
             <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
                 <TableRow>
-                    <TableCell className={styles.text} align="left">Username</TableCell>
-                    <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                    {user.authUser.username == game.host
+                    ?
+                    <>
+                        <TableCell className={styles.text} align="left">Username</TableCell>
+                        <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                        <TableCell className={styles.text} align="right">Kick Players</TableCell>
+                    </>
+                    :
+                    <>
+                        <TableCell className={styles.text} align="left">Username</TableCell>
+                        <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                    </>
+                    }
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {user.username == game.host
+                {user.authUser.username == game.host
                 ?
                 game.players.map((player) => (
                     <TableRow
@@ -70,7 +81,7 @@ function Players() {
                     >
                     <TableCell className={styles.text} align="left">{player.username}</TableCell>
                     <TableCell className={styles.text} align="right">{player.points}</TableCell>
-                    <TableCell className={styles.text} align="right">Kick Players</TableCell>
+                    <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
                     </TableRow>
                 ))
                 :
@@ -80,7 +91,6 @@ function Players() {
                     >
                     <TableCell className={styles.text} align="left">{player.username}</TableCell>
                     <TableCell className={styles.text} align="right">{player.points}</TableCell>
-                    <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
                     </TableRow>                
                     ))}
                 </TableBody>
