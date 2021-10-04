@@ -1,5 +1,7 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { gameState } from '../../state-slices/multiplayer/game-slice';
 
 /**
  * React component that renders the current players username and their points of an active game.
@@ -15,9 +17,10 @@ import { makeStyles } from '@material-ui/core';
   const useStyles = makeStyles(() => ({
       root: {
         backgroundColor: "#b15fc2",
-        width: '18%',
+        width: '18em',
         borderStyle: 'solid',
-        borderColor: '#7636a3'
+        borderColor: '#7636a3',
+        display: 'flex'
       },
       table: {
           verticalAlign: 'middle',
@@ -26,19 +29,12 @@ import { makeStyles } from '@material-ui/core';
       text: {
           color: 'white'
       }
-  }))  
+  }))
   
-  const rows = [
-    createData('Yozur', 159),
-    createData('John', 237),
-    createData('Tommy', 262),
-    createData('Cupcake', 305),
-    createData('Sam', 134),
-  ];
-
 function Players() {
 
     const styles = useStyles();
+    const game = useSelector(gameState);
 
     return (
         <>
@@ -46,21 +42,17 @@ function Players() {
             <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
                 <TableRow>
-                    <TableCell className={styles.text}>Players</TableCell>
-                    <TableCell className={styles.text} align="right">Username</TableCell>
+                    <TableCell className={styles.text} align="left">Username</TableCell>
                     <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {rows.map((row) => (
+                {game.players.map((player) => (
                     <TableRow
-                    key={row.username}      
+                    key={player.username}      
                     >
-                    <TableCell className={styles.text} component="th" scope="row">
-                        {row.username}
-                    </TableCell>
-                    <TableCell className={styles.text} align="right">{row.username}</TableCell>
-                    <TableCell className={styles.text} align="right">{row.points}</TableCell>
+                    <TableCell className={styles.text} align="left">{player.username}</TableCell>
+                    <TableCell className={styles.text} align="right">{player.points}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

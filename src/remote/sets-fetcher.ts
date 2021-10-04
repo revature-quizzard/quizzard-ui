@@ -1,5 +1,6 @@
 import axios from "axios";
 import {StudySet} from "../models/study-set";
+import { quizzardApiClientTokenAuthorized } from "./api-client";
 import apiUrl from './api-url';
 
 /**
@@ -43,3 +44,8 @@ export const ownedSetsFetcher = async (token: string) => {
     .catch((e) => console.log(e));
   return data;
 };
+
+export const getSets = async () => {
+  let response = await quizzardApiClientTokenAuthorized.get("/sets");
+  return response.data;
+}
