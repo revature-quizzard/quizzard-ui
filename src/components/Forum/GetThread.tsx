@@ -5,12 +5,13 @@ import { Thread } from '../../models/thread';
 import { useHistory } from 'react-router';
 import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { authState } from '../../state-slices/auth/auth-slice';
 import AddThread from './AddThread';
 
 const GetThreads = ()=> {
     let [threads, setThread] = useState(undefined as Thread[] | undefined);
     const history = useHistory();
+    const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
 
@@ -37,8 +38,13 @@ const GetThreads = ()=> {
 
     return (
       <>
-        <AddThread />
-        <TableContainer component={Paper}>
+            {(auth.isAuthenticated)
+            ?
+                <AddThread />
+            :
+                <div />
+            }
+          <TableContainer component={Paper}>
           <Table>
               <TableHead>
                   <TableRow>

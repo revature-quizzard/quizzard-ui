@@ -21,30 +21,23 @@ function ViewComment() {
         console.log(forumInfo);
         const getComments = async () => {
         try{
-            console.log("ABOUT TO FETCH COMMENTS");
             setComments(await viewComments(forumInfo.id));
         } catch(e:any) {
             // set an error message / toast here
-            console.log("AN ERROR OCCURED WHILE TRYING TO GET COMMENTS");
             console.log(e);
         }
         }
         getComments();
     }, []);
 
-    function showComments(){
-        console.log(comments);
-    }
-
     return (
         <>
-            {(auth.authUser.username == forumInfo.owner)
+            {(auth.authUser?.username == forumInfo.owner)
             ?
             <UpdateThread />
             :
-            <h1>THIS THREAD IS NOT YOURS</h1>
+            <div />
             }
-            <Button onClick={() => showComments()}>Click me</Button>
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
                 <div style={{'margin': '2rem'}}>
