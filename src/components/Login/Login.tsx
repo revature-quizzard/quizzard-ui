@@ -1,13 +1,29 @@
-import {Form, Button} from "react-bootstrap";
+import {Button, Container, TextField, Typography} from "@mui/material"
+import {makeStyles} from "@mui/styles";
 import {useState} from "react";
 import {authenticate} from "../../remote/login-register-service";
 import {LoginModel} from "../../models/login-model";
 import {useDispatch, useSelector} from 'react-redux';
 import {showSnackbar, setErrorSeverity} from "../../state-slices/error/errorSlice";
 import {authState, loginUserReducer} from "../../state-slices/auth/auth-slice";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
+
+const useStyles = makeStyles({
+    loginContainer: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginTop: '3rem',
+        border: 'solid #332347',
+        borderWidth: '2px'
+    },
+    loginDiv: {
+        justifyContent: "space-between",
+        margin: '2rem'
+    }
+});
 
 const Login = () => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const [loginUser, setLoginUser] = useState({username: "", password: ""} as LoginModel)
     const auth = useSelector(authState);
@@ -31,27 +47,55 @@ const Login = () => {
         }
     }
 
+    const history = useHistory();
+
+    let navToRegister = () => {
+        history.push('/register');
+    }
+
     return (
         auth.isAuthenticated ? <Redirect to="/study"/> :
             <>
-                <Form>
-                    <h2>Login</h2>
-                    <Form.Group>
-                        <Form.Label>Username: </Form.Label>
-                        <Form.Control name="username" value={loginUser.username} onChange={onChange} type="text"
-                                      placeholder="username"/>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password: </Form.Label>
-                        <Form.Control name="password" value={loginUser.password} onChange={onChange} type="password"
-                                      placeholder="*******"/>
-                    </Form.Group>
-                    <Form.Group className="text-center">
-                        <Button onClick={logUserIn} type="submit">Login</Button>
-                    </Form.Group>
-                </Form>
+                <Container fixed maxWidth="sm" id="login-component" className={classes.loginContainer}>
+                    <div className={classes.loginDiv}>
+                        <Typography variant='h4'>Login</Typography>
+                        <br/><br/>
+                        <TextField
+                            id='username'
+                            label='Username'
+                            name='username'
+                            value={loginUser.username}
+                            variant='outlined'
+                            onChange={onChange}
+                        />
+                        <br/><br/>
+                        <TextField
+                            id='password'
+                            label='Password'
+                            name='password'
+                            value={loginUser.password}
+                            variant='outlined'
+                            type='password'
+                            onChange={onChange}
+                        />
+                        <br/><br/>
+                        <Button
+                            id='login-button'
+                            onClick={logUserIn}
+                            variant='contained'
+                            style={{backgroundColor: '#332347', color: '#FFFFFF'}}
+                            type="submit">
+                            Login
+                        </Button>
+                        <br/><br/>
+                        <p>No account yet? <span
+                            style={{color: "#0000EE", cursor: "pointer", textDecoration: "underline"}}
+                            onClick={navToRegister}>Sign Up</span>!</p>
+                    </div>
+                </Container>
             </>
     )
 }
-
 export default Login;
+
+
