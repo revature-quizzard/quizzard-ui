@@ -1,11 +1,12 @@
-import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
-import React from 'react';
+import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles, TextField, Typography } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
-import { createWrongAnswerArray, generateWrongAnswers } from '../../utilities/game-utility';
+import * as gameUtil from '../../utilities/game-utility';
 import { Card } from '../../API';
-import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { gameState, Player } from '../../state-slices/multiplayer/game-slice';
 import { useSelector, useDispatch } from 'react-redux';
+import { updateGame } from '../../graphql/mutations';
 
 
 /**
@@ -22,105 +23,98 @@ import { useSelector, useDispatch } from 'react-redux';
  * @authors Heather Guilfoyle, Sean Dunn, Colby Wall, Robert Ni
  */
 
-let testCard = {
-    id: "1",
-    question: "What are you doing?",
-    correctAnswer: "Sleeping",
-    multiAnswers: [
-        "Working",
-        "Working Very Hard",
-        "Working, but also not working.",
-        "Sleeping"
-    ]
-}
 
- export async function createAnswers() {
-    let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
-    getCardList(response);
-}
-
-let getCardList = (response: any) => {
-    let cardList = response.data.getGame.set.cardList;
-    let answerBank: Array<string> = [];
-    console.log(cardList);
-
-    for (let card of cardList) {
-        answerBank.push(card.correctAnswer);
+let previousRenderColor = '';
+function renderColors(id: string) {
+    if (previousRenderColor !== '') {
+        document.getElementById(previousRenderColor).style.border = '3px solid rgba(0,0,0,0)';
     }
-
-    for (let card of cardList) {
-        let wrongAnswers = generateWrongAnswers(card, answerBank);
-        card.multiAnswers = wrongAnswers;
-    }
-    console.log(cardList);
+    previousRenderColor = id;
+    document.getElementById(id).style.border = '3px solid rgb(90, 50, 180)';
 }
 
-
-// @ts-ignore
-function randomizeAnswers(card): string[] {
-    let answers: string[] | undefined = [];
-    let order: number[] = [];
-    let ranNum: number = Math.floor(Math.random() * 4);
-    while (order.length < 4) {
-        if (!order.includes(ranNum)) {
-            order.push(ranNum);
+const useStyles = makeStyles({
+    roundedBorder: {
+        padding: '10px 0px 10px 0px',
+        borderRadius: '10px',
+        textAlign: 'center',
+        border: '3px solid rgba(0,0,0,0)',
+        '&:hover': {
+            backgroundColor: 'rgb(240,240,240)'
         }
-        ranNum = Math.floor(Math.random() * 4);
     }
-
-    let i: number = 0;
-    while (answers.length < 4) {
-        answers.push(card.multiAnswers[order[i++]]);
-    }
-
-    console.log(answers);
-
-    return answers;
-}
-
-
-
-function renderColors() {
-    
-}
-
+});
 
 function Answers() {
-    let answers: string[] = randomizeAnswers(testCard);
+    
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     const game = useSelector(gameState);
     const dispatch = useDispatch();
+    const classes = useStyles();
+    const [answers, setAnswers] = useState([])
     
-    function submit(e: any) {
-        if (e.target.id === testCard.correctAnswer) {
-            console.log('yes');
+
+    useEffect(() => {
+        setAnswers(gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]));
+    }, [])
+
+    async function submit(e: any) {
+        //@ts-ignore
+        let currentPlayer : Player = {};
+        let playerList : Player[] = [].concat(game.players);
+        playerList.forEach(player => {
+            if (player.username == 'nobody') Object.assign(currentPlayer, player);
+        })
+        playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
+        if (!currentPlayer || currentPlayer.answered) return;        
+        currentPlayer.answered = true;
+        if (e.target.id === game.set.cardList[game.questionIndex].correctAnswer) {            
+            currentPlayer.answeredCorrectly = true;            
+            currentPlayer.answeredAt = new Date().toISOString();
         } else {
-            console.log('no');
+            currentPlayer.answeredCorrectly = false;
         }
+        playerList.push(currentPlayer);
+        await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
+        
+        renderColors(e.target.id);
     }
 
     return (
         <>
-        <Button onClick={createAnswers}>Test Me</Button>
-        {
         <TableContainer>
-            <Table>
+            <Table style={{tableLayout: 'fixed'}}>
                 <TableHead>
-                    {testCard.question}
                     <TableRow>
-                        <TableCell id={answers[0]} onClick={submit}>{answers[0]}</TableCell>
-                        <TableCell id={answers[1]} onClick={submit}>{answers[1]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[0]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[0]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[1]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[1]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell id={answers[2]} onClick={submit}>{answers[2]}</TableCell>
-                        <TableCell id={answers[3]} onClick={submit}>{answers[3]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[2]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[2]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[3]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[3]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
             </Table>
-        </TableContainer>
-        }       
+        </TableContainer>      
         </>
 
     );
 }
 export default Answers; 
+

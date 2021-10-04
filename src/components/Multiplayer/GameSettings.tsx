@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button } from '@mui/material';
 import { authState } from '../../state-slices/auth/auth-slice';
+import * as gameUtil from '../../utilities/game-utility'
 
 //Need set to satisy typescript
 interface Set{};
@@ -101,6 +102,10 @@ function GameSettings() {
             cardElement['multiAnswers'] = [];
         
             return cardElement;
+        })
+        cardList.forEach((card, i) => {
+            //@ts-ignore
+            card.multiAnswers = gameUtil.generateWrongAnswers(card.correctAnswer, cardList);
         })
         console.log("CardList: ",cardList);
 
