@@ -9,10 +9,11 @@ import { addComment } from '../../remote/comment-service';
 import { showSnackbar, setErrorSeverity } from '../../state-slices/error/errorSlice';
 import { AlertColor } from '@mui/material';
 import { Comment } from '../../models/comment';
-import { setReload } from '../../state-slices/forum/forum-slice';
+import { Redirect } from 'react-router';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
 
@@ -27,13 +28,19 @@ function AddComment() {
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
-            setReload(true);
+            setRedirect(true);
             setErrorSeverity('success');
             showSnackbar('Comment successfully added')
         } catch (e: any) {
             setErrorSeverity('error');
             showSnackbar('Your comment could not be added');
         }
+    }
+    
+    if (redirect) {
+        return (
+            <Redirect to='/forum' />
+        )
     }
 
     return (
