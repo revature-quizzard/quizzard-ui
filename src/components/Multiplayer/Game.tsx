@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { useHistory } from 'react-router';
-
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
 import { createGame, deleteGame, updateGame } from '../../graphql/mutations';
@@ -8,20 +7,48 @@ import { onCreateGame, onDeleteGame, onUpdateGame, onUpdateGameById, onDeleteGam
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
-import { GraphQLTime } from 'graphql-iso-date';
 import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
-import { Button } from '@material-ui/core';
-import * as queries from '../../graphql/queries';
-import { Card } from 'react-bootstrap';
-import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import { Button, makeStyles } from '@material-ui/core';
 import Answers from './Answers';
 import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState } from '../../state-slices/auth/auth-slice';
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
+import { flexbox } from '@mui/system';
+
+const useStyles = makeStyles({
+    playerContainer: {
+        justifyContent: "center",
+        marginLeft: "2em",
+        marginTop: "2em"
+    },
+
+    gameContainer: {
+        display: 'flex',
+        justifyContent: "center",
+        marginLeft: "20em",
+        marginTop: "2em"
+
+    },
+
+    timerContainer: {
+        justifyContent: "center",
+        marginLeft: "2em",
+        marginTop: "2em"
+
+    },
+
+    leaderContainer: {
+        justifyContent: "center",
+        marginLeft: "2em",
+        marginTop: "2em"
+
+    }
+
+});
 
 Amplify.configure(config);
 
@@ -51,6 +78,7 @@ Amplify.configure(config);
  * 
  *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
+
 
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
@@ -137,21 +165,26 @@ function Game() {
         }
     }, [])
 
+    const classes = useStyles();
+
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
         let currentUser = 'nobody';
+        
         switch(game.matchState) {
             case 0:
                 return (
                     <>
+                        <div className= {classes.playerContainer}>
                         <Players />
+                        </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={startGame}> Host Start Game Button </Button>
+                        <Button onClick={startGame}> Start Game </Button>
                         :
                         <></> }
                     </>
@@ -159,10 +192,16 @@ function Game() {
             case 1:
                 return (
                     <>
+                        <div className= {classes.playerContainer}>
                         <Players />
+                        </div>
+                        <div className= {classes.timerContainer}>
                         <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                        </div>
+                        <div className= {classes.gameContainer}>
                         <Questions />
                         <Answers />
+                        </div>
                     </>
                 )
             case 2:
@@ -194,6 +233,7 @@ function Game() {
                     </>
                 )
         }
+        
     }
 
     /**
