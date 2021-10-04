@@ -32,9 +32,9 @@ export const store = configureStore({
         profile: profileReducer, 
         createSet: createSetReducer, 
         forum: forumReducer
-       
+    } 
 
-    }
+
 })
 
 export type RootState = ReturnType<typeof store.getState>;
