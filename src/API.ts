@@ -507,6 +507,49 @@ export type OnUpdateGameByIdSubscription = {
   } | null,
 };
 
+export type OnDeleteGameByIdSubscriptionVariables = {
+  id: string,
+};
+
+export type OnDeleteGameByIdSubscription = {
+  onDeleteGameById?:  {
+    __typename: "Game",
+    id: string,
+    name: string,
+    matchState: number,
+    questionIndex: number,
+    capacity: number,
+    host: string,
+    questionTimer: number,
+    set:  {
+      __typename: "Set",
+      id: string,
+      name: string,
+      creator: string,
+      cardList:  Array< {
+        __typename: "Card",
+        id: string,
+        question: string,
+        correctAnswer: string,
+        multiAnswers: Array< string | null >,
+      } | null >,
+    },
+    players:  Array< {
+      __typename: "Player",
+      id: string,
+      username: string,
+      answered: boolean,
+      answeredAt: string,
+      answeredCorrectly: boolean,
+      placing: number,
+      streak: number,
+      points: number,
+    } | null >,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateGameSubscription = {
   onCreateGame?:  {
     __typename: "Game",
