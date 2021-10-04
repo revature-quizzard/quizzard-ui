@@ -38,7 +38,7 @@ export const forumSlice = createSlice({
     }
 })
 
-export const { setCurrentSubforum, setCurrentThread, setCurrentComment } = forumSlice.actions;
+export const { setCurrentSubforum, setCurrentThread, setCurrentComment, setReload } = forumSlice.actions;
 
 export const forumState = (state: RootState) => state.forum;
 
