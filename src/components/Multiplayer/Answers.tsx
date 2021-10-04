@@ -4,8 +4,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
 import * as gameUtil from '../../utilities/game-utility';
 import { Card } from '../../API';
-import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { gameState, Player } from '../../state-slices/multiplayer/game-slice';
 import { useSelector, useDispatch } from 'react-redux';
+import { updateGame } from '../../graphql/mutations';
 
 
 /**
@@ -22,26 +23,9 @@ import { useSelector, useDispatch } from 'react-redux';
  * @authors Heather Guilfoyle, Sean Dunn, Colby Wall, Robert Ni
  */
 
-let testCard = {
-    id: "1",
-    question: "What are you doing?",
-    correctAnswer: "Sleeping",
-    multiAnswers: [
-        "Working",
-        "Working Very Hard",
-        "Working, but also not working.",
-        "Sleeping"
-    ]
-}
-
-
-
-
-
 function renderColors() {
     
 }
-
 
 function Answers() {
     
@@ -51,12 +35,23 @@ function Answers() {
 
     let answers: string[] = gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]);
 
-    function submit(e: any) {
-        if (e.target.id === game.set.cardList[game.questionIndex].correctAnswer) {
-            console.log('yes');
+    async function submit(e: any) {
+        let currentPlayer : Player;
+        let playerList : Player[] = game.players;
+        playerList.forEach(player => {
+            if (player.username == 'nobody') currentPlayer = player;
+        })
+        playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
+        if (!currentPlayer || currentPlayer.answered) return;        
+        currentPlayer.answered = true;
+        if (e.target.id === game.set.cardList[game.questionIndex].correctAnswer) {            
+            currentPlayer.answeredCorrectly = true;            
+            currentPlayer.answeredAt = new Date().toISOString();
         } else {
-            console.log('no');
+            currentPlayer.answeredCorrectly = false;
         }
+        playerList.push(currentPlayer);
+        await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
     }
 
     return (
@@ -64,7 +59,6 @@ function Answers() {
         <TableContainer>
             <Table>
                 <TableHead>
-                    {testCard.question}
                     <TableRow>
                         <TableCell id={answers[0]} onClick={submit}>{answers[0]}</TableCell>
                         <TableCell id={answers[1]} onClick={submit}>{answers[1]}</TableCell>
