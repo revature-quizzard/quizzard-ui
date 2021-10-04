@@ -9,6 +9,7 @@ import { addComment } from '../../remote/comment-service';
 import { showSnackbar, setErrorSeverity } from '../../state-slices/error/errorSlice';
 import { AlertColor } from '@mui/material';
 import { Comment } from '../../models/comment';
+import { setReload } from '../../state-slices/forum/forum-slice';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');
@@ -26,6 +27,7 @@ function AddComment() {
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
+            setReload(true);
             setErrorSeverity('success');
             showSnackbar('Comment successfully added')
         } catch (e: any) {
