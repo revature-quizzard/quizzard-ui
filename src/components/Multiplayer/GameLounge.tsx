@@ -169,9 +169,11 @@ function GameLounge() {
         <GameSettings />
         <br></br>
         {/* Input field for the join game ID */}
-        <Input onKeyUp={handleUpdate} />
+        <Input onKeyUp={handleUpdate} 
+               placeholder = 'Game ID'/> {       }
 
-        <Input onKeyUp={changeNickName} />
+        <Input onKeyUp={changeNickName}
+               placeholder = 'Nickname' /> 
 
         {/* Button which joins existing game according to input id */}
         <Button onClick={fetchGame}>Join Game</Button>
