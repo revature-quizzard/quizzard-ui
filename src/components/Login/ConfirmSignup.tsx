@@ -80,6 +80,7 @@ export const ConfirmSignup = () => {
                 onClick={confirmAccount}
                 variant="contained"
                 color="primary"
+                style={{backgroundColor: '#332347', color: '#FFFFFF'}}
                 size="medium">Confirm Account</Button>
 
             <br/><br/>

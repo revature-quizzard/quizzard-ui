@@ -1,4 +1,5 @@
-import {Form, Button} from "react-bootstrap";
+import {Button, Container, TextField, Typography} from "@mui/material"
+import {makeStyles} from "@mui/styles";
 import {useState} from 'react';
 import {registerUserAccount} from "../../remote/login-register-service";
 import {RegisterModel} from "../../models/register-model";
@@ -6,6 +7,17 @@ import {useDispatch} from 'react-redux';
 import {useHistory} from "react-router-dom";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
 
+const useStyles = makeStyles({
+    registerContainer: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginTop: '3rem',
+    },
+    registerDiv: {
+        justifyContent: "space-between",
+        margin: '2rem'
+    }
+});
 
 const Register = () => {
     const [newUser, setNewUser] = useState({
@@ -17,7 +29,7 @@ const Register = () => {
     } as RegisterModel)
     const dispatch = useDispatch();
     const history = useHistory();
-
+    const classes = useStyles();
 
     const handleChange = (e: any) => {
         const {name, value} = e.target;
@@ -40,64 +52,65 @@ const Register = () => {
 
     return (
         <>
-            <Form className="auth-form">
-                <h2>Registration</h2>
-                <Form.Group>
-                    <Form.Label>Username: </Form.Label>
-                    <Form.Control
-                        name="username"
-                        value={newUser.username}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="username"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Password: </Form.Label>
-                    <Form.Control
-                        name="password"
-                        value={newUser.password}
-                        onChange={handleChange}
-                        type="password"
-                        placeholder="*******"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Email: </Form.Label>
-                    <Form.Control
-                        name="email"
-                        value={newUser.email}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="email@email.com"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>First Name: </Form.Label>
-                    <Form.Control
-                        name="firstName"
-                        value={newUser.firstName}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="John"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Last Name: </Form.Label>
-                    <Form.Control
-                        name="lastName"
-                        value={newUser.lastName}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Bond"
-                    />
-                </Form.Group>
-                <Form.Group className="text-center">
-                    <Button onClick={registerNewUser} type="submit">
-                        Register
-                    </Button>
-                </Form.Group>
-            </Form>
+            <Container fixed maxWidth="sm" id="login-component" className={classes.registerContainer}>
+                <div className={classes.registerDiv}>
+                    <Typography variant='h4'>Register</Typography>
+                        <br/>
+                        <Typography>Username: </Typography>
+                        <TextField
+                            name="username"
+                            value={newUser.username}
+                            onChange={handleChange}
+                            type="text"
+                            placeholder="username"
+                        />
+                        <br/>
+                        <Typography>Password: </Typography>
+                        <TextField
+                            name="password"
+                            value={newUser.password}
+                            onChange={handleChange}
+                            type="password"
+                            placeholder="*******"
+                        />
+                        <br/>
+                        <Typography>Email: </Typography>
+                        <TextField
+                            name="email"
+                            value={newUser.email}
+                            onChange={handleChange}
+                            type="text"
+                            placeholder="email@email.com"
+                        />
+                        <br/>
+                        <Typography>First Name: </Typography>
+                        <TextField
+                            name="firstName"
+                            value={newUser.firstName}
+                            onChange={handleChange}
+                            type="text"
+                            placeholder="John"
+                        />
+                        <br/>
+                        <Typography>Last Name: </Typography>
+                        <TextField
+                            name="lastName"
+                            value={newUser.lastName}
+                            onChange={handleChange}
+                            type="text"
+                            placeholder="Bond"
+                        />
+                        <br/>
+                        <Button
+                            id='register-button'
+                            onClick={registerNewUser}
+                            variant='contained'
+                            style={{backgroundColor: '#332347', color: '#FFFFFF'}}
+                            type="submit">
+                            Register
+                        </Button>
+                </div>
+            </Container>
         </>
     );
 };
