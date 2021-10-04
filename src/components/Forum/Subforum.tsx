@@ -13,15 +13,13 @@ const SubforumHandler = ()=> {
     const history = useHistory();
     const forumInfo: Subforum = useSelector(forumState).currentSubforum;
     const dispatch = useDispatch();
+
     useEffect(() => {
-   
         const getSubforums = async () => {
           try{
-          setSubforums(await getAllSubForums());
-          console.log('in component: ' + subforums[0]);
-          }catch(error)
-          {
-            console.log(error);
+              setSubforums(await getAllSubForums());
+          } catch(error) {
+              console.log(error);
           }
         };
         getSubforums();

@@ -20,7 +20,6 @@ function ViewComment() {
         const getComments = async () => {
         try{
             console.log("ABOUT TO FETCH COMMENTS");
-            console.log(forumInfo.id);
             setComments(await viewComments(forumInfo.id));
         } catch(e:any) {
             // set an error message / toast here

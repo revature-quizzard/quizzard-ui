@@ -49,15 +49,14 @@ function AddThread() {
 
     let handleClick = async () => {
         try {
-            let threadAncestors: string[] = ["114687543"];
-            
+            let threadAncestors: string[] = [forumInfo.currentSubforum.id]
             //CHANGE THESE VALUES
             let toAdd = new Thread(
                 threadAncestors,
-                "114687543",
+                forumInfo.currentSubforum.id,
                 description,
                 subject,
-                "cmettee",
+                auth.authUser.username
             );
             let resp = await addThread(toAdd);
         } catch (e: any) {
