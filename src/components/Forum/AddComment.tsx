@@ -5,10 +5,10 @@ import Editor from 'rich-markdown-editor';
 import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
 import { forumState } from '../../state-slices/forum/forum-slice';
-import { Comment } from '../../models/comment';
 import { addComment } from '../../remote/comment-service';
 import { showSnackbar, setErrorSeverity } from '../../state-slices/error/errorSlice';
 import { AlertColor } from '@mui/material';
+import { Comment } from '../../models/comment';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');

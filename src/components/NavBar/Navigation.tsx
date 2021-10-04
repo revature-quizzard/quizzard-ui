@@ -208,7 +208,6 @@ export function NavigationComponent(){
               </ListItem>
 
               <ListItem button component={Link} to={'/forum'}>
-
                 <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
 
