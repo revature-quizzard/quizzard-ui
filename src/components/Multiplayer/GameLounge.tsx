@@ -37,109 +37,108 @@ function GameLounge() {
     const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
+    let firstRender = useRef(true);
     let history = useHistory();
 
-    // Handle setting guest slice in Redux when nickname is set
     useEffect(() => {
-        console.log('nickname: ', nickName)
-        dispatch(setGuest({
-            id: Math.random().toString(36).substr(2, 5),
-            nickname: nickName
-        }))
-        return () => {
+        async function fetchGame() {
+            console.log('Id.current',id.current);
+            console.log('nickName:', nickName)
             
-        }
-    }, [nickName])
-
-    async function fetchGame() {
-        console.log(id.current);
-        let game: Game;
-        try {
-            let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-            console.log('resp:', resp)
-            //@ts-ignore
-            game = {...resp.data.getGame};
-        } catch {
-            // Game already exists
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Game ID does not exist!"));
-            return;
-        }
-        
-        
-        
-        //game already exists
-        
-        if(game.id !== undefined){
-            if(game.matchState === 0){
-                //check to see if game capacity is full
-                if(game.players.length >= game.capacity){
+            let game: Game;
+            try {
+                let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
+                console.log('resp:', resp)
+                //@ts-ignore
+                game = {...resp.data.getGame};
+            } catch {
+                // Game already exists
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Game ID does not exist!"));
+                return;
+            }
+            
+            //game already exists
+            
+            if(game.id !== undefined){
+                if(game.matchState === 0){
+                    //check to see if game capacity is full
+                    if(game.players.length >= game.capacity){
+                        dispatch(setErrorSeverity("error"));
+                        dispatch(showSnackbar("Game Full"));
+                        return;  
+                    } 
+                } else {
                     dispatch(setErrorSeverity("error"));
-                    dispatch(showSnackbar("Game Full"));
-                    return;  
-                } 
+                    dispatch(showSnackbar("Game started already"));
+                    return;   
+                }     
             } else {
                 dispatch(setErrorSeverity("error"));
-                dispatch(showSnackbar("Game started already"));
-                return;   
-            }     
-        } else {
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Game ID does not exist"));
-            return;
-        }
-        // Set the user into the list of players
-        let baseUser: any;
-        // User is logged in
-        if (user.authUser) {
-            baseUser = {
-                id: user.authUser.id,
-                username: user.authUser.username,
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                answeredCorrectly: false,
-                placing: -1,
-                streak: 0,
-                points: 0
-            };
-        // User is not logged in, but has set a nickname
-        } else if (guestUser) {
-            baseUser = {
-                id: Math.random().toString(36).substr(2, 5),
-                username: nickName,
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                answeredCorrectly: false,
-                placing: -1,
-                streak: 0,
-                points: 0
+                dispatch(showSnackbar("Game ID does not exist"));
+                return;
             }
-        // User is not logged in, and has not set a nickname
-        } else {
-            console.log('guest: ', guestUser)
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Please set a nickname."));
-            return;
+            // Set the user into the list of players
+            let baseUser: any;
+            // User is logged in
+            if (user.authUser) {
+                baseUser = {
+                    id: user.authUser.id,
+                    username: user.authUser.username,
+                    answered: false,
+                    answeredAt: new Date().toISOString(),
+                    answeredCorrectly: false,
+                    placing: -1,
+                    streak: 0,
+                    points: 0
+                };
+            // User is not logged in, but has set a nickname
+            } else if (guestUser.id) {
+                baseUser = {
+                    id: Math.random().toString(36).substr(2, 5),
+                    //@ts-ignore
+                    username: guestUser.nickname,
+                    answered: false,
+                    answeredAt: new Date().toISOString(),
+                    answeredCorrectly: false,
+                    placing: -1,
+                    streak: 0,
+                    points: 0
+                }
+            // User is not logged in, and has not set a nickname
+            } else {
+                console.log('guest: ', guestUser)
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Please set a nickname."));
+                return;
+            }
+            console.log('Base User: ', baseUser);
+    
+            game.players.push(baseUser);
+            let updateresp = await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
+    
+            console.log("Successfully updated GraphQL!", updateresp);
+    
+            dispatch(setGame(game));
+    
+            
         }
-        console.log('Base User: ', baseUser);
+        firstRender.current ? firstRender.current = false : fetchGame();
+    }, [guestUser])
+    
 
-        game.players.push(baseUser);
-        let updateresp = await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
-
-        console.log("Successfully updated GraphQL!", updateresp);
-
-        dispatch(setGame(game));
-
-        
+    function joinGame() {
+        // Handle setting guest slice in Redux when nickname is set
+        dispatch(setGuest({nickname: nickName}))
     }
     
     function handleUpdate(e: any) {
         id.current = e.target.value;
-        console.log(id.current);
+        console.log('Id.current:',id.current);
     }
 
     function changeNickName(e: any) {
-         setNickName(e.target.value);
+        setNickName(e.target.value);
     }
 
     return (
@@ -168,7 +167,7 @@ function GameLounge() {
                placeholder = 'Nickname' /> 
 
         {/* Button which joins existing game according to input id */}
-        <Button onClick={fetchGame}>Join Game</Button>
+        <Button onClick={joinGame}>Join Game</Button>
         <Link to="/multiplayer">Go Back To Multiplayer</Link> 
         </>
         : <Redirect to="/multiplayer" /> }
