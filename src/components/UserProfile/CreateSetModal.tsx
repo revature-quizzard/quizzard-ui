@@ -217,11 +217,8 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    <TextField name="tag color" id="filled-basic" label="tag color" variant="standard"  value={_createSetState.newTagForms[i].tagColor} />
-                    <br/>
-                    <TextField   name="tag name" id="filled-basic" label="tag name" variant="standard"value={_createSetState.newTagForms[i].TagName}/>
-                  
-                    <br/> 
+                    <p> <FiberManualRecordIcon style={{color: _createSetState.newTagForms[i].tagColor}} /> {_createSetState.newTagForms[i].TagName}</p>
+                 
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
                     </Button>
