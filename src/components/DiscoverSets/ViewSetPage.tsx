@@ -27,6 +27,7 @@ import {style} from "@mui/system";
 import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {addSetToFavorites} from "../../remote/user-service";
+import {useHistory} from "react-router-dom";
 
 
 
@@ -38,6 +39,7 @@ function ViewSetPage() {
     const [open, setOpen] = React.useState(false);
     const [answer, setAnswer] = React.useState(false);
     const user: User = useSelector(authState).authUser;
+    const history = useHistory();
 
     function handleOpen(a:any){
         setAnswer(a)
@@ -103,13 +105,11 @@ function ViewSetPage() {
     };
 
     async function addTofavoriets(){
-        console.log("adding favorite")
+
         let setId={
             id:s.id
         }
 
-        // console.log(s)
-        // console.log(user.id)
         try{
             await addSetToFavorites(setId, user.id)
 
@@ -117,16 +117,25 @@ function ViewSetPage() {
             console.log(e.message)
         }
     }
+    function toSetPage(){
+        history.push('/study/')
+    }
 
 
 
     return(
         <>
+            {user
+                ?
+                <Button  onClick={addTofavoriets} startIcon={<AddBoxIcon />} color="success">
+                    Add Set to favorites
+                </Button>
 
-            <Button  onClick={addTofavoriets} startIcon={<AddBoxIcon />} color="success">
-                Add Set to favorites
-            </Button>
-            <Button startIcon={<BackspaceIcon />} color="secondary"  href="/study/">
+                :
+                ''
+            }
+
+            <Button startIcon={<BackspaceIcon />} onClick={toSetPage} color="secondary" >
                 Go back to Sets
             </Button>
         <TableContainer component={Paper} className={classes.tableContainer}>
