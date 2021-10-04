@@ -30,6 +30,7 @@ import {
 } from "@mui/material";
 
 import React from "react";
+import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
 
 export function NavigationComponent(){
 
@@ -129,6 +130,10 @@ export function NavigationComponent(){
     setOpen(!open);
   };
 
+  const handleLogout = () => {
+    quizzardApiClientTokenAuthorized.defaults.headers.common["authorization"] = null;
+  }
+
   return (
 
       <>
@@ -184,7 +189,7 @@ export function NavigationComponent(){
             <div  >
             <List   >
 
-              <ListItem button component = {Link} to={'/'}>
+              <ListItem button component = {Link} to={'/'} onClick={handleLogout}>
 
                 <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
               </ListItem>
