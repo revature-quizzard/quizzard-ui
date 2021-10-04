@@ -53,7 +53,7 @@ function UpdateComment() {
     return (
         <Paper elevation={3} style={{'margin': '4rem'}}>
             <div style={{'margin': '2rem'}}>
-                <Editor onChange={handleChange} defaultValue={forumInfo.currentComment.description} />
+                <Editor onChange={handleChange} placeholder='Update your comment...' />
                 <Button onClick={handleClick} style={{'color':'#75BC3E'}}>Update</Button>
             </div>
         </Paper>
