@@ -103,7 +103,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                      <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span></b> 
+                      <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ? <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>  }</b> 
 
                         {state.isLoaded ? <UserGameRecords/> : 'Loading...'}
                     </Typography>
