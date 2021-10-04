@@ -39,20 +39,15 @@ function GameLounge() {
     let id = useRef('');
     let history = useHistory();
 
-    // Handle setting guest slice in Redux when nickname is set
-    useEffect(() => {
-        console.log('nickname: ', nickName)
-        dispatch(setGuest({
-            id: Math.random().toString(36).substr(2, 5),
-            nickname: nickName
-        }))
-        return () => {
-            
-        }
-    }, [nickName])
+    
+    
 
     async function fetchGame() {
-        console.log(id.current);
+        console.log('Id.current',id.current);
+
+        // Handle setting guest slice in Redux when nickname is set
+        dispatch(setGuest({nickname: nickName}))
+
         let game: Game;
         try {
             let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
@@ -103,10 +98,11 @@ function GameLounge() {
                 points: 0
             };
         // User is not logged in, but has set a nickname
-        } else if (guestUser) {
+        } else if (guestUser.id) {
             baseUser = {
                 id: Math.random().toString(36).substr(2, 5),
-                username: nickName,
+                //@ts-ignore
+                username: guestUser.nickname,
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
@@ -135,7 +131,7 @@ function GameLounge() {
     
     function handleUpdate(e: any) {
         id.current = e.target.value;
-        console.log(id.current);
+        console.log('Id.current:',id.current);
     }
 
     function changeNickName(e: any) {

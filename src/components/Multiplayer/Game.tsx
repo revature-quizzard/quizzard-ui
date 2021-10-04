@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
 import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
-import { Guest, guestState } from '../../state-slices/multiplayer/guest-slice';
+import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
 Amplify.configure(config);
 
@@ -106,7 +106,7 @@ function Game() {
 
     const user = useSelector(authState);
     //@ts-ignore
-    const guestUser: Guest = useSelector(guestState);
+    const guestUser = useSelector(guestState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -161,6 +161,7 @@ function Game() {
             currentUser = user.authUser.username;
         // User is not logged in, but has a guest state set
         } else if (guestUser) {
+            //@ts-ignore
             currentUser = guestUser.nickname
         // User is not logged in, and has no guest state set
         } else {
@@ -238,6 +239,7 @@ function Game() {
             currentUser = user.authUser.username;
         // User is not logged in, but has a guest state set
         } else if (guestUser) {
+            //@ts-ignore
             currentUser = guestUser.nickname
         // User is not logged in, and has no guest state set
         } else {
