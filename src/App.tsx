@@ -27,6 +27,8 @@ import UserProfileContainer from "./components/UserProfile/UserProfileContainer"
 import AddThread from './components/Forum/AddThread';
 import GetThreads from "./components/Forum/GetThread";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
+import CreateSetModal from "./components/UserProfile/CreateSetModal";
+
 
 
 Amplify.configure({
@@ -43,6 +45,7 @@ function App() {
   return (
     <Router>
       <Navigation />
+     
       <Container className="app-container" id="app-container">
         <Switch>
           <Route exact path="/">
@@ -83,6 +86,7 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
+           
           </Route>
 
 
@@ -94,13 +98,7 @@ function App() {
           {error.errorMsg}
         </Alert>
       </Snackbar>
-      <footer>
-        <Row className="bg-dark text-light">
-          <Col>
-            <div className="footerText">Copyright Revature LLC. &copy;</div>
-          </Col>
-        </Row>
-      </footer>
+
     </Router>
   );
 }

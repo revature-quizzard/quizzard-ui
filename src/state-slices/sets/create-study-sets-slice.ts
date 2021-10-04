@@ -17,7 +17,9 @@ const initialState: State = {
 
 };
 
-//create the slice using createSlice
+/**
+ * @author Jose Tejada
+ */
 export const createStudySetSlice = createSlice({
 
     //Name the slice
