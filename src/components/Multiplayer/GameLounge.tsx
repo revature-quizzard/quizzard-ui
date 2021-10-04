@@ -44,7 +44,7 @@ function GameLounge() {
         console.log('nickname: ', nickName)
         dispatch(setGuest({
             id: Math.random().toString(36).substr(2, 5),
-            nickName: nickName
+            nickname: nickName
         }))
         return () => {
             
@@ -53,13 +53,22 @@ function GameLounge() {
 
     async function fetchGame() {
         console.log(id.current);
-        let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-        // @ts-ignore
+        try {
+            let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
+            console.log('resp:', resp)
+            //@ts-ignore
+            let game: Game = {...resp.data.getGame};
+        } catch {
+            // Game already exists
+            dispatch(setErrorSeverity("error"));
+            dispatch(showSnackbar("Game ID does not exist!"));
+            return;
+        }
         
-        let game: Game = {...resp.data.getGame};
+        
         
         //game already exists
-        console.log('resp:', resp)
+        
         if(game.id !== undefined){
             if(game.matchState === 0){
                 //check to see if game capacity is full
