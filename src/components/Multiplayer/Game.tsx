@@ -155,18 +155,9 @@ function Game() {
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
-        let currentUser : String;
-        // User is logged in
-        if (user.authUser) {
-            currentUser = user.authUser.username;
-        // User is not logged in, but has a guest state set
-        } else if (guestUser) {
-            //@ts-ignore
-            currentUser = guestUser.nickname
-        // User is not logged in, and has no guest state set
-        } else {
-            history.push('/lounge');
-        }
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
+        
         switch(game.matchState) {
             case 0:
                 return (
@@ -233,18 +224,9 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
-        let currentUser : String;
-        // User is logged in
-        if (user.authUser) {
-            currentUser = user.authUser.username;
-        // User is not logged in, but has a guest state set
-        } else if (guestUser) {
-            //@ts-ignore
-            currentUser = guestUser.nickname
-        // User is not logged in, and has no guest state set
-        } else {
-            history.push('/lounge');
-        }
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
+        
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
             // TODO: Utilize placing and streak fields for scoring
