@@ -6,36 +6,17 @@ import {
   quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
 
-import { quizzardApiClientTokenAuthorized as QuizzardClient } from "./api-client";
+export async function createStudySet(studySet: SetDto) {
 
-export async function createStudySet(studySet: SetDto , token: string) {
- 
-    console.log("inside create study sset")
-    let config ={
+  let response = await quizzardApiClientTokenAuthorized.post("/sets",studySet);
 
-            headers: {
-                Authorization: token
-            }
-       }
-       let response = await QuizzardClient.post("/sets", studySet, config);
-
-
-
-    console.log(response)
-  return response.data;
+  return await response.data;
 }
 
 
-export async function getSetTags(token: string) {
-  let config = {
-    headers: {
-        Authorization: token
-    }
-}
-  let response = await QuizzardClient.get(
-    "/tags",
-    config
-  );
+export async function getSetTags() {
+
+  let response = await quizzardApiClientTokenAuthorized.get("/tags");
 
   return await response.data;
 }

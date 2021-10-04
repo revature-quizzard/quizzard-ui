@@ -31,43 +31,43 @@ export const createQuiz = (studySet: Array<SetFlashcardDTO>) => {
     let newStudySet = filterCurrentCard(flashCard, studySet);
     
     // Create empty array to store all answers from other cards in this particular study set
-    let wrongAnswerArray = createWrongAnswerArray(newStudySet);
+    // let wrongAnswerArray = createWrongAnswerArray(newStudySet);
 
     // Assign random wrong answers to variables to build question
-    let wrong1: string = wrongAnswerArray[0];
-    let wrong2: string = wrongAnswerArray[1];
-    let wrong3: string = wrongAnswerArray[2];
+    // let wrong1: string = wrongAnswerArray[0];
+    // let wrong2: string = wrongAnswerArray[1];
+    // let wrong3: string = wrongAnswerArray[2];
 
     // Push question to question array after being passed through createQuizQuestion and after answers have been placed in random order
-    questionArray.push(createQuizQuestion(flashCard, wrong1, wrong2, wrong3));
+    // questionArray.push(createQuizQuestion(flashCard, wrong1, wrong2, wrong3));
   });
 
   return questionArray;
 };
 
-export const createWrongAnswerArray = (newStudySet: Array<SetFlashcardDTO>) => {
-    let  answerArray: string[] = [];
+// export const createWrongAnswerArray = (answers: string[]) => {
+//     let  answerArray: string[] = [];
   
-    // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
-    let ranNum: number = generateRandom(newStudySet.length);
+//     // Generate a random number based on length of the newStudySet array that does not include current target of loop, this random number will choose random wrong answers from pool of potential answers
+//     let ranNum: number = generateRandom(answers.length);
   
-    // Build an array of potential wrong answers from all other answers in study set.
-  while (answerArray.length < 3) {
+//     // Build an array of potential wrong answers from all other answers in study set.
+//   while (answerArray.length < 3) {
     
-    if (!answerArray.includes(newStudySet[ranNum].answer)) {
+//     if (!answerArray.includes(answers[ranNum])) {
       
-      answerArray.push(newStudySet[ranNum].answer);
+//       answerArray.push(answers[ranNum]);
       
-    } else {
+//     } else {
       
-      ranNum = generateRandom(newStudySet.length);
+//       ranNum = generateRandom(answers.length);
       
-      }
-    }
+//       }
+//     }
   
   
-  return answerArray;
-}
+//   return answerArray;
+// }
 
 export const filterCurrentCard = (currentCard: SetFlashcardDTO, studySet: Array<SetFlashcardDTO>) => {
   

@@ -26,6 +26,8 @@ import BackspaceIcon from '@mui/icons-material/Backspace';
 import {style} from "@mui/system";
 import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
+import {addSetToFavorites} from "../../remote/user-service";
+import {useHistory} from "react-router-dom";
 
 
 
@@ -37,6 +39,7 @@ function ViewSetPage() {
     const [open, setOpen] = React.useState(false);
     const [answer, setAnswer] = React.useState(false);
     const user: User = useSelector(authState).authUser;
+    const history = useHistory();
 
     function handleOpen(a:any){
         setAnswer(a)
@@ -101,13 +104,38 @@ function ViewSetPage() {
         p: 4,
     };
 
+    async function addTofavoriets(){
+
+        let setId={
+            id:s.id
+        }
+
+        try{
+            await addSetToFavorites(setId, user.id)
+
+        }catch (e:any){
+            console.log(e.message)
+        }
+    }
+    function toSetPage(){
+        history.push('/study/')
+    }
+
+
 
     return(
         <>
-            <Button  startIcon={<AddBoxIcon />} color="success">
-                Add Set to favorites
-            </Button>
-            <Button startIcon={<BackspaceIcon />} color="secondary"  href="/study/">
+            {user
+                ?
+                <Button  onClick={addTofavoriets} startIcon={<AddBoxIcon />} color="success">
+                    Add Set to favorites
+                </Button>
+
+                :
+                ''
+            }
+
+            <Button startIcon={<BackspaceIcon />} onClick={toSetPage} color="secondary" >
                 Go back to Sets
             </Button>
         <TableContainer component={Paper} className={classes.tableContainer}>
@@ -119,16 +147,19 @@ function ViewSetPage() {
                         <TableCell align="center">Views</TableCell>
                         <TableCell align="center">Favorites</TableCell>
                         <TableCell align="center">Tags</TableCell>
+                        <TableCell align="center">Set Id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     <TableRow>
+
                         <TableCell align="center">{s.setName}</TableCell>
                         <TableCell align="center">{s.author}</TableCell>
                         <TableCell align="center">{s.views}</TableCell>
                         <TableCell align="center">{s.favorites}</TableCell>
                         <TableCell align="center">{s.tags.map((tag, index, s) => (
                             <h6 key={index}>{tag.tagName}</h6>))}</TableCell>
+                        <TableCell align="center">{s.id}</TableCell>
                     </TableRow>
 
                 </TableBody>
