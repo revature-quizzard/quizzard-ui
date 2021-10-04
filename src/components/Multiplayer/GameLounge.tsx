@@ -11,6 +11,8 @@ import { createGame, updateGame } from '../../graphql/mutations';
 import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
 import { createAnswers } from './Answers'
+import { UsernameAttributes } from 'aws-amplify-react';
+import Players from './Players';
 
 Amplify.configure(config);
 
@@ -24,6 +26,7 @@ Amplify.configure(config);
 
 function GameLounge() {
 
+    const [nickName, setNickName] = useState("");
     const game = useSelector(gameState);
     const user = useSelector(authState);
     const dispatch = useDispatch();
@@ -91,7 +94,7 @@ function GameLounge() {
         } else {
             baseUser = {
                 id: Math.random().toString(36).substr(2, 5),
-                username: 'Guest',
+                username: nickName,
                 answered: false,
                 answeredAt: new Date().toISOString(),
                 answeredCorrectly: false,
@@ -115,6 +118,10 @@ function GameLounge() {
         console.log(id.current);
     }
 
+    function changeNickName(e: any) {
+         setNickName(e.target.value);
+    }
+
     return (
         <>
         { (!game.host)
@@ -136,6 +143,8 @@ function GameLounge() {
 
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} />
+
+        <Input onKeyUp={changeNickName} />
 
         {/* Button which joins existing game according to input id */}
         <Button onClick={fetchGame}>Join Game</Button>
