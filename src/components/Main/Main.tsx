@@ -11,7 +11,7 @@ const Main = () => {
   const auth = useSelector(authState);
 
   return (
-    <Row className="d-flex justify-content-around">
+    <Row  className="d-flex justify-content-around">
       <Col md={7} style={{ height: "100%" }}>
         <Welcome />
       </Col>

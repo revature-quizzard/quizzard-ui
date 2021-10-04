@@ -3,6 +3,7 @@ import { User } from "../../models/user";
 import { RootState } from "../../store/store";
 
 interface State {
+  username: string;
   isAuthenticated: boolean;
   isLoading: boolean;
   authUser : User | undefined;
@@ -14,6 +15,7 @@ const initialState: State = {
   isLoading: false,
   authUser: undefined,
   showLogin: false,
+  username: ""
 };
 
 export const authSlice = createSlice({

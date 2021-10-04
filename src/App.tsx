@@ -15,14 +15,23 @@ import Sets from "./components/Sets/Sets";
 import Game from "./components/Multiplayer/Game";
 import GameLounge from "./components/Multiplayer/GameLounge";
 import { FlipCard } from "./components/Flashcards/FlipCard";
+import SubforumHandler from "./components/Forum/Subforum";
 import {ConfirmSignup} from "./components/Login/ConfirmSignup";
 import {Amplify} from "aws-amplify";
 import {COGNITO} from "./config/aws";
 import { Alert, Snackbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { errorState, hideErrorMessage } from "./state-slices/error/errorSlice";
+
+import ViewComment from "./components/Forum/ViewComments";
+
 import UserProfileContainer from "./components/UserProfile/UserProfileContainer";
+import AddThread from './components/Forum/AddThread';
+import GetThreads from "./components/Forum/GetThread";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
+import CreateSetModal from "./components/UserProfile/CreateSetModal";
+
+
 
 Amplify.configure({
     aws_cognito_region: COGNITO.REGION,
@@ -38,6 +47,7 @@ function App() {
   return (
     <Router>
       <Navigation />
+     
       <Container className="app-container" id="app-container">
         <Switch>
           <Route exact path="/">
@@ -73,8 +83,18 @@ function App() {
           <Route exact path="/confirmation">
             <ConfirmSignup />
           </Route>
+          <Route exact path="/forum">
+            <SubforumHandler />
+          </Route>
+          <Route exact path="/forum/thread/*">
+            <ViewComment />
+          </Route>
+          <Route path="/forum/*">
+            <GetThreads />
+          </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
+           
           </Route>
 
 
@@ -86,13 +106,7 @@ function App() {
           {error.errorMsg}
         </Alert>
       </Snackbar>
-      <footer>
-        <Row className="bg-dark text-light">
-          <Col>
-            <div className="footerText">Copyright Revature LLC. &copy;</div>
-          </Col>
-        </Row>
-      </footer>
+
     </Router>
   );
 }

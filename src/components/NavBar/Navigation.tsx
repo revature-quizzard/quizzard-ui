@@ -3,6 +3,14 @@
  */
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import LoginIcon from '@mui/icons-material/Login';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import ForumIcon from '@mui/icons-material/Forum';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -31,6 +39,15 @@ export function NavigationComponent(){
     root: {
       display: 'flex',
       textAlign: "center",
+      flexDirection: "row",
+      flexWrap: "wrap"
+      
+    },
+    typography:{
+      paddingLeft: "12rem"
+    },
+    typographyIcons:{
+      paddingLeft: "3rem"
     },
     alert: {
       textAlign: 'center',
@@ -45,6 +62,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      background: "#7D7687 "
     },
     appBarShift: {
       marginLeft: drawerWidth,
@@ -53,6 +71,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      background: "#332347"
     },
     menuButton: {
       marginRight: 36,
@@ -71,6 +90,7 @@ export function NavigationComponent(){
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      background: "#332347"
     },
     drawerClose: {
       transition: theme.transitions.create('width', {
@@ -82,6 +102,7 @@ export function NavigationComponent(){
       [theme.breakpoints.up('sm')]: {
         width: theme.spacing(9) + 1,
       },
+   
     },
     toolbar: {
       display: 'flex',
@@ -90,6 +111,7 @@ export function NavigationComponent(){
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
+   
     },
     content: {
       flexGrow: 1,
@@ -110,15 +132,14 @@ export function NavigationComponent(){
   return (
 
       <>
-        <div className={classes.root}>
+        <div>
           <CssBaseline/>
           <AppBar
               position="fixed"
-              className={clsx(classes.appBar, {
-                [classes.appBarShift]: open,
-              })}
+              style={{background: "#4E3E61" , color: '#7D7687 '}}
+           
           >
-            <Toolbar>
+            <Toolbar  >
               <IconButton
                   color="inherit"
                   aria-label="open drawer"
@@ -133,7 +154,7 @@ export function NavigationComponent(){
               </IconButton>
               <ButtonBase component={Link} to='/'>
 
-                <Typography variant="h6" noWrap>
+                <Typography className={classes.typography} variant="h6" noWrap>
                   Flashback
                 </Typography>
               </ButtonBase>
@@ -154,35 +175,51 @@ export function NavigationComponent(){
                 }),
               }}
           >
-            <div className={classes.toolbar}>
+            <div  className={classes.toolbar}>
               <IconButton onClick={handleDrawerToggle}>
                 {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
               </IconButton>
-            </div>
+            </div >
             <Divider/>
-            <List>
+            <div  >
+            <List   >
 
               <ListItem button component = {Link} to={'/'}>
 
-                <Typography color="inherit" variant="h6">Logout</Typography>
-              </ListItem>
-              <ListItem button component={Link} to={'/profile'}>
-
-                <Typography color="inherit" variant="h6">Dashboard</Typography>
+                <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
               </ListItem>
 
               <ListItem button component={Link} to={'/login'}>
 
-                <Typography color="inherit" variant="h6">Login</Typography>
+                <ExitToAppIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Login</Typography>
+              </ListItem>
+              <ListItem button component={Link} to={'/profile'}>
+
+                <AccountBoxIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Dashboard</Typography>
               </ListItem>
               <ListItem button component={Link} to={'/register'}>
 
-                <Typography color="inherit" variant="h6">Register</Typography>
+                <AppRegistrationIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Register</Typography>
+              </ListItem>
+
+              <ListItem button component={Link} to={'/study'}>
+
+                <LibraryBooksIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Discover Sets</Typography>
+              </ListItem>
+
+              <ListItem button component={Link} to={'/register'}>
+
+                <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
+              </ListItem>
+
+              <ListItem button component={Link} to={'/register'}>
+
+                <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
               </ListItem>
 
 
             </List>
-
+        </div>
           </Drawer>
           <main className={classes.content}>
             <div className={classes.toolbar}/>
@@ -193,6 +230,7 @@ export function NavigationComponent(){
             </Typography>
           </main>
         </div>
+       
       </>
 
   );
