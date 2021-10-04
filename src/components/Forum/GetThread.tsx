@@ -7,7 +7,7 @@ import { forumState, setCurrentThread } from '../../state-slices/forum/forum-sli
 import { useDispatch, useSelector } from 'react-redux';
 
 const GetThreads = ()=> {
-    let [threadName,setThread] = useState(undefined as Thread[] | undefined);
+    let [threads, setThread] = useState(undefined as Thread[] | undefined);
     const history = useHistory();
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
@@ -16,9 +16,8 @@ const GetThreads = ()=> {
    
         const getThreads = async () => {
           try{
-          console.log("Current Subforum: " + forumInfo.currentSubforum.subject);
-          setThread(await getAllThreads(forumInfo.currentSubforum?.id));
-          console.log('in component: ' + threadName[0]);
+            console.log(forumInfo.currentSubforum.id);
+            setThread(await getAllThreads(forumInfo.currentSubforum.id));
           }catch(error)
           {
             console.log(error);
@@ -30,8 +29,6 @@ const GetThreads = ()=> {
 
     function Navigate(id: string, thr: Thread){
       dispatch(setCurrentThread(thr));
-      console.log(forumInfo);
-      console.log("Navigating to " + id);
       history.push("/forum/thread/" + id);
     }
 
@@ -39,28 +36,28 @@ const GetThreads = ()=> {
     return (
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Subject</TableCell>
-              <TableCell align="left">Author&nbsp;</TableCell>
-              <TableCell align="left">Number of Comments&nbsp;</TableCell>
-            </TableRow>
-          </TableHead>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Subject</TableCell>
+                    <TableCell align="left">Author&nbsp;</TableCell>
+                    <TableCell align="left">Number of Comments&nbsp;</TableCell>
+                </TableRow>
+            </TableHead>
           <TableBody>
-            {threadName?.map((sub) => (
-              <TableRow>
-                <TableCell
-                align="left"
-                onClick={() => Navigate(sub.subject, sub)}>
-                {sub.subject}
-                </TableCell>
-                <TableCell
-                align="left"
-                onClick={() => Navigate(sub.subject, sub)}>
-                {sub.owner}
-                </TableCell>
-                <TableCell align="left">{sub.child_count}</TableCell>
-              </TableRow>
+              {threads?.map((thr) => (
+                  <TableRow>
+                      <TableCell
+                        align="left"
+                        onClick={() => Navigate(thr.subject, thr)}>
+                        {thr.subject}
+                        </TableCell>
+                        <TableCell
+                        align="left"
+                        onClick={() => Navigate(thr.subject, thr)}>
+                        {thr.owner}
+                      </TableCell>
+                    <TableCell align="left">{thr.child_count}</TableCell>
+                </TableRow>
             ))}
           </TableBody>
         </Table>

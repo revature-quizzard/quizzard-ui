@@ -90,7 +90,6 @@ function AddThread() {
                 </Box>
         </div>
     )
-
 }
 
 export default AddThread;

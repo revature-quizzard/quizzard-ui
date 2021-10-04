@@ -3,7 +3,7 @@ import { forumState } from '../../state-slices/forum/forum-slice';
 import { viewComments } from '../../remote/comment-service';
 import { Paper } from '@mui/material';
 import { Comment } from '../../models/comment';
-import { Divider, Avatar, Grid } from "@material-ui/core";
+import { Divider, Avatar, Grid, Button } from "@material-ui/core";
 import React, { useEffect, useState } from 'react';
 import  Editor  from 'rich-markdown-editor';
 import { Thread } from '../../models/thread';
@@ -12,38 +12,32 @@ import { Thread } from '../../models/thread';
 function ViewComment() {
     const forumInfo: Thread = useSelector(forumState).currentThread;
     const dispatch = useDispatch();
-    let [resp,setResp] = useState(undefined as Comment[] | undefined);
+    let [comments,setComments] = useState(undefined as Comment[] | undefined);
+
+
     useEffect(() => {
+        console.log(forumInfo);
         const getComments = async () => {
         try{
-            setResp(await viewComments(forumInfo?.id));
+            console.log("ABOUT TO FETCH COMMENTS");
+            console.log(forumInfo.id);
+            setComments(await viewComments(forumInfo.id));
         } catch(e:any) {
             // set an error message / toast here
+            console.log("AN ERROR OCCURED WHILE TRYING TO GET COMMENTS");
+            console.log(e);
         }
-    }
+        }
+        getComments();
     }, []);
-    let rd = function(comment: Comment) {
-        return <>
-            <Paper style={{ padding: "40px 20px" }}>
-                <Grid container wrap="nowrap" spacing={2}>
-                    <Grid item xs zeroMinWidth>
-                    <h5 style={{ margin: 0, textAlign: "left" }}>{comment.owner}</h5>
-                    <p style={{ textAlign: "left" }}>
-                        <Editor readOnly={true} value={comment.description} />
-                        
-                    </p>
-                    <p style={{ textAlign: "left", color: "gray" }}>
-                        {comment.date_created}
-                    </p>
-                    </Grid>
-                </Grid>
-            </Paper>
-            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-        </>
+
+    function showComments(){
+        console.log(comments);
     }
 
     return (
         <>
+            <Button onClick={() => showComments()}>Click me</Button>
             <Paper elevation={3} style={{ padding: "40px 20px"}}>
             
                 <div style={{'margin': '2rem'}}>
@@ -58,7 +52,26 @@ function ViewComment() {
 
              <br></br>
 
-            {resp?.map( (comment : Comment) => rd(comment))}
+            {comments?.map((comment) => (
+                <div>
+                    <Paper style={{ padding: "40px 20px" }}>
+                        <Grid container wrap="nowrap" spacing={2}>
+                            <Grid item xs zeroMinWidth>
+                            <h5 style={{ margin: 0, textAlign: "left" }}>{comment.owner}</h5>
+                            <p style={{ textAlign: "left" }}>
+                                <Editor readOnly={true} value={comment.description} />
+                                
+                            </p>
+                            <p style={{ textAlign: "left", color: "gray" }}>
+                                {comment.date_created}
+                            </p>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                    <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+                </div>
+            ))}
+            
     
         </>
     )
