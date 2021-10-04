@@ -53,11 +53,12 @@ function GameLounge() {
 
     async function fetchGame() {
         console.log(id.current);
+        let game: Game;
         try {
             let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
             console.log('resp:', resp)
             //@ts-ignore
-            let game: Game = {...resp.data.getGame};
+            game = {...resp.data.getGame};
         } catch {
             // Game already exists
             dispatch(setErrorSeverity("error"));
