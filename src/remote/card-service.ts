@@ -39,6 +39,6 @@ export async function createCard(
  */
 
 export async function getCards() {
-  let response = await quizzardApiClientTokenAuthorized.get("/sets");
+  let response = await quizzardApiClientTokenAuthorized.get("/cards/all");
   return response.data;
 }
