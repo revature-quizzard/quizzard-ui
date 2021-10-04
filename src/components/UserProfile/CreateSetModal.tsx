@@ -7,9 +7,10 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createStudySet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, setIsPublic, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
+import SwitchUnstyled from '@mui/core/SwitchUnstyled';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
@@ -51,7 +52,7 @@ const CreateSetModal = (props: any) => {
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
   let k : number = 0;
-  let loc
+  let _setIsPublic : boolean = false;
 
 
   const handleChange = (e: any) => {
@@ -157,7 +158,11 @@ const CreateSetModal = (props: any) => {
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
    
+    const setSetToPublic = () => {
+        dispatch(setIsPublic(_setIsPublic));
+    }
 
+   
     const applyChanges = async function () {
         
         
@@ -171,8 +176,6 @@ const CreateSetModal = (props: any) => {
             } catch (e: any) {
                 console.log(e);
             }
-        
-       
     }
 
    
@@ -181,7 +184,7 @@ const CreateSetModal = (props: any) => {
         <div>
                 
 
-            <TextField label="set name" onChange={handleChange} value={newSet} />
+            <TextField label="set name" onChange={handleChange} value={newSet} /> <SwitchUnstyled  defaultChecked />
                 <hr/>
 
                     { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>

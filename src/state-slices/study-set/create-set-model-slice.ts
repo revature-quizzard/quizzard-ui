@@ -79,7 +79,7 @@ export const createSetSlice = createSlice({
             state.newTagForms =  state.newTagForms.filter(DeletedAll);
             console.log( state.newTagForms);
             state.newTagForms.push({ tagColor: '', TagName: '', tagAdded: false}  as TagFormModel);
-            state.setToSave.tags = [] ;      
+            //state.setToSave.tags = [] ;      
            },
         deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
 
@@ -102,6 +102,10 @@ export const createSetSlice = createSlice({
             state.setToSave.isPublic = action.payload.isPublic;
             state.setToSave.setName = action.payload.setName;
             state.setToSave.tags = action.payload.tags;
+           },
+           setIsPublic: (state , action : PayloadAction<boolean>) => {
+           
+            state.setToSave.isPublic = action.payload;
            }
     }
 
@@ -109,7 +113,7 @@ export const createSetSlice = createSlice({
 })
 export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, 
     appendNewTag , incrementTagLimit , updateTagFormbyIndex , clearTags , 
-    deleteTag , clearTagFrombyIndex , saveSet} = createSetSlice.actions;
+    deleteTag , clearTagFrombyIndex , saveSet , setIsPublic} = createSetSlice.actions;
     
 export const createSetState = (state: RootState) => state.createSet;
 export default createSetSlice.reducer;
