@@ -78,19 +78,6 @@ async function closeGame(game: any) {
 }
 
 /**
- *  The host of a game can remove players from the game.
- * 
- *  This logic is run when the 'Kick Player' button is clicked next
- *  to a player's name. The given id will be removed from the game data and 
- *  the player list will be updated accordingly.
- * 
- * @param playerID - ID of player to be kicked from game
- */
-async function kickPlayer(playerID: string) {
-
-}
-
-/**
  *  The host of a game will invoke this function at the end of the game (match_state = 3)
  * 
  *  This function will trigger our AWS Lambda, which will post game records to DynamoDB, and pull info

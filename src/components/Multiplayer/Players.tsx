@@ -44,6 +44,15 @@ function Players() {
     const game = useSelector(gameState);
     const user = useSelector(authState);
 
+    /**
+     *  The host of a game can remove players from the game.
+     * 
+     *  This logic is run when the 'Kick Player' button is clicked next
+     *  to a player's name. The given id will be removed from the game data and 
+     *  the player list will be updated accordingly.
+     * 
+     * @param user - player to be kicked from game
+     */
     const executeKick = async (user: Player) => {
         let copylist: Player[] = [].concat(game.players);
         let index = copylist.findIndex((player) => player.id == user.id);
