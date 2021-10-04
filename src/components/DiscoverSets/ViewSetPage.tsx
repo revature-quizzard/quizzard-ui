@@ -42,8 +42,8 @@ function ViewSetPage() {
     const user: User = useSelector(authState).authUser;
     const history = useHistory();
 
-    const state = useSelector(profileState);
-    const favorites = state.userProfile.favoriteSets;
+    // const state = useSelector(profileState);
+    // const favorites = state.userProfile.favoriteSets;
 
 
     function handleOpen(a:any){
