@@ -26,6 +26,7 @@ import BackspaceIcon from '@mui/icons-material/Backspace';
 import {style} from "@mui/system";
 import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
+import {addSetToFavorites} from "../../remote/user-service";
 
 
 
@@ -101,10 +102,28 @@ function ViewSetPage() {
         p: 4,
     };
 
+    async function addTofavoriets(){
+        console.log("adding favorite")
+        let setId={
+            id:s.id
+        }
+
+        // console.log(s)
+        // console.log(user.id)
+        try{
+            await addSetToFavorites(setId, user.id)
+
+        }catch (e:any){
+            console.log(e.message)
+        }
+    }
+
+
 
     return(
         <>
-            <Button  startIcon={<AddBoxIcon />} color="success">
+
+            <Button  onClick={addTofavoriets} startIcon={<AddBoxIcon />} color="success">
                 Add Set to favorites
             </Button>
             <Button startIcon={<BackspaceIcon />} color="secondary"  href="/study/">
@@ -119,16 +138,19 @@ function ViewSetPage() {
                         <TableCell align="center">Views</TableCell>
                         <TableCell align="center">Favorites</TableCell>
                         <TableCell align="center">Tags</TableCell>
+                        <TableCell align="center">Set Id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     <TableRow>
+
                         <TableCell align="center">{s.setName}</TableCell>
                         <TableCell align="center">{s.author}</TableCell>
                         <TableCell align="center">{s.views}</TableCell>
                         <TableCell align="center">{s.favorites}</TableCell>
                         <TableCell align="center">{s.tags.map((tag, index, s) => (
                             <h6 key={index}>{tag.tagName}</h6>))}</TableCell>
+                        <TableCell align="center">{s.id}</TableCell>
                     </TableRow>
 
                 </TableBody>

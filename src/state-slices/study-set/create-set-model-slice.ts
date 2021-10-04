@@ -19,7 +19,7 @@ import { SetDto } from "../../dtos/set-dto";
  * interface for the state
  */
 interface  State {
-    IsShowing: boolean; 
+    IsShowing: boolean;
     currentUser: User;
     setToSave: Set;
     newTagForms: TagFormModel[];
@@ -33,7 +33,7 @@ interface  State {
 const initialState: State = {
     IsShowing: false,
     currentUser: undefined,
-    setToSave: {setName: '', isPublic: false, author : '' , tags : [] as Tag[] , set_id : '' , favorites :0 , cards: [] as Card[] , views : 0  , plays : 0 ,studies : 0 } as Set,
+    setToSave: {id: '', setName: '', isPublic: false, author : '' , tags : [] as Tag[] , set_id : '' , favorites :0 , cards: [] as Card[] , views : 0  , plays : 0 ,studies : 0 } as Set,
     newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
     tagLimit: 0
 }
@@ -74,19 +74,19 @@ export const createSetSlice = createSlice({
             state.newTagForms[action.payload.index].tagAdded = action.payload.tagAdded;
         },
         clearTags: (state) => {
-            state.newTagForms =  [{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel ]; 
-            state.setToSave.tags = [] ;      
+            state.newTagForms =  [{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel ];
+            state.setToSave.tags = [] ;
            },
         deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
 
-            function isNotToBeDeleted(element: any)  {  return element != undefined;  } 
+            function isNotToBeDeleted(element: any)  {  return element != undefined;  }
 
             state.newTagForms[action.payload.index] = undefined;
             state.newTagForms = state.newTagForms.filter(isNotToBeDeleted);
-        
+
             state.setToSave.tags[action.payload.index] = undefined
-            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);      
-           
+            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);
+
         },
         clearTagFrombyIndex: (state , action : PayloadAction<SaveTagFormModel>) => {
             state.newTagForms[action.payload.index].TagName = '';
