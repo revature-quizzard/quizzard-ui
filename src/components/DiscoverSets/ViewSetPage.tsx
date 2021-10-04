@@ -8,37 +8,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Box, Button, Card, CssBaseline, Popover, Skeleton, SwipeableDrawer} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    Modal,
+} from "@mui/material";
 import React, {useState} from "react";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
+
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+
 import Typography from '@mui/material/Typography';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import Backdrop from '@mui/material/Backdrop';
+
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import {style} from "@mui/system";
+import {User} from "../../models/user";
+import {authState} from "../../state-slices/auth/auth-slice";
+
 
 
 /**
- *
+ *@author Jose Tejada
  * @constructor
  */
 function ViewSetPage() {
     const [open, setOpen] = React.useState(false);
+    const [answer, setAnswer] = React.useState(false);
+    const user: User = useSelector(authState).authUser;
+
+    function handleOpen(a:any){
+        setAnswer(a)
+        setOpen(true)
+        }
+    const handleClose = () => setOpen(false);
 
     const s: Set = useSelector(StudySetState).aSet;
 
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-    };
 
     const useStyles = makeStyles((theme:Theme) => ({
 
@@ -47,12 +54,21 @@ function ViewSetPage() {
             borderStyle: "ridge",
             borderColor:"#4e3e61"
         },
+        Thread:{
+          backgroundColor:"#4e3e61",
+
+        },
+        cell:{
+            fontColor: "whitesmoke"
+        },
         button:{
             textAlign:"center"
 
         },
         divTable: {
             display:"flex",
+            flexDirection:"row",
+            flexWrap:"wrap",
             marginTop: 20,
 
         },
@@ -64,33 +80,41 @@ function ViewSetPage() {
 
         },
         cardStyle: {
-
             width:"fit-content",
             marginLeft: 10,
             borderStyle: "groove",
-            textAlign:"center"
+            textAlign:"center",
+            marginBottom: 10,
 
             }
     }));
     const classes = useStyles();
-
-
-
-
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
 
     return(
         <>
-
-
-            <Button onClick={() => {alert('clicked');}} startIcon={<AddBoxIcon />} color="success">
-                Add to favorites
+            <Button  startIcon={<AddBoxIcon />} color="success">
+                Add Set to favorites
+            </Button>
+            <Button startIcon={<BackspaceIcon />} color="secondary"  href="/study/">
+                Go back to Sets
             </Button>
         <TableContainer component={Paper} className={classes.tableContainer}>
             <Table sx={{minWidth: 700}} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Set Name</TableCell>
+                <TableHead className={classes.Thread}>
+                    <TableRow >
+                        <TableCell align="center" className={classes.cell}>Set Name</TableCell>
                         <TableCell align="center">Author</TableCell>
                         <TableCell align="center">Views</TableCell>
                         <TableCell align="center">Favorites</TableCell>
@@ -121,19 +145,31 @@ function ViewSetPage() {
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {card.question}
                         </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 14, textAlign: "center" }} color="text.secondary">
-                            {card.answer}
-                        </Typography>
                     </CardContent>
 
+                        <Button onClick={ () => handleOpen(card.answer)}>View Answer</Button>
 
-                        <Button size="small" onClick={() => {alert(<h1>{card.answer}</h1>);}} color="secondary">View Answer</Button>
+                </Card>
+                ))}
+                <div>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                The answer
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                {answer}
+                            </Typography>
+                        </Box>
+                    </Modal>
+                </div>
 
-
-                </Card>))}
             </div>
-
-
     </>
 );
 

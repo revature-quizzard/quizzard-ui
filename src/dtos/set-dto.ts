@@ -2,7 +2,7 @@ import { Tag } from "./Tag"
 
 
 export class SetDto {
-    setName: String;
+    setName: string;
     isPublic: boolean;
     author: string;
     tags: Tag[];
