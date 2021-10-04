@@ -7,6 +7,7 @@ import { authState } from '../../state-slices/auth/auth-slice';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { addThread } from '../../remote/thread-service';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles({
     addThreadContainer: {
@@ -33,6 +34,7 @@ const useStyles = makeStyles({
 function AddThread() {
     const classes = useStyles();
     const [description, setDescription] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const [subject, setSubject] = useState('');
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
@@ -59,10 +61,17 @@ function AddThread() {
                 auth.authUser.username
             );
             let resp = await addThread(toAdd);
+            setRedirect(true);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
         }
+    }
+
+    if (redirect) {
+        return (
+            <Redirect to='/forum' />
+        )
     }
 
     return (
