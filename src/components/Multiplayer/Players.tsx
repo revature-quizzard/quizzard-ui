@@ -3,9 +3,11 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { makeStyles } from '@material-ui/core';
 import { graphqlOperation } from 'aws-amplify';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { deleteGame, updateGame } from '../../graphql/mutations';
 import { authState } from '../../state-slices/auth/auth-slice';
 import { gameState, Player } from '../../state-slices/multiplayer/game-slice';
+import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
 /**
  * React component that renders the current players username and their points of an active game.
@@ -43,6 +45,12 @@ function Players() {
     const styles = useStyles();
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const guestUser = useSelector(guestState);
+    const history = useHistory();
+
+    let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+
+    if (!currentUser) history.push('/lounge')
 
     /**
      *  The host of a game can remove players from the game.
@@ -66,7 +74,7 @@ function Players() {
             <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
                 <TableRow>
-                    {user.authUser.username == game.host
+                    {currentUser == game.host
                     ?
                     <>
                         <TableCell className={styles.text} align="left">Username</TableCell>
@@ -82,7 +90,7 @@ function Players() {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {user.authUser.username == game.host
+                {currentUser == game.host
                 ?
                 game.players.map((player) => (
                     <TableRow

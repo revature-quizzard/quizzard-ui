@@ -7,9 +7,9 @@ import { RootState } from "../../store/store";
  */
 interface State {
     id: string,
-    nickname: string,
-
+    nickname: string
 }
+
 const initialState: State = {
     id: '',
     nickname: '',
@@ -24,7 +24,6 @@ export const guestSlice = createSlice({
             state.id = Math.random().toString(36).substr(2, 5);
             state.nickname = action.payload.nickname;
         }
-
     }
 })
 
@@ -32,6 +31,6 @@ export const {
     setGuest
 } = guestSlice.actions;
 
-export const guestState = (state: RootState) => state.game;
+export const guestState = (state: RootState) => state.guest;
 
 export default guestSlice.reducer;
