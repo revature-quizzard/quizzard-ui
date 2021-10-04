@@ -1,72 +1,55 @@
 import {FormControl, Input, InputLabel, MenuItem, Select} from '@mui/material';
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { useEffect, useState } from 'react';
 import { createGame } from '../../graphql/mutations';
-import { FlashcardDTO } from '../../models/flashcard';
-import { getCards } from '../../remote/card-service';
+import { getSets } from '../../remote/sets-fetcher';
 import { setGame } from '../../state-slices/multiplayer/game-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button } from '@mui/material';
 import { authState } from '../../state-slices/auth/auth-slice';
 
-/*
-    Redux Props:
-        + user
-        + gameSettings {
-            - name
-            - set
-            - capacity
-            - timer
-        }
- */
-
-// Might not use modal?
-// interface IGameSettings {
-//     show: boolean;
-//     setShow: (val: boolean) => void
-// }
-
-type Set = {
-    id: string,
-    author: string,
-    cards: FlashcardDTO[],
-    favorites: number,
-    isPublic: boolean,
-    name: string,       //Name of the type of set
-    plays: number,
-    setName: string,
-    tags: object[],
-    views: number
-}
+//Need set to satisy typescript
+interface Set{};
 
 /**
- *  This modal is used to set game settings with which to start a game, when the user clicks
- *  'Create Game' in Game.tsx.
+ *  This component is used to set game settings with which to start a game, when the user clicks
+ *  'Create Game'. 
  *  Users will be able to set:
- *      + Game Name
- *      + Game Set
- *      + Game Capacity
- *      + Game Timer
- *  with some validation on each field.
+ *      + Game name
+ *      + Set of cards
+ *      + Game capacity
+ *      + Question timer
  * 
- *  Games will not be able to be created if not all of these fields are set and valid.
+ *  Invalid input is set with default values (capacity and timer)
  * 
- * @author Sean Dunn, Colby Wall, Heather Guilfoyle
+ * @author Colby Wall
  */
 function GameSettings() {
-    const [cards, setCards] = useState(undefined as Set[] | undefined)
+    const [sets, setSets] = useState(undefined as Set[] | undefined)
+    const user = useSelector(authState);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    //formData holds the model of a game and sets to default values
     const [formData, setFormData] = useState({
         gameName: '',
         capacity: 15,
         timer: 15,
-        set: {}
+        set: {
+            id: '',
+            setName: '',
+            author: '',
+            cards: [{
+                id: '',
+                question: '',
+                correctAnswer: '',
+                multiAnswers: []
+            }]
+        }
     })
-    const user = useSelector(authState);
-    const dispatch = useDispatch();
-    const history = useHistory();
 
+    //Validation for creating the game
     let isFormValid = () => {
         for (const [key,value] of Object.entries(formData)) {
             if (!value) {
@@ -84,7 +67,7 @@ function GameSettings() {
 
     const getData = async() => {
         try{
-            setCards(await getCards());
+            setSets(await getSets());
         } catch (e: any){
             console.log(e);
         }
@@ -94,7 +77,7 @@ function GameSettings() {
         getData();
     },[]);
 
-    // Creates a game, pushes it to DynamoDB, and
+    // Tries to create a game, pushes it to DynamoDB, and
     // reroutes user to /multiplayer
     const createNewGame = async() => {
         if(!isFormValid()){
@@ -102,8 +85,25 @@ function GameSettings() {
             // props.setMessage('Please fill in all fields');
             // props.setSeverity('warning');
             // props.setOpen(true)
-            // return;
+            return;
         }
+        // Map the cards to an object that GraphQL will accept
+        let cardList = formData.set.cards.map((card) => {
+            let cardElement={};
+
+            // @ts-ignore
+            cardElement['id'] = card.id;
+            // @ts-ignore
+            cardElement['question'] = card.question;
+            // @ts-ignore
+            cardElement['correctAnswer'] = card.answer;
+            // @ts-ignore
+            cardElement['multiAnswers'] = [];
+        
+            return cardElement;
+        })
+        console.log("CardList: ",cardList);
+
         try{
             if(user.authUser){
                 var inputGame = {
@@ -111,46 +111,44 @@ function GameSettings() {
                     name: formData.gameName,
                     matchState: 0,
                     questionIndex: 0,
-                    capacity: formData.capacity,
+                    // @ts-ignore
+                    capacity: parseInt(formData.capacity),
                     host: user.authUser.username,
-                    set: formData.set,
-                    timer: formData.timer,
-                    // set: {
-                    //     id: '10',
-                    //     name: 'Test Set',
-                    //     creator: 'nobody',
-                    //     cardList: [{
-                    //         id: '10',
-                    //         question: 'What is the answer to this question?',
-                    //         correctAnswer: "There isn't one",
-                    //         multiAnswers: ['wrong', 'correct', 'idk']
-                    //     }]
-                    // },
+                    set: {
+                        id: formData.set.id,
+                        name: formData.set.setName,
+                        creator: formData.set.author,
+                        cardList
+                    },
+                    // @ts-ignore
+                    questionTimer: parseInt(formData.timer),
                     players: [{
-                        id: '10',
-                        username: 'nobody',
+                        id: user.authUser.id,
+                        username: user.authUser.username,
                         points: 0,
                         answered: false,
                         answeredAt: new Date().toISOString(),
-                        answeredCorrectly: false
+                        answeredCorrectly: false,
+                        placing: -1,
+                        streak: 0
                     }]
                 }
+            } else {
+                console.log("inputGame is undefined because user is not logged in.");
             }
             console.log(inputGame);
-            let resp = await API.graphql(graphqlOperation(createGame, {input: inputGame })) as Promise<GraphQLResult>;
+            //Set game in graphql
+            await API.graphql(graphqlOperation(createGame, {input: inputGame })) as Promise<GraphQLResult>;
+            //Set game in redux
             dispatch(setGame(inputGame));
             history.push('/multiplayer');
         }
         catch(e: any){
-            //SNACKBAR notis here uwu
+            //SNACKBAR notis here
             console.log(e);
         }
     }
 
-    /*      - name
-            - set
-            - capacity
-            - timer */
     return (
         <>
             <div>
@@ -185,13 +183,13 @@ function GameSettings() {
                         id='timer'
                         name='timer'
                         type='number'
-                        placeholder='Enter a timer for questions'
+                        placeholder='Enter question timer'
                     />
                 </FormControl>
 
                 <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="set">Set</InputLabel>
-                        {console.log(cards)}
+                        {console.log(sets)}
                         <Select
                             id="set"
                             name="set"
@@ -201,12 +199,12 @@ function GameSettings() {
                             placeholder="Choose a set"
                         >
 
-                        {cards == null // check if cards are null
+                        {sets == null // check if set is null
                         ?
                         <MenuItem>No sets found</MenuItem> // displays this if no sets found
                         :
-                        // maps the cards if it's found
-                        cards.map(
+                        // maps the sets if found
+                        sets.map(
                             (item: any, index: any) => (
                                 <MenuItem value={item}>{item.setName}</MenuItem>
                             )
