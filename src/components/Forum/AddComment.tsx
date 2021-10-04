@@ -21,6 +21,8 @@ function AddComment() {
 
     let handleClick = async () => {
         try {
+            setErrorSeverity('info');
+            showSnackbar('Createing comment...')
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
