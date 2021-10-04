@@ -1,4 +1,4 @@
-import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import { Table, Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, makeStyles, TextField, Typography } from '@material-ui/core';
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from '../../graphql/queries';
@@ -33,6 +33,8 @@ let testCard = {
         "Sleeping"
     ]
 }
+
+let previousRenderColor = '';
 
  export async function createAnswers() {
     let response = await API.graphql(graphqlOperation(queries.getGame, {id: '1'}));
@@ -78,14 +80,18 @@ function randomizeAnswers(card): string[] {
     return answers;
 }
 
-
-
-function renderColors() {
-    
+function renderColors(id: string) {
+    if (previousRenderColor !== '') {
+        document.getElementById(previousRenderColor).style.border = '3px solid rgba(0,0,0,0)';
+    }
+    previousRenderColor = id;
+    document.getElementById(id).style.border = '3px solid rgb(90, 50, 180)';
 }
 
 
 function Answers() {
+    const classes = useStyles();
+
     let answers: string[] = randomizeAnswers(testCard);
     // if redux.state-slices.store.game.match_state == 2 renderColors()
     const game = useSelector(gameState);
@@ -97,6 +103,7 @@ function Answers() {
         } else {
             console.log('no');
         }
+        renderColors(e.target.id);
     }
 
     return (
@@ -104,16 +111,32 @@ function Answers() {
         <Button onClick={createAnswers}>Test Me</Button>
         {
         <TableContainer>
-            <Table>
+            <Table style={{tableLayout: 'fixed'}}>
                 <TableHead>
                     {testCard.question}
                     <TableRow>
-                        <TableCell id={answers[0]} onClick={submit}>{answers[0]}</TableCell>
-                        <TableCell id={answers[1]} onClick={submit}>{answers[1]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[0]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[0]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[1]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[1]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell id={answers[2]} onClick={submit}>{answers[2]}</TableCell>
-                        <TableCell id={answers[3]} onClick={submit}>{answers[3]}</TableCell>
+                        <TableCell>
+                            <Typography id={answers[2]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[2]}
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography id={answers[3]} onClick={submit} className={classes.roundedBorder} variant='button' display='block'>
+                                {answers[3]}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
             </Table>
@@ -124,3 +147,15 @@ function Answers() {
     );
 }
 export default Answers; 
+
+const useStyles = makeStyles({
+    roundedBorder: {
+        padding: '10px 0px 10px 0px',
+        borderRadius: '10px',
+        textAlign: 'center',
+        border: '3px solid rgba(0,0,0,0)',
+        '&:hover': {
+            backgroundColor: 'rgb(240,240,240)'
+        }
+    }
+});
