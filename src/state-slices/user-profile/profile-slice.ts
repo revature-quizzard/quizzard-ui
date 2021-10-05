@@ -60,6 +60,12 @@ export const profileSlice = createSlice({
             sets.splice( removeIndex, 1 );
             state.userProfile.favoriteSets = sets;
         }
+        uploadImageReducer: (state, action: PayloadAction<File>) =>{
+            let image = state.userProfile;
+            let removeIndex = sets.findIndex( set => set.id === action.payload);
+            sets.splice( removeIndex, 1 );
+            state.userProfile.favoriteSets = sets;
+        }
     }
 })
 
