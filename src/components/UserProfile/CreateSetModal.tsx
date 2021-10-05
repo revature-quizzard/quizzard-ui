@@ -7,10 +7,11 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createStudySet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, setIsPublic, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, resetCurrentSetToSave, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/create-set-model-slice";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import SwitchUnstyled from '@mui/core/SwitchUnstyled';
+import Switch from '@mui/material/Switch';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
@@ -142,7 +143,7 @@ const CreateSetModal = (props: any) => {
         
         let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor , tagName: tagName , tagAdded: true , index: key};
         dispatch(updateTagFormbyIndex(formToSave_w_key));
-        console.log(_createSetState.setToSave.tags);
+        console.log("TAGS ON SET TO SEND : " ,  _createSetState.setToSave.tags);
         }
         else{
             
@@ -158,8 +159,9 @@ const CreateSetModal = (props: any) => {
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
    
-    const setSetToPublic = () => {
-        dispatch(setIsPublic(_setIsPublic));
+    const toggleSetStatus = () => {
+        dispatch(setIsPublic());
+        console.log(_createSetState.setToSave.isPublic);
     }
 
    
@@ -168,14 +170,20 @@ const CreateSetModal = (props: any) => {
         
             try {
                 dispatch(loading());
-                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
-                dispatch(saveSet(setToSave));
-                console.log(setToSave);
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
-                dispatch(clearTags);
-                console.log(newly_created_set);
+                let setToSave_ : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                dispatch(saveSet(setToSave_));
+                console.log("SET TO SAVE : " , setToSave_);
+                let newly_created_set = await createStudySet(setToSave_);
+                console.log("NEWLY CREATED SET : " ,  newly_created_set);
+                dispatch(clearTags());
+                setNewSet('');
+                // dispatch(resetCurrentSetToSave());
+                
             } catch (e: any) {
                 console.log(e);
+                dispatch(clearTags());
+                // dispatch(resetCurrentSetToSave());
+                setNewSet('');
             }
     }
 
@@ -184,11 +192,14 @@ const CreateSetModal = (props: any) => {
     return (
         <div>
                 
-
-            <TextField label="set name" onChange={handleChange} value={newSet} /> <SwitchUnstyled  defaultChecked />
+            <div >
+            <TextField label="set name" onChange={handleChange} value={newSet} />
+            <br/>
+            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+            </div >
                 <hr/>
 
-                    { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
+                    { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
                      { 
                    return <div key={i}>
                     
@@ -216,32 +227,36 @@ const CreateSetModal = (props: any) => {
                               </Select>
                     </FormControl>
                     <br/>
-                    <Button key={i}  variant="contained" style={{background: 'green' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                    <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
                     </>
                     
                     : 
                     
                     <>
-                    <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
+                    { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                  
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
                     </Button>
                   
-                    <Alert  severity="success">Added!</Alert> 
+                    <Alert  severity="success">Added!</Alert>  <hr/> </>}
                     
-                    <hr/>
+                   
                     <br/>
                      </> }
                 </div>
                 })
             }
-                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
+                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
                <br/>
 
-                <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+                <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
         </div>
     );
 }
 
 export default CreateSetModal;
+
+function resetSet(resetSet: any) {
+    throw new Error("Function not implemented.");
+}

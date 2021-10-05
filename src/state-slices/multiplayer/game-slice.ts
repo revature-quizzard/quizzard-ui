@@ -77,9 +77,17 @@ export const gameSlice = createSlice({
             console.log('Setting ', state, ' to ', action.payload)
         },
 
-        // Used when resetting the statee
+        // Used when resetting the state
         resetGame: (state) => {
-            state = initialState;
+            state.id = '';
+            state.name = '';
+            state.matchState = 0;
+            state.questionIndex = 0;
+            state.capacity = 0;
+            state.host = '';
+            state.questionTimer = 0;
+            state.set = undefined;
+            state.players = undefined;
         }
     }
 });

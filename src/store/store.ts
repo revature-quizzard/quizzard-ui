@@ -12,6 +12,7 @@ import authReducer from "../state-slices/auth/auth-slice";
 import createQuizReducer from "../state-slices/create-quiz/create-quiz-slice";
 import studySetReducer from "../state-slices/study-set/study-set-slice";
 import gameReducer from "../state-slices/multiplayer/game-slice";
+import guestReducer from "../state-slices/multiplayer/guest-slice";
 import errorReducer from "../state-slices/error/errorSlice";
 import forumReducer from "../state-slices/forum/forum-slice"
 import profileReducer from "../state-slices/user-profile/profile-slice";
@@ -32,11 +33,10 @@ export const store = configureStore({
         game: gameReducer,
         error: errorReducer,
         profile: profileReducer, 
-        createSet: createSetReducer, 
-        forum: forumReducer
-    } 
-
-
+        createSet: createSetReducer,
+        forum: forumReducer,
+        guest: guestReducer
+    }
 })
 
 export type RootState = ReturnType<typeof store.getState>;

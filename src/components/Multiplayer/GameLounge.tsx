@@ -14,6 +14,9 @@ import { Game } from '../../models/game';
 import { authState, loginUserReducer } from '../../state-slices/auth/auth-slice';
 import * as gameUtil from '../../utilities/game-utility'
 import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
+import Players from './Players';
+import { guestState, setGuest } from '../../state-slices/multiplayer/guest-slice';
+import { fontFamily } from '@mui/system';
 
 
 Amplify.configure(config);
@@ -27,124 +30,117 @@ Amplify.configure(config);
  **/
 
 function GameLounge() {
+
+    const [nickName, setNickName] = useState("");
     
     const game = useSelector(gameState);
     const user = useSelector(authState);
+    const guestUser = useSelector(guestState);
     const error = useSelector(errorState);
     const dispatch = useDispatch();
     let id = useRef('');
+    let firstRender = useRef(true);
     let history = useHistory();
 
-    // Creates a game using dummy data for now, pushes it to DynamoDB, and
-    // reroutes user to /multiplayer
-    async function makeGame() {
-        let testGame = {
-            id: Math.random().toString(36).substr(2, 5),
-            name: 'Test Game',
-            matchState: 0,
-            questionIndex: 0,
-            capacity: 1,
-            host: 'nobody',
-            questionTimer: 10,
-            set: {
-                id: '10',
-                name: 'Test Set',
-                creator: 'nobody',
-                cardList: [{
-                    id: '10',
-                    question: 'What is the answer to this question?',
-                    correctAnswer: "There isn't one",
-                    multiAnswers: ['']
-                }]
-            },
-            players: [{
-                id: '10',
-                username: 'nobody',
-                points: 0,
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                placing: -1,
-                streak: 0,
-                answeredCorrectly: false
-            }]
-        }
-        testGame.set.cardList.forEach((card, i) => {
-            card.multiAnswers = gameUtil.generateWrongAnswers(card.correctAnswer, testGame.set.cardList);
-        })
-
-        console.log(testGame)
-        let resp = await (API.graphql(graphqlOperation(createGame, {input: testGame})) as Promise<GraphQLResult>);
-        dispatch(setGame(testGame));
-        history.push('/multiplayer');
-    }
-    
-    async function fetchGame() {
-        console.log(id.current);
-        let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-        // @ts-ignore
-        
-        let game: Game = {...resp.data.getGame};
-        
-        //game already exists
-        console.log(resp)
-        if(game.id !== undefined){
-
-            if(game.matchState === 0){
-                //check to see if game capacity is full
-                if(game.players.length < game.capacity){
-        // Set the user into the list of players
-        let baseUser: any;
-        if (user.authUser) {
-            baseUser = {
-                id: user.authUser.id,
-                username: user.authUser.username,
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                answeredCorrectly: false,
-                placing: -1,
-                streak: 0,
-                points: 0
-            };
-        } else {
-            baseUser = {
-                id: Math.random().toString(36).substr(2, 5),
-                username: 'Guest',
-                answered: false,
-                answeredAt: new Date().toISOString(),
-                answeredCorrectly: false,
-                placing: -1,
-                streak: 0,
-                points: 0
+    useEffect(() => {
+        async function fetchGame() {
+            console.log('Id.current',id.current);
+            console.log('nickName:', nickName)
+            
+            let game: Game;
+            try {
+                let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
+                console.log('resp:', resp)
+                //@ts-ignore
+                game = {...resp.data.getGame};
+            } catch {
+                // Game already exists
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Game ID does not exist!"));
+                return;
             }
-        }
-        console.log('Base User: ', baseUser);
-
-        game.players.push(baseUser);
-        await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
-
-        console.log("Successfully updated GraphQL!");
-
-        dispatch(setGame(game));
+            
+            //game already exists
+            
+            if(game.id !== undefined){
+                if(game.matchState === 0){
+                    //check to see if game capacity is full
+                    if(game.players.length >= game.capacity){
+                        dispatch(setErrorSeverity("error"));
+                        dispatch(showSnackbar("Game Full"));
+                        return;  
+                    } 
                 } else {
-                  dispatch(setErrorSeverity("error"));
-                  dispatch(showSnackbar("Game Full"));
-                  return;  
-                } 
+                    dispatch(setErrorSeverity("error"));
+                    dispatch(showSnackbar("Game started already"));
+                    return;   
+                }     
             } else {
-              dispatch(setErrorSeverity("error"));
-              dispatch(showSnackbar("Game started already"));
-              return;   
-            }     
-        } else {
-            dispatch(setErrorSeverity("error"));
-            dispatch(showSnackbar("Game ID does not exist"));
-            return;
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Game ID does not exist"));
+                return;
+            }
+            // Set the user into the list of players
+            let baseUser: any;
+            // User is logged in
+            if (user.authUser) {
+                baseUser = {
+                    id: user.authUser.id,
+                    username: user.authUser.username,
+                    answered: false,
+                    answeredAt: new Date().toISOString(),
+                    answeredCorrectly: false,
+                    placing: -1,
+                    streak: 0,
+                    points: 0
+                };
+            // User is not logged in, but has set a nickname
+            } else if (guestUser.id) {
+                baseUser = {
+                    id: guestUser.id,
+                    //@ts-ignore
+                    username: guestUser.nickname,
+                    answered: false,
+                    answeredAt: new Date().toISOString(),
+                    answeredCorrectly: false,
+                    placing: -1,
+                    streak: 0,
+                    points: 0
+                }
+            // User is not logged in, and has not set a nickname
+            } else {
+                console.log('guest: ', guestUser)
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Please set a nickname."));
+                return;
+            }
+            console.log('Base User: ', baseUser);
+    
+            game.players.push(baseUser);
+            let updateresp = await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
+    
+            console.log("Successfully updated GraphQL!", updateresp);
+    
+            dispatch(setGame(game));
+    
+            
         }
+        firstRender.current ? firstRender.current = false : fetchGame();
+    }, [guestUser])
+    
+
+    function joinGame() {
+        // Handle setting guest slice in Redux when nickname is set
+        dispatch(setGuest({nickname: nickName}))
     }
     
     function handleUpdate(e: any) {
         id.current = e.target.value;
-        console.log(id.current);
+        console.log('Id.current:',id.current);
+    }
+
+    function changeNickName(e: any) {
+        setNickName(e.target.value);
     }
 
     return (
@@ -152,9 +148,12 @@ function GameLounge() {
         { (!game.host)
         ?
         <>
-        <div className="App">
-            <header className="App-header">
-                Welcome to the looounnnge...
+        <div className="App" >
+            <header >
+            <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+            <br/> 
+            <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span> </b> </h1>
+                
                 <br></br>
                 <br></br>
                 <br></br>
@@ -162,15 +161,28 @@ function GameLounge() {
 
         </div>
         
+        {user.authUser
+        ?
+        <>
         {/*Create Game contains create game button*/}
         <GameSettings />
         <br></br>
+        
         {/* Input field for the join game ID */}
-        <Input onKeyUp={handleUpdate} />
-
+        <Input onKeyUp={handleUpdate} 
+               placeholder = 'Game ID'/> {       }
+        </>
+        :
+        <>
+        <Input onKeyUp={handleUpdate} 
+               placeholder = 'Game ID'/> {       }
+    
+        <Input onKeyUp={changeNickName}
+               placeholder = 'Nickname' /> 
+        </>       
+        }
         {/* Button which joins existing game according to input id */}
-        <Button onClick={fetchGame}>Join Game</Button>
-        <Link to="/multiplayer">Go Back To Multiplayer</Link> 
+        <Button onClick={joinGame}>Join Game</Button>
         </>
         : <Redirect to="/multiplayer" /> }
         </>
