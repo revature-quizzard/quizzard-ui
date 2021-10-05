@@ -92,9 +92,19 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell align="left">{player.username}</TableCell>
-                    <TableCell align="right">{player.points}</TableCell>
-                    <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
+                    {(user.authUser.username == player.username)
+                        ?
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => (API.graphql(graphqlOperation(deleteGame, {input: {id: game.id}}))) }>Close Game</Button></TableCell>
+                        </>
+                        :
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
+                        </>}
                     </TableRow>
                 ))
                 :
@@ -102,8 +112,18 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell align="left">{player.username}</TableCell>
-                    <TableCell align="right">{player.points}</TableCell>
+                        {(user.authUser.username == player.username)
+                        ?
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Leave Game</Button></TableCell>
+                        </>
+                        :
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        </>}                    
                     </TableRow>                
                     ))}
                 </TableBody>
