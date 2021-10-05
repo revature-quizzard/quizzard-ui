@@ -181,7 +181,6 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
             }
     }
 
-
    const useStyles = makeStyles({
         box: {
             justifyContent: "center",
