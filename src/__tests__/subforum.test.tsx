@@ -3,7 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import SubforumHandler from '../components/Forum/Subforum';
 import { Subforum } from '../models/subforum';
 import { Provider } from 'react-redux';
-import forumReducer from '../state-slices/forum/forum-slice';
+import forumReducer, { setCurrentSubforum } from '../state-slices/forum/forum-slice';
 import createMockStore from 'redux-mock-store';
 import { configureStore } from '@reduxjs/toolkit';
 import { assert } from 'console';
@@ -51,25 +51,29 @@ describe('View Subforum Component Test Suite', () => {
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
     })
-    it('Subforum render a table with accurate values given info from api', () => {
+    it('Subforum render a table with accurate values given info from api', async () => {
         // configure mock store
-        const configureMockStore = createMockStore();
-        const mockStore = configureMockStore(initialState);
-        act(() => {
+        let mockStore = configureStore({
+            //@ts-ignore
+            reducer: { currentSubforum: setCurrentSubforum }, initialState
+        });
+
         (getAllSubForums as jest.Mock).mockImplementation((): Promise<Subforum[]> => {
             return Promise.resolve([new Subforum([], "NULL", "Description", "ID", "Subject", 1)])
-        })
+        });
 
         // set up wrapper class
-        const wrapper = mount(  <Provider store={mockStore}>
+        let wrapper;
+        await act(() => {
+        wrapper = mount(  <Provider store={mockStore}>
                                     <SubforumHandler />
                                 </Provider>);
         wrapper.update();
         console.log(wrapper.debug());
         });
+        
         // expect table to have a row with values
         expect(getAllSubForums).toBeCalled();
-    }
-    
-    )
-})
+        // change
+        });
+    })
