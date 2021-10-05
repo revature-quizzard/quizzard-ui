@@ -54,3 +54,10 @@ export const getAllSets = async () =>{
   console.log(resp.data)
   return resp.data;
 }
+
+export const deleteSet = async (setId:string) => {
+
+  let response = await quizzardApiClientTokenAuthorized.delete(`/sets/${setId}`);
+
+  return response.data;
+}

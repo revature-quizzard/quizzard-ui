@@ -7,9 +7,10 @@ import { authState } from '../../state-slices/auth/auth-slice';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { updateThread } from '../../remote/thread-service';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles({
-    addThreadContainer: {
+    updateThreadContainer: {
         justifyContent: "center",
         margin: 'auto',
         padding: 20,
@@ -30,10 +31,15 @@ const useStyles = makeStyles({
     }
 });
 
-function UpdateThread() {
+interface IUpdateThreadProps {
+    close: (input: boolean) => void;
+}
+
+function UpdateThread(props: IUpdateThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
 
@@ -51,33 +57,41 @@ function UpdateThread() {
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
-                threadAncestors,
-                "114687543",
+                forumInfo.currentThread.ancestors,
+                forumInfo.currentThread.parent,
                 description,
                 subject,
-                "cmettee",
-                "310f67a1-822c-4fab-9b7f-8313686f7fb2",
-                1,
-                "2021-10-01T21:59:02.879",
-                ["tag1id", "tag2id"]
+                forumInfo.currentThread.owner,
+                forumInfo.currentThread.id,
+                forumInfo.currentThread.child_count,
+                forumInfo.currentThread.date_created,
+                forumInfo.currentThread.tags
             );
             console.log(toAdd);
             let resp = await updateThread(toAdd);
+            setRedirect(true);
+            setRedirect(false);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
         }
     }
 
+    if (redirect) {
+        return (
+            <Redirect to='/forum' />
+        )
+    }
+
     return (
-        <div id="add-thread-component" className={classes.addThreadContainer}>
+        <div id="update-thread-component" className={classes.updateThreadContainer}>
                 <Typography align="center" variant="h5">Update Thread</Typography>
                 <br />
                 <Typography>Update Thread Title</Typography>
                 <FormControl style={{'margin': '1rem'}}>
                     <Input className={classes.input}
                         onChange={handleSubjectChange}
-                        placeholder={forumInfo?.currentThread?.subject}
+                        placeholder={forumInfo.currentThread?.subject}
                     />
                 </FormControl>
 
@@ -85,11 +99,11 @@ function UpdateThread() {
                 <Paper style={{'margin': '1rem'}}>
                     <Editor
                         onChange={handleDescriptionChange}
-                        placeholder={forumInfo?.currentThread?.description} />
+                        placeholder='Write your new description...' />
                 </Paper>
                 <br />
                 <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
+                    <Button variant="contained" className={classes.button} onClick={handleClick}>Update Thread</Button>
                 </Box>
         </div>
     )
