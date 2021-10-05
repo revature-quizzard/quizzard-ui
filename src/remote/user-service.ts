@@ -16,3 +16,16 @@ export async function addSetToFavorites(setId:{id:string}, user_Id:string){
 
     return response.data
 }
+
+export const deleteFavorite = async (setId:string, user_Id:string) => {
+
+    let config = {
+        data :{
+            id:setId
+        }
+    }
+
+    let response = await quizzardApiClientTokenAuthorized.delete(`/users/favorites?user_id=${user_Id}`, config );
+
+    return response.data;
+}

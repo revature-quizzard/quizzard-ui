@@ -34,27 +34,32 @@ const SubforumHandler = ()=> {
     return (
       <TableContainer component={Paper}>
         <Table>
-          <TableHead>
+          <TableHead style={{'backgroundColor':'#333333'}}>
             <TableRow>
-              <TableCell>Subject</TableCell>
-              <TableCell align="left">Description&nbsp;</TableCell>
-              <TableCell align="left">Number of Threads&nbsp;</TableCell>
+              <TableCell style={{'color':'#FFFFFF'}}>Subject</TableCell>
+              <TableCell align="left" style={{'color':'#FFFFFF'}}>Description&nbsp;</TableCell>
+              <TableCell align="left" style={{'color':'#FFFFFF'}}>Number of Threads&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {subforums?.map((sub) => (
-              <TableRow>
+              <TableRow style={{'backgroundColor':'#5E5E5E'}}>
                 <TableCell
                 align="left"
+                style={{'color':'#FFFFFF'}}
                 onClick={() => Navigate(sub.subject, sub)}>
-                {sub.subject}
+                  {sub.subject}
                 </TableCell>
                 <TableCell
                 align="left"
+                style={{'color':'#FFFFFF'}}
                 onClick={() => Navigate(sub.subject, sub)}>
-                {sub.description}
+                  {sub.description}
                 </TableCell>
-                <TableCell align="left">{sub.child_count}</TableCell>
+                <TableCell
+                align="left"
+                style={{'color':'#75BC3E'}}>
+                  {sub.child_count}</TableCell>
               </TableRow>
             ))}
           </TableBody>
