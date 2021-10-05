@@ -7,6 +7,11 @@ import { authState } from '../../state-slices/auth/auth-slice';
 import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { addThread } from '../../remote/thread-service';
+import { Redirect } from 'react-router';
+
+interface IAddThreadProps {
+    close: (input: boolean) => void;
+}
 
 const useStyles = makeStyles({
     addThreadContainer: {
@@ -30,9 +35,10 @@ const useStyles = makeStyles({
     }
 });
 
-function AddThread() {
+function AddThread(props: IAddThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
+    const [redirect, setRedirect] = useState(false);
     const [subject, setSubject] = useState('');
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
@@ -49,45 +55,51 @@ function AddThread() {
 
     let handleClick = async () => {
         try {
-            let threadAncestors: string[] = ["114687543"];
-            
-            //CHANGE THESE VALUES
+            let threadAncestors: string[] = [forumInfo.currentSubforum.id]
             let toAdd = new Thread(
                 threadAncestors,
-                "114687543",
+                forumInfo.currentSubforum.id,
                 description,
                 subject,
-                "cmettee",
+                auth.authUser.username
             );
             let resp = await addThread(toAdd);
+            setRedirect(true);
+            setRedirect(false);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
         }
     }
 
+    if (redirect) {
+        return (
+            <Redirect to='/forum' />
+        )
+    }
+
     return (
         <div id="add-thread-component" className={classes.addThreadContainer}>
-                <Typography align="center" variant="h5">Create Thread</Typography>
-                <br />
-                <Typography>Thread Title</Typography>
-                <FormControl style={{'margin': '1rem'}}>
-                    <Input className={classes.input}
-                        onChange={handleSubjectChange}
-                        placeholder="Enter the thread title"
-                    />
-                </FormControl>
+            <Typography align="center" variant="h5">Create Thread</Typography>
+            <br />
+            <Typography>Thread Title</Typography>
+            <FormControl style={{'margin': '1rem'}}>
+                <Input id='subjectInput' className={classes.input}
+                    onChange={handleSubjectChange}
+                    placeholder="Enter the thread title"
+                />
+            </FormControl>
 
-                <Typography>Enter Your Post</Typography>
-                <Paper style={{'margin': '1rem'}}>
-                    <Editor
-                        onChange={handleDescriptionChange}
-                        placeholder='Enter the first post here...' />
-                </Paper>
-                <br />
-                <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
-                </Box>
+            <Typography>Enter Your Post</Typography>
+            <Paper style={{'margin': '1rem'}}>
+                <Editor id='descriptionInput'
+                    onChange={handleDescriptionChange}
+                    placeholder='Enter the first post here...' />
+            </Paper>
+            <br />
+            <Box textAlign='center'>
+                <Button id='createThreadButton' variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
+            </Box>
         </div>
     )
 }
