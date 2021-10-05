@@ -45,10 +45,10 @@ function App() {
 
   // @ts-ignore
   return (
-    <Router>
+    <Router >
       <Navigation />
-     
-      <Container className="app-container" id="app-container">
+     {/* className="app-container" id="app-container" */}
+      <Container>
         <Switch>
           <Route exact path="/">
             <Main />
