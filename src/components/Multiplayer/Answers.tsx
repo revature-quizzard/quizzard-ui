@@ -32,7 +32,8 @@ const useStyles = makeStyles({
         textAlign: 'center',
         border: '3px solid rgba(0,0,0,0)',
         '&:hover': {
-            backgroundColor: 'rgb(240,240,240)'
+            backgroundColor: 'rgb(240,240,240)',
+            cursor: 'pointer'
         }
     },
     selectedAnswer: {
@@ -72,9 +73,13 @@ function Answers() {
             }
         } else if (game.matchState === 2) {
             answers.forEach((answer, i) => {
-                if (answer == game.set.cardList[game.questionIndex].correctAnswer) {                    
-                    document.getElementById(i.toString()).classList.add(classes.correctAnswer);
-                } else document.getElementById(i.toString()).classList.add(classes.wrongAnswer);
+                let element = document.getElementById(i.toString());
+                if (answer === game.set.cardList[game.questionIndex].correctAnswer) {
+                    element.classList.add(classes.correctAnswer);
+                } else if (element.classList.contains(classes.selectedAnswer)) {
+                    element.classList.add(classes.wrongAnswer);
+                }
+                element.classList.remove(classes.selectedAnswer);
             });
         }
     }, [game.matchState, answers]);
