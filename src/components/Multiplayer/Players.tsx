@@ -45,7 +45,7 @@ function Players() {
     const guestUser = useSelector(guestState);
     const history = useHistory();
 
-    let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+    let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
 
     if (!currentUser) history.push('/lounge')
 
@@ -91,9 +91,9 @@ function Players() {
                 ?
                 game.players.map((player) => (
                     <TableRow
-                    key={player.username}      
+                    key={player.id}      
                     >
-                    {(currentUser == player.username)
+                    {(currentUser == player.id)
                         ?
                         <>
                         <TableCell align="left">{player.username}</TableCell>
@@ -111,9 +111,9 @@ function Players() {
                 :
                 game.players.map((player) => (
                     <TableRow
-                    key={player.username}      
+                    key={player.id}      
                     >
-                        {(currentUser == player.username)
+                        {(currentUser == player.id)
                         ?
                         <>
                         <TableCell align="left">{player.username}</TableCell>

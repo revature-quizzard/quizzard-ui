@@ -200,10 +200,8 @@ function Game() {
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
-        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
-        if (!currentUser){ history.push('/lounge')
-            console.log('pushedOut?', {currentUser})
-        }
+        let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
+        if (!currentUser) history.push('/lounge')
         
         switch(game.matchState) {
             case 0:
@@ -307,7 +305,7 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
-        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {
