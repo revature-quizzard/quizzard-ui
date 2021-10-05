@@ -95,7 +95,7 @@ function GameLounge() {
             // User is not logged in, but has set a nickname
             } else if (guestUser.id) {
                 baseUser = {
-                    id: Math.random().toString(36).substr(2, 5),
+                    id: guestUser.id,
                     //@ts-ignore
                     username: guestUser.nickname,
                     answered: false,
@@ -155,12 +155,13 @@ function GameLounge() {
 
         </div>
         
-        {/*Create Game contains create game button*/}
-        <GameSettings />
-        <br></br>
         {user.authUser
         ?
         <>
+        {/*Create Game contains create game button*/}
+        <GameSettings />
+        <br></br>
+        
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} 
                placeholder = 'Game ID'/> {       }
@@ -176,7 +177,6 @@ function GameLounge() {
         }
         {/* Button which joins existing game according to input id */}
         <Button onClick={joinGame}>Join Game</Button>
-        <Link to="/multiplayer">Go Back To Multiplayer</Link> 
         </>
         : <Redirect to="/multiplayer" /> }
         </>

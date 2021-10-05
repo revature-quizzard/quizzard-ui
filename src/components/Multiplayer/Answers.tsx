@@ -91,7 +91,7 @@ function Answers() {
         playerList.forEach(player => {
             if (player.username == currentUser) Object.assign(currentPlayer, player);
         })
-        playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
+        playerList.splice(playerList.findIndex(player => player.id == currentPlayer.id), 1)
         if (!currentPlayer || currentPlayer.answered) return;        
         currentPlayer.answered = true;
         if (answers[e.target.id] === game.set.cardList[game.questionIndex].correctAnswer) {            
