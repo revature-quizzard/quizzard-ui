@@ -51,7 +51,7 @@ describe('View Subforum Component Test Suite', () => {
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
     })
-    it('Subforum render a table with accurate values given info from api', async () => {
+    it('Subforum calls to the api on initial render', async () => {
         // configure mock store
         let mockStore = configureStore({
             //@ts-ignore
@@ -64,16 +64,15 @@ describe('View Subforum Component Test Suite', () => {
 
         // set up wrapper class
         let wrapper;
+        let subjectWrapper
         await act(() => {
         wrapper = mount(  <Provider store={mockStore}>
                                     <SubforumHandler />
                                 </Provider>);
         wrapper.update();
-        console.log(wrapper.debug());
         });
         
         // expect table to have a row with values
         expect(getAllSubForums).toBeCalled();
-        // change
         });
     })
