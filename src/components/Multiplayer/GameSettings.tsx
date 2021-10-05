@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button } from '@mui/material';
 import { authState } from '../../state-slices/auth/auth-slice';
+import { guestState, setGuest } from '../../state-slices/multiplayer/guest-slice';
+import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
 import * as gameUtil from '../../utilities/game-utility'
 
 //Need set to satisy typescript
@@ -30,8 +32,11 @@ interface Set{};
 function GameSettings() {
     const [sets, setSets] = useState(undefined as Set[] | undefined)
     const user = useSelector(authState);
+    const guestUser = useSelector(guestState);
+    const error = useSelector(errorState);
     const dispatch = useDispatch();
     const history = useHistory();
+
     //formData holds the model of a game and sets to default values
     const [formData, setFormData] = useState({
         gameName: '',
@@ -63,14 +68,14 @@ function GameSettings() {
     let handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
-        console.log(formData);
+        console.log('formdata:',formData);
     }
 
     const getData = async() => {
         try{
             setSets(await getAllSets());
         } catch (e: any){
-            console.log(e);
+            console.log('e',e);
         }
     }
 
@@ -83,9 +88,8 @@ function GameSettings() {
     const createNewGame = async() => {
         if(!isFormValid()){
             //Snack bar error message to user 
-            // props.setMessage('Please fill in all fields');
-            // props.setSeverity('warning');
-            // props.setOpen(true)
+            dispatch(setErrorSeverity("warning"));
+            dispatch(showSnackbar("Please fill in all fields"));
             return;
         }
         // Map the cards to an object that GraphQL will accept
@@ -109,39 +113,56 @@ function GameSettings() {
         })
         console.log("CardList: ",cardList);
 
+        let host = '';
+        let id = '';
+        let username = '';
         try{
             if(user.authUser){
-                var inputGame = {
-                    id: Math.random().toString(36).substr(2, 5),
-                    name: formData.gameName,
-                    matchState: 0,
-                    questionIndex: 0,
-                    // @ts-ignore
-                    capacity: parseInt(formData.capacity),
-                    host: user.authUser.username,
-                    set: {
-                        id: formData.set.id,
-                        name: formData.set.setName,
-                        creator: formData.set.author,
-                        cardList
-                    },
-                    // @ts-ignore
-                    questionTimer: parseInt(formData.timer),
-                    players: [{
-                        id: user.authUser.id,
-                        username: user.authUser.username,
-                        points: 0,
-                        answered: false,
-                        answeredAt: new Date().toISOString(),
-                        answeredCorrectly: false,
-                        placing: -1,
-                        streak: 0
-                    }]
-                }
+                host = user.authUser.username;
+                id = user.authUser.id;
+                username = user.authUser.username;
+            } else if (guestUser) {
+                // @ts-ignore
+                host = guestUser.nickname;
+                // @ts-ignore
+                id = guestUser.id;
+                // @ts-ignore
+                username = guestUser.nickname;
             } else {
-                console.log("inputGame is undefined because user is not logged in.");
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("Please login or continue as guest by setting a nickname."));
+                return;
             }
-            console.log(inputGame);
+
+            let inputGame = {
+                id: Math.random().toString(36).substr(2, 5),
+                name: formData.gameName,
+                matchState: 0,
+                questionIndex: 0,
+                // @ts-ignore
+                capacity: parseInt(formData.capacity),
+                host: host,
+                set: {
+                    id: formData.set.id,
+                    name: formData.set.setName,
+                    creator: formData.set.author,
+                    cardList
+                },
+                // @ts-ignore
+                questionTimer: parseInt(formData.timer),
+                players: [{
+                    id: id,
+                    username: username,
+                    points: 0,
+                    answered: false,
+                    answeredAt: new Date().toISOString(),
+                    answeredCorrectly: false,
+                    placing: -1,
+                    streak: 0
+                }]
+            }
+
+            console.log('game',inputGame);
             //Set game in graphql
             await API.graphql(graphqlOperation(createGame, {input: inputGame })) as Promise<GraphQLResult>;
             //Set game in redux
@@ -150,7 +171,7 @@ function GameSettings() {
         }
         catch(e: any){
             //SNACKBAR notis here
-            console.log(e);
+            console.log('e',e);
         }
     }
 
@@ -194,7 +215,7 @@ function GameSettings() {
 
                 <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="set">Set</InputLabel>
-                        {console.log(sets)}
+                        {console.log('sets:',sets)}
                         <Select
                             id="set"
                             name="set"
