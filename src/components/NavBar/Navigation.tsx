@@ -50,6 +50,10 @@ export function NavigationComponent() {
             flexWrap: "wrap"
 
         },
+        typography: {
+            marginLeft: "20rem",
+            width: "fit-content"
+        },
         typographyIcons: {
             paddingLeft: "3rem"
         },
@@ -248,6 +252,17 @@ export function NavigationComponent() {
                     </List>
 
                 </Drawer>
+                {
+                    // The following is a margin, need to fix to actually use margin css
+                }
+                <main className={classes.content}>
+                    <div className={classes.toolbar}/>
+                    <Typography paragraph>
+                    </Typography>
+                    <Typography paragraph>
+
+                    </Typography>
+                </main>
             </div>
 
         </>
