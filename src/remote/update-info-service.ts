@@ -23,3 +23,6 @@ export async function addPointsToUser (ponits: addPoints) {
     let response = await quizzardApiClientTokenAuthorized.post(`/accounts/points`, ponits);
     return await response.data;
 }
+
+
+

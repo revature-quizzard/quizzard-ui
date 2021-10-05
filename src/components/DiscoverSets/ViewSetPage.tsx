@@ -8,37 +8,52 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {Box, Button, Card, CssBaseline, Popover, Skeleton, SwipeableDrawer} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    Modal,
+}
+from "@mui/material";
 import React, {useState} from "react";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import Backdrop from '@mui/material/Backdrop';
+import BackspaceIcon from '@mui/icons-material/Backspace';
+import {User} from "../../models/user";
+import {authState} from "../../state-slices/auth/auth-slice";
+import {addSetToFavorites} from "../../remote/user-service";
+import {useHistory} from "react-router-dom";
+import {profileState} from "../../state-slices/user-profile/profile-slice";
+
 
 
 /**
- *
+ *@author Jose Tejada
  * @constructor
  */
+
+
+
 function ViewSetPage() {
     const [open, setOpen] = React.useState(false);
+    const [answer, setAnswer] = React.useState(false);
+    const user: User = useSelector(authState).authUser;
+    const history = useHistory();
+
+    // const state = useSelector(profileState);
+    // const favorites = state.userProfile.favoriteSets;
+
+
+    function handleOpen(a:any){
+        setAnswer(a)
+        setOpen(true)
+        }
+    const handleClose = () => setOpen(false);
 
     const s: Set = useSelector(StudySetState).aSet;
 
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-    };
 
     const useStyles = makeStyles((theme:Theme) => ({
 
@@ -47,12 +62,21 @@ function ViewSetPage() {
             borderStyle: "ridge",
             borderColor:"#4e3e61"
         },
+        Thread:{
+          backgroundColor:"#4e3e61",
+          threadColor: "whitesmoke"
+        },
+        cell:{
+
+        },
         button:{
             textAlign:"center"
 
         },
         divTable: {
             display:"flex",
+            flexDirection:"row",
+            flexWrap:"wrap",
             marginTop: 20,
 
         },
@@ -64,47 +88,85 @@ function ViewSetPage() {
 
         },
         cardStyle: {
-
             width:"fit-content",
             marginLeft: 10,
             borderStyle: "groove",
-            textAlign:"center"
+            textAlign:"center",
+            marginBottom: 10,
 
             }
     }));
     const classes = useStyles();
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    async function addTofavoriets(){
 
 
 
+        let setId={
+            id:s.id
+        }
+
+        try{
+            await addSetToFavorites(setId, user.id)
+
+        }catch (e:any){
+            console.log(e.message)
+        }
+    }
+    function toSetPage(){
+        history.push('/study/')
+    }
 
 
 
     return(
         <>
+            {user
+                ?
+                <Button  onClick={addTofavoriets} startIcon={<AddBoxIcon />} color="success">
+                    Add Set to favorites
+                </Button>
 
+                :
+                ''
+            }
 
-            <Button onClick={() => {alert('clicked');}} startIcon={<AddBoxIcon />} color="success">
-                Add to favorites
+            <Button startIcon={<BackspaceIcon />} onClick={toSetPage} color="secondary" >
+                Go back to Sets
             </Button>
         <TableContainer component={Paper} className={classes.tableContainer}>
             <Table sx={{minWidth: 700}} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="center">Set Name</TableCell>
-                        <TableCell align="center">Author</TableCell>
-                        <TableCell align="center">Views</TableCell>
-                        <TableCell align="center">Favorites</TableCell>
-                        <TableCell align="center">Tags</TableCell>
+                <TableHead className={classes.Thread}>
+                    <TableRow style={{background: "#4E3E61" , color: 'white '}}>
+                        <TableCell style={{color: 'white '}} align="center" >Set Name</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Author</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Views</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Favorites</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Tags</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Set Id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     <TableRow>
+
                         <TableCell align="center">{s.setName}</TableCell>
                         <TableCell align="center">{s.author}</TableCell>
                         <TableCell align="center">{s.views}</TableCell>
                         <TableCell align="center">{s.favorites}</TableCell>
                         <TableCell align="center">{s.tags.map((tag, index, s) => (
                             <h6 key={index}>{tag.tagName}</h6>))}</TableCell>
+                        <TableCell align="center">{s.id}</TableCell>
                     </TableRow>
 
                 </TableBody>
@@ -121,19 +183,31 @@ function ViewSetPage() {
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {card.question}
                         </Typography>
-                        <Typography sx={{ mb: 1.5, fontSize: 14, textAlign: "center" }} color="text.secondary">
-                            {card.answer}
-                        </Typography>
                     </CardContent>
 
+                        <Button onClick={ () => handleOpen(card.answer)}>View Answer</Button>
 
-                        <Button size="small" onClick={() => {alert(<h1>{card.answer}</h1>);}} color="secondary">View Answer</Button>
+                </Card>
+                ))}
+                <div>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                The answer
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                {answer}
+                            </Typography>
+                        </Box>
+                    </Modal>
+                </div>
 
-
-                </Card>))}
             </div>
-
-
     </>
 );
 

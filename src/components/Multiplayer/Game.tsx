@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { useHistory } from 'react-router';
-
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
 import { createGame, deleteGame, updateGame } from '../../graphql/mutations';
@@ -8,20 +7,71 @@ import { onCreateGame, onDeleteGame, onUpdateGame, onUpdateGameById, onDeleteGam
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
-import { GraphQLTime } from 'graphql-iso-date';
 import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
-import { Button } from '@material-ui/core';
-import * as queries from '../../graphql/queries';
-import { Card } from 'react-bootstrap';
-import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import { Button, makeStyles } from '@material-ui/core';
 import Answers from './Answers';
 import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
-import { authState } from '../../state-slices/auth/auth-slice';
-import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
+import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
+import { gameState, Player, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
+import { guestState } from '../../state-slices/multiplayer/guest-slice';
+
+
+const useStyles = makeStyles({
+    gameContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        marginTop: '2rem'
+    },
+
+    playerContainer: {
+        marginRight: '1rem'
+    },
+
+    topRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
+    gameId: {
+        alignSelf: 'center',
+        paddingLeft: '2rem'
+    },
+
+    bottomRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'stretch'
+    },
+
+    qaContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '35rem'
+    },
+
+    timerContainer: {
+        alignSelf: 'flex-start',
+        justifyContent: 'right',
+        marginBottom: '1rem'
+    },
+
+    hideMe: {
+        visibility: 'hidden'
+    },
+
+    leaderContainer: {
+        justifyContent: "center",
+
+    }
+
+});
+
 
 Amplify.configure(config);
 
@@ -52,11 +102,17 @@ Amplify.configure(config);
  *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
 
+
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
  *  Inside of the subscription, we set our game state to 2, and update our render accordingly.
  */
-async function startGame() {
+async function startGame(game: any) {
+    if (game.matchState === 0) {
+        await API.graphql(graphqlOperation(
+            updateGame, {input: {id: game.id, matchState: 1}}
+        ));
+    }
 }
 
 /**
@@ -64,20 +120,12 @@ async function startGame() {
  *  in lobby will be redirected. If the game is not closed through this manner, it will be
  *  automatically closed when the last player leaves the lobby.
  */
-function closeGame() {
-}
-
-/**
- *  The host of a game can remove players from the game.
- * 
- *  This logic is run when the 'Kick Player' button is clicked next
- *  to a player's name. The given id will be removed from the game data and 
- *  the player list will be updated accordingly.
- * 
- * @param playerID - ID of player to be kicked from game
- */
-async function kickPlayer(playerID: string) {
-
+async function closeGame(game: any) {
+    if (game.matchState === 3) {
+        await API.graphql(graphqlOperation(
+            deleteGame, {input: {id: game.id}}
+        ));
+    }
 }
 
 /**
@@ -94,6 +142,8 @@ function postGameRecords() {
 function Game() {
 
     const user = useSelector(authState);
+    //@ts-ignore
+    const guestUser = useSelector(guestState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -114,8 +164,9 @@ function Game() {
             graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
+                let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == user.authUser?.id);
                 console.log('onUpdate:', { provider, value });
-                dispatch(setGame({...value.data.onUpdateGameById}))
+                ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -127,31 +178,44 @@ function Game() {
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
                 console.log('onDelete:', { provider, value });
+                history.push('/lounge');
             }
         })
 
         return () => {
             // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
+            let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+            let copylist: Player[] = [].concat(game.players);
+            let index = copylist.findIndex((player) => player.id === currentUser);
+            copylist.splice(index, 1);
+            (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
             updateSubscription.unsubscribe();
             deleteSubscription.unsubscribe();
         }
     }, [])
 
+    const classes = useStyles();
+
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
-        let currentUser = 'nobody';
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
+        
         switch(game.matchState) {
             case 0:
                 return (
-                    <>
+                    <>  
+                        <h1 className={classes.gameId}>{game.id}</h1> 
+                        <div className= {classes.playerContainer}>
                         <Players />
+                        </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={startGame}> Host Start Game Button </Button>
+                        <Button onClick={startGame}> Start Game </Button>
                         :
                         <></> }
                     </>
@@ -159,23 +223,53 @@ function Game() {
             case 1:
                 return (
                     <>
-                        <Players />
-                        <Timer start={game.questionTimer} onTimeout={onTimeout}/>
-                        <Questions />
-                        <Answers />
+                    <div className = {classes.gameContainer}>
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <div className= {classes.timerContainer}>
+                                <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                            </div>
+                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
+                    </div>
                     </>
                 )
             case 2:
                 return (
                     <>
-                        <Players />
-                        <Questions />
-                        <Answers />
+                    <div className = {classes.gameContainer}>
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>  
+                            <div className={classes.hideMe}>                        
+                                 <div className= {classes.timerContainer}>
+                                    <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                                 </div>
+                            </div>  
+                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={nextCard}> Host Next Card Button </Button>
+                        <Button onClick={nextCard}>Next Card </Button>
                         :
                         <></> }
                     </>
@@ -183,17 +277,20 @@ function Game() {
             case 3: 
                 return (
                     <>
+                    <div className = {classes.leaderContainer}>
                         <Leaderboard />
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={closeGame}> Host Close Game Button </Button>
+                        <Button onClick={() => {closeGame(game)}}> Close Game </Button>
                         :
                         <></> }
                     </>
                 )
         }
+        
     }
 
     /**
@@ -208,8 +305,9 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
-        // TODO: Change to check redux state, bit weird rn as guests don't use state
-        let currentUser = 'nobody';
+        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        if (!currentUser) history.push('/lounge')
+        
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
             // TODO: Utilize placing and streak fields for scoring
@@ -238,7 +336,7 @@ function Game() {
                     points *= 1 + (.1 * player.streak);
 
                     // Update points
-                    player.points += points;
+                    player.points += Math.floor(points);
                 }
             });
             // Give bonus points if only one player answered correctly
@@ -305,36 +403,14 @@ function Game() {
         console.log('Inside incrementState, temp:', temp)
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
     }
-
-    function test(game: any) {
-        let newgame = {
-            id: game.id,
-            name: '',
-            matchState: 0,
-            questionIndex: 0,
-            capacity: 0,
-            host: '',
-            questionTimer: 10,
-            set: {
-                //@ts-ignore
-                cardList: []
-            },
-            //@ts-ignore
-            players: []
-        }
-        newgame.id = parseInt(game.id) + 1;
-        return newgame;
-    }
     
     // The return renders components based on match state if game exists in redux,
     // otherwise, redirect user to game lounge
     return (
         // buttons for test (remove this after testing)
         <>
-        <h1>{game.id}</h1>
-        <Button onClick={() => dispatch(setGame(test(game)))}>Click Me</Button>
         {
-            (game) // If game is defined (Using redux slice)
+            (game.id) // If game is defined (Using redux slice)
             ?
             <>
                 { render() }

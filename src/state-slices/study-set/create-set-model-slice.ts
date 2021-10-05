@@ -15,31 +15,31 @@ import { SetDto } from "../../dtos/set-dto";
 
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * interface for the state
  */
 interface  State {
-    IsShowing: boolean; 
+    IsShowing: boolean;
     currentUser: User;
-    setToSave: Set;
+    setToSave: SetDto;
     newTagForms: TagFormModel[];
     tagLimit: number ;
 }
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * initial state values
  */
 const initialState: State = {
     IsShowing: false,
     currentUser: undefined,
-    setToSave: {setName: '', isPublic: false, author : '' , tags : [] as Tag[] , set_id : '' , favorites :0 , cards: [] as Card[] , views : 0  , plays : 0 ,studies : 0 } as Set,
+    setToSave: {setName: '', isPublic: false, author : '', tags : [] as String[]} as SetDto,
     newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
     tagLimit: 0
 }
 
 /**
- * @author Sean Taba
+ * @author Alfonso Holmes
  * state definition, name, initial state, reducers
  */
 export const createSetSlice = createSlice({
@@ -59,9 +59,9 @@ export const createSetSlice = createSlice({
         {
             state.newTagForms.push(action.payload);
         },
-        appendNewTag: (state, action : PayloadAction<Tag> ) => {
+        appendNewTag: (state, action : PayloadAction<string> ) => {
             console.log(action.payload);
-            state.setToSave.tags.push({tagColor: action.payload.tagColor  , tagName : action.payload.tagName} as Tag);
+            state.setToSave.tags.push(action.payload);
         },
         incrementTagLimit: (state) => {
             if(state.tagLimit < 10)
@@ -74,19 +74,23 @@ export const createSetSlice = createSlice({
             state.newTagForms[action.payload.index].tagAdded = action.payload.tagAdded;
         },
         clearTags: (state) => {
-            state.newTagForms =  [{ tagColor: '', TagName: '', tagAdded: false} as TagFormModel ]; 
-            state.setToSave.tags = [] ;      
+            function DeletedAll(element: any)  {  return element == undefined;  } 
+            
+            state.newTagForms =  state.newTagForms.filter(DeletedAll);
+            console.log( state.newTagForms);
+            state.newTagForms.push({ tagColor: '', TagName: '', tagAdded: false}  as TagFormModel);
+            //state.setToSave.tags = [] ;      
            },
         deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
 
-            function isNotToBeDeleted(element: any)  {  return element != undefined;  } 
+            function isNotToBeDeleted(element: any)  {  return element != undefined;  }
 
             state.newTagForms[action.payload.index] = undefined;
             state.newTagForms = state.newTagForms.filter(isNotToBeDeleted);
-        
+
             state.setToSave.tags[action.payload.index] = undefined
-            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);      
-           
+            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);
+
         },
         clearTagFrombyIndex: (state , action : PayloadAction<SaveTagFormModel>) => {
             state.newTagForms[action.payload.index].TagName = '';
@@ -98,6 +102,10 @@ export const createSetSlice = createSlice({
             state.setToSave.isPublic = action.payload.isPublic;
             state.setToSave.setName = action.payload.setName;
             state.setToSave.tags = action.payload.tags;
+           },
+           setIsPublic: (state , action : PayloadAction<boolean>) => {
+           
+            state.setToSave.isPublic = action.payload;
            }
     }
 
@@ -105,7 +113,7 @@ export const createSetSlice = createSlice({
 })
 export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, 
     appendNewTag , incrementTagLimit , updateTagFormbyIndex , clearTags , 
-    deleteTag , clearTagFrombyIndex , saveSet} = createSetSlice.actions;
+    deleteTag , clearTagFrombyIndex , saveSet , setIsPublic} = createSetSlice.actions;
     
 export const createSetState = (state: RootState) => state.createSet;
 export default createSetSlice.reducer;

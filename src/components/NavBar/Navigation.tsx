@@ -10,7 +10,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ForumIcon from '@mui/icons-material/Forum';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -45,7 +45,14 @@ export function NavigationComponent(){
       
     },
     typography:{
-      paddingLeft: "12rem"
+      // display: "flex",
+      // flexFlow: "column",
+      // flexWrap: "nowrap",
+      // alignItems: "baseline",
+      // justifyContent: "space-evenly",
+      // flexDirection: "row",
+      marginLeft: "20rem",
+      width:"fit-content"
     },
     typographyIcons:{
       paddingLeft: "3rem"
@@ -140,11 +147,13 @@ export function NavigationComponent(){
         <div>
           <CssBaseline/>
           <AppBar
-              position="fixed"
               style={{background: "#4E3E61" , color: '#7D7687 '}}
-           
+              position="fixed"
+              className={clsx(classes.appBar, {
+                [classes.appBarShift]: open,
+              })}
           >
-            <Toolbar  >
+            <Toolbar  className={classes.typography}>
               <IconButton
                   color="inherit"
                   aria-label="open drawer"
@@ -155,18 +164,19 @@ export function NavigationComponent(){
                   })}
               >
 
-                <MenuIcon/>
-              </IconButton>
-              <ButtonBase component={Link} to='/'>
 
-                <Typography className={classes.typography} variant="h6" noWrap>
-                  Flashback
+              </IconButton>
+              <ButtonBase  component={Link} to='/'>
+
+                <Typography  variant="h3" noWrap>
+
+                  KWIZZORD
                 </Typography>
               </ButtonBase>
 
             </Toolbar>
 
-          </AppBar>
+</AppBar>
           <Drawer
               variant="permanent"
               className={clsx(classes.drawer, {
@@ -182,7 +192,8 @@ export function NavigationComponent(){
           >
             <div  className={classes.toolbar}>
               <IconButton onClick={handleDrawerToggle}>
-                {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+                <MenuIcon/>
+                {/*{theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}*/}
               </IconButton>
             </div >
             <Divider/>
@@ -217,7 +228,7 @@ export function NavigationComponent(){
                 <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
 
-              <ListItem button component={Link} to={'/register'}>
+              <ListItem button component={Link} to={'/lounge'}>
 
                 <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
               </ListItem>

@@ -6,20 +6,20 @@ import {
   quizzardApiClientTokenAuthorizedSynchronous
 } from "./api-client";
 
-export async function createStudySet(studySet: SetDto , token: string) {
-  let config = {
-    headers: {
-        Authorization: token
-    }
-}
-  let response = await quizzardApiClientTokenAuthorized.post(
-    "/sets/newset",
-    studySet
-  );
+export async function createStudySet(studySet: SetDto) {
+
+  let response = await quizzardApiClientTokenAuthorized.post("/sets", studySet);
 
   return await response.data;
 }
 
+
+export async function getSetTags() {
+
+  let response = await quizzardApiClientTokenAuthorized.get("/tags");
+
+  return await response.data;
+}
 /**
  * Added on a refactor to include token header for user integration. Copy pasted code
  * just in case, as editing above may have been cusing bugs... though we don't know why.
@@ -33,7 +33,7 @@ export async function createStudySetWithToken(
   headers: any
 ) {
   let response = await quizzardApiClientTokenAuthorizedSynchronous.post(
-    "/sets/newset",
+    "/sets",
     studySet,
     {
       headers: headers,
