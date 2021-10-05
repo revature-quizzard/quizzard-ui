@@ -24,6 +24,9 @@ import UpdateSetModal from "./UpdateSetModal";
  * */
 
 interface iUserSets {
+    setUpdateSetName: (nextSetName: string) => void,
+    setUpdateSetIsPublic: (nextSetIsPublic: boolean) => void,
+    setUpdateSetTagNames: (nextTagNames: string[]) => void,
     setUpdateSetId: (nextSetId: string) => void,
     setUpdateIsOpen: (updateIsOpen: boolean) => void
 }
@@ -51,7 +54,11 @@ const UserSets = (props: iUserSets) => {
             renderCell: (params) => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
-                    props.setUpdateSetId(api.getRow(params.id).setId);
+                    const setFields = api.getRow(params.id);
+                    props.setUpdateSetName(setFields.setName);
+                    props.setUpdateIsOpen(setFields.isPublic);
+                    props.setUpdateSetTagNames(setFields.tags);
+                    props.setUpdateSetId(setFields.setId);
                     props.setUpdateIsOpen(true);
                     // let rowId = api.getRow(params.id).setId;
                     // let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');

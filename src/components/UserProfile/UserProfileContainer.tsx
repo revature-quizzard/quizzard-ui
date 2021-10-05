@@ -22,7 +22,11 @@ const UserProfileContainer = (props: any) => {
   const user: User = useSelector(authState).authUser;
   const createState = useSelector(createSetState);
  
-  const [updateSetId, setUpdateSetId] = useState('');
+  /* [Duct Tape] these states are for the UpdateSets modal */
+  const [updateSetName, setUpdateSetName] = useState(undefined as string);
+  const [updateSetIsPublic, setUpdateSetIsPublic] = useState(undefined as boolean);
+  const [updateSetTagNames, setUpdateSetTagNames] = useState(undefined as string[]);
+  const [updateSetId, setUpdateSetId] = useState(undefined as string);
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
 
@@ -75,7 +79,9 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}/> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
+                        {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}
+                            setUpdateSetName={setUpdateSetName} setUpdateSetIsPublic={setUpdateSetIsPublic} setUpdateSetTagNames={setUpdateSetTagNames}
+                        /> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
