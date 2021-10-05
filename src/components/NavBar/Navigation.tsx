@@ -50,16 +50,6 @@ export function NavigationComponent() {
             flexWrap: "wrap"
 
         },
-        typography: {
-            // display: "flex",
-            // flexFlow: "column",
-            // flexWrap: "nowrap",
-            // alignItems: "baseline",
-            // justifyContent: "space-evenly",
-            // flexDirection: "row",
-            marginLeft: "20rem",
-            width: "fit-content"
-        },
         typographyIcons: {
             paddingLeft: "3rem"
         },
@@ -153,125 +143,117 @@ export function NavigationComponent() {
     return (
 
         <>
-        <div>
-            <CssBaseline/>
-            <AppBar
-                style={{background: "#4E3E61", color: '#7D7687 '}}
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar className={classes.typography}>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerToggle}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
+            <div>
+                <CssBaseline/>
+                <AppBar
+                    style={{background: "#4E3E61", color: '#7D7687 '}}
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                >
+                    <Toolbar className={classes.typography}>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerToggle}
+                            edge="start"
+                            className={clsx(classes.menuButton, {
+                                [classes.hide]: open,
+                            })}
+                        >
 
 
-                    </IconButton>
-                    <ButtonBase component={Link} to='/'>
+                        </IconButton>
+                        <ButtonBase component={Link} to='/'>
 
-                        <Typography variant="h3" noWrap>
+                            <Typography variant="h3" noWrap>
 
-                            KWIZZORD
-                        </Typography>
-                    </ButtonBase>
+                                KWIZZORD
+                            </Typography>
+                        </ButtonBase>
 
-                </Toolbar>
+                    </Toolbar>
 
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerToggle}>
-                        <MenuIcon/>
-                        {/*{theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}*/}
-                    </IconButton>
-                </div>
-                <Divider/>
-                <List>
-                    {state.isAuthenticated ?
-                        <>
-                            <ListItem button component={Link} to={'/'} onClick={() => {
-                                handleLogout()
-                            }}>
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }),
+                    }}
+                >
+                    <div className={classes.toolbar}>
+                        <IconButton onClick={handleDrawerToggle}>
+                            <MenuIcon/>
+                            {/*{theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}*/}
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    <List>
+                        {state.isAuthenticated ?
+                            <>
+                                <ListItem button component={Link} to={'/'} onClick={() => {
+                                    handleLogout()
+                                }}>
 
-                                <LoginIcon/><Typography color="inherit" variant="h6"
-                                                        className={classes.typographyIcons}>Logout</Typography>
-                            </ListItem>
-                            <ListItem button component={Link} to={'/profile'}>
+                                    <LoginIcon/><Typography color="inherit" variant="h6"
+                                                            className={classes.typographyIcons}>Logout</Typography>
+                                </ListItem>
+                                <ListItem button component={Link} to={'/profile'}>
 
-                                <AccountBoxIcon/><Typography color="inherit" variant="h6"
-                                                             className={classes.typographyIcons}>Dashboard</Typography>
-                            </ListItem>
-                        </>
-                        :
-                        <>
-                            <ListItem button component={Link} to={'/login'}>
+                                    <AccountBoxIcon/><Typography color="inherit" variant="h6"
+                                                                 className={classes.typographyIcons}>Dashboard</Typography>
+                                </ListItem>
+                            </>
+                            :
+                            <>
+                                <ListItem button component={Link} to={'/login'}>
 
-                                <ExitToAppIcon/><Typography color="inherit" variant="h6"
-                                                            className={classes.typographyIcons}>Login</Typography>
-                            </ListItem>
-                            <ListItem button component={Link} to={'/register'}>
+                                    <ExitToAppIcon/><Typography color="inherit" variant="h6"
+                                                                className={classes.typographyIcons}>Login</Typography>
+                                </ListItem>
+                                <ListItem button component={Link} to={'/register'}>
 
-                                <AppRegistrationIcon/> <Typography color="inherit" variant="h6"
-                                                                   className={classes.typographyIcons}>Register</Typography>
-                            </ListItem>
-                        </>
+                                    <AppRegistrationIcon/> <Typography color="inherit" variant="h6"
+                                                                       className={classes.typographyIcons}>Register</Typography>
+                                </ListItem>
+                            </>
 
-                    }
+                        }
 
-                    <ListItem button component={Link} to={'/study'}>
+                        <ListItem button component={Link} to={'/study'}>
 
-                        <LibraryBooksIcon/> <Typography color="inherit" variant="h6"
-                                                        className={classes.typographyIcons}>Discover
-                        Sets</Typography>
-                    </ListItem>
+                            <LibraryBooksIcon/> <Typography color="inherit" variant="h6"
+                                                            className={classes.typographyIcons}>Discover
+                            Sets</Typography>
+                        </ListItem>
 
-                    <ListItem button component={Link} to={'/forum'}>
-                        <ForumIcon/> <Typography color="inherit" variant="h6"
-                                                 className={classes.typographyIcons}>Forum</Typography>
-                    </ListItem>
+                        <ListItem button component={Link} to={'/forum'}>
+                            <ForumIcon/> <Typography color="inherit" variant="h6"
+                                                     className={classes.typographyIcons}>Forum</Typography>
+                        </ListItem>
 
-                    <ListItem button component={Link} to={'/lounge'}>
+                        <ListItem button component={Link} to={'/lounge'}>
 
-                        <SportsEsportsIcon/> <Typography color="inherit" variant="h6"
-                                                         className={classes.typographyIcons}>Game</Typography>
-                    </ListItem>
-                </List>
+                            <SportsEsportsIcon/> <Typography color="inherit" variant="h6"
+                                                             className={classes.typographyIcons}>Game</Typography>
+                        </ListItem>
+                    </List>
 
-        </Drawer>
-    <main className={classes.content}>
-        <div className={classes.toolbar}/>
-        <Typography paragraph>
-        </Typography>
-        <Typography paragraph>
+                </Drawer>
+            </div>
 
-        </Typography>
-    </main>
-</div>
+        </>
 
-</>
-
-)
-    ;
+    )
+        ;
 }
 
 export default NavigationComponent;
