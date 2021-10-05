@@ -48,7 +48,7 @@ function ViewComment() {
             : 
                 <></>
             }
-            <Paper elevation={3} style={{ padding: "40px 20px"}}>
+            <Paper elevation={3} style={{ padding: '40px 20px', 'marginTop': '2rem'}}>
             
                 <div style={{'margin': '2rem'}}>
                     <h1>{forumInfo.subject}</h1>
