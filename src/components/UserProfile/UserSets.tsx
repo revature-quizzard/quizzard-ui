@@ -1,4 +1,4 @@
-import {Container, Typography, Button, IconButton} from "@mui/material";
+import {Container, Typography, Button, IconButton, Modal, Box} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteSetReducer, profileState} from "../../state-slices/user-profile/profile-slice";
@@ -10,13 +10,16 @@ import {
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
-import {deleteSet} from "../../remote/set-service";
+import {addCard,deleteSet} from "../../remote/set-service";
+import React, {useState} from "react";
+import {Form} from "react-bootstrap";
+import AddIcon from '@mui/icons-material/Add';
 
 /**
  * Component for rendering a user's Sets.
  * Will contain a button to render a modal for adding sets.
  * Each set will have a button for editing or deleting the corresponding set and a link to the set.
- * @authors Cody McDonald, Mitchell Panenko
+ * @authors Cody McDonald, Mitchell Panenko, Jose Tejada
  * */
 
 const UserSets = () => {
@@ -24,6 +27,55 @@ const UserSets = () => {
     const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
     const userId = state.userProfile.id;
+
+
+    const [open, setOpen] = React.useState(false);
+
+    const [setID, setSetId] = useState('')
+    const[newCard, setNewCard] = useState({
+        question: '',
+        answer:''
+    })
+
+    //used on the button that will open the modal
+    function handleOpen(){
+
+        setOpen(true)
+    }
+    ///used to close the modal
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleChange = (e: any) => {
+        const {name, value} = e.target;
+        setNewCard({...newCard, [name]: value})
+
+    }
+    const style = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+
+    function addCardToSet(){
+        let card = {
+            setId:setID,
+            question:newCard.question,
+            answer:newCard.answer
+        }
+        console.log(card)
+        addNewCard(card)
+
+    }
+
+
 
     const columns: GridColDef[] = [
         {field: 'id', headerName: 'index', hide: true},
@@ -57,9 +109,39 @@ const UserSets = () => {
                     <DeleteIcon/>
                 </IconButton>;
             }
+        },
+        {
+            field: "Add new Card",
+            headerName: " ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const NewCard = () => {
+                    const api: GridApi = params.api;
+                    let rowId = api.getRow(params.id).setId;
+                    setSetId(rowId)
+                };
+
+                return <IconButton onClick={() => {
+                    NewCard()
+                    handleOpen()
+                }}>
+                    <AddIcon/>
+                </IconButton>;
+            }
         }
     ]
 
+    const addNewCard = async function (card:{setId:string, question:string, answer:string}){
+        try{
+            let resp = await addCard(card)
+
+
+        }catch (e:any){
+            console.log(e.message)
+        }
+
+    }
 
     const rows = userCreatedSets.map((set: SetDocument, index: any) => (
             {
@@ -89,8 +171,12 @@ const UserSets = () => {
         }
     }
 
+
+
+
     return (
         <>
+
             <br/><br/>
             {userCreatedSets.length ?
                 <DataGrid
@@ -107,6 +193,48 @@ const UserSets = () => {
                     You haven't created any sets yet!
                 </Typography>
             }
+            <div>
+            <div>
+
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Form className="card form">
+                            <h2>Add a new card</h2>
+                            <Form.Group>
+                                <Form.Label>Question: </Form.Label>
+                                <Form.Control
+                                    name="question"
+                                    value={newCard.question}
+                                    onChange={handleChange}
+                                    type="text"
+                                    placeholder="question"
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Answer: </Form.Label>
+                                <Form.Control
+                                    name="answer"
+                                    value={newCard.answer}
+                                    onChange={handleChange}
+                                    type="text"
+                                    placeholder="answer"
+                                />
+                            </Form.Group>
+                        </Form>
+                        <Button onClick={addCardToSet} variant="contained" color="success">
+                            Success
+                        </Button>
+
+                    </Box>
+                </Modal>
+            </div>
+        </div>
+
         </>
     )
 };
