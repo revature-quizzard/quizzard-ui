@@ -93,7 +93,7 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    {(user.authUser.username == player.username)
+                    {(currentUser == player.username)
                         ?
                         <>
                         <TableCell align="left">{player.username}</TableCell>
@@ -113,7 +113,7 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                        {(user.authUser.username == player.username)
+                        {(currentUser == player.username)
                         ?
                         <>
                         <TableCell align="left">{player.username}</TableCell>
