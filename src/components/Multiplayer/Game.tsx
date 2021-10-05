@@ -426,7 +426,8 @@ function Game() {
             let newPlayers: any[]=[];
             let winner;
 
-            players.forEach(player => {
+            players.forEach((player, i) => {
+                player.placing = i + 1;
                 if(player.placing === 1) winner = player.username;
                 newPlayers.push({
                     id: player.id,
