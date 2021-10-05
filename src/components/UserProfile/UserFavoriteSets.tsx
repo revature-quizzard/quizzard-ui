@@ -1,10 +1,12 @@
 import {Container, IconButton, Typography} from "@mui/material";
-import {useSelector} from "react-redux";
-import {profileState} from "../../state-slices/user-profile/profile-slice";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteFavoriteReducer, isLoaded, loading, profileState} from "../../state-slices/user-profile/profile-slice";
 import {Link} from "react-router-dom";
 import {DataGrid, GridApi, GridColDef} from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {deleteFavorite} from "../../remote/user-service";
+import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
 
 /**
  * Component for rendering a user's Favorite sets.
@@ -14,7 +16,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const UserFavoriteSets = () => {
     const state = useSelector(profileState);
+    const dispatch = useDispatch();
     const userFavorites = state.userProfile.favoriteSets;
+    const userId = state.userProfile.id;
 
     const columns : GridColDef[] = [
         {field: 'id', headerName: 'index', hide: true},
@@ -35,8 +39,8 @@ const UserFavoriteSets = () => {
             renderCell: (params) => {
                 const removeSetFromUserFavorites = () => {
                     const api: GridApi = params.api;
-                    console.log(api.getRow(params.id).setId);
-                    // axios call here
+                    let rowId = api.getRow(params.id).setId;
+                    removeFavorite(rowId);
                     api.updateRows([{
                         id: params.id,
                         _action: 'delete'
@@ -68,7 +72,18 @@ const UserFavoriteSets = () => {
         )
     )
 
-    console.log(rows);
+    const removeFavorite = async function (setId:string){
+        try{
+            let resp = await deleteFavorite(setId, userId);
+            dispatch(deleteFavoriteReducer(setId));
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar("Favorite deleted!"));
+        } catch (e:any){
+            console.log(e.message);
+                dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
+        }
+    }
 
     return (
         <>
