@@ -172,11 +172,11 @@ const CreateSetModal = (props: any) => {
         
             try {
                 dispatch(loading());
-                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: _createSetState.setToSave.isPublic , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave));
                 console.log("SET TO SAVE : "+setToSave);
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
-                dispatch(clearTags);
+                let newly_created_set = await createStudySet(setToSave);
+                dispatch(clearTags());
                 console.log(newly_created_set);
             } catch (e: any) {
                 console.log(e);
@@ -191,7 +191,7 @@ const CreateSetModal = (props: any) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" /> </>}</p> 
             </div >
                 <hr/>
 
