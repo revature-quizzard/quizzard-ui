@@ -40,7 +40,6 @@ const UserFavoriteSets = () => {
                 const removeSetFromUserFavorites = () => {
                     const api: GridApi = params.api;
                     let rowId = api.getRow(params.id).setId;
-                    console.log(rowId);
                     removeFavorite(rowId);
                     api.updateRows([{
                         id: params.id,
