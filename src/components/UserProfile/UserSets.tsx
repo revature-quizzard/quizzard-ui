@@ -1,8 +1,6 @@
 import {Container, Typography, Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
-import {useSelector} from "react-redux";
-import {profileState} from "../../state-slices/user-profile/profile-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteSetReducer, profileState} from "../../state-slices/user-profile/profile-slice";
 import {
