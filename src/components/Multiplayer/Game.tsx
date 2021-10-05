@@ -185,7 +185,6 @@ function Game() {
         })
 
         return () => {
-            // **************** Persist user data here or in a function? **********************
             // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
             let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
             let copylist: Player[] = [].concat(game.players);
