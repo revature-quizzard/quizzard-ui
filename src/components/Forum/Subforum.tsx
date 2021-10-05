@@ -11,7 +11,6 @@ const SubforumHandler = ()=> {
     
     let [subforums,setSubforums] = useState(undefined as Subforum[] | undefined);
     const history = useHistory();
-    const forumInfo: Subforum = useSelector(forumState).currentSubforum;
     const dispatch = useDispatch();
 
     useEffect(() => {
