@@ -60,9 +60,6 @@ function Timer(props: ITimerProps) {
 
   return (
     <div className="App">
-      <h1>
-        Timer Yay
-      </h1>
       <div className="timer-wrapper">
         {
           // (!oneLastRerender) ?
