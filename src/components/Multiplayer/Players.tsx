@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { graphqlOperation } from 'aws-amplify';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { deleteGame, updateGame } from '../../graphql/mutations';
@@ -22,7 +23,7 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
   const useStyles = makeStyles(() => ({
       root: {
-        width: '15em',
+        width: '21em',
         borderStyle: 'solid',
         borderColor: '#4e3e61',
         display: 'flex'
@@ -92,9 +93,19 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell align="left">{player.username}</TableCell>
-                    <TableCell align="right">{player.points}</TableCell>
-                    <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
+                    {(user.authUser.username == player.username)
+                        ?
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => (API.graphql(graphqlOperation(deleteGame, {input: {id: game.id}}))) }>Close Game</Button></TableCell>
+                        </>
+                        :
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
+                        </>}
                     </TableRow>
                 ))
                 :
@@ -102,8 +113,18 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell align="left">{player.username}</TableCell>
-                    <TableCell align="right">{player.points}</TableCell>
+                        {(user.authUser.username == player.username)
+                        ?
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Leave Game</Button></TableCell>
+                        </>
+                        :
+                        <>
+                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="right">{player.points}</TableCell>
+                        </>}                    
                     </TableRow>                
                     ))}
                 </TableBody>
