@@ -25,16 +25,6 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
  * @author Heather Guilfoyle, Sean Dunn, Colby Wall, Robert Ni
  */
 
-
-let previousRenderColor = '';
-function renderColors(id: string) {
-    if (previousRenderColor !== '') {
-        document.getElementById(previousRenderColor).style.border = '3px solid rgba(0,0,0,0)';
-    }
-    previousRenderColor = id;
-    document.getElementById(id).style.border = '3px solid rgb(90, 50, 180)';
-}
-
 const useStyles = makeStyles({
     roundedBorder: {
         padding: '10px 0px 10px 0px',
@@ -42,7 +32,8 @@ const useStyles = makeStyles({
         textAlign: 'center',
         border: '3px solid rgba(0,0,0,0)',
         '&:hover': {
-            backgroundColor: 'rgb(240,240,240)'
+            backgroundColor: 'rgb(240,240,240)',
+            cursor: 'pointer'
         }
     },
     selectedAnswer: {
@@ -66,19 +57,32 @@ function Answers() {
     
 
     useEffect(() => {
-        setAnswers(gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]));        
-    }, [])
+        if (game.matchState === 1) {
+            setAnswers(gameUtil.randomizeAnswers(game.set.cardList[game.questionIndex]));  
+        }      
+    }, [game.matchState]);
 
     useEffect(() => {
         // Render correct/incorrect answers with color
-        if (game.matchState == 2) {
+        if (game.matchState === 1) {
+            for (let i = 0; i < 4; i++) {
+                let element = document.getElementById(i.toString());
+                element.classList.remove(classes.selectedAnswer);
+                element.classList.remove(classes.correctAnswer);
+                element.classList.remove(classes.wrongAnswer);
+            }
+        } else if (game.matchState === 2) {
             answers.forEach((answer, i) => {
-                if (answer == game.set.cardList[game.questionIndex].correctAnswer) {                    
-                    document.getElementById(i.toString()).classList.add(classes.correctAnswer);
-                } else document.getElementById(i.toString()).classList.add(classes.wrongAnswer);
-            })
+                let element = document.getElementById(i.toString());
+                if (answer === game.set.cardList[game.questionIndex].correctAnswer) {
+                    element.classList.add(classes.correctAnswer);
+                } else if (element.classList.contains(classes.selectedAnswer)) {
+                    element.classList.add(classes.wrongAnswer);
+                }
+                element.classList.remove(classes.selectedAnswer);
+            });
         }
-    }, [answers])
+    }, [game.matchState, answers]);
 
     async function submit(e: any) {
         if (game.matchState == 2) return;
@@ -91,7 +95,7 @@ function Answers() {
         playerList.forEach(player => {
             if (player.username == currentUser) Object.assign(currentPlayer, player);
         })
-        playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
+        playerList.splice(playerList.findIndex(player => player.id == currentPlayer.id), 1)
         if (!currentPlayer || currentPlayer.answered) return;        
         currentPlayer.answered = true;
         if (answers[e.target.id] === game.set.cardList[game.questionIndex].correctAnswer) {            
@@ -105,6 +109,10 @@ function Answers() {
         await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
         
         renderColors(e.target.id);
+    }
+
+    function renderColors(id: string) {
+        document.getElementById(id).classList.add(classes.selectedAnswer);
     }
 
     return (
