@@ -1,6 +1,6 @@
 import {Container, IconButton, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {isLoaded, loading, profileState} from "../../state-slices/user-profile/profile-slice";
+import {deleteFavoriteReducer, isLoaded, loading, profileState} from "../../state-slices/user-profile/profile-slice";
 import {Link} from "react-router-dom";
 import {DataGrid, GridApi, GridColDef} from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
@@ -76,7 +76,7 @@ const UserFavoriteSets = () => {
     const removeFavorite = async function (setId:string){
         try{
             let resp = await deleteFavorite(setId, userId);
-
+            dispatch(deleteFavoriteReducer(setId));
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar("Favorite deleted!"));
         } catch (e:any){

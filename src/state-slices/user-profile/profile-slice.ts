@@ -41,16 +41,18 @@ export const profileSlice = createSlice({
         clearProfile: (state) =>{
             state.userProfile = undefined;
         },
-        deleteFavorite: (state, action: PayloadAction<string>) =>{
+        deleteFavoriteReducer: (state, action: PayloadAction<string>) =>{
             let sets = state.userProfile.favoriteSets;
-
+            let removeIndex = sets.findIndex( set => set.id === action.payload);
+            sets.splice( removeIndex, 1 );
+            state.userProfile.favoriteSets = sets;
         }
     }
 })
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setProfile, loading, isLoaded, clearProfile } = profileSlice.actions;
+export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer } = profileSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const profileState = (state: RootState) => state.profile;
