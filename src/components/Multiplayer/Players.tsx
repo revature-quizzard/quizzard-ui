@@ -2,6 +2,7 @@ import API from '@aws-amplify/api';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { graphqlOperation } from 'aws-amplify';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { deleteGame, updateGame } from '../../graphql/mutations';

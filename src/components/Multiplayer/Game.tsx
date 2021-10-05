@@ -168,6 +168,9 @@ function Game() {
                 console.log('usersToUpdate',{currentUser});
                 let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
                 console.log('onUpdate:', { provider, value });
+
+                value.data.onUpdateGameById.players.sort((a: any, b: any) => a.points < b.points ? 1 : -1);
+
                 ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
             //@ts-ignore
