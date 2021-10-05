@@ -22,7 +22,7 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
   const useStyles = makeStyles(() => ({
       root: {
-        width: '15em',
+        width: '21em',
         borderStyle: 'solid',
         borderColor: '#4e3e61',
         display: 'flex'
