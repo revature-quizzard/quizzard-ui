@@ -128,6 +128,7 @@ function Game() {
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
                 console.log('onDelete:', { provider, value });
+                history.push('/lounge');
             }
         })
 
