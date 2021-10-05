@@ -497,7 +497,6 @@ function Game() {
             ?
             <>
                 { render() }
-                <Button onClick={() => incrementState()} >Increment State</Button>
             </>            
             : <Redirect to="lounge" />
         }
