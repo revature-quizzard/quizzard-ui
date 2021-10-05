@@ -11,7 +11,8 @@ import {
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
-import {deleteSet} from "../../remote/set-service";
+import {deleteSet, updateSet} from "../../remote/set-service";
+import {SetDto} from '../../dtos/set-dto';
 
 /**
  * Component for rendering a user's Sets.
@@ -36,6 +37,28 @@ const UserSets = () => {
         {field: 'plays', headerName: 'Plays', flex: 1},
         {field: 'studies', headerName: 'Studies', flex: 1},
         {field: 'favorites', headerName: 'Faves', flex: 1},
+        {field: "updateSet",
+            headerName: " ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const updateSet = () => {
+                    const api: GridApi = params.api;
+                    let rowId = api.getRow(params.id).setId;
+                    // upSet(rowId); <---- Send In SetDto as second parameter to upSet
+                    api.updateRows([{
+                        id: params.id,
+                        // _action: 'delete'
+                    }]);
+                };
+
+                return <IconButton onClick={() => {
+                    updateSet()
+                }}>
+                    <UpdateIcon/>
+                </IconButton>;
+            }
+        },
         {field: "deleteSet",
             headerName: " ",
             sortable: false,
@@ -79,6 +102,19 @@ const UserSets = () => {
     const delSet = async function (setId:string){
         try{
             let resp = await deleteSet(setId);
+            dispatch(deleteSetReducer(setId));
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar("Favorite deleted!"));
+        } catch (e:any){
+            console.log(e.message);
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
+        }
+    }
+
+    const upSet = async function (setId:string, set: SetDto){
+        try{
+            let resp = await updateSet(setId, set);
             dispatch(deleteSetReducer(setId));
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar("Favorite deleted!"));
