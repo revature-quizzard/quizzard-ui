@@ -14,7 +14,7 @@ import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import clsx from 'clsx';
 import {ButtonBase, Toolbar, Typography} from "@material-ui/core";
 import {
@@ -29,11 +29,17 @@ import {
   useTheme,
 } from "@mui/material";
 
-import React from "react";
+import React, {useState} from "react";
+import {User} from "../../models/user";
+import {useSelector} from "react-redux";
+import {authState} from "../../state-slices/auth/auth-slice";
 
 export function NavigationComponent(){
 
   const drawerWidth = 240;
+  let user: User = useSelector(authState).authUser;
+  const [user1, setUser1] = useState(user)
+  let history = useHistory();
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -126,6 +132,12 @@ export function NavigationComponent(){
     },
   }));
 
+  function logout() {
+
+    setUser1(undefined)
+
+  }
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -166,6 +178,7 @@ export function NavigationComponent(){
                 <Typography  variant="h3" noWrap>
 
                   KWIZZORD
+
                 </Typography>
               </ButtonBase>
 
@@ -192,44 +205,42 @@ export function NavigationComponent(){
               </IconButton>
             </div >
             <Divider/>
-            <div  >
-            <List   >
+            <div >
 
-              <ListItem button component = {Link} to={'/'}>
 
-                <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
-              </ListItem>
+                  <List >
+                  <ListItem button onClick={ () => logout()} >
+                    <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
+                  </ListItem>
 
-              <ListItem button component={Link} to={'/login'}>
+                  <ListItem button component={Link} to={'/profile'}>
+                    <AccountBoxIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Dashboard</Typography>
+                  </ListItem>
 
-                <ExitToAppIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Login</Typography>
-              </ListItem>
-              <ListItem button component={Link} to={'/profile'}>
-
-                <AccountBoxIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Dashboard</Typography>
-              </ListItem>
-              <ListItem button component={Link} to={'/register'}>
-
+                <ListItem button component={Link} to={'/lounge'}>
+                <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
+                </ListItem>
+                  </List>
+                  <List >
+                <ListItem button component={Link} to={'/register'}>
                 <AppRegistrationIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Register</Typography>
-              </ListItem>
+                </ListItem>
+
+
+                <ListItem button component={Link} to={'/login'}>
+                <ExitToAppIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Login</Typography>
+                </ListItem>
+                  </List>
+
 
               <ListItem button component={Link} to={'/study'}>
-
                 <LibraryBooksIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Discover Sets</Typography>
               </ListItem>
 
-              <ListItem button component={Link} to={'/register'}>
-
+              <ListItem button component={Link} to={'/forum'}>
                 <ForumIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Forum</Typography>
               </ListItem>
 
-              <ListItem button component={Link} to={'/lounge'}>
-
-                <SportsEsportsIcon/> <Typography color="inherit" variant="h6" className={classes.typographyIcons}>Game</Typography>
-              </ListItem>
-
-
-            </List>
         </div>
           </Drawer>
           <main className={classes.content}>

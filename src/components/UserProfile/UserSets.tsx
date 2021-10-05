@@ -49,9 +49,7 @@ const UserSets = () => {
                     }]);
                 };
 
-                return <IconButton onClick={() => {
-                    removeSetFromUserFavorites()
-                }}>
+                return <IconButton onClick={() => {removeSetFromUserFavorites()}}>
                     <DeleteIcon/>
                 </IconButton>;
             }
