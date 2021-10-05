@@ -1,5 +1,6 @@
 import {Container, Typography, Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateIcon from '@mui/icons-material/Update';
 import {useSelector} from "react-redux";
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 import {
@@ -31,8 +32,7 @@ const UserSets = () => {
         {field: 'plays', headerName: 'Plays', flex: 1},
         {field: 'studies', headerName: 'Studies', flex: 1},
         {field: 'favorites', headerName: 'Faves', flex: 1},
-        {
-            field: "",
+        {field: "updateSet",
             headerName: " ",
             sortable: false,
             width: 50,
@@ -50,10 +50,34 @@ const UserSets = () => {
                 };
 
                 return <IconButton onClick={() => {
-                    removeSetFromUserFavorites()
-                }}>
-                    <DeleteIcon/>
-                </IconButton>;
+                            removeSetFromUserFavorites()
+                        }}>
+                            <UpdateIcon/>
+                    </IconButton>;
+            }
+        },
+        {field: "deleteSet",
+            headerName: " ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const removeSetFromUserFavorites = () => {
+                    const api: GridApi = params.api;
+                    // This makes the ui hitch and prints errors after returning for some reason
+                    // alert(JSON.stringify(api.getRow(params.id).setId));
+                    console.log(api.getRow(params.id).setId);
+                    // axios call here
+                    api.updateRows([{
+                        id: params.id,
+                        _action: 'delete'
+                    }]);
+                };
+
+                return <IconButton onClick={() => {
+                            removeSetFromUserFavorites()
+                        }}>
+                            <DeleteIcon/>
+                    </IconButton>;
             }
         }
     ]
