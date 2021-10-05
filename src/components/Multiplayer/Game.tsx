@@ -184,11 +184,6 @@ function Game() {
 
         return () => {
             // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
-            let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
-            let copylist: Player[] = [].concat(game.players);
-            let index = copylist.findIndex((player) => player.id === currentUser);
-            copylist.splice(index, 1);
-            (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
             updateSubscription.unsubscribe();
             deleteSubscription.unsubscribe();
         }
