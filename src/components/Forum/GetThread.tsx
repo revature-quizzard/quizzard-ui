@@ -1,6 +1,7 @@
 import { getAllThreads } from '../../remote/sub-forum-service';
 import { useEffect, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@material-ui/core';
+import Modal from '@mui/material/Modal';
 import { Thread } from '../../models/thread';
 import { useHistory } from 'react-router';
 import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
@@ -10,6 +11,7 @@ import AddThread from './AddThread';
 
 const GetThreads = ()=> {
     let [threads, setThread] = useState(undefined as Thread[] | undefined);
+    const [showAddThread, setShowAddThread] = useState(false);
     const history = useHistory();
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
@@ -40,7 +42,7 @@ const GetThreads = ()=> {
       <>
             {(auth.isAuthenticated)
             ?
-                <AddThread />
+                <Button onClick={() => {setShowAddThread(true)}}>Add Thread</Button>
             :
                 <div />
             }
@@ -72,6 +74,9 @@ const GetThreads = ()=> {
             </TableBody>
           </Table>
         </TableContainer>
+        <Modal open={showAddThread} onClose={() => {setShowAddThread(false)}}>
+          <AddThread close={setShowAddThread}/>
+        </Modal>
       </>
     );
 
