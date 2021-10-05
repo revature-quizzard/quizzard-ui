@@ -76,13 +76,13 @@ const UserSets = () => {
         )
     )
 
-    const delSet = async function (setId:string){
-        try{
+    const delSet = async function (setId: string) {
+        try {
             let resp = await deleteSet(setId);
             dispatch(deleteSetReducer(setId));
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar("Favorite deleted!"));
-        } catch (e:any){
+        } catch (e: any) {
             console.log(e.message);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));

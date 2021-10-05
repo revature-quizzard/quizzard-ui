@@ -1,6 +1,6 @@
 import {Container, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import {profileState} from "../../state-slices/user-profile/profile-slice";
 

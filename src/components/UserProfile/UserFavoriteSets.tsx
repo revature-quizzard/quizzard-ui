@@ -20,7 +20,7 @@ const UserFavoriteSets = () => {
     const userFavorites = state.userProfile.favoriteSets;
     const userId = state.userProfile.id;
 
-    const columns : GridColDef[] = [
+    const columns: GridColDef[] = [
         {field: 'id', headerName: 'index', hide: true},
         {field: 'setId', headerName: 'setId', hide: true},
         {field: 'setName', headerName: 'Name', flex: 1},
@@ -72,15 +72,15 @@ const UserFavoriteSets = () => {
         )
     )
 
-    const removeFavorite = async function (setId:string){
-        try{
+    const removeFavorite = async function (setId: string) {
+        try {
             let resp = await deleteFavorite(setId, userId);
             dispatch(deleteFavoriteReducer(setId));
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar("Favorite deleted!"));
-        } catch (e:any){
+        } catch (e: any) {
             console.log(e.message);
-                dispatch(setErrorSeverity('error'));
+            dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
         }
     }
