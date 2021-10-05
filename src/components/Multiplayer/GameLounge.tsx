@@ -158,14 +158,22 @@ function GameLounge() {
         {/*Create Game contains create game button*/}
         <GameSettings />
         <br></br>
+        {user.authUser
+        ?
+        <>
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} 
                placeholder = 'Game ID'/> {       }
-        
+        </>
+        :
+        <>
+        <Input onKeyUp={handleUpdate} 
+               placeholder = 'Game ID'/> {       }
+    
         <Input onKeyUp={changeNickName}
                placeholder = 'Nickname' /> 
-
-
+        </>       
+        }
         {/* Button which joins existing game according to input id */}
         <Button onClick={joinGame}>Join Game</Button>
         <Link to="/multiplayer">Go Back To Multiplayer</Link> 
