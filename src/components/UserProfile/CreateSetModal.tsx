@@ -200,7 +200,7 @@ const CreateSetModal = (props: any) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
+            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
                 <hr/>
 

@@ -4,7 +4,7 @@ const Welcome = () => {
   return (
     <>
     {/* className="d-flex justify-content-center align-items-center mt-4 mb-4" */}
-      <Row  style={{background: "#332347 " , color: '#7D7687 '}}>
+      <Row>
         <Col lg={10} className="welcomeBanner">
           <img className="welcomeBanner" src="qwizzard.gif" alt="qwizzard quizzard qwizard kwizzard" height="80px" />
         </Col>

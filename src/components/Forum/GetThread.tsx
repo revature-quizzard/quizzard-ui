@@ -1,14 +1,19 @@
 import { getAllThreads } from '../../remote/sub-forum-service';
 import { useEffect, useState } from 'react';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@material-ui/core';
+import Modal from '@mui/material/Modal';
 import { Thread } from '../../models/thread';
 import { useHistory } from 'react-router';
 import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { authState } from '../../state-slices/auth/auth-slice';
+import AddThread from './AddThread';
 
 const GetThreads = ()=> {
     let [threads, setThread] = useState(undefined as Thread[] | undefined);
+    const [showAddThread, setShowAddThread] = useState(false);
     const history = useHistory();
+    const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
 
@@ -34,34 +39,61 @@ const GetThreads = ()=> {
 
 
     return (
-      <TableContainer component={Paper}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Subject</TableCell>
-                    <TableCell align="left">Author&nbsp;</TableCell>
-                    <TableCell align="left">Number of Comments&nbsp;</TableCell>
-                </TableRow>
-            </TableHead>
-          <TableBody>
-              {threads?.map((thr) => (
+      <>
+            {(auth.isAuthenticated)
+            ?
+                <Button
+                style={{'color':'#75BC3E'}}
+                onClick={() => {setShowAddThread(true)}}>
+                  Add Thread
+                </Button>
+            :
+                <div />
+            }
+          <TableContainer component={Paper}>
+          <Table>
+              <TableHead style={{'backgroundColor':'#333333'}}>
                   <TableRow>
-                      <TableCell
+                      <TableCell style={{'color':'#FFFFFF'}}>Subject</TableCell>
+                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Author&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Date Created&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Comments&nbsp;</TableCell>
+                  </TableRow>
+              </TableHead>
+            <TableBody>
+                {threads?.map((thr) => (
+                    <TableRow style={{'backgroundColor':'#5E5E5E'}}>
+                        <TableCell
                         align="left"
+                        style={{'color':'#FFFFFF'}}
                         onClick={() => Navigate(thr.subject, thr)}>
-                        {thr.subject}
+                            { thr.subject}
                         </TableCell>
                         <TableCell
                         align="left"
+                        style={{'color':'#FFFFFF'}}
                         onClick={() => Navigate(thr.subject, thr)}>
-                        {thr.owner}
-                      </TableCell>
-                    <TableCell align="left">{thr.child_count}</TableCell>
-                </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                            {thr.owner}
+                        </TableCell>
+                        <TableCell
+                        align="left"
+                        style={{'color':'#FFFFFF'}}>
+                            {thr.date_created.replace('T', ' ').substring(0,16)}
+                        </TableCell>
+                        <TableCell
+                        align="left"
+                        style={{'color':'#75BC3E'}}>
+                            {thr.child_count}
+                        </TableCell>
+                  </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Modal open={showAddThread} onClose={() => {setShowAddThread(false)}}>
+          <AddThread close={setShowAddThread}/>
+        </Modal>
+      </>
     );
 
 
