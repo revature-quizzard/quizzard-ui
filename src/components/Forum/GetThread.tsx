@@ -77,6 +77,11 @@ const GetThreads = ()=> {
                         </TableCell>
                         <TableCell
                         align="left"
+                        style={{'color':'#FFFFFF'}}>
+                            {thr.date_created.replace('T', ' ').substring(0,16)}
+                        </TableCell>
+                        <TableCell
+                        align="left"
                         style={{'color':'#75BC3E'}}>
                             {thr.child_count}
                         </TableCell>
