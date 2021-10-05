@@ -16,7 +16,7 @@ import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
 import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
-import { gameState, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
+import { gameState, Player, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
 
@@ -178,11 +178,17 @@ function Game() {
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
                 console.log('onDelete:', { provider, value });
+                history.push('/lounge');
             }
         })
 
         return () => {
             // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
+            let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+            let copylist: Player[] = [].concat(game.players);
+            let index = copylist.findIndex((player) => player.id === currentUser);
+            copylist.splice(index, 1);
+            (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: copylist}})));
             updateSubscription.unsubscribe();
             deleteSubscription.unsubscribe();
         }
