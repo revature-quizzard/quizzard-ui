@@ -83,6 +83,7 @@ function Answers() {
     async function submit(e: any) {
         if (game.matchState == 2) return;
 
+        console.log('submit e:', e.target.id)
         let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
         //@ts-ignore
         let currentPlayer : Player = {};
@@ -93,7 +94,7 @@ function Answers() {
         playerList.splice(playerList.findIndex(playre => playre.id == currentPlayer.id), 1)
         if (!currentPlayer || currentPlayer.answered) return;        
         currentPlayer.answered = true;
-        if (e.target.id === game.set.cardList[game.questionIndex].correctAnswer) {            
+        if (answers[e.target.id] === game.set.cardList[game.questionIndex].correctAnswer) {            
             currentPlayer.answeredCorrectly = true;            
             currentPlayer.answeredAt = new Date().toISOString();
         } else {
