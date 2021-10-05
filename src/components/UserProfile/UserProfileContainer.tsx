@@ -10,6 +10,7 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createSetState } from "../../state-slices/study-set/create-set-model-slice";
 import CreateSetModal from "./CreateSetModal";
+import UpdateSetModal from "./UpdateSetModal";
 import UserGameRecords from "./UserGameRecords";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserSets from "./UserSets";
@@ -125,6 +126,23 @@ const UserProfileContainer = (props: any) => {
                     <Typography>
 
                        <CreateSetModal />
+                      
+                    </Typography>
+                </AccordionDetails> 
+                 
+            </Accordion>
+            <Accordion >
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography  >{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span> Update New Set </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> Create New Set </>}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+
+                       <UpdateSetModal />
                       
                     </Typography>
                 </AccordionDetails> 

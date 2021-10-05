@@ -1,13 +1,12 @@
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, makeStyles, Typography } from "@mui/material";
-
+import { Alert, Button, } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
 import { useEffect, useState } from "react";
 import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
-import { createStudySet, getSetTags } from "../../remote/set-service";
+import { updateSet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, setIsPublic, updateTagFormbyIndex } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, resetCurrentSetToSave, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/create-set-model-slice";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import SwitchUnstyled from '@mui/core/SwitchUnstyled';
@@ -24,24 +23,13 @@ import { errorState } from "../../state-slices/error/errorSlice";
 import LabelIcon from '@mui/icons-material/Label';
 
 
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Popover from '@mui/material/Popover';
-import { style } from "@mui/system";
-import { ClassNames, useTheme } from "@emotion/react";
-import { getJSDocTags } from "typescript";
-
-
-
 /**
  * Allows user to create set with multiple tags.
  * Renders itself.
  * @author Alfonso Holmes
  * */
 
-const CreateSetModal = (props: any) => {
+const UpdateSetModal = (props: any) => {
 
   const [newSet, setNewSet] = useState('')
   const [tagColor, setTagColor] = useState('');
@@ -143,7 +131,7 @@ const CreateSetModal = (props: any) => {
         
         let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor , tagName: tagName , tagAdded: true , index: key};
         dispatch(updateTagFormbyIndex(formToSave_w_key));
-        console.log(_createSetState.setToSave.tags);
+        console.log("TAGS ON SET TO SEND : " ,  _createSetState.setToSave.tags);
         }
         else{
             
@@ -160,26 +148,29 @@ const CreateSetModal = (props: any) => {
     }
    
     const toggleSetStatus = () => {
-
-        // _setIsPublic = !_setIsPublic
-        // console.log(_setIsPublic);
-        // dispatch(setIsPublic(_setIsPublic));
+        dispatch(setIsPublic());
+        console.log(_createSetState.setToSave.isPublic);
     }
 
    
     const applyChanges = async function () {
         
-        
             try {
                 dispatch(loading());
-                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
-                dispatch(saveSet(setToSave));
-                console.log("SET TO SAVE : "+setToSave);
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
-                dispatch(clearTags);
-                console.log(newly_created_set);
+                let setToSave_ : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                dispatch(saveSet(setToSave_));
+                console.log("SET TO SAVE : " , setToSave_);
+                let newly_created_set = await updateSet("01101000 01100101 01101110 01110100 01100001 01101001", setToSave_);
+                console.log("NEWLY CREATED SET : " ,  newly_created_set);
+                dispatch(clearTags());
+                setNewSet('');
+                // dispatch(resetCurrentSetToSave());
+                
             } catch (e: any) {
                 console.log(e);
+                dispatch(clearTags());
+                // dispatch(resetCurrentSetToSave());
+                setNewSet('');
             }
     }
 
@@ -195,7 +186,7 @@ const CreateSetModal = (props: any) => {
             </div >
                 <hr/>
 
-                    { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
+                    { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
                      { 
                    return <div key={i}>
                     
@@ -229,15 +220,15 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
+                    { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                  
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
                     </Button>
                   
-                    <Alert  severity="success">Added!</Alert> 
+                    <Alert  severity="success">Added!</Alert>  <hr/> </>}
                     
-                    <hr/>
+                   
                     <br/>
                      </> }
                 </div>
@@ -251,4 +242,8 @@ const CreateSetModal = (props: any) => {
     );
 }
 
-export default CreateSetModal;
+export default UpdateSetModal;
+
+function resetSet(resetSet: any) {
+    throw new Error("Function not implemented.");
+}
