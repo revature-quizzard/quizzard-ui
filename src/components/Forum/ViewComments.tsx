@@ -64,7 +64,7 @@ function ViewComment() {
 
             {comments?.map((comment) => (
                 <div>
-                    <Paper style={{ padding: "40px 20px" }}>
+                    <Paper elevation={2} style={{ padding: "40px 20px" }}>
                         <Grid container wrap="nowrap" spacing={2}>
                             <Grid item xs zeroMinWidth>
                             <h5 style={{ margin: 0, textAlign: "left" }}>{comment.owner}</h5>
@@ -74,7 +74,8 @@ function ViewComment() {
                             <p style={{ textAlign: "left", color: "gray" }}>
                                 {comment.date_created.replace('T', ' ').substring(0,16)}
                             </p>
-                            {(comment.owner === auth.authUser?.username) ? <Button onClick={() => {
+                            {(comment.owner === auth.authUser?.username) ?
+                            <Button style={{'color': '#75BC3E'}} onClick={() => {
                                 dispatch(setCurrentComment(comment));
                                 setShowEditComment(true);
                             }}>edit</Button> : <></>}

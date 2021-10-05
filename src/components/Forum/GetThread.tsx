@@ -42,7 +42,11 @@ const GetThreads = ()=> {
       <>
             {(auth.isAuthenticated)
             ?
-                <Button onClick={() => {setShowAddThread(true)}}>Add Thread</Button>
+                <Button
+                style={{'color':'#75BC3E'}}
+                onClick={() => {setShowAddThread(true)}}>
+                  Add Thread
+                </Button>
             :
                 <div />
             }
@@ -52,35 +56,30 @@ const GetThreads = ()=> {
                   <TableRow>
                       <TableCell style={{'color':'#FFFFFF'}}>Subject</TableCell>
                       <TableCell align="left" style={{'color':'#FFFFFF'}}>Author&nbsp;</TableCell>
-                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Number of Comments&nbsp;</TableCell>
                       <TableCell align="left" style={{'color':'#FFFFFF'}}>Date Created&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Comments&nbsp;</TableCell>
                   </TableRow>
               </TableHead>
             <TableBody>
                 {threads?.map((thr) => (
                     <TableRow style={{'backgroundColor':'#5E5E5E'}}>
                         <TableCell
-                          align="left"
-                          style={{'color':'#FFFFFF'}}
-                          onClick={() => Navigate(thr.subject, thr)}>
-                          {thr.subject}
-                          </TableCell>
-                          <TableCell
-                          align="left"
-                          style={{'color':'#FFFFFF'}}
-                          onClick={() => Navigate(thr.subject, thr)}>
-                          {thr.owner}
+                        align="left"
+                        style={{'color':'#FFFFFF'}}
+                        onClick={() => Navigate(thr.subject, thr)}>
+                            { thr.subject}
                         </TableCell>
-                      <TableCell
-                      align="left"
-                      style={{'color':'#75BC3E'}}>
-                        {thr.child_count}
-                      </TableCell>
-                      <TableCell
-                      align="left"
-                      style={{'color':'#FFFFFF'}}>
-                        {thr.date_created.replace('T', ' ').substring(0,16)}
-                      </TableCell>
+                        <TableCell
+                        align="left"
+                        style={{'color':'#FFFFFF'}}
+                        onClick={() => Navigate(thr.subject, thr)}>
+                            {thr.owner}
+                        </TableCell>
+                        <TableCell
+                        align="left"
+                        style={{'color':'#75BC3E'}}>
+                            {thr.child_count}
+                        </TableCell>
                   </TableRow>
               ))}
             </TableBody>
