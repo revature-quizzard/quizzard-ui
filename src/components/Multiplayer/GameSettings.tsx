@@ -27,7 +27,7 @@ interface Set{};
  * 
  *  Invalid input is set with default values (capacity and timer)
  * 
- * @author Colby Wall
+ * @author Colby Wall, John Callahan
  */
 function GameSettings() {
     const [sets, setSets] = useState(undefined as Set[] | undefined)
@@ -59,10 +59,15 @@ function GameSettings() {
     let isFormValid = () => {
         for (const [key,value] of Object.entries(formData)) {
             if (!value) {
-                return false;
+                return 2;
             }
         }
-        return true;
+        if (formData.capacity < 1 || formData.capacity > 20) {
+            return 3;
+        } else if (formData.timer<3 || formData.timer > 45) {
+            return 4;
+        }
+        return 1;
     }
 
     let handleChange = (e: any) => {
@@ -86,11 +91,25 @@ function GameSettings() {
     // Tries to create a game, pushes it to DynamoDB, and
     // reroutes user to /multiplayer
     const createNewGame = async() => {
-        if(!isFormValid()){
+        let value = isFormValid();
+        switch(value) {
+            case 2:
             //Snack bar error message to user 
-            dispatch(setErrorSeverity("warning"));
-            dispatch(showSnackbar("Please fill in all fields"));
-            return;
+                dispatch(setErrorSeverity("warning"));
+                dispatch(showSnackbar("Please fill in all fields"));
+                return;
+            case 3:
+                //Snack bar error message to user 
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("There cannot be fewer than one players, or more than twenty!"));
+                return;
+            case 4:
+                //Snack bar error message to user 
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("You cannot set a timer for less than five seconds, or more than forty-five seconds!"));
+                return;
+            default:
+                break;
         }
         // Map the cards to an object that GraphQL will accept
         let cardList = formData.set.cards.map((card) => {
