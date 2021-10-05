@@ -46,7 +46,7 @@ describe('View Subforum Component Test Suite', () => {
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
     })
-    it('', () => {
+    it('Subforum render a table with accurate values given info from api', () => {
         // configure mock store
         const configureMockStore = createMockStore();
         const mockStore = configureMockStore(initialState);
@@ -58,11 +58,12 @@ describe('View Subforum Component Test Suite', () => {
         })
 
         // set up wrapper class
-        const wrapper = shallow(<Provider store={mockStore}>
+        const wrapper = mount(<Provider store={mockStore}>
                                     <SubforumHandler />
                                 </Provider>);
+        console.log(wrapper.debug());
 
-        // expect it to be truthy (i.e. something renders)
+        // expect table to have a row with values
     }
     
     )
