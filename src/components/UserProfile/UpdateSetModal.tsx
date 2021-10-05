@@ -184,14 +184,16 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
 
    const useStyles = makeStyles({
         box: {
+            justifyContent: "center",
+            textAlign: 'center',    
+            margin: 'auto',
             position: 'absolute' as 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: 'background.paper',
+            backgroundColor: '#FFFFFF',
             border: '2px solid #000',
-            // boxShadow: 24,
             p: 4,
         }
     });
@@ -207,7 +209,6 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                 <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
                 </div >
                     <hr/>
-
                         { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
                         { 
                     return <div key={i}>
