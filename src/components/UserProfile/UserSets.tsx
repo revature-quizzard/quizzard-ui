@@ -2,7 +2,7 @@ import {Container, Typography, Button, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteSetReducer, profileState} from "../../state-slices/user-profile/profile-slice";
+import {deleteSetReducer, profileState, updateSetReducer} from "../../state-slices/user-profile/profile-slice";
 import {
     DataGrid,
     GridColDef,
@@ -45,10 +45,11 @@ const UserSets = () => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
                     let rowId = api.getRow(params.id).setId;
-                    // upSet(rowId); <---- Send In SetDto as second parameter to upSet
+                    let rows = api.getRow(params.id).set;
+                     upSet(rowId, rows); 
                     api.updateRows([{
                         id: params.id,
-                        // _action: 'delete'
+                         _action1: 'update'
                     }]);
                 };
 
@@ -115,13 +116,13 @@ const UserSets = () => {
     const upSet = async function (setId:string, set: SetDto){
         try{
             let resp = await updateSet(setId, set);
-            dispatch(deleteSetReducer(setId));
+            dispatch(updateSetReducer(setId));
             dispatch(setErrorSeverity('info'));
-            dispatch(showSnackbar("Favorite deleted!"));
+            dispatch(showSnackbar("Updated!"));
         } catch (e:any){
             console.log(e.message);
             dispatch(setErrorSeverity('error'));
-            dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
+            dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
         }
     }
 

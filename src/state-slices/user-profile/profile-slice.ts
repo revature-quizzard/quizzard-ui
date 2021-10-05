@@ -47,6 +47,12 @@ export const profileSlice = createSlice({
             sets.splice( removeIndex, 1 );
             state.userProfile.createdSets = sets;
         },
+        updateSetReducer: (state, action: PayloadAction<string>) =>{
+            let sets = state.userProfile.createdSets;
+            let removeIndex = sets.findIndex( set => set.id === action.payload);
+            sets.splice( removeIndex, 1 );
+            state.userProfile.createdSets = sets;
+        },
         deleteFavoriteReducer: (state, action: PayloadAction<string>) =>{
             let sets = state.userProfile.favoriteSets;
             let removeIndex = sets.findIndex( set => set.id === action.payload);
@@ -58,7 +64,7 @@ export const profileSlice = createSlice({
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer } = profileSlice.actions;
+export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer, updateSetReducer } = profileSlice.actions;
 
 // Export the state of the entire slice to be referenced in the components
 export const profileState = (state: RootState) => state.profile;
