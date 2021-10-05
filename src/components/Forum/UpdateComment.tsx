@@ -25,7 +25,6 @@ function UpdateComment(props: IUpdateCommentProps) {
 
     let handleClick = async () => {
         console.log("button clicked!");
-        props.close(false);
         try {
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(
@@ -42,6 +41,7 @@ function UpdateComment(props: IUpdateCommentProps) {
             console.log(toAdd);
             let resp = await updateComment(toAdd);
             setRedirect(true);
+            setRedirect(false);
         } catch (e: any) {
             console.log(e);
         }

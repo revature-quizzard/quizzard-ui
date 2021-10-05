@@ -29,6 +29,7 @@ function AddComment() {
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
             setRedirect(true);
+            setRedirect(false);
             setErrorSeverity('success');
             showSnackbar('Comment successfully added')
         } catch (e: any) {

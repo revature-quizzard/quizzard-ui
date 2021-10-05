@@ -54,7 +54,6 @@ function UpdateThread(props: IUpdateThreadProps) {
     }
 
     let handleClick = async () => {
-        props.close(false);
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
@@ -71,6 +70,7 @@ function UpdateThread(props: IUpdateThreadProps) {
             console.log(toAdd);
             let resp = await updateThread(toAdd);
             setRedirect(true);
+            setRedirect(false);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
@@ -99,7 +99,7 @@ function UpdateThread(props: IUpdateThreadProps) {
                 <Paper style={{'margin': '1rem'}}>
                     <Editor
                         onChange={handleDescriptionChange}
-                        placeholder={forumInfo.currentThread?.description} />
+                        placeholder='Write your new description...' />
                 </Paper>
                 <br />
                 <Box textAlign='center'>

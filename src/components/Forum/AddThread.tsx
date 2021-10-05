@@ -54,7 +54,6 @@ function AddThread(props: IAddThreadProps) {
     }
 
     let handleClick = async () => {
-        props.close(false);
         try {
             let threadAncestors: string[] = [forumInfo.currentSubforum.id]
             //CHANGE THESE VALUES
@@ -67,6 +66,7 @@ function AddThread(props: IAddThreadProps) {
             );
             let resp = await addThread(toAdd);
             setRedirect(true);
+            setRedirect(false);
         } catch (e: any) {
             console.log(e);
             // #TODO: set error message / toast here
