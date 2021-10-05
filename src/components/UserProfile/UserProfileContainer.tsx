@@ -1,9 +1,9 @@
-import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Modal, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserData } from "../../remote/user-service";
 import { UserData } from "../../models/user-data";
 import { User } from "../../models/user";
@@ -22,7 +22,8 @@ const UserProfileContainer = (props: any) => {
   const user: User = useSelector(authState).authUser;
   const createState = useSelector(createSetState);
  
-
+  const [updateSetId, setUpdateSetId] = useState('');
+  const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
 
 /**
@@ -49,8 +50,6 @@ const UserProfileContainer = (props: any) => {
         getData();
     }, []);
 
-
-
     return (
         <div >
             <Accordion expanded >
@@ -76,7 +75,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserSets/> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
+                        {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}/> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -141,6 +140,15 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                  
             </Accordion>
+
+            <Modal
+                open={updateIsOpen}
+                onClose={() => {
+                    setUpdateIsOpen(false);
+                }}
+            >
+                <UpdateSetModal setId={updateSetId} />
+            </Modal>
           
         </div>
     );

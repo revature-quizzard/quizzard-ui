@@ -251,8 +251,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
 
 const useStyles = makeStyles({
     updateSetModal: {
-        position: 'fixed',
-        top: '0'
+        backgroundColor: '#ffffff'
     }
 });
 

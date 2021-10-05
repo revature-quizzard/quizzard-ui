@@ -23,7 +23,12 @@ import UpdateSetModal from "./UpdateSetModal";
  * @authors Cody McDonald, Mitchell Panenko
  * */
 
-const UserSets = () => {
+interface iUserSets {
+    setUpdateSetId: (nextSetId: string) => void,
+    setUpdateIsOpen: (updateIsOpen: boolean) => void
+}
+
+const UserSets = (props: iUserSets) => {
     const state = useSelector(profileState);
     const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
@@ -46,9 +51,11 @@ const UserSets = () => {
             renderCell: (params) => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
-                    let rowId = api.getRow(params.id).setId;
-                    let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
-                     upSet(rowId, setDto); 
+                    props.setUpdateSetId(api.getRow(params.id).setId);
+                    props.setUpdateIsOpen(true);
+                    // let rowId = api.getRow(params.id).setId;
+                    // let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
+                    //  upSet(rowId, setDto); 
                     api.updateRows([{
                         id: params.id,
                         _action1: 'update'
