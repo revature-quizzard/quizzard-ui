@@ -115,13 +115,13 @@ const UserSets = () => {
     const upSet = async function (setId:string, set: SetDto){
         try{
             let resp = await updateSet(setId, set);
-            dispatch(deleteSetReducer(setId));
+            // dispatch(updateSetReducer(setId)); <---- We need an updateSet reducer in profile-slice
             dispatch(setErrorSeverity('info'));
-            dispatch(showSnackbar("Favorite deleted!"));
+            dispatch(showSnackbar("Updated set!"));
         } catch (e:any){
             console.log(e.message);
             dispatch(setErrorSeverity('error'));
-            dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
+            dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
         }
     }
 
