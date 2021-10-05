@@ -13,6 +13,7 @@ import CreateSetModal from "./CreateSetModal";
 import UserGameRecords from "./UserGameRecords";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserSets from "./UserSets";
+import { Gif } from "@material-ui/icons";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -60,7 +61,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {state.isLoaded ? <UserProfile/> : 'Loading...'}
+                    {state.isLoaded ? <UserProfile/> : <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" /> </>}
                 </AccordionDetails>
             </Accordion>
             <hr/>
@@ -84,7 +85,7 @@ const UserProfileContainer = (props: any) => {
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>{state.isLoaded == false?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Favorite Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Favorite Sets </>}</Typography>
+                    <Typography>{state.isLoaded == false?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Favorite Sets</> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Favorite Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
