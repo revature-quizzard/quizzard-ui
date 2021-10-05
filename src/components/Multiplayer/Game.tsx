@@ -215,7 +215,7 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={startGame}> Start Game </Button>
+                        <Button onClick={() => {startGame(game)}}> Start Game </Button>
                         :
                         <></> }
                     </>
