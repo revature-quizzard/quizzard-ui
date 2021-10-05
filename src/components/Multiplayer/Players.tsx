@@ -22,18 +22,14 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
   const useStyles = makeStyles(() => ({
       root: {
-        backgroundColor: "#b15fc2",
-        width: '18em',
+        width: '15em',
         borderStyle: 'solid',
-        borderColor: '#7636a3',
+        borderColor: '#4e3e61',
         display: 'flex'
       },
       table: {
           verticalAlign: 'middle',
           msAlignSelf: 'left'
-      },
-      text: {
-          color: 'white'
       },
       button: {
           color: 'red'
@@ -77,14 +73,14 @@ function Players() {
                     {currentUser == game.host
                     ?
                     <>
-                        <TableCell className={styles.text} align="left">Username</TableCell>
-                        <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
-                        <TableCell className={styles.text} align="right">Kick Players</TableCell>
+                        <TableCell align="left">Username</TableCell>
+                        <TableCell align="right">Points&nbsp;</TableCell>
+                        <TableCell align="right">Kick Players</TableCell>
                     </>
                     :
                     <>
-                        <TableCell className={styles.text} align="left">Username</TableCell>
-                        <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                        <TableCell align="left">Username</TableCell>
+                        <TableCell align="right">Points&nbsp;</TableCell>
                     </>
                     }
                 </TableRow>
@@ -96,8 +92,8 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell className={styles.text} align="left">{player.username}</TableCell>
-                    <TableCell className={styles.text} align="right">{player.points}</TableCell>
+                    <TableCell align="left">{player.username}</TableCell>
+                    <TableCell align="right">{player.points}</TableCell>
                     <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
                     </TableRow>
                 ))
@@ -106,8 +102,8 @@ function Players() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell className={styles.text} align="left">{player.username}</TableCell>
-                    <TableCell className={styles.text} align="right">{player.points}</TableCell>
+                    <TableCell align="left">{player.username}</TableCell>
+                    <TableCell align="right">{player.points}</TableCell>
                     </TableRow>                
                     ))}
                 </TableBody>

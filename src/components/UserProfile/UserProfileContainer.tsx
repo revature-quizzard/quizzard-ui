@@ -30,7 +30,7 @@ const UserProfileContainer = (props: any) => {
  * */
 
 
-   
+
     const getData = async function () {
         try {
             dispatch(loading());
@@ -57,37 +57,24 @@ const UserProfileContainer = (props: any) => {
                     aria-label="Expand"
                     id="panel1a-header"
                 >
-                    <Typography><h1>My Profile<span style={{color: 'red'}}> | </span></h1></Typography>
+                    <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     {state.isLoaded ? <UserProfile/> : 'Loading...'}
                 </AccordionDetails>
             </Accordion>
-            <Accordion style={{background: "#FFFFFF " , color: 'black ' , opacity: '88%'}}>
+            <hr/>
+            <Accordion style={{background: "#332347 " , color: '#7D7687 '}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography><span style={{color: 'red'}}> | </span>  My Sets</Typography>
+                    <Typography>{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span>  My Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
                         {state.isLoaded ? <UserSets/> : 'Loading...'}
-                    </Typography>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion >
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon/>}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header"
-                >
-                    <Typography> <span style={{color: 'red'}}> | </span> My Favorite Sets</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        {state.isLoaded ? <UserFavoriteSets/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -97,18 +84,33 @@ const UserProfileContainer = (props: any) => {
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography> <span style={{color: '#75BC3E'}}> | </span> My Game Records</Typography>
+                    <Typography>{state.isLoaded == false?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Favorite Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Favorite Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                      <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span></b> 
+                        {state.isLoaded ? <UserFavoriteSets/> : 'Loading...'}
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <hr/>
+            <Accordion style={{background: "#332347 " , color: '#7D7687 '}}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel3a-content"
+                    id="panel3a-header"
+                >
+                    <Typography>{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Game Records </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Game Records </>}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                      <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ? <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>  }</b> 
 
                         {state.isLoaded ? <UserGameRecords/> : 'Loading...'}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
             <div>
-               
+               <hr/>
             </div>
             <Accordion >
                 <AccordionSummary
@@ -116,7 +118,7 @@ const UserProfileContainer = (props: any) => {
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography  > <span style={{color: '#75BC3E'}}> | </span> Create New Set</Typography>
+                    <Typography  >{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span> Create New Set </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> Create New Set </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>

@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import { useHistory } from 'react-router';
-
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import config from '../../aws-exports';
 import { createGame, deleteGame, updateGame } from '../../graphql/mutations';
@@ -8,14 +7,10 @@ import { onCreateGame, onDeleteGame, onUpdateGame, onUpdateGameById, onDeleteGam
 import { getGame, listGames } from '../../graphql/queries';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { Observable } from 'redux';
-import { GraphQLTime } from 'graphql-iso-date';
 import Questions from './Questions';
 import Leaderboard from './Leaderboard';
 import { Redirect } from 'react-router';
-import { Button } from '@material-ui/core';
-import * as queries from '../../graphql/queries';
-import { Card } from 'react-bootstrap';
-import { ConsoleLogger } from 'typedoc/dist/lib/utils';
+import { Button, makeStyles } from '@material-ui/core';
 import Answers from './Answers';
 import Timer from './Timer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +18,60 @@ import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
 import { gameState, Player, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
+
+
+const useStyles = makeStyles({
+    gameContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        marginTop: '2rem'
+    },
+
+    playerContainer: {
+        marginRight: '1rem'
+    },
+
+    topRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
+    gameId: {
+        alignSelf: 'center',
+        paddingLeft: '2rem'
+    },
+
+    bottomRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'stretch'
+    },
+
+    qaContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '35rem'
+    },
+
+    timerContainer: {
+        alignSelf: 'flex-start',
+        justifyContent: 'right',
+        marginBottom: '1rem'
+    },
+
+    hideMe: {
+        visibility: 'hidden'
+    },
+
+    leaderContainer: {
+        justifyContent: "center",
+
+    }
+
+});
+
 
 Amplify.configure(config);
 
@@ -52,6 +101,7 @@ Amplify.configure(config);
  * 
  *  @author Sean Dunn, Heather Guilfoyle, Colby Wall, Robert Ni
  */
+
 
 /**  
  *  Start Game sends an update to DynamoDB, which triggers our subscription in useEffect.
@@ -144,6 +194,8 @@ function Game() {
         }
     }, [])
 
+    const classes = useStyles();
+
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
     function render() {
@@ -154,13 +206,16 @@ function Game() {
         switch(game.matchState) {
             case 0:
                 return (
-                    <>
+                    <>  
+                        <h1 className={classes.gameId}>{game.id}</h1> 
+                        <div className= {classes.playerContainer}>
                         <Players />
+                        </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {startGame(game)}}> Host Start Game Button </Button>
+                        <Button onClick={startGame}> Start Game </Button>
                         :
                         <></> }
                     </>
@@ -168,23 +223,53 @@ function Game() {
             case 1:
                 return (
                     <>
-                        <Players />
-                        <Timer start={game.questionTimer} onTimeout={onTimeout}/>
-                        <Questions />
-                        <Answers />
+                    <div className = {classes.gameContainer}>
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <div className= {classes.timerContainer}>
+                                <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                            </div>
+                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
+                    </div>
                     </>
                 )
             case 2:
                 return (
                     <>
-                        <Players />
-                        <Questions />
-                        <Answers />
+                    <div className = {classes.gameContainer}>
+                        <div className={classes.topRow}>
+                            <h1 className={classes.gameId}>{game.id}</h1>  
+                            <div className={classes.hideMe}>                        
+                                 <div className= {classes.timerContainer}>
+                                    <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                                 </div>
+                            </div>  
+                        </div>
+                        <div className={classes.bottomRow}>
+                            <div className= {classes.playerContainer}>
+                                <Players />
+                            </div>
+                            <div className= {classes.qaContainer}>
+                                <Questions />
+                                <Answers />
+                            </div>
+                        </div>  
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
+
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={nextCard}> Host Next Card Button </Button>
+                        <Button onClick={nextCard}>Next Card </Button>
                         :
                         <></> }
                     </>
@@ -192,17 +277,20 @@ function Game() {
             case 3: 
                 return (
                     <>
+                    <div className = {classes.leaderContainer}>
                         <Leaderboard />
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {closeGame(game)}}> Host Close Game Button </Button>
+                        <Button onClick={() => {closeGame(game)}}> Close Game </Button>
                         :
                         <></> }
                     </>
                 )
         }
+        
     }
 
     /**
@@ -321,7 +409,6 @@ function Game() {
     return (
         // buttons for test (remove this after testing)
         <>
-        <h1>{game.id}</h1>
         {
             (game.id) // If game is defined (Using redux slice)
             ?
