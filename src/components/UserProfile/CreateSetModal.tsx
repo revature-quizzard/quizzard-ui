@@ -11,6 +11,7 @@ import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeMo
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import SwitchUnstyled from '@mui/core/SwitchUnstyled';
+import Switch from '@mui/material/Switch';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
@@ -158,7 +159,10 @@ const CreateSetModal = (props: any) => {
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
    
-    const setSetToPublic = () => {
+    const toggleSetStatus = () => {
+
+        _setIsPublic = !_setIsPublic
+        console.log(_setIsPublic);
         dispatch(setIsPublic(_setIsPublic));
     }
 
@@ -170,7 +174,7 @@ const CreateSetModal = (props: any) => {
                 dispatch(loading());
                 let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave));
-                console.log(setToSave);
+                console.log("SET TO SAVE : "+setToSave);
                 let newly_created_set = await createStudySet(_createSetState.setToSave);
                 dispatch(clearTags);
                 console.log(newly_created_set);
@@ -184,8 +188,11 @@ const CreateSetModal = (props: any) => {
     return (
         <div>
                 
-
-            <TextField label="set name" onChange={handleChange} value={newSet} /> <SwitchUnstyled  defaultChecked />
+            <div >
+            <TextField label="set name" onChange={handleChange} value={newSet} />
+            <br/>
+            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+            </div >
                 <hr/>
 
                     { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
@@ -216,7 +223,7 @@ const CreateSetModal = (props: any) => {
                               </Select>
                     </FormControl>
                     <br/>
-                    <Button key={i}  variant="contained" style={{background: 'green' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                    <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
                     </>
                     
                     : 
@@ -236,10 +243,10 @@ const CreateSetModal = (props: any) => {
                 </div>
                 })
             }
-                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}} onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
+                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
                <br/>
 
-                <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+                <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
         </div>
     );
 }

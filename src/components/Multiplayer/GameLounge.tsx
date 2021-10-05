@@ -16,6 +16,8 @@ import * as gameUtil from '../../utilities/game-utility'
 import { errorState, setErrorSeverity, showSnackbar, hideErrorMessage } from '../../state-slices/error/errorSlice';
 import Players from './Players';
 import { guestState, setGuest } from '../../state-slices/multiplayer/guest-slice';
+import { fontFamily } from '@mui/system';
+
 
 Amplify.configure(config);
 
@@ -146,8 +148,12 @@ function GameLounge() {
         { (!game.host)
         ?
         <>
-        <div className="App">
-            <header className="App-header">
+        <div className="App" >
+            <header >
+            <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+            <br/> 
+            <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span> </b> </h1>
+                
                 <br></br>
                 <br></br>
                 <br></br>
