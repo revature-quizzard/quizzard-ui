@@ -18,6 +18,8 @@ import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
 import { gameState, Player, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
+import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
+import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
 
 
 const useStyles = makeStyles({
@@ -140,7 +142,7 @@ function postGameRecords() {
 
 
 function Game() {
-
+    const userProfile = useSelector(profileState);
     const user = useSelector(authState);
     //@ts-ignore
     const guestUser = useSelector(guestState);
@@ -183,6 +185,7 @@ function Game() {
         })
 
         return () => {
+            // **************** Persist user data here or in a function? **********************
             // Unsubscribe from subscriptions when component unmounts, to avoid memory leaks
             let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
             let copylist: Player[] = [].concat(game.players);
@@ -278,6 +281,7 @@ function Game() {
                 return (
                     <>
                     <div className = {classes.leaderContainer}>
+                        {persistUserData}
                         <Leaderboard />
                     </div>
                         {/* This needs to be the username of the player who made the game! */}
@@ -337,6 +341,9 @@ function Game() {
 
                     // Update points
                     player.points += Math.floor(points);
+                } else if(player.answered == true && player.answeredCorrectly == false){
+                    // Reset streak if answered incorrectly
+                    player.streak = 0;
                 }
             });
             // Give bonus points if only one player answered correctly
@@ -393,12 +400,91 @@ function Game() {
     }
 
     /**
+     *  This method is invoked at the end of a game to persist the users data (points, win, or loss)
+     *  The logic:
+     *      id: string;
+            username: string;
+            favoriteSets: Array<SetDocument>;
+            createdSets: Array<SetDocument>;
+            profilePicture: string;
+            points: number;
+            wins: number;
+            losses: number;
+            registrationDate: string;
+            gameRecords: Array<string>;
+     */
+    async function persistUserData(){
+
+        // find the current user if not guest
+
+        let currentUser = user.authUser.username;
+        let players = game.players.map(player => ({...player}));
+
+
+        if(currentUser === game.host){
+            let newPlayers;
+            let winner;
+
+            players.forEach(player => {
+                if(player.placing === 1) winner = player.username;
+                newPlayers.push({
+                    id: player.id,
+                    placing: player.placing,
+                    points: player.points
+                })
+            });
+
+            console.log("newPlayers: ", newPlayers);
+    
+            let gameRecord = {
+                playerList: newPlayers,
+                cardList: game.set,
+                winner,
+                datePlayed: new Date().toISOString
+            }
+            console.log("gameRecord: ", gameRecord);
+            try{
+                let resp = await quizzardApiClientTokenAuthorized.post('/records', gameRecord);
+                console.log('persist user data response: ', resp);
+            }catch(e: any){
+                console.log('persist user data error: ', e);
+            }
+
+        }
+
+
+        //Update user state
+        // if(user?.isAuthenticated){
+        //     let persistPlayer;
+        //     let currentPlayer = game.players.find(player => player.id === user?.authUser.id);
+        //     if(currentPlayer.placing === 1){
+        //         persistPlayer = { wins: userProfile.userProfile.losses++,
+        //             points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
+        //              ...userProfile.userProfile}
+
+        //     } else {
+        //         persistPlayer = { wins: userProfile.userProfile.losses++,
+        //             points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
+        //              ...userProfile.userProfile}
+
+        //     }
+        //     dispatch(setProfile(persistPlayer));  //Update state
+        //     // try{
+        //     //     let resp = await quizzardApiClientTokenAuthorized.put('/users', gameRecord);       //NO PUT USERS ENDPOINT D:<
+        //     //     console.log('persist user data response: ', resp);
+        //     // }catch(e: any){
+        //     //     console.log('persist user data error: ', e);
+        //     // }
+        // }
+    }
+
+    /**
      *  Utility function to aid in testing.
      *  Simply progresses game to next state, looping back to 0 from 3.
      */
     async function incrementState() {
         let temp = game.matchState;
-        if (temp == 3) temp = 0;
+        if (temp == 3) temp = 0; 
         else temp += 1;
         console.log('Inside incrementState, temp:', temp)
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
