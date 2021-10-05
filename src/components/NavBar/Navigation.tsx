@@ -10,9 +10,6 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ForumIcon from '@mui/icons-material/Forum';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
@@ -30,7 +27,6 @@ import {
 } from "@mui/material";
 
 import React from "react";
-import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
 
 export function NavigationComponent(){
 
@@ -137,10 +133,6 @@ export function NavigationComponent(){
     setOpen(!open);
   };
 
-  const handleLogout = () => {
-    quizzardApiClientTokenAuthorized.defaults.headers.common["authorization"] = null;
-  }
-
   return (
 
       <>
@@ -200,7 +192,7 @@ export function NavigationComponent(){
             <div  >
             <List   >
 
-              <ListItem button component = {Link} to={'/'} onClick={handleLogout}>
+              <ListItem button component = {Link} to={'/'}>
 
                 <LoginIcon/><Typography color="inherit" variant="h6" className={classes.typographyIcons}>Logout</Typography>
               </ListItem>
