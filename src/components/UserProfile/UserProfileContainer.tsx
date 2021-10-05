@@ -13,6 +13,7 @@ import CreateSetModal from "./CreateSetModal";
 import UserGameRecords from "./UserGameRecords";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserSets from "./UserSets";
+import { Gif } from "@material-ui/icons";
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -60,7 +61,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {state.isLoaded ? <UserProfile/> : 'Loading...'}
+                    {state.isLoaded ? <UserProfile/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" />  </>}
                 </AccordionDetails>
             </Accordion>
             <hr/>
@@ -74,7 +75,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserSets/> : 'Loading...'}
+                        {state.isLoaded ? <UserSets/> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -84,11 +85,11 @@ const UserProfileContainer = (props: any) => {
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>{state.isLoaded == false?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Favorite Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Favorite Sets </>}</Typography>
+                    <Typography>{state.isLoaded == false?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Favorite Sets</> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Favorite Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserFavoriteSets/> : 'Loading...'}
+                        {state.isLoaded ? <UserFavoriteSets/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -105,7 +106,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography>
                       <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ? <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>  }</b> 
 
-                        {state.isLoaded ? <UserGameRecords/> : 'Loading...'}
+                        {state.isLoaded ? <UserGameRecords/> :<> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
