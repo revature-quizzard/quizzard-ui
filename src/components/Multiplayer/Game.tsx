@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        margin: '0 3rem'
+        marginTop: '2rem'
     },
 
     playerContainer: {
@@ -61,10 +61,12 @@ const useStyles = makeStyles({
         marginBottom: '1rem'
     },
 
+    hideMe: {
+        visibility: 'hidden'
+    },
+
     leaderContainer: {
         justifyContent: "center",
-        marginLeft: '2em',
-        marginTop: '2em'
 
     }
 
@@ -198,7 +200,8 @@ function Game() {
         switch(game.matchState) {
             case 0:
                 return (
-                    <>
+                    <>  
+                        <h1 className={classes.gameId}>{game.id}</h1> 
                         <div className= {classes.playerContainer}>
                         <Players />
                         </div>
@@ -238,7 +241,12 @@ function Game() {
                     <>
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
-                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <h1 className={classes.gameId}>{game.id}</h1>  
+                            <div className={classes.hideMe}>                        
+                                 <div className= {classes.timerContainer}>
+                                    <Timer start={game.questionTimer} onTimeout={onTimeout}/>
+                                 </div>
+                            </div>  
                         </div>
                         <div className={classes.bottomRow}>
                             <div className= {classes.playerContainer}>
@@ -255,7 +263,7 @@ function Game() {
 
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={nextCard}> Host Next Card Button </Button>
+                        <Button onClick={nextCard}>Next Card </Button>
                         :
                         <></> }
                     </>
@@ -263,12 +271,14 @@ function Game() {
             case 3: 
                 return (
                     <>
+                    <div className = {classes.leaderContainer}>
                         <Leaderboard />
+                    </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {closeGame(game)}}> Host Close Game Button </Button>
+                        <Button onClick={() => {closeGame(game)}}> Close Game </Button>
                         :
                         <></> }
                     </>

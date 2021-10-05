@@ -1,5 +1,6 @@
 import { ClassNames } from '@emotion/react';
 import{ Card, CardContent, Typography, makeStyles }from '@material-ui/core';
+import { borderColor } from '@mui/system';
 import { useSelector } from 'react-redux';
 import { gameState } from '../../state-slices/multiplayer/game-slice';
 
@@ -13,7 +14,8 @@ import { gameState } from '../../state-slices/multiplayer/game-slice';
  const useStyles = makeStyles({
     cardClass: {
         width: '100%',
-        flexGrow: 1
+        flexGrow: 1,
+        borderColor: 'orange'
     },
 
     contentClass: {
