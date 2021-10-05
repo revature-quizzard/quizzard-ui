@@ -248,7 +248,7 @@ function Game() {
                     points *= 1 + (.1 * player.streak);
 
                     // Update points
-                    player.points += points;
+                    player.points += Math.floor(points);
                 }
             });
             // Give bonus points if only one player answered correctly
