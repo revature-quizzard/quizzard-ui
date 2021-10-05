@@ -77,6 +77,8 @@ const useStyles = makeStyles({
 
 Amplify.configure(config);
 
+// Prevents duplicate calls to persist data
+let numCalls = 0;
 
 /**
  *  This React component is a container for the multiplayer quiz game.
@@ -170,7 +172,7 @@ function Game() {
                 console.log('usersToUpdate',{currentUser});
                 let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
                 console.log('onUpdate:', { provider, value });
-                ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
+                ingame ? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
             //@ts-ignore
             error: error => console.warn(error)
@@ -277,7 +279,7 @@ function Game() {
                 return (
                     <>
                     <div className = {classes.leaderContainer}>
-                        {persistUserData()}
+                        { callPersistData() }
                         <Leaderboard />
                     </div>
                         {/* This needs to be the username of the player who made the game! */}
@@ -396,26 +398,28 @@ function Game() {
     }
 
     /**
+     * Helper function to be called from React fragment
+    */
+    const callPersistData = () => {
+        if(numCalls<1)
+            persistUserData();
+        numCalls++;
+    }
+
+    /**
      *  This method is invoked at the end of a game to persist the users data (points, win, or loss)
      *  The logic:
-     *      id: string;
-            username: string;
-            favoriteSets: Array<SetDocument>;
-            createdSets: Array<SetDocument>;
-            profilePicture: string;
-            points: number;
-            wins: number;
-            losses: number;
-            registrationDate: string;
-            gameRecords: Array<string>;
+     *      + Called by helper method callPersistData to allow async method call from React fragment
+     *      + make sure the one persisting user data is the host
+     *      + rewrite player data to discard unwanted data
+     *      + create record object and attempt to persist to lambda function postRecords
      */
     async function persistUserData(){
-
+        // Prevent duplicate calls
+        numCalls++;
         // find the current user if not guest
-
         let currentUser = user.authUser.username;
         let players = game.players.map(player => ({...player}));
-
 
         if(currentUser === game.host){
             let newPlayers: any[]=[];
@@ -449,30 +453,23 @@ function Game() {
 
         }
 
-
         //Update user state
-        // if(user?.isAuthenticated){
-        //     let persistPlayer;
-        //     let currentPlayer = game.players.find(player => player.id === user?.authUser.id);
-        //     if(currentPlayer.placing === 1){
-        //         persistPlayer = { wins: userProfile.userProfile.losses++,
-        //             points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-        //              ...userProfile.userProfile}
-
-        //     } else {
-        //         persistPlayer = { wins: userProfile.userProfile.losses++,
-        //             points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-        //              ...userProfile.userProfile}
-
-        //     }
-        //     dispatch(setProfile(persistPlayer));  //Update state
-        //     // try{
-        //     //     let resp = await quizzardApiClientTokenAuthorized.put('/users', gameRecord);       //NO PUT USERS ENDPOINT D:<
-        //     //     console.log('persist user data response: ', resp);
-        //     // }catch(e: any){
-        //     //     console.log('persist user data error: ', e);
-        //     // }
-        // }
+        if(user?.authUser){
+            let persistPlayer;
+            let currentPlayer = game.players.find(player => player.id === user?.authUser.id);
+            console.log("Before updating persistPlayer")
+            if(currentPlayer.placing === 1){
+                persistPlayer = { wins: userProfile.userProfile.losses+1,
+                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
+                     ...userProfile.userProfile}
+            } else {
+                persistPlayer = { losses: userProfile.userProfile.losses+1,
+                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
+                     ...userProfile.userProfile}
+            }
+            console.log("Dispatch: "+ persistPlayer);
+            dispatch(setProfile(persistPlayer));  //Update state
+        }
     }
 
     /**
