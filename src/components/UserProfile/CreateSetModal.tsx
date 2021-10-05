@@ -67,6 +67,7 @@ const CreateSetModal = (props: any) => {
     {
         try{
               let response = await getSetTags();  
+              dispatch(setIsPublic());
         setAllTags(response);
         }catch(e: any){
           console.log(e);
@@ -160,8 +161,9 @@ const CreateSetModal = (props: any) => {
     }
    
     const toggleSetStatus = () => {
+        
         dispatch(setIsPublic());
-        console.log(_createSetState.setToSave.isPublic);
+       
     
     }
 
