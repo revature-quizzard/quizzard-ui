@@ -139,13 +139,6 @@ const UserProfileContainer = (props: any) => {
                 >
                     <Typography  >{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span> Update New Set </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> Create New Set </>}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-
-                       <UpdateSetModal />
-                      
-                    </Typography>
-                </AccordionDetails> 
                  
             </Accordion>
           

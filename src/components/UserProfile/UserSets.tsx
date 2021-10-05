@@ -13,6 +13,8 @@ import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
 import {deleteSet, updateSet} from "../../remote/set-service";
 import {SetDto} from '../../dtos/set-dto';
+import { Tag } from "../../dtos/Tag";
+import UpdateSetModal from "./UpdateSetModal";
 
 /**
  * Component for rendering a user's Sets.
@@ -45,11 +47,11 @@ const UserSets = () => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
                     let rowId = api.getRow(params.id).setId;
-                    let rows = api.getRow(params.id).set;
-                     upSet(rowId, rows); 
+                    let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
+                     upSet(rowId, setDto); 
                     api.updateRows([{
                         id: params.id,
-                         _action1: 'update'
+                        _action1: 'update'
                     }]);
                 };
 
@@ -90,7 +92,7 @@ const UserSets = () => {
                 id: index,
                 setId: set.id,
                 setName: set.setName,
-                tags: set.tags.map((x) => (x.tagName)),
+                tags: set.tags.map((x) => x.tagName),
                 isPublic: set.isPublic,
                 views: set.views,
                 plays: set.plays,
@@ -114,16 +116,19 @@ const UserSets = () => {
     }
 
     const upSet = async function (setId:string, set: SetDto){
-        try{
-            let resp = await updateSet(setId, set);
-            dispatch(updateSetReducer(setId));
-            dispatch(setErrorSeverity('info'));
-            dispatch(showSnackbar("Updated!"));
-        } catch (e:any){
-            console.log(e.message);
-            dispatch(setErrorSeverity('error'));
-            dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
-        }
+        // try{
+        //     let resp = await updateSet(setId, set);
+        //     dispatch(updateSetReducer(setId));
+        //     dispatch(setErrorSeverity('info'));
+        //     dispatch(showSnackbar("Updated!"));
+        // } catch (e:any){
+        //     console.log(e.message);
+        //     dispatch(setErrorSeverity('error'));
+        //     dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
+        // }
+
+        return <UpdateSetModal setId={setId} />
+
     }
 
     return (

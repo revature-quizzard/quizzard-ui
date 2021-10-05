@@ -21,7 +21,8 @@ import { TagFormModel } from "../../models/new-tag-form";
 import { SaveTagFormModel } from "../../models/save-tag-form-model";
 import { errorState } from "../../state-slices/error/errorSlice";
 import LabelIcon from '@mui/icons-material/Label';
-
+import Modal from '@mui/material/Modal' 
+import { makeStyles } from "@mui/styles";
 
 /**
  * Allows user to create set with multiple tags.
@@ -29,7 +30,13 @@ import LabelIcon from '@mui/icons-material/Label';
  * @author Alfonso Holmes
  * */
 
-const UpdateSetModal = (props: any) => {
+interface iUpdateSetModal {
+    setId: string
+}
+
+const UpdateSetModal = (props: iUpdateSetModal) => {
+
+    console.log('WE ARE IN UPDATESETMODAL');
 
   const [newSet, setNewSet] = useState('')
   const [tagColor, setTagColor] = useState('');
@@ -157,10 +164,10 @@ const UpdateSetModal = (props: any) => {
         
             try {
                 dispatch(loading());
-                let setToSave_ : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                let setToSave_ : SetDto = {setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave_));
                 console.log("SET TO SAVE : " , setToSave_);
-                let newly_created_set = await updateSet("01101000 01100101 01101110 01110100 01100001 01101001", setToSave_);
+                let newly_created_set = await updateSet(props.setId, setToSave_);
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
@@ -174,11 +181,10 @@ const UpdateSetModal = (props: any) => {
             }
     }
 
-   
+   const classes = useStyles();
 
     return (
-        <div>
-                
+        <div className={classes.updateSetModal}>                
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
@@ -238,9 +244,17 @@ const UpdateSetModal = (props: any) => {
                <br/>
 
                 <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+
         </div>
     );
 }
+
+const useStyles = makeStyles({
+    updateSetModal: {
+        position: 'fixed',
+        top: '0'
+    }
+});
 
 export default UpdateSetModal;
 
