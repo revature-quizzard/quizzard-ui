@@ -162,6 +162,7 @@ const CreateSetModal = (props: any) => {
     const toggleSetStatus = () => {
         dispatch(setIsPublic());
         console.log(_createSetState.setToSave.isPublic);
+    
     }
 
    
@@ -197,7 +198,7 @@ const CreateSetModal = (props: any) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" /> </>}</p> 
+            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
                 <hr/>
 
