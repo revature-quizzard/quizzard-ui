@@ -54,7 +54,7 @@ function ViewComment() {
                     <h1>{forumInfo.subject}</h1>
                     <br></br>
                     <br></br>
-                    <p>{forumInfo.description}</p>
+                    <Editor readOnly={true} value={forumInfo.description} />
                     {/* <h1>forumInfo.currentThread.subject</h1>
                     <p>forumInfo.currentThread.description</p> */}
                 </div>    
