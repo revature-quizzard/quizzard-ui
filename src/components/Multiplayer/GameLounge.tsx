@@ -148,7 +148,6 @@ function GameLounge() {
         <>
         <div className="App">
             <header className="App-header">
-                Welcome to the looounnnge...
                 <br></br>
                 <br></br>
                 <br></br>
@@ -162,9 +161,10 @@ function GameLounge() {
         {/* Input field for the join game ID */}
         <Input onKeyUp={handleUpdate} 
                placeholder = 'Game ID'/> {       }
-
+        
         <Input onKeyUp={changeNickName}
                placeholder = 'Nickname' /> 
+
 
         {/* Button which joins existing game according to input id */}
         <Button onClick={joinGame}>Join Game</Button>

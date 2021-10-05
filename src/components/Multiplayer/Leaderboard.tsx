@@ -20,18 +20,14 @@ function Leaderboard() {
 
     const useStyles = makeStyles(() => ({
         root: {
-          backgroundColor: "#b15fc2",
           width: '18em',
           borderStyle: 'solid',
-          borderColor: '#7636a3',
+          borderColor: '#4e3e61',
           display: 'flex'
         },
         table: {
             verticalAlign: 'middle',
             msAlignSelf: 'left'
-        },
-        text: {
-            color: 'white'
         }
     }))
 
@@ -43,8 +39,8 @@ function Leaderboard() {
             <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
                 <TableRow>
-                    <TableCell className={styles.text} align="left">Username</TableCell>
-                    <TableCell className={styles.text} align="right">Points&nbsp;</TableCell>
+                    <TableCell align="left">Username</TableCell>
+                    <TableCell align="right">Points&nbsp;</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
@@ -52,8 +48,8 @@ function Leaderboard() {
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell className={styles.text} align="left">{player.username}</TableCell>
-                    <TableCell className={styles.text} align="right">{player.points}</TableCell>
+                    <TableCell align="left">{player.username}</TableCell>
+                    <TableCell align="right">{player.points}</TableCell>
                     </TableRow>
                 ))}
                 </TableBody>
