@@ -164,7 +164,9 @@ function Game() {
             graphqlOperation(onUpdateGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
-                let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == user.authUser?.id);
+                let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
+                console.log('usersToUpdate',{currentUser});
+                let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
                 console.log('onUpdate:', { provider, value });
                 ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },

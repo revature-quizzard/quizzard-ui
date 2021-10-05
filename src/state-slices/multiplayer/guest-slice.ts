@@ -8,11 +8,23 @@ import { RootState } from "../../store/store";
 interface State {
     id: string,
     nickname: string
+    answered: false,
+    answeredAt: string,
+    answeredCorrectly: boolean,
+    placing: number,
+    streak: number,
+    points: number
 }
 
 const initialState: State = {
     id: '',
     nickname: '',
+    answered: false,
+    answeredAt: new Date().toISOString(),
+    answeredCorrectly: false,
+    placing: -1,
+    streak: 0,
+    points: 0
 }
 export const guestSlice = createSlice({
     name: 'guest',
@@ -21,8 +33,14 @@ export const guestSlice = createSlice({
 
     reducers: {
         setGuest: (state,action) => {
-            state.id = Math.random().toString(36).substr(2, 5);
+            state.id = Math.random().toString(36).substr(2, 10);
             state.nickname = action.payload.nickname;
+            state.answered = action.payload.answered;
+            state.answeredAt = action.payload.answeredAt;
+            state.answeredCorrectly = action.payload.answeredCorrectly;
+            state.placing = action.payload.placing;
+            state.streak = action.payload.streak;
+            state.points = action.payload.points;
         }
     }
 })
