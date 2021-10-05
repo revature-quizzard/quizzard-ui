@@ -26,7 +26,6 @@ function UpdateComment(props: IUpdateCommentProps) {
     let handleClick = async () => {
         console.log("button clicked!");
         try {
-            let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(
                 forumInfo.currentComment.ancestors,
                 forumInfo.currentComment.parent,
@@ -54,12 +53,14 @@ function UpdateComment(props: IUpdateCommentProps) {
     }
 
     return (
-        <Paper elevation={3} style={{'margin': '4rem'}}>
-            <div style={{'margin': '2rem'}}>
-                <Editor onChange={handleChange} placeholder='Update your comment...' />
-                <Button onClick={handleClick} style={{'color':'#75BC3E'}}>Update</Button>
-            </div>
-        </Paper>
+        <>
+            <Paper elevation={3} style={{'margin': '4rem'}}>
+                <div style={{'margin': '2rem'}}>
+                    <Editor onChange={handleChange} placeholder='Update your comment...' />
+                    <Button onClick={handleClick} style={{'color':'#75BC3E'}}>Update</Button>
+                </div>
+            </Paper>
+        </>
     )
 }
 

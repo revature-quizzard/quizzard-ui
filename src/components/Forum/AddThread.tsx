@@ -56,7 +56,6 @@ function AddThread(props: IAddThreadProps) {
     let handleClick = async () => {
         try {
             let threadAncestors: string[] = [forumInfo.currentSubforum.id]
-            //CHANGE THESE VALUES
             let toAdd = new Thread(
                 threadAncestors,
                 forumInfo.currentSubforum.id,
@@ -81,26 +80,26 @@ function AddThread(props: IAddThreadProps) {
 
     return (
         <div id="add-thread-component" className={classes.addThreadContainer}>
-                <Typography align="center" variant="h5">Create Thread</Typography>
-                <br />
-                <Typography>Thread Title</Typography>
-                <FormControl style={{'margin': '1rem'}}>
-                    <Input className={classes.input}
-                        onChange={handleSubjectChange}
-                        placeholder="Enter the thread title"
-                    />
-                </FormControl>
+            <Typography align="center" variant="h5">Create Thread</Typography>
+            <br />
+            <Typography>Thread Title</Typography>
+            <FormControl style={{'margin': '1rem'}}>
+                <Input id='subjectInput' className={classes.input}
+                    onChange={handleSubjectChange}
+                    placeholder="Enter the thread title"
+                />
+            </FormControl>
 
-                <Typography>Enter Your Post</Typography>
-                <Paper style={{'margin': '1rem'}}>
-                    <Editor
-                        onChange={handleDescriptionChange}
-                        placeholder='Enter the first post here...' />
-                </Paper>
-                <br />
-                <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
-                </Box>
+            <Typography>Enter Your Post</Typography>
+            <Paper style={{'margin': '1rem'}}>
+                <Editor id='descriptionInput'
+                    onChange={handleDescriptionChange}
+                    placeholder='Enter the first post here...' />
+            </Paper>
+            <br />
+            <Box textAlign='center'>
+                <Button id='createThreadButton' variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
+            </Box>
         </div>
     )
 }
