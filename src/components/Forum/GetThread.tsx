@@ -53,6 +53,7 @@ const GetThreads = ()=> {
                       <TableCell style={{'color':'#FFFFFF'}}>Subject</TableCell>
                       <TableCell align="left" style={{'color':'#FFFFFF'}}>Author&nbsp;</TableCell>
                       <TableCell align="left" style={{'color':'#FFFFFF'}}>Number of Comments&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Date Created&nbsp;</TableCell>
                   </TableRow>
               </TableHead>
             <TableBody>
@@ -74,6 +75,11 @@ const GetThreads = ()=> {
                       align="left"
                       style={{'color':'#75BC3E'}}>
                         {thr.child_count}
+                      </TableCell>
+                      <TableCell
+                      align="left"
+                      style={{'color':'#FFFFFF'}}>
+                        {thr.date_created.replace('T', ' ').substring(0,16)}
                       </TableCell>
                   </TableRow>
               ))}
