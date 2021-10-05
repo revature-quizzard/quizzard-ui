@@ -23,8 +23,7 @@ const StudyHub = () => {
   const useStyles = makeStyles((theme:Theme) => ({
     divTable: {
       textAlign: 'center',
-      // width: '70%',
-      // marginLeft: 200,
+
     },
     paper: {
 

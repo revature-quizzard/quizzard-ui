@@ -39,7 +39,6 @@ body {
   flex-flow: column;
   width: 90%;
   align-content: center;
-  flex-flow: column;
   flex-wrap: nowrap;
   align-items: baseline;
   justify-content: space-evenly;

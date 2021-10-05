@@ -13,21 +13,19 @@ import {
     Button,
     Card,
     Modal,
-} from "@mui/material";
+}
+from "@mui/material";
 import React, {useState} from "react";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-
 import CardContent from '@mui/material/CardContent';
-
 import Typography from '@mui/material/Typography';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-
 import BackspaceIcon from '@mui/icons-material/Backspace';
-import {style} from "@mui/system";
 import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {addSetToFavorites} from "../../remote/user-service";
 import {useHistory} from "react-router-dom";
+import {profileState} from "../../state-slices/user-profile/profile-slice";
 
 
 
@@ -35,11 +33,18 @@ import {useHistory} from "react-router-dom";
  *@author Jose Tejada
  * @constructor
  */
+
+
+
 function ViewSetPage() {
     const [open, setOpen] = React.useState(false);
     const [answer, setAnswer] = React.useState(false);
     const user: User = useSelector(authState).authUser;
     const history = useHistory();
+
+    // const state = useSelector(profileState);
+    // const favorites = state.userProfile.favoriteSets;
+
 
     function handleOpen(a:any){
         setAnswer(a)
@@ -59,10 +64,10 @@ function ViewSetPage() {
         },
         Thread:{
           backgroundColor:"#4e3e61",
-
+          threadColor: "whitesmoke"
         },
         cell:{
-            fontColor: "whitesmoke"
+
         },
         button:{
             textAlign:"center"
@@ -106,6 +111,8 @@ function ViewSetPage() {
 
     async function addTofavoriets(){
 
+
+
         let setId={
             id:s.id
         }
@@ -141,13 +148,13 @@ function ViewSetPage() {
         <TableContainer component={Paper} className={classes.tableContainer}>
             <Table sx={{minWidth: 700}} aria-label="customized table">
                 <TableHead className={classes.Thread}>
-                    <TableRow >
-                        <TableCell align="center" className={classes.cell}>Set Name</TableCell>
-                        <TableCell align="center">Author</TableCell>
-                        <TableCell align="center">Views</TableCell>
-                        <TableCell align="center">Favorites</TableCell>
-                        <TableCell align="center">Tags</TableCell>
-                        <TableCell align="center">Set Id</TableCell>
+                    <TableRow style={{background: "#4E3E61" , color: 'white '}}>
+                        <TableCell style={{color: 'white '}} align="center" >Set Name</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Author</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Views</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Favorites</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Tags</TableCell>
+                        <TableCell style={{color: 'white '}} align="center">Set Id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

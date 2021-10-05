@@ -30,7 +30,7 @@ const UserProfileContainer = (props: any) => {
  * */
 
 
-   
+
     const getData = async function () {
         try {
             dispatch(loading());

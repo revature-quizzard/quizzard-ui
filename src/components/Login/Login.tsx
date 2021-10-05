@@ -54,7 +54,7 @@ const Login = () => {
     }
 
     return (
-        auth.isAuthenticated ? <Redirect to="/study"/> :
+        auth.isAuthenticated ? <Redirect to="/profile"/> :
             <>
                 <Container fixed maxWidth="sm" id="login-component" className={classes.loginContainer}>
                     <div className={classes.loginDiv}>
