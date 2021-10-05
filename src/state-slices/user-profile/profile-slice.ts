@@ -6,12 +6,14 @@ import { UserData } from "../../models/user-data";
 // Create an interface for the state object
 interface State {
     userProfile: UserData | undefined;
+    selectedImage: File | undefined;
     isLoaded: boolean;
 }
 
 //Declare the initial state values that extends the State interface
 const initialState: State = {
     userProfile: undefined,
+    selectedImage: undefined,
     isLoaded: false,
 }
   /**
@@ -59,19 +61,20 @@ export const profileSlice = createSlice({
             let removeIndex = sets.findIndex( set => set.id === action.payload);
             sets.splice( removeIndex, 1 );
             state.userProfile.favoriteSets = sets;
-        }
-        uploadImageReducer: (state, action: PayloadAction<File>) =>{
-            let image = state.userProfile;
-            let removeIndex = sets.findIndex( set => set.id === action.payload);
-            sets.splice( removeIndex, 1 );
-            state.userProfile.favoriteSets = sets;
+        },
+        updateSelectedImage: (state, action: PayloadAction<File>) =>{
+            state.selectedImage = action.payload;
+        },
+        updateImageReducer: (state, action: PayloadAction<string>) =>{
+            state.userProfile.profilePicture = action.payload;
         }
     }
 })
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer, updateSetReducer } = profileSlice.actions;
+export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer, updateImageReducer, updateSelectedImage } = profileSlice.actions;
+
 
 // Export the state of the entire slice to be referenced in the components
 export const profileState = (state: RootState) => state.profile;
