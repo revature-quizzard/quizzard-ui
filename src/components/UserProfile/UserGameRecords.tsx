@@ -22,8 +22,8 @@ const UserGameRecords = () => {
                     </Typography>
                     :
                     <Typography>
-                        You haven't played any games yet!<br/>
-                        Go to the <Link to="/games">Game Page</Link> and join or create your first game!
+                        This segment is under construction, please look forward to it in a future update!<br/>
+                        Go to the <Link to="/games">Game Page</Link> and join or create a game!
                     </Typography>
                 }
             </Container>
