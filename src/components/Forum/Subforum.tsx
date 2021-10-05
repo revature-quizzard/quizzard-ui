@@ -43,18 +43,23 @@ const SubforumHandler = ()=> {
           </TableHead>
           <TableBody>
             {subforums?.map((sub) => (
-              <TableRow>
+              <TableRow style={{'backgroundColor':'#5E5E5E'}}>
                 <TableCell
                 align="left"
+                style={{'color':'#FFFFFF'}}
                 onClick={() => Navigate(sub.subject, sub)}>
-                {sub.subject}
+                  {sub.subject}
                 </TableCell>
                 <TableCell
                 align="left"
+                style={{'color':'#FFFFFF'}}
                 onClick={() => Navigate(sub.subject, sub)}>
-                {sub.description}
+                  {sub.description}
                 </TableCell>
-                <TableCell align="left" style={{'color':'#75BC3E'}}>{sub.child_count}</TableCell>
+                <TableCell
+                align="left"
+                style={{'color':'#75BC3E'}}>
+                  {sub.child_count}</TableCell>
               </TableRow>
             ))}
           </TableBody>
