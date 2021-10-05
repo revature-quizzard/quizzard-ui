@@ -125,6 +125,11 @@ export function NavigationComponent() {
             flexGrow: 1,
             padding: theme.spacing(3),
         },
+        logoStyle: {
+            textDecoration:'none',
+            color:'gray',
+            '&:hover':{color:'orange', textDecoration:'none'}
+        }
     }));
 
     const classes = useStyles();
@@ -169,11 +174,9 @@ export function NavigationComponent() {
 
 
                         </IconButton>
-                        <ButtonBase component={Link} to='/'>
-
+                        <ButtonBase component={Link} to='/' className={classes.logoStyle}>
                             <Typography variant="h3" noWrap>
-
-                                KWIZZORD
+                                Qwizzard
                             </Typography>
                         </ButtonBase>
 
@@ -195,8 +198,10 @@ export function NavigationComponent() {
                 >
                     <div className={classes.toolbar}>
                         <IconButton onClick={handleDrawerToggle}>
-                            <MenuIcon/>
-                            {/*{theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}*/}
+                            {(open) ?
+                            <ChevronLeftIcon />
+                            :
+                            <MenuIcon/>}
                         </IconButton>
                     </div>
                     <Divider/>
