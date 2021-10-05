@@ -3,6 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update';
 import {useSelector} from "react-redux";
 import {profileState} from "../../state-slices/user-profile/profile-slice";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteSetReducer, profileState} from "../../state-slices/user-profile/profile-slice";
 import {
     DataGrid,
     GridColDef,
@@ -10,6 +12,8 @@ import {
     GridCellValue
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
+import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
+import {deleteSet} from "../../remote/set-service";
 
 /**
  * Component for rendering a user's Sets.
@@ -20,7 +24,9 @@ import {SetDocument} from "../../models/set-document";
 
 const UserSets = () => {
     const state = useSelector(profileState);
+    const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
+    const userId = state.userProfile.id;
 
     const columns: GridColDef[] = [
         {field: 'id', headerName: 'index', hide: true},
@@ -32,41 +38,15 @@ const UserSets = () => {
         {field: 'plays', headerName: 'Plays', flex: 1},
         {field: 'studies', headerName: 'Studies', flex: 1},
         {field: 'favorites', headerName: 'Faves', flex: 1},
-        {field: "updateSet",
-            headerName: " ",
-            sortable: false,
-            width: 50,
-            renderCell: (params) => {
-                const removeSetFromUserFavorites = () => {
-                    const api: GridApi = params.api;
-                    // This makes the ui hitch and prints errors after returning for some reason
-                    // alert(JSON.stringify(api.getRow(params.id).setId));
-                    console.log(api.getRow(params.id).setId);
-                    // axios call here
-                    api.updateRows([{
-                        id: params.id,
-                        _action: 'delete'
-                    }]);
-                };
-
-                return <IconButton onClick={() => {
-                            removeSetFromUserFavorites()
-                        }}>
-                            <UpdateIcon/>
-                    </IconButton>;
-            }
-        },
         {field: "deleteSet",
             headerName: " ",
             sortable: false,
             width: 50,
             renderCell: (params) => {
-                const removeSetFromUserFavorites = () => {
+                const removeSet = () => {
                     const api: GridApi = params.api;
-                    // This makes the ui hitch and prints errors after returning for some reason
-                    // alert(JSON.stringify(api.getRow(params.id).setId));
-                    console.log(api.getRow(params.id).setId);
-                    // axios call here
+                    let rowId = api.getRow(params.id).setId;
+                    delSet(rowId);
                     api.updateRows([{
                         id: params.id,
                         _action: 'delete'
@@ -74,10 +54,10 @@ const UserSets = () => {
                 };
 
                 return <IconButton onClick={() => {
-                            removeSetFromUserFavorites()
-                        }}>
-                            <DeleteIcon/>
-                    </IconButton>;
+                    removeSet()
+                }}>
+                    <DeleteIcon/>
+                </IconButton>;
             }
         }
     ]
@@ -97,6 +77,19 @@ const UserSets = () => {
             }
         )
     )
+
+    const delSet = async function (setId:string){
+        try{
+            let resp = await deleteSet(setId);
+            dispatch(deleteSetReducer(setId));
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar("Favorite deleted!"));
+        } catch (e:any){
+            console.log(e.message);
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
+        }
+    }
 
     return (
         <>
