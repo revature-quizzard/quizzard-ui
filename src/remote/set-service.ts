@@ -68,3 +68,13 @@ export const addCard = async (card: {setId:string, question:string, answer:strin
   console.log("wee need this")
   return response.data;
 }
+
+export const getSetById = async (id: string) =>{
+
+  console.log(id)
+  let response = await quizzardApiClientTokenAuthorized.get(`/sets/${id}`)
+  console.log(response.data)
+  return response.data
+}
+
+// export const deleteCard = async(setId:string, )

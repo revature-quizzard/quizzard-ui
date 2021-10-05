@@ -10,10 +10,14 @@ import {
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
-import {addCard,deleteSet} from "../../remote/set-service";
+import {addCard, deleteSet, getSetById} from "../../remote/set-service";
 import React, {useState} from "react";
 import {Form} from "react-bootstrap";
 import AddIcon from '@mui/icons-material/Add';
+import {Set} from "../../dtos/Set";
+import {StudySet} from "../../state-slices/sets/create-study-sets-slice";
+import {useHistory} from "react-router-dom";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 /**
  * Component for rendering a user's Sets.
@@ -27,9 +31,11 @@ const UserSets = () => {
     const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
     const userId = state.userProfile.id;
+    let history = useHistory();
 
 
     const [open, setOpen] = React.useState(false);
+
 
     const [setID, setSetId] = useState('')
     const[newCard, setNewCard] = useState({
@@ -74,6 +80,10 @@ const UserSets = () => {
         addNewCard(card)
 
     }
+    function handleSetState(s:Set){
+        dispatch(StudySet(s))
+        history.push("/userCards")
+    }
 
 
 
@@ -112,7 +122,7 @@ const UserSets = () => {
         },
         {
             field: "Add new Card",
-            headerName: " ",
+            headerName: "addCard ",
             sortable: false,
             width: 50,
             renderCell: (params) => {
@@ -120,6 +130,8 @@ const UserSets = () => {
                     const api: GridApi = params.api;
                     let rowId = api.getRow(params.id).setId;
                     setSetId(rowId)
+
+
                 };
 
                 return <IconButton onClick={() => {
@@ -129,12 +141,39 @@ const UserSets = () => {
                     <AddIcon/>
                 </IconButton>;
             }
+        },
+        {
+            field: "View Cards",
+            headerName: "View Cards ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const ViewSetCard = async () => {
+                    const api: GridApi = params.api;
+                    let rowId = api.getRow(params.id).setId;
+                    let resp = getSet(rowId)
+
+
+
+
+
+                };
+
+                return <IconButton onClick={() => {
+
+                    ViewSetCard()
+                }}>
+                    <RemoveRedEyeIcon/>
+                </IconButton>;
+            }
+
         }
     ]
 
     const addNewCard = async function (card:{setId:string, question:string, answer:string}){
         try{
             let resp = await addCard(card)
+
 
 
         }catch (e:any){
@@ -157,6 +196,15 @@ const UserSets = () => {
             }
         )
     )
+
+    const getSet = async function (setId:string){
+        try{
+            let set = await getSetById(setId)
+            handleSetState(set)
+        }catch(e:any){
+            console.log(e.messege)
+        }
+    }
 
     const delSet = async function (setId:string){
         try{
@@ -187,6 +235,7 @@ const UserSets = () => {
                     pagination={true}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
+                    style={{background: "white" }}
                 />
                 :
                 <Typography>
