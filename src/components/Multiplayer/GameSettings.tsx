@@ -137,12 +137,12 @@ function GameSettings() {
         let username = '';
         try{
             if(user.authUser){
-                host = user.authUser.username;
+                host = user.authUser.id;
                 id = user.authUser.id;
                 username = user.authUser.username;
             } else if (guestUser) {
                 // @ts-ignore
-                host = guestUser.nickname;
+                host = guestUser.id;
                 // @ts-ignore
                 id = guestUser.id;
                 // @ts-ignore
