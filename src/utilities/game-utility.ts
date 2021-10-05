@@ -11,7 +11,7 @@
  */
 export function randomizeAnswers(card: any): string[] {
   let allAnswers = card.multiAnswers.concat(card.correctAnswer);
-  console.log(allAnswers)
+  console.log('All Answers:', allAnswers)
   // allAnswers.push(card.correctAnswer)
   // console.log(allAnswers)
   let answers: string[] | undefined = [];
@@ -29,7 +29,7 @@ export function randomizeAnswers(card: any): string[] {
       answers.push(allAnswers[order[i++]]);
   }
 
-  console.log(answers);
+  console.log('Trimmed answers:',answers);
 
   return answers;
 }
@@ -50,6 +50,7 @@ export const generateWrongAnswers = (correctAnswer : any, cardList: any) => {
         answers.push(newcard.correctAnswer)
     });
     while (answers.length < 3) answers.push('Java');
+    while (answers.length > 3) answers.pop();
     return answers;
 }
 
