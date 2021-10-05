@@ -277,7 +277,7 @@ function Game() {
                 return (
                     <>
                     <div className = {classes.leaderContainer}>
-                        {persistUserData}
+                        {persistUserData()}
                         <Leaderboard />
                     </div>
                         {/* This needs to be the username of the player who made the game! */}
@@ -418,13 +418,14 @@ function Game() {
 
 
         if(currentUser === game.host){
-            let newPlayers;
+            let newPlayers: any[]=[];
             let winner;
 
             players.forEach(player => {
                 if(player.placing === 1) winner = player.username;
                 newPlayers.push({
                     id: player.id,
+                    name: player.username,
                     placing: player.placing,
                     points: player.points
                 })
@@ -434,9 +435,9 @@ function Game() {
     
             let gameRecord = {
                 playerList: newPlayers,
-                cardList: game.set,
+                cardList: game.set.cardList.map(card => ({id: card.id, question: card.question, correctAnswer: card.correctAnswer})),
                 winner,
-                datePlayed: new Date().toISOString
+                datePlayed: new Date().toISOString()
             }
             console.log("gameRecord: ", gameRecord);
             try{
