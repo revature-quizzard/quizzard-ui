@@ -34,13 +34,16 @@ export const profileSlice = createSlice({
         isLoaded: (state) => {
             state.isLoaded = true;
         },
-
         // Define action names here: pass in the state, define how the state is manipulated within the reducer
         setProfile: (state, action: PayloadAction<UserData>) => {
             state.userProfile = action.payload;
         },
         clearProfile: (state) =>{
             state.userProfile = undefined;
+        },
+        deleteFavorite: (state, action: PayloadAction<string>) =>{
+            let sets = state.userProfile.favoriteSets;
+
         }
     }
 })

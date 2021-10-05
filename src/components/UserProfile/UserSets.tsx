@@ -37,7 +37,7 @@ const UserSets = () => {
             sortable: false,
             width: 50,
             renderCell: (params) => {
-                const removeSetFromUserFavorites = () => {
+                const removeSet = () => {
                     const api: GridApi = params.api;
                     // This makes the ui hitch and prints errors after returning for some reason
                     // alert(JSON.stringify(api.getRow(params.id).setId));
@@ -50,7 +50,7 @@ const UserSets = () => {
                 };
 
                 return <IconButton onClick={() => {
-                    removeSetFromUserFavorites()
+                    removeSet()
                 }}>
                     <DeleteIcon/>
                 </IconButton>;
