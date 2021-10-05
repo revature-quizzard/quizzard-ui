@@ -7,7 +7,7 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { createStudySet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, saveSet, setIsPublic, updateTagFormbyIndex , resetSet } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, resetCurrentSetToSave, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/create-set-model-slice";
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import SwitchUnstyled from '@mui/core/SwitchUnstyled';
@@ -170,18 +170,20 @@ const CreateSetModal = (props: any) => {
         
             try {
                 dispatch(loading());
-                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
-                dispatch(saveSet(setToSave));
-                console.log("SET TO SAVE : " , setToSave);
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
+                let setToSave_ : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                dispatch(saveSet(setToSave_));
+                console.log("SET TO SAVE : " , setToSave_);
+                let newly_created_set = await createStudySet(setToSave_);
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
-                dispatch(resetSet());
-                
+                // dispatch(resetCurrentSetToSave());
                 
             } catch (e: any) {
                 console.log(e);
+                dispatch(clearTags());
+                // dispatch(resetCurrentSetToSave());
+                setNewSet('');
             }
     }
 
@@ -197,7 +199,7 @@ const CreateSetModal = (props: any) => {
             </div >
                 <hr/>
 
-                    { _createSetState.newTagForms.map((F : TagFormModel | undefined , i) =>
+                    { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
                      { 
                    return <div key={i}>
                     

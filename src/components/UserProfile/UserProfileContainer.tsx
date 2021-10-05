@@ -61,7 +61,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {state.isLoaded ? <UserProfile/> : <> <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" />  </>}
+                    {state.isLoaded ? <UserProfile/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" />  </>}
                 </AccordionDetails>
             </Accordion>
             <hr/>
@@ -75,7 +75,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserSets/> : <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" />}
+                        {state.isLoaded ? <UserSets/> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -89,7 +89,7 @@ const UserProfileContainer = (props: any) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {state.isLoaded ? <UserFavoriteSets/> : <img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" />}
+                        {state.isLoaded ? <UserFavoriteSets/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -106,7 +106,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography>
                       <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ? <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>  }</b> 
 
-                        {state.isLoaded ? <UserGameRecords/> :<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" />}
+                        {state.isLoaded ? <UserGameRecords/> :<> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>

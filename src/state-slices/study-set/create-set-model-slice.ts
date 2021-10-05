@@ -76,9 +76,9 @@ export const createSetSlice = createSlice({
         clearTags: (state) => {
            
             
-            state.newTagForms =  undefined;
+            state.newTagForms =  [];
             console.log("FROM STATE SLICE CLEAR TAGS METHOD " + state.newTagForms);
-            state.setToSave.tags = undefined ;      
+            state.setToSave.tags = [] ;      
            },
         deleteTag: (state , action : PayloadAction<SaveTagFormModel>) => {
 
@@ -88,7 +88,7 @@ export const createSetSlice = createSlice({
             state.newTagForms = state.newTagForms.filter(isNotToBeDeleted);
 
             state.setToSave.tags[action.payload.index] = undefined
-            state.setToSave.tags =  state.setToSave.tags.filter(isNotToBeDeleted);
+            state.setToSave.tags = state.setToSave.tags.filter(isNotToBeDeleted);
 
         },
         clearTagFrombyIndex: (state , action : PayloadAction<SaveTagFormModel>) => {
@@ -102,8 +102,11 @@ export const createSetSlice = createSlice({
             state.setToSave.setName = action.payload.setName;
             state.setToSave.tags = action.payload.tags;
            },
-           resetSet: (state ) => {
-            state.setToSave = undefined;
+           resetCurrentSetToSave: (state ) => {
+            state.setToSave.tags= [];
+            state.setToSave.isPublic= false;
+            state.setToSave.author= '';
+            state.setToSave.setName= '';
            },
            setIsPublic: (state ) => {
            
@@ -115,7 +118,7 @@ export const createSetSlice = createSlice({
 })
 export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, 
     appendNewTag , incrementTagLimit , updateTagFormbyIndex , clearTags , 
-    deleteTag , clearTagFrombyIndex , saveSet , setIsPublic , resetSet } = createSetSlice.actions;
+    deleteTag , clearTagFrombyIndex , saveSet , setIsPublic , resetCurrentSetToSave } = createSetSlice.actions;
     
 export const createSetState = (state: RootState) => state.createSet;
 export default createSetSlice.reducer;
