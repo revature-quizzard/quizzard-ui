@@ -116,15 +116,9 @@ const UserSets = () => {
     const upSet = async function (setId:string, set: SetDto){
         try{
             let resp = await updateSet(setId, set);
-<<<<<<< HEAD
             dispatch(updateSetReducer(setId));
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar("Updated!"));
-=======
-            // dispatch(updateSetReducer(setId)); <---- We need an updateSet reducer in profile-slice
-            dispatch(setErrorSeverity('info'));
-            dispatch(showSnackbar("Updated set!"));
->>>>>>> 2803dd281ad22bdf54d917edf0352ae902414114
         } catch (e:any){
             console.log(e.message);
             dispatch(setErrorSeverity('error'));
