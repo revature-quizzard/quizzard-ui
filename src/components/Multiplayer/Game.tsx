@@ -257,7 +257,14 @@ function Game() {
                                 <Players />
                                 { (currentUser == game.host) 
                                 ?
+                                <>
+                                { (game.questionIndex< game.set.cardList.length-1)
+                                ? 
                                 <Button className={classes.buttons} onClick={nextCard}>Next Card</Button>
+                                :
+                                <Button className={classes.buttons} onClick={nextCard}>See Leaderboard</Button>
+                                } 
+                                </>
                                 :
                                 <></> }
                             </div>
@@ -312,7 +319,7 @@ function Game() {
             // Need to clone players array in order to mutate fields
             // Sort temp player list by time answered
             let players = [].concat(game.players.map(player => ({...player})))
-                            .sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
+                            .sort((a: any, b: any) => a.answeredAt > b.answeredAt ? 1 : -1);
             console.log('players after sort: ', players);
 
             // Calculate points
