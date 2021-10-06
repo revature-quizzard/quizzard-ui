@@ -40,6 +40,7 @@ export const profileSlice = createSlice({
         },
         clearProfile: (state) =>{
             state.userProfile = undefined;
+            state.isLoaded = false;
         },
         deleteSetReducer: (state, action: PayloadAction<string>) =>{
             let sets = state.userProfile.createdSets;

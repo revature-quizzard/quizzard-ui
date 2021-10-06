@@ -10,6 +10,7 @@ import { showSnackbar, setErrorSeverity } from '../../state-slices/error/errorSl
 import { AlertColor } from '@mui/material';
 import { Comment } from '../../models/comment';
 import { Redirect } from 'react-router';
+import AddCommentRoundedIcon from '@mui/icons-material/AddCommentRounded';
 
 function AddComment() {
     const [inputText, setInputText] = useState('');
@@ -49,7 +50,7 @@ function AddComment() {
         <Paper elevation={3} style={{'margin': '.5rem'}}>
             <div style={{'margin': '2rem'}}>
                 <Editor id='addNewComment' onChange={handleChange} placeholder='Write your comment here...' />
-                <Button id='createCommentButton' onClick={handleClick} style={{'color':'#75BC3E'}}>Create</Button>
+                <Button id='createCommentButton' onClick={handleClick} style={{'color':'#75BC3E'}}><AddCommentRoundedIcon />Create</Button>
             </div>
         </Paper>
     )

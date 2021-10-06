@@ -30,6 +30,8 @@ import AddThread from './components/Forum/AddThread';
 import GetThreads from "./components/Forum/GetThread";
 import ViewSetPage from "./components/DiscoverSets/ViewSetPage";
 import CreateSetModal from "./components/UserProfile/CreateSetModal";
+import UserSets from "./components/UserProfile/UserSets";
+import ViewUserCards from "./components/UserProfile/UserCards";
 
 
 
@@ -71,6 +73,9 @@ function App() {
           <Route exact path="/quiz">
             <CreateQuiz />
           </Route>
+          <Route exact path="/userCards">
+          <ViewUserCards />
+        </Route>
           <Route exact path="/study">
             <StudyHub />
           </Route>
@@ -94,8 +99,9 @@ function App() {
           </Route>
           <Route exact path="/profile">
             <UserProfileContainer />
-           
           </Route>
+
+
 
 
 

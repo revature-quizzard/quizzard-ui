@@ -2,12 +2,12 @@ import { Tag } from "./Tag"
 
 
 export class SetDto {
-    setName: String;
+    setName: string;
     isPublic: boolean;
     author: string;
-    tags: String[];
+    tags: string[];
     // You need something for Accounts, I'd recommend using the Account ID
-    constructor(setName: string, isPublic: boolean, author : string , tags : String[]) {
+    constructor(setName: string, isPublic: boolean, author : string , tags : string[]) {
         this.setName = setName;
         this.isPublic = isPublic;
         this.author = author;
