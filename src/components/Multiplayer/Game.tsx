@@ -85,6 +85,7 @@ const useStyles = makeStyles({
 });
 
 
+
 Amplify.configure(config);
 
 // Prevents duplicate calls to persist data
@@ -150,6 +151,10 @@ function Game() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const classes = useStyles();
+
+    
+
     useEffect(() => {
         // If game does not exist, reroute to /lounge
         if (!game.id) history.push('/lounge');
@@ -194,7 +199,7 @@ function Game() {
         }
     }, [])
 
-    const classes = useStyles();
+
 
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
@@ -332,6 +337,7 @@ function Game() {
             players.forEach(player => {
                 points = 0;
                 if (player.answered == true && player.answeredCorrectly == true) {
+
                     count++;
                     // Points from placing
                     player.placing = count;
@@ -344,10 +350,13 @@ function Game() {
                     // Update points
                     player.pointsEarned = Math.floor(points)
                     player.points += player.pointsEarned;
+                    
                 } else if(player.answered == true && player.answeredCorrectly == false){
+                    
                     player.pointsEarned = 0;
                     // Reset streak if answered incorrectly
                     player.streak = 0;
+                    
                 }
             });
 
