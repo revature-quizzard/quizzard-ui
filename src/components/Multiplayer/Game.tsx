@@ -77,8 +77,6 @@ const useStyles = makeStyles({
 
 });
 
-const soundFx = '../../../public/P3_SFX/Correct.mp3'
-
 
 
 Amplify.configure(config);
@@ -161,30 +159,6 @@ function Game() {
     const history = useHistory();
 
     const classes = useStyles();
-    
-    const [playbackRate, setPlaybackRate] = React.useState(1);
-    
-    const [playActive] = useSound(
-        soundFx,
-        { volume: 0.25 }
-    );
-
-    const [status, setStatus] = useState<ReactSoundProps['playStatus']>('STOPPED');
-  
-    function togglePlayStatus() {
-      setStatus((status: string) => status === 'STOPPED' ? 'PLAYING' : 'STOPPED')
-    }
-  
-    function statusLabel(status: ReactSoundProps['playStatus']): string {
-      switch(status) {
-        case 'STOPPED':
-          return 'PLAY';
-        case 'PLAYING':
-          return 'STOP';
-        default:
-          return 'STOP';
-      }
-    }
 
     
 
@@ -255,13 +229,6 @@ function Game() {
                         ?
                         <>
                         <Button onClick={() => {startGame(game)}}> Start Game </Button>
-                        <Button onClick={() => {playActive()}}> Play Sound </Button>
-                        <button onClick={(click) => togglePlayStatus()}>{statusLabel(status)}</button>
-                        <Sound
-                        url={"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"}
-                        playStatus={status}
-                        />
-    
                         </>
                         :
                         <></> }
@@ -374,6 +341,7 @@ function Game() {
             players.forEach(player => {
                 points = 0;
                 if (player.answered == true && player.answeredCorrectly == true) {
+
                     count++;
                     // Points from placing
                     player.placing = count;
@@ -386,10 +354,13 @@ function Game() {
                     // Update points
                     player.pointsEarned = Math.floor(points)
                     player.points += player.pointsEarned;
+                    
                 } else if(player.answered == true && player.answeredCorrectly == false){
+                    
                     player.pointsEarned = 0;
                     // Reset streak if answered incorrectly
                     player.streak = 0;
+                    
                 }
             });
 
