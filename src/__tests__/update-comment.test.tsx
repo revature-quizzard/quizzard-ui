@@ -51,4 +51,8 @@ describe('Update Comment Component Test Suite', () => {
         expect(wrapper).toBeTruthy();
     });
 
+    it('Component calls updateComment when button is clicked', () => {
+        
+    });
+
 })
