@@ -65,12 +65,26 @@ const GetThreads = ()=> {
             <TableBody>
                 {threads?.map((thr) => (
                     <TableRow style={{'backgroundColor':'#1E1E1E'}}>
-                        <TableCell
+                        {thr.child_count > 0 ? 
+
+                         <TableCell
                         align="left"
                         style={{'color':'grey'}}
                         onClick={() => Navigate(thr.subject, thr)}>
-                        <span style={{color: 'red'}}><MoreVertRoundedIcon/>  </span>    { thr.subject}
+                        <span style={{color: '#75BC3E'}}><MoreVertRoundedIcon/>  </span>    { thr.subject}
                         </TableCell>
+
+                         :       
+                         <TableCell
+                         align="left"
+                         style={{'color':'grey'}}
+                         onClick={() => Navigate(thr.subject, thr)}>
+                         <span style={{color: 'red'}}><MoreVertRoundedIcon/>  </span>    { thr.subject}
+                         </TableCell>
+                         
+                         }
+                       
+
                         <TableCell
                         align="left"
                         style={{'color':'grey'}}
