@@ -77,4 +77,11 @@ export const getSetById = async (id: string) =>{
   return response.data
 }
 
-// export const deleteCard = async(setId:string, )
+export const deleteCard = async(setId:string, cardId:string) =>{
+  console.log("Card:" + cardId)
+  console.log("Set:" + setId)
+  let response = await  quizzardApiClientTokenAuthorized.delete(`/sets/cards/?set_id=${setId}&card_id=${cardId}`)
+  console.log(response.data)
+  return response.data
+
+}

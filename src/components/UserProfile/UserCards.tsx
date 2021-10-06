@@ -1,14 +1,11 @@
-import React from "react";
-import {User} from "../../models/user";
+import React, {useState} from "react";
+
 import {useSelector} from "react-redux";
-import {authState} from "../../state-slices/auth/auth-slice";
 import {useHistory} from "react-router-dom";
 import {Set} from "../../dtos/Set";
 import {StudySetState} from "../../state-slices/sets/create-study-sets-slice";
 import {makeStyles, Theme} from "@material-ui/core/styles";
-import {addSetToFavorites} from "../../remote/user-service";
-import {Box, Button, Card, Modal} from "@mui/material";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import {Button, Card} from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
@@ -19,30 +16,21 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import {deleteCard} from "../../remote/set-service";
 
 
 function ViewUserCards(){
 
-    const [open, setOpen] = React.useState(false);
-    const [answer, setAnswer] = React.useState(false);
-    const user: User = useSelector(authState).authUser;
     const history = useHistory();
     const s: Set = useSelector(StudySetState).aSet;
+    const [value,setValue] = useState();
 
 
     // const state = useSelector(profileState);
     // const favorites = state.userProfile.favoriteSets;
 
 
-
-
-
-
-
-
     const useStyles = makeStyles((theme:Theme) => ({
-
-
         tableContainer:{
             borderStyle: "ridge",
             borderColor:"#4e3e61"
@@ -82,34 +70,32 @@ function ViewUserCards(){
         }
     }));
     const classes = useStyles();
-    const style = {
-        position: 'absolute' as 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
 
-    async function addTofavoriets(){
-
-        let setId={
-            id:s.id
-        }
-
-        try{
-            await addSetToFavorites(setId, user.id)
-
-        }catch (e:any){
-            console.log(e.message)
-        }
-    }
     function toSetPage(){
         history.push('/profile/')
     }
+
+    const deleteSet = async function (sId:string,cId:string ){
+        try{
+            let resp = await deleteCard(sId, cId);
+        }catch (e:any){
+            console.log(e.message)
+        }
+
+    }
+
+    const refresh = ()=>{
+        // it re-renders the component
+        // @ts-ignore
+        setValue({});
+    }
+
+    function deleteCardFrom(sId:string,cId:string ){
+        let d = deleteSet(sId, cId);
+        refresh()
+
+    }
+
 
 
 
@@ -164,7 +150,7 @@ function ViewUserCards(){
 
                         </CardContent>
 
-                        {/*<Button onClick={ () => handleOpen(card.answer)}>Delete</Button>*/}
+                        <Button onClick={ () => deleteCardFrom(s.id,card.id)}>Delete</Button>
 
                     </Card>
                 ))}

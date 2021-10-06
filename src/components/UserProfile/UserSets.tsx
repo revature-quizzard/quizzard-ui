@@ -78,11 +78,12 @@ const UserSets = () => {
         }
         console.log(card)
         addNewCard(card)
+        handleClose()
 
     }
     function handleSetState(s:Set){
         dispatch(StudySet(s))
-        history.push("/userCards")
+        history.push("/userCards/")
     }
 
 
