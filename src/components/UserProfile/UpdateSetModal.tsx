@@ -80,12 +80,10 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
     getTags();
   }, []); // <-- empty array means 'run once'
 
-//   const updateTagName = (e: any) => {
-//     setTagName(e.target.value);
-//   }
   const updateTagColor = (e: any) => {
    
   }
+
   const updateTagNameAndColor = (e: any , key: number) => {
     setTagName(allTags[key].tagName);
     setTagColor(allTags[key].tagColor);
@@ -119,13 +117,11 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
     }
 
     const ClearTags = (e: any ) => {  
-       
         dispatch(clearTags);
         console.log(_createSetState.setToSave.tags + " " + _createSetState.newTagForms );
     }
-    const removeTag = (e: any , key: number) => {   
 
-        
+    const removeTag = (e: any , key: number) => {   
         let formToSave_w_key: SaveTagFormModel = { tagColor: '' , tagName: '' ,  tagAdded: true , index: key}
         dispatch(deleteTag(formToSave_w_key));
     }
@@ -175,7 +171,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         
             try {
                 dispatch(loading());
-                let setToSave_ : SetDto = {setName: newSet , isPublic: checked , tags : _createSetState.setToSave.tags} as SetDto
+                let setToSave_ : SetDto = {setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave_));
                 console.log("SET TO SAVE : " , setToSave_);
                 let newly_created_set = await updateSet(props.setId, setToSave_);
@@ -216,7 +212,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         <Box className={classes.box}>
             <div>                
                 <div >
-                <TextField label="set name" onChange={handleChange} value={newSet} />
+                <TextField label="set name" onChange={handleChange} defaultValue={props.setName} value={newSet} />
                 <br/>
                 <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
                 </div >
