@@ -58,7 +58,13 @@ const Login = () => {
             <>
                 <Container fixed maxWidth="sm" id="login-component" className={classes.loginContainer}>
                     <div className={classes.loginDiv}>
-                        <Typography variant='h4'>Login</Typography>
+                    <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+      <br/> 
+      <span style={{color: '#7D7687 '}}>App</span> </b> </h1>
+      <hr/>
+            <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>L o g i n</span> 
+      <br/>    </b></h1>
+      <hr/>
                         <br/><br/>
                         <TextField
                             id='username'

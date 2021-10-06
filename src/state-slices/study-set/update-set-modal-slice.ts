@@ -18,7 +18,8 @@ import { SetDto } from "../../dtos/set-dto";
  * @author Alfonso Holmes
  * interface for the state
  */
-interface  State {
+interface State {
+    id: string;
     IsShowing: boolean;
     currentUser: User;
     setToSave: SetDto | undefined;
@@ -31,9 +32,10 @@ interface  State {
  * initial state values
  */
 const initialState: State = {
+    id: '',
     IsShowing: false,
     currentUser: undefined,
-    setToSave: {setName: '', isPublic: false, author : '', tags : [] as String[]} as SetDto,
+    setToSave: {setName: '', isPublic: true, author : '', tags : [] as String[]} as SetDto,
     newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
     tagLimit: 0
 }
@@ -42,8 +44,8 @@ const initialState: State = {
  * @author Alfonso Holmes
  * state definition, name, initial state, reducers
  */
-export const createSetSlice = createSlice({
-    name: "createSet",
+export const updateSetSlice = createSlice({
+    name: "updateSet",
     initialState,
     reducers: {
         setIsShowing: (state , action : PayloadAction<boolean>) => {
@@ -74,8 +76,8 @@ export const createSetSlice = createSlice({
             state.newTagForms[action.payload.index].tagAdded = action.payload.tagAdded;
         },
         clearTags: (state) => {
-           
-            
+
+
             state.newTagForms =  [];
             console.log("FROM STATE SLICE CLEAR TAGS METHOD " + state.newTagForms);
             state.setToSave.tags = [] ;      
@@ -96,29 +98,32 @@ export const createSetSlice = createSlice({
             state.newTagForms[action.payload.index].tagColor = '';
             state.newTagForms[action.payload.index].tagAdded = false;
            },
-           saveSet: (state , action : PayloadAction<SetDto>) => {
+        saveSet: (state , action : PayloadAction<SetDto>) => {
             state.setToSave.author = action.payload.author;
             state.setToSave.isPublic = action.payload.isPublic;
             state.setToSave.setName = action.payload.setName;
             state.setToSave.tags = action.payload.tags;
-           },
-           resetCurrentSetToSave: (state ) => {
+        },
+        saveId: (state , action : PayloadAction<string>) => {
+            state.id = action.payload;
+        },
+        resetCurrentSetToSave: (state ) => {
             state.setToSave.tags= [];
             state.setToSave.isPublic= false;
             state.setToSave.author= '';
             state.setToSave.setName= '';
-           },
-           setIsPublic: (state ) => {
-           
+        },
+        setIsPublic: (state ) => {
+
             state.setToSave.isPublic = !state.setToSave.isPublic;
            }
     }
 
-       
+
 })
 export const {setIsShowing  , closeModal  , openModal ,  appendNewTagForm, 
     appendNewTag , incrementTagLimit , updateTagFormbyIndex , clearTags , 
-    deleteTag , clearTagFrombyIndex , saveSet , setIsPublic , resetCurrentSetToSave } = createSetSlice.actions;
-    
-export const createSetState = (state: RootState) => state.createSet;
-export default createSetSlice.reducer;
+    deleteTag , clearTagFrombyIndex , saveSet , saveId, setIsPublic , resetCurrentSetToSave } = updateSetSlice.actions;
+
+export const updateSetState = (state: RootState) => state.updateSet;
+export default updateSetSlice.reducer; 
