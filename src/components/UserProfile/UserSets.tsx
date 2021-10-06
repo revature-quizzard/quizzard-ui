@@ -15,6 +15,9 @@ import {deleteSet, updateSet} from "../../remote/set-service";
 import {SetDto} from '../../dtos/set-dto';
 import { Tag } from "../../dtos/Tag";
 import UpdateSetModal from "./UpdateSetModal";
+import { updateSetState } from "../../state-slices/study-set/update-set-modal-slice";
+import { saveSet, saveId } from "../../state-slices/study-set/update-set-modal-slice";
+import { authState } from "../../state-slices/auth/auth-slice";
 
 /**
  * Component for rendering a user's Sets.
@@ -36,6 +39,10 @@ const UserSets = (props: iUserSets) => {
     const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
     const userId = state.userProfile.id;
+    const currentSetState = useSelector(updateSetState);
+    const auth = useSelector(authState).username;
+
+
 
     const columns: GridColDef[] = [
         {field: 'id', headerName: 'index', hide: true},
@@ -55,14 +62,17 @@ const UserSets = (props: iUserSets) => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
                     const setFields = api.getRow(params.id);
-                    props.setUpdateSetName(setFields.setName);
-                    props.setUpdateSetIsPublic(setFields.isPublic);
-                    props.setUpdateSetTagNames(setFields.tags);
-                    props.setUpdateSetId(setFields.setId);
+
                     props.setUpdateIsOpen(true);
-                    // let rowId = api.getRow(params.id).setId;
-                    // let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
-                    //  upSet(rowId, setDto); 
+                    let dto = { setName: setFields.setName,
+                        isPublic: setFields.isPublic,
+                        tags : setFields.tags as String[],
+                        author : auth //just username
+                        } as SetDto;
+                
+                    dispatch(saveSet(dto));
+                    dispatch(saveId(setFields.id));
+
                     api.updateRows([{
                         id: params.id,
                         _action1: 'update'

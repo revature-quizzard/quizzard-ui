@@ -21,7 +21,7 @@ const UserProfileContainer = (props: any) => {
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
   const createState = useSelector(createSetState);
- 
+
   /* [Duct Tape] these states are for the UpdateSets modal */
   const [updateSetName, setUpdateSetName] = useState(undefined as string);
   const [updateSetIsPublic, setUpdateSetIsPublic] = useState(undefined as boolean);
