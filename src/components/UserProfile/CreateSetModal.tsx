@@ -200,6 +200,7 @@ const CreateSetModal = (props: any) => {
             <br/>
             <p>public <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> private { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
+            
                 <hr/>
 
                     { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
