@@ -96,13 +96,13 @@ function Players() {
                     {(currentUser == player.id)
                         ?
                         <>
-                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="left">{player.username.length < 15 ? player.username : player.username.substring(0, 15).concat('...')}</TableCell>
                         <TableCell align="right">{player.points}</TableCell>
                         <TableCell className={styles.button} align="right"><Button onClick={() => (API.graphql(graphqlOperation(deleteGame, {input: {id: game.id}}))) }>Close Game</Button></TableCell>
                         </>
                         :
                         <>
-                        <TableCell align="left">{player.username}</TableCell>
+                        <TableCell align="left">{player.username.length < 15 ? player.username : player.username.substring(0, 15).concat('...')}</TableCell>
                         <TableCell align="right">{player.points}</TableCell>
                         <TableCell className={styles.button} align="right"><Button onClick={() => executeKick(player)}>Kick</Button></TableCell>
                         </>}
