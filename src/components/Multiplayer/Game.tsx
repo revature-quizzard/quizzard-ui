@@ -337,7 +337,8 @@ function Game() {
                     points *= 1 + (.1 * player.streak);
 
                     // Update points
-                    player.points += Math.floor(points);
+                    player.pointsEarned = Math.floor(points)
+                    player.points += player.pointsEarned;
                 } else if(player.answered == true && player.answeredCorrectly == false){
                     // Reset streak if answered incorrectly
                     player.streak = 0;
@@ -347,7 +348,10 @@ function Game() {
             // Give bonus points if only one player answered correctly
             if (count == 1) {
                 players.forEach(player => {
-                    if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
+                    if (player.answered == true && player.answeredCorrectly == true) {
+                        player.pointsEarned += 200;
+                        player.points += 200;
+                    }
                 })
             }
 

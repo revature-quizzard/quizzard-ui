@@ -2,7 +2,9 @@ import { ClassNames } from '@emotion/react';
 import{ Card, CardContent, Typography, makeStyles }from '@material-ui/core';
 import { borderColor } from '@mui/system';
 import { useSelector } from 'react-redux';
+import { authState } from '../../state-slices/auth/auth-slice';
 import { gameState } from '../../state-slices/multiplayer/game-slice';
+import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
 /**
  * React component that renders a questions to the players
@@ -37,6 +39,10 @@ import { gameState } from '../../state-slices/multiplayer/game-slice';
         verticalAlign: 'center'
     },
 
+    pointsEarned: {
+        color: 'rgb(6, 196, 44)'
+    },
+
     questNumTypo: {
 
     }
@@ -47,6 +53,8 @@ import { gameState } from '../../state-slices/multiplayer/game-slice';
     const classes = useStyles();
  
     const game = useSelector(gameState);
+    const user = useSelector(authState);
+    const guestUser = useSelector(guestState);
     console.log('Game in Questions component', game)
 
     return (
@@ -56,6 +64,9 @@ import { gameState } from '../../state-slices/multiplayer/game-slice';
                     <div className={classes.vAlign}>
                     <Typography variant="h5" gutterBottom className={classes.questionTypo}>
                         {game.set.cardList[game.questionIndex].question}
+                    </Typography>
+                    <Typography variant="h5" className={classes.pointsEarned}>
+                        +{game.players.find((player) => player.id = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined).pointsEarned} points
                     </Typography>
                     </div>
                     <Typography className={classes.questNumTypo}>  {/*sx={{ mb: 1.5 }}*/}
