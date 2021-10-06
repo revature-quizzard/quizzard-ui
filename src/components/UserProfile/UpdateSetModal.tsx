@@ -1,4 +1,4 @@
-import { Alert, Button, } from "@mui/material";
+import { Alert, Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
 import { useEffect, useState } from "react";
@@ -7,15 +7,9 @@ import { authState } from "../../state-slices/auth/auth-slice";
 import { updateSet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
 import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, resetCurrentSetToSave, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/create-set-model-slice";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
-import SwitchUnstyled from '@mui/core/SwitchUnstyled';
 import Switch from '@mui/material/Switch';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { SetDtoModel } from "../../models/create-set-model";
 import { Tag } from "../../dtos/Tag";
 import { TagFormModel } from "../../models/new-tag-form";
 import { SaveTagFormModel } from "../../models/save-tag-form-model";
@@ -210,7 +204,8 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
 
     return (
         <Box className={classes.box}>
-            <div>                
+            <div>
+            <br /><Typography variant="h5">Update Set</Typography> <br />
                 <div >
                 <TextField label="set name" onChange={handleChange} defaultValue={props.setName} value={newSet} />
                 <br/>
@@ -229,7 +224,6 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                         <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
                             <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
                             <Select
-                                            
                                                 labelId="demo-simple-select-standard-label"
                                                 id="demo-simple-select-standard"
                                                 value={tagName}
