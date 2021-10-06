@@ -308,14 +308,12 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
+        if (game.matchState != 1) return;
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
-            // TODO: Utilize placing and streak fields for scoring
-            
-            
             console.log('players before sort: ', game.players);
             // Need to clone players array in order to mutate fields
             // Sort temp player list by time answered
@@ -339,18 +337,25 @@ function Game() {
                     points *= 1 + (.1 * player.streak);
 
                     // Update points
-                    player.points += Math.floor(points);
+                    player.pointsEarned = Math.floor(points)
+                    player.points += player.pointsEarned;
                 } else if(player.answered == true && player.answeredCorrectly == false){
+                    player.pointsEarned = 0;
                     // Reset streak if answered incorrectly
                     player.streak = 0;
                 }
             });
+
             // Give bonus points if only one player answered correctly
             if (count == 1) {
                 players.forEach(player => {
-                    if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
+                    if (player.answered == true && player.answeredCorrectly == true) {
+                        player.pointsEarned += 200;
+                        player.points += 200;
+                    }
                 })
             }
+
             // Update matchState
             let matchState = 2;
             
@@ -402,6 +407,7 @@ function Game() {
      * Helper function to be called from React fragment
     */
     const callPersistData = () => {
+        console.log('callPersistData called, numCalls: ', numCalls)
         if(numCalls<1)
             persistUserData();
         numCalls++;
@@ -419,14 +425,15 @@ function Game() {
         // Prevent duplicate calls
         numCalls++;
         // find the current user if not guest
-        let currentUser = user.authUser.username;
+        let currentUser = user.authUser.id;
         let players = game.players.map(player => ({...player}));
 
         if(currentUser === game.host){
             let newPlayers: any[]=[];
             let winner;
 
-            players.forEach(player => {
+            players.forEach((player, i) => {
+                player.placing = i + 1;
                 if(player.placing === 1) winner = player.username;
                 newPlayers.push({
                     id: player.id,
@@ -452,24 +459,6 @@ function Game() {
                 console.log('persist user data error: ', e);
             }
 
-        }
-
-        //Update user state
-        if(user?.authUser){
-            let persistPlayer;
-            let currentPlayer = game.players.find(player => player.id === user?.authUser.id);
-            console.log("Before updating persistPlayer")
-            if(currentPlayer.placing === 1){
-                persistPlayer = { wins: userProfile.userProfile.losses+1,
-                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-                     ...userProfile.userProfile}
-            } else {
-                persistPlayer = { losses: userProfile.userProfile.losses+1,
-                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-                     ...userProfile.userProfile}
-            }
-            console.log("Dispatch: "+ persistPlayer);
-            dispatch(setProfile(persistPlayer));  //Update state
         }
     }
 

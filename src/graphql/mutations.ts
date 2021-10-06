@@ -35,6 +35,8 @@ export const createGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -74,6 +76,8 @@ export const updateGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -113,6 +117,8 @@ export const deleteGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt

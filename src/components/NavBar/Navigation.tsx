@@ -3,6 +3,7 @@
  */
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';

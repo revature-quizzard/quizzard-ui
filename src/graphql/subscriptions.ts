@@ -32,6 +32,8 @@ export const onUpdateGameById = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -68,6 +70,8 @@ export const onDeleteGameById = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -104,6 +108,8 @@ export const onCreateGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -140,6 +146,8 @@ export const onUpdateGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
@@ -176,6 +184,8 @@ export const onDeleteGame = /* GraphQL */ `
         placing
         streak
         points
+        pointsEarned
+        afk
       }
       createdAt
       updatedAt
