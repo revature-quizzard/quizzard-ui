@@ -308,14 +308,12 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
+        if (game.matchState != 1) return;
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
-            // TODO: Utilize placing and streak fields for scoring
-            
-            
             console.log('players before sort: ', game.players);
             // Need to clone players array in order to mutate fields
             // Sort temp player list by time answered
@@ -345,12 +343,14 @@ function Game() {
                     player.streak = 0;
                 }
             });
+
             // Give bonus points if only one player answered correctly
             if (count == 1) {
                 players.forEach(player => {
                     if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
                 })
             }
+
             // Update matchState
             let matchState = 2;
             
