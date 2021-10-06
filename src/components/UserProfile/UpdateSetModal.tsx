@@ -23,6 +23,7 @@ import { errorState } from "../../state-slices/error/errorSlice";
 import LabelIcon from '@mui/icons-material/Label';
 import Box from '@mui/material/Box';
 import { makeStyles } from '@material-ui/core';
+import { useHistory } from "react-router";
 
 /**
  * Allows user to create set with multiple tags.
@@ -51,7 +52,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
   let isAtTagLimit : boolean = false;
   let k : number = 0;
   let _setIsPublic : boolean = false;
-
+  let history = useHistory();
 
   const handleChange = (e: any) => {
      
@@ -181,6 +182,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
+                history.push('/study')
                 // dispatch(resetCurrentSetToSave());
                 
             } catch (e: any) {
