@@ -63,6 +63,16 @@ describe('Update Comment Component Test Suite', () => {
         // configure the mock store
         //@ts-ignore
         const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState})
+
+        // set up a spy for useSelector (to mock values)
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockImplementation((arg) => {
+            if (arg === forumState) {
+                return initialState;
+            } else {
+                return { authUser: { username: 'username' } };
+            }
+        })
     });
 
 })
