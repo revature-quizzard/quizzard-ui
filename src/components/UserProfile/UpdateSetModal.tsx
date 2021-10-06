@@ -216,7 +216,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                 <div >
                 <TextField label="set name" onChange={handleChange} value={newSet} />
                 <br/>
-                <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+                <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
                 </div >
                     <hr/>
                         { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
