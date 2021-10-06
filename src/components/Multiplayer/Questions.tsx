@@ -80,8 +80,9 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
                         { 
                         game.matchState == 2 && currentPlayer.pointsEarned > 0 ?
                             <Typography variant="h5" className={classes.pointsEarned}>
-                                + {currentPlayer.pointsEarned} points! {currentPlayer.streak > 1 ? <>Streak: {currentPlayer.streak} &#x1F525; </>: <> </>}
-                                <img height='100px' src='wizard.gif'/>
+                                + {currentPlayer.pointsEarned} points! 
+                                &nbsp; <img height='50px' src='fast_meow_party.gif'/> &nbsp;
+                                {currentPlayer.streak > 1 ? <> {currentPlayer.streak} &#x1F525; </>: <> </>}
                             </Typography> : game.matchState == 2 ?
                             <Typography variant="h5" className={classes.noPointsEarned}>
                                 No points earned... &#x1F4A9;
