@@ -15,7 +15,7 @@ import {UserData} from "../../models/user-data";
 
 /**
  * Component for displaying/changing a user's profile picture
- * @author Mitchell Panenko
+ * @author Mitchell Panenko, Cody McDonald
  * */
 
 const UserProfilePicture = () => {

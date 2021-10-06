@@ -31,21 +31,14 @@ export const deleteFavorite = async (setId:string, user_Id:string) => {
 }
 
 export const postProfilePicture = async (user_Id:string,image:File) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(image);
-    console.log(reader.result);
-    // let data = new FormData();
-    // data.append('image', image);
-    // data.append('headers', { 'Content-Type': 'multipart/form-data' })
+    let data = new FormData();
+    data.append('image', image);
+    console.log(data);
     let config = {
         headers: { 'Content-Type': 'multipart/form-data' },
-        data :{
-            image: reader.result
-        }
     };
 
-
-    let response = await quizzardApiClientTokenAuthorized.post(`/users/image?user_id=${user_Id}`, config);
+    let response = await quizzardApiClientTokenAuthorized.post(`/users/image?user_id=${user_Id}`, data, config);
 
     return response.data;
 }
