@@ -2,9 +2,10 @@ import { shallow, configure, mount } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import GetThreads from '../components/Forum/GetThread';
 import { Subforum } from '../models/subforum';
-import { Thread } from '../models/thread';import { Provider } from 'react-redux';
+import { Thread } from '../models/thread';
+import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
-import { assert } from 'console';
+import * as redux from 'react-redux';
 import { getAllThreads } from '../remote/sub-forum-service';
 jest.mock('../remote/sub-forum-service');
 import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
@@ -48,7 +49,7 @@ describe('Get Threads Component Test Suite', () => {
         expect(wrapper).toBeTruthy();
     })
 
-    it('', () => {
+    it('GetThread calls the api on initial render', () => {
         // configure mock store
         const configureMockStore = createMockStore();
         const mockStore = configureMockStore(initialState);
@@ -65,8 +66,6 @@ describe('Get Threads Component Test Suite', () => {
                                 </Provider>);
 
         // expect it to be truthy (i.e. something renders)
-    }
-    
-    )
+    })
 
 })
