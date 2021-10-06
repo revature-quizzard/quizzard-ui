@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Set} from "../../dtos/Set";
-import {StudySetState} from "../../state-slices/sets/create-study-sets-slice";
+import {StudySet, StudySetState} from "../../state-slices/sets/create-study-sets-slice";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import {Button, Card} from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
@@ -17,13 +17,15 @@ import TableBody from "@mui/material/TableBody";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import {deleteCard} from "../../remote/set-service";
+import {studySetState} from "../../state-slices/study-set/study-set-slice";
 
 
 function ViewUserCards(){
 
     const history = useHistory();
-    const s: Set = useSelector(StudySetState).aSet;
+    const [s,setS] = useState(useSelector(StudySetState).aSet as Set)
     const [value,setValue] = useState();
+    const dispatch = useDispatch();
 
 
     // const state = useSelector(profileState);
@@ -72,7 +74,7 @@ function ViewUserCards(){
     const classes = useStyles();
 
     function toSetPage(){
-        history.push('/profile/')
+        history.push('/profile')
     }
 
     const deleteSet = async function (sId:string,cId:string ){
@@ -84,15 +86,12 @@ function ViewUserCards(){
 
     }
 
-    const refresh = ()=>{
-        // it re-renders the component
-        // @ts-ignore
-        setValue({});
-    }
+
 
     function deleteCardFrom(sId:string,cId:string ){
         let d = deleteSet(sId, cId);
-        refresh()
+
+        dispatch(StudySet(s));
 
     }
 
