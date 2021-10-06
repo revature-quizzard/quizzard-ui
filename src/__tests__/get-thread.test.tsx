@@ -52,6 +52,9 @@ describe('Get Threads Component Test Suite', () => {
     })
 
     it('GetThread calls the api on initial render', () => {
+        // set up initial state
+        initialState = new Subforum([], "NULL", "Description", "ID", "Subject", 1);
+
         // configure mock store
         const mockStore = configureStore({
             reducer: {forumInfo: forumReducer},
