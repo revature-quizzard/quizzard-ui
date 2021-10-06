@@ -53,7 +53,7 @@ describe('Get Threads Component Test Suite', () => {
 
     it('GetThread calls the api on initial render', () => {
         // set up initial state
-        initialState = new Subforum([], "NULL", "Description", "ID", "Subject", 1);
+        initialState = { currentSubforum: new Subforum([], "NULL", "Description", "ID", "Subject", 1) };
 
         // configure mock store
         const mockStore = configureStore({
@@ -78,11 +78,12 @@ describe('Get Threads Component Test Suite', () => {
         })
 
         // set up wrapper class
-        const wrapper = shallow(<Provider store={mockStore}>
+        const wrapper = mount(<Provider store={mockStore}>
                                     <GetThreads />
                                 </Provider>);
 
-        // expect it to be truthy (i.e. something renders)
+        // expect the api function to have been called
+        expect(getAllThreads).toBeCalled();
     })
 
 })
