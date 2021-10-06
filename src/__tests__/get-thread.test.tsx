@@ -6,9 +6,11 @@ import { Thread } from '../models/thread';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import * as redux from 'react-redux';
+import forumReducer from '../state-slices/forum/forum-slice';
 import { getAllThreads } from '../remote/sub-forum-service';
 jest.mock('../remote/sub-forum-service');
 import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
+import { configureStore } from '@reduxjs/toolkit';
 jest.mock('../state-slices/error/errorSlice')
 
 interface TempState {
@@ -51,14 +53,16 @@ describe('Get Threads Component Test Suite', () => {
 
     it('GetThread calls the api on initial render', () => {
         // configure mock store
-        const configureMockStore = createMockStore();
-        const mockStore = configureMockStore(initialState);
+        const mockStore = configureStore({
+            reducer: {forumInfo: forumReducer},
+            //@ts-ignore
+            initialState
+        });
         
+        // provide mock implementation for getAllThreads
         (getAllThreads as jest.Mock).mockImplementation(() => {
-            [
-                new Thread(["Ancestor"], "Parent", "Description", "ID", "Subject")
-            ]
-        })
+            return Promise.resolve([new Thread(["Ancestor"], "Parent", "Description", "ID", "Subject")])
+        });
 
         // set up wrapper class
         const wrapper = shallow(<Provider store={mockStore}>
