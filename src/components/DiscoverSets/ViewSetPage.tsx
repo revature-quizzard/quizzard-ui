@@ -25,11 +25,13 @@ import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {addSetToFavorites} from "../../remote/user-service";
 import {useHistory} from "react-router-dom";
-import {profileState} from "../../state-slices/user-profile/profile-slice";
+
 
 
 
 /**
+ * This component lets users view public sets that users have created.
+ * They dont have to be signed in if they want to see the pulic sets.
  *@author Jose Tejada
  * @constructor
  */
@@ -44,8 +46,6 @@ function ViewSetPage() {
     const s: Set = useSelector(StudySetState).aSet;
 
 
-    // const state = useSelector(profileState);
-    // const favorites = state.userProfile.favoriteSets;
 
 
     function handleOpen(a:any){
@@ -62,7 +62,8 @@ function ViewSetPage() {
 
         tableContainer:{
             borderStyle: "ridge",
-            borderColor:"#4e3e61"
+            borderColor:"#4e3e61",
+            width: "100%"
         },
         Thread:{
           backgroundColor:"#4e3e61",
@@ -81,6 +82,7 @@ function ViewSetPage() {
             flexWrap:"wrap",
             marginTop: 20,
 
+
         },
         paper: {
             backgroundColor: theme.palette.background.paper,
@@ -90,7 +92,7 @@ function ViewSetPage() {
 
         },
         cardStyle: {
-            width:"fit-content",
+            width:"40%",
             marginLeft: 10,
             borderStyle: "groove",
             textAlign:"center",
@@ -104,11 +106,11 @@ function ViewSetPage() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: 500,
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        p: 4,
+        p: 8,
     };
 
     async function addTofavoriets(){
@@ -154,7 +156,6 @@ function ViewSetPage() {
                         <TableCell style={{color: 'white '}} align="center">Views</TableCell>
                         <TableCell style={{color: 'white '}} align="center">Favorites</TableCell>
                         <TableCell style={{color: 'white '}} align="center">Tags</TableCell>
-                        <TableCell style={{color: 'white '}} align="center">Set Id</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -166,9 +167,7 @@ function ViewSetPage() {
                         <TableCell align="center">{s.favorites}</TableCell>
                         <TableCell align="center">{s.tags.map((tag, index, s) => (
                             <h6 key={index}>{tag.tagName}</h6>))}</TableCell>
-                        <TableCell align="center">{s.id}</TableCell>
                     </TableRow>
-
                 </TableBody>
             </Table>
         </TableContainer>
@@ -177,9 +176,7 @@ function ViewSetPage() {
                 {s.cards.map((card,index, c)=>(
                 <Card key={card.id} sx={{ minWidth: 25 }} className={classes.cardStyle}>
                     <CardContent>
-                        <Typography sx={{ fontSize: 14, textAlign: "center" }} color="text.secondary" gutterBottom>
-                            {card.id}
-                        </Typography>
+
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
                             {card.question}
                         </Typography>
