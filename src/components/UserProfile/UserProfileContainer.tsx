@@ -1,6 +1,7 @@
 import {Accordion, AccordionDetails, AccordionSummary, Modal, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
+
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
 import { useEffect, useState } from "react";
@@ -15,6 +16,8 @@ import UserGameRecords from "./UserGameRecords";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserSets from "./UserSets";
 import {Gif} from "@material-ui/icons";
+import UserProfilePicture from "./UserProfilePicture";
+
 
 const UserProfileContainer = (props: any) => {
   const state = useSelector(profileState);
@@ -28,8 +31,6 @@ const UserProfileContainer = (props: any) => {
   const [updateSetTagNames, setUpdateSetTagNames] = useState(undefined as string[]);
   const [updateSetId, setUpdateSetId] = useState(undefined as string);
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
-
-  const [dummySwitch, setDummySwitch] = useState(false);
 
     /**
      * Main parent component for user profile. Retrieves user data and persists it to profile state.
@@ -53,7 +54,7 @@ const UserProfileContainer = (props: any) => {
     // componentDidMount lifecycle
     useEffect(() => {
         getData();
-    }, [dummySwitch]);
+    }, []);
 
     return (
         <div>
@@ -66,6 +67,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
+                    {state.isLoaded ? <UserProfilePicture/> : 'Loading...'}
                     {state.isLoaded ? <UserProfile/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" /> </>}
                 </AccordionDetails>
             </Accordion>
@@ -141,7 +143,7 @@ const UserProfileContainer = (props: any) => {
                 <AccordionDetails>
                     <Typography>
 
-                        {state.isLoaded ? <CreateSetModal dummySwitch={dummySwitch} setDummySwitch={setDummySwitch}/> : <> loading...<img className="welcomeBanner"
+                        {state.isLoaded ? <CreateSetModal/> : <> loading...<img className="welcomeBanner"
                                                                                 src="wizard.gif" alt="qwizard"
                                                                                 height="50px"/>  </>}
 
@@ -156,8 +158,7 @@ const UserProfileContainer = (props: any) => {
                     setUpdateIsOpen(false);
                 }}
             >
-                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}
-                    dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} setUpdateIsOpen={setUpdateIsOpen}/>
+                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}/>
             </Modal>
           
         </div>
