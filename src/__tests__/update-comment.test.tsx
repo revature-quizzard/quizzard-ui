@@ -1,4 +1,6 @@
 import { shallow, configure, mount } from 'enzyme';
+import * as redux from 'react-redux';
+import forumReducer, { forumState } from '../state-slices/forum/forum-slice';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import UpdateComment from '../components/Forum/UpdateComment';
 import { Subforum } from '../models/subforum';
@@ -52,7 +54,10 @@ describe('Update Comment Component Test Suite', () => {
     });
 
     it('Component calls updateComment when button is clicked', () => {
-        
+        // set up the initial state
+        initialState = {
+            currentComment: new Comment(['subforumId','threadId'], 'threadId', 'description', 'username', 'id','subject',0,'2021-10-06T23:29:17.650',[])
+        }
     });
 
 })
