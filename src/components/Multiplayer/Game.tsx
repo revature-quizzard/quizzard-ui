@@ -77,7 +77,8 @@ const useStyles = makeStyles({
 
     buttons: {
         backgroundColor: 'rgb(245,245,245)',
-        margin: '1rem'
+        margin: '1rem',
+        marginLeft: '0rem'
     },
 
 

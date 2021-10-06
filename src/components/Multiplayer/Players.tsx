@@ -1,4 +1,5 @@
 import API from '@aws-amplify/api';
+import { ClassNames } from '@emotion/react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, useTheme, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { graphqlOperation } from 'aws-amplify';
@@ -23,13 +24,17 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
   }
 
   const useStyles = makeStyles(() => ({
+      playContain: {
+        display: 'flex',
+        flexDirection: 'column'
+
+      },
       root: {
         width: '21em',
         borderStyle: 'solid',
         borderColor: '#4e3e61',
-        display: 'flex',
         maxHeight: '550px',
-        overflowY: "scroll",
+        display: 'flex'
       },
       table: {
           verticalAlign: 'middle',
@@ -40,7 +45,6 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
       },
       closeGameButton: {
         backgroundColor: 'rgb(245,245,245)',
-        margin: '1rem'
       }
   }))
   
@@ -74,6 +78,7 @@ function Players() {
 
     return (
         <>
+        <div className= {styles.playContain}>
         <TableContainer className={styles.root} component={Paper}>
             <Table className={styles.table} aria-label="simple table"> {/*sx={{ maxWidth: 200 }}*/}
                 <TableHead>
@@ -132,6 +137,7 @@ function Players() {
             :
             <Button onClick={() => executeKick(currentUser)}>Leave Game</Button>
             }
+            </div>
         </>
     )
 }
