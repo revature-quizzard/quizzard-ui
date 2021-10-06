@@ -67,7 +67,7 @@ const CreateSetModal = (props: any) => {
         try{
               let response = await getSetTags();  
               dispatch(setIsPublic());
-        setAllTags(response);
+        
         }catch(e: any){
           console.log(e);
           setAllTags([{tagName: 'oop' , tagColor: 'blue'} ,
@@ -199,7 +199,7 @@ const CreateSetModal = (props: any) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
+            <p>public <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> private { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
                 <hr/>
 
