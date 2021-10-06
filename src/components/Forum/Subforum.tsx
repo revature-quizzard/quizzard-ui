@@ -31,6 +31,12 @@ const SubforumHandler = ()=> {
     }
 
     return (
+      <>
+      <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+      <br/> 
+      <span style={{color: 'grey'}}>Forum</span> </b> </h1>
+      <hr/>
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead style={{'backgroundColor':'#333333'}}>
@@ -64,6 +70,7 @@ const SubforumHandler = ()=> {
           </TableBody>
         </Table>
       </TableContainer>
+      </>
     );
 }
 

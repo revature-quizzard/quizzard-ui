@@ -61,3 +61,27 @@ export const deleteSet = async (setId:string) => {
 
   return response.data;
 }
+
+export const addCard = async (card: {setId:string, question:string, answer:string}) =>{
+  let response = await quizzardApiClientTokenAuthorized.post(`/sets/cards`, card)
+  console.log(response)
+  console.log("wee need this")
+  return response.data;
+}
+
+export const getSetById = async (id: string) =>{
+
+  console.log(id)
+  let response = await quizzardApiClientTokenAuthorized.get(`/sets/${id}`)
+  console.log(response.data)
+  return response.data
+}
+
+export const deleteCard = async(setId:string, cardId:string) =>{
+  console.log("Card:" + cardId)
+  console.log("Set:" + setId)
+  let response = await  quizzardApiClientTokenAuthorized.delete(`/sets/cards/?set_id=${setId}&card_id=${cardId}`)
+  console.log(response.data)
+  return response.data
+
+}

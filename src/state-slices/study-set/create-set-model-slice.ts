@@ -33,7 +33,7 @@ interface  State {
 const initialState: State = {
     IsShowing: false,
     currentUser: undefined,
-    setToSave: {setName: '', isPublic: true, author : '', tags : [] as String[]} as SetDto,
+    setToSave: {setName: '', isPublic: false, author : '', tags : [] as String[]} as SetDto,
     newTagForms: [ { tagColor: '', TagName: '', tagAdded: false} as TagFormModel ] as TagFormModel[],
     tagLimit: 0
 }
