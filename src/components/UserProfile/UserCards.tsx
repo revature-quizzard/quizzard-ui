@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Set} from "../../dtos/Set";
@@ -17,9 +16,14 @@ import TableBody from "@mui/material/TableBody";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import {deleteCard} from "../../remote/set-service";
-import {studySetState} from "../../state-slices/study-set/study-set-slice";
 
 
+/**
+ * A component that lets a user view all of thier cards in a set
+ * they own.
+ * @author Jose Tejada
+ * @constructor
+ */
 function ViewUserCards(){
 
     const history = useHistory();
@@ -73,7 +77,7 @@ function ViewUserCards(){
     }));
     const classes = useStyles();
 
-    function toSetPage(){
+    function toProfilePage(){
         history.push('/profile')
     }
 
@@ -102,7 +106,7 @@ function ViewUserCards(){
         <>
 
 
-            <Button startIcon={<BackspaceIcon />} onClick={toSetPage} color="secondary" >
+            <Button startIcon={<BackspaceIcon />} onClick={toProfilePage} color="secondary" >
                 Go back to Sets
             </Button>
             <TableContainer component={Paper} className={classes.tableContainer}>
@@ -149,7 +153,7 @@ function ViewUserCards(){
 
                         </CardContent>
 
-                        <Button onClick={ () => deleteCardFrom(s.id,card.id)}>Delete</Button>
+                        <Button onClick={ () => {deleteCardFrom(s.id,card.id); toProfilePage()} }>Delete</Button>
 
                     </Card>
                 ))}

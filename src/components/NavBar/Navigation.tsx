@@ -31,6 +31,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearProfile, profileState} from "../../state-slices/user-profile/profile-slice";
 import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
+import { logout } from '../../remote/login-register-service';
 
 export function NavigationComponent() {
     const state = useSelector(authState);
@@ -143,6 +144,7 @@ export function NavigationComponent() {
     const handleLogout = () => {
         dispatch(logoutUserReducer());
         dispatch(clearProfile());
+        logout();
         history.push('/login');
     };
 

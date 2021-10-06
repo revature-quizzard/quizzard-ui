@@ -9,8 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateGame } from '../../graphql/mutations';
 import { authState } from '../../state-slices/auth/auth-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
+import useSound from 'use-sound';
 
+const correctFx = '../../../public/P3_SFX/Correct.mp3'
 
+const CorrectSound = () => {
+    const [playCorrect] = useSound(correctFx);
+}
 /**
  * React component that renders that chooseable answers for the questions to players.
  * Function needed to pull random answers off of cards in the set (including correct answer).

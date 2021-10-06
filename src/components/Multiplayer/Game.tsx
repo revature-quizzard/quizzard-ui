@@ -20,6 +20,7 @@ import { gameState, Player, resetGame, setGame } from '../../state-slices/multip
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
 import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
 import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
+import { maxHeight } from '@mui/system';
 
 
 const useStyles = makeStyles({
@@ -31,7 +32,8 @@ const useStyles = makeStyles({
     },
 
     playerContainer: {
-        marginRight: '1rem'
+        display: 'flex',
+        marginRight: '1rem',
     },
 
     topRow: {
@@ -75,10 +77,13 @@ const useStyles = makeStyles({
 
     buttons: {
         backgroundColor: 'rgb(245,245,245)',
-        margin: '1rem'
-    }
+        margin: '1rem',
+        marginLeft: '0rem'
+    },
+
 
 });
+
 
 
 Amplify.configure(config);
@@ -146,6 +151,10 @@ function Game() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const classes = useStyles();
+
+    
+
     useEffect(() => {
         // If game does not exist, reroute to /lounge
         if (!game.id) history.push('/lounge');
@@ -190,7 +199,7 @@ function Game() {
         }
     }, [])
 
-    const classes = useStyles();
+
 
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
@@ -328,6 +337,7 @@ function Game() {
             players.forEach(player => {
                 points = 0;
                 if (player.answered == true && player.answeredCorrectly == true) {
+
                     count++;
                     // Points from placing
                     player.placing = count;
@@ -340,10 +350,13 @@ function Game() {
                     // Update points
                     player.pointsEarned = Math.floor(points)
                     player.points += player.pointsEarned;
+                    
                 } else if(player.answered == true && player.answeredCorrectly == false){
+                    
                     player.pointsEarned = 0;
                     // Reset streak if answered incorrectly
                     player.streak = 0;
+                    
                 }
             });
 
