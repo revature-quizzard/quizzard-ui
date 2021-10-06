@@ -41,6 +41,7 @@ function AddThread(props: IAddThreadProps) {
     const [description, setDescription] = useState('');
     const [redirect, setRedirect] = useState(false);
     const [subject, setSubject] = useState('');
+    const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function AddThread(props: IAddThreadProps) {
     }
 
     let handleClick = async () => {
+        setDisabled(true);
         try {
             let threadAncestors: string[] = [forumInfo.currentSubforum.id]
             let toAdd = new Thread(
@@ -71,9 +73,11 @@ function AddThread(props: IAddThreadProps) {
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Thread created!'))
             setRedirect(true);
+            setDisabled(false);
             setRedirect(false);
         } catch (e: any) {
             console.log(e);
+            setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem creating your thread'));
         }
@@ -105,7 +109,7 @@ function AddThread(props: IAddThreadProps) {
             </Paper>
             <br />
             <Box textAlign='center'>
-                <Button id='createThreadButton' variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
+                <Button id='createThreadButton' disabled={disabled} variant="contained" className={classes.button} onClick={handleClick}>Create Thread</Button>
             </Box>
         </div>
     )

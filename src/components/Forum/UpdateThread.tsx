@@ -41,6 +41,7 @@ function UpdateThread(props: IUpdateThreadProps) {
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
     const dispatch = useDispatch();
     const forumInfo = useSelector(forumState);
@@ -56,6 +57,7 @@ function UpdateThread(props: IUpdateThreadProps) {
     }
 
     let handleClick = async () => {
+        setDisabled(true);
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
@@ -76,8 +78,10 @@ function UpdateThread(props: IUpdateThreadProps) {
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Thread updated!'))
             setRedirect(true);
+            setDisabled(false);
             setRedirect(false);
         } catch (e: any) {
+            setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem updating your thread'))
         }
@@ -109,7 +113,7 @@ function UpdateThread(props: IUpdateThreadProps) {
                 </Paper>
                 <br />
                 <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Update Thread</Button>
+                    <Button variant="contained" disabled={disabled} className={classes.button} onClick={handleClick}>Update Thread</Button>
                 </Box>
         </div>
     )

@@ -17,6 +17,7 @@ interface IUpdateCommentProps {
 function UpdateComment(props: IUpdateCommentProps) {
     const [description, setDescription] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function UpdateComment(props: IUpdateCommentProps) {
     }
 
     let handleClick = async () => {
-        console.log("button clicked!");
+        setDisabled(true);
         try {
             let toAdd = new Comment(
                 forumInfo.currentComment.ancestors,
@@ -46,8 +47,10 @@ function UpdateComment(props: IUpdateCommentProps) {
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Comment updated!'))
             setRedirect(true);
+            setDisabled(false);
             setRedirect(false);
         } catch (e: any) {
+            setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem updating your comment'))
         }
@@ -64,7 +67,7 @@ function UpdateComment(props: IUpdateCommentProps) {
             <Paper elevation={3} style={{'margin': '4rem'}}>
                 <div style={{'margin': '2rem'}}>
                     <Editor onChange={handleChange} placeholder='Update your comment...' />
-                    <Button onClick={handleClick} style={{'color':'#75BC3E'}}>Update</Button>
+                    <Button onClick={handleClick} disabled={disabled} style={{'color':'#75BC3E'}}>Update</Button>
                 </div>
             </Paper>
         </>
