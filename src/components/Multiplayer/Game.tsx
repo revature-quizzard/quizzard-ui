@@ -340,6 +340,7 @@ function Game() {
                     player.pointsEarned = Math.floor(points)
                     player.points += player.pointsEarned;
                 } else if(player.answered == true && player.answeredCorrectly == false){
+                    player.pointsEarned = 0;
                     // Reset streak if answered incorrectly
                     player.streak = 0;
                 }

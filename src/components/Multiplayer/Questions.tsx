@@ -40,7 +40,15 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     },
 
     pointsEarned: {
-        color: 'rgb(6, 196, 44)'
+        color: 'rgb(6, 196, 44)',
+        alignSelf: 'center',
+        verticalAlign: 'center'
+    },
+
+    noPointsEarned: {
+        color: 'rgb(196, 22, 10)',
+        alignSelf: 'center',
+        verticalAlign: 'center'
     },
 
     questNumTypo: {
@@ -57,20 +65,29 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     const guestUser = useSelector(guestState);
     console.log('Game in Questions component', game)
 
-    let currentPlayer = game.players.find((player) => player.id = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
-    console.log('currentPlayer:',currentPlayer)
+    let currentUser = user.authUser ? user.authUser.id : guestUser.id
+    let currentPlayer = game.players.find((player) => player.id == currentUser);
 
     return (
         <>
             <Card className={classes.cardClass}>
                 <CardContent className={classes.contentClass}>
                     <div className={classes.vAlign}>
-                    <Typography variant="h5" gutterBottom className={classes.questionTypo}>
-                        {game.set.cardList[game.questionIndex].question}
-                    </Typography>
-                    <Typography variant="h5" className={classes.pointsEarned}>
-                        + {currentPlayer.pointsEarned} points
-                    </Typography>
+                        <Typography variant="h5" gutterBottom className={classes.questionTypo}>
+                            {game.set.cardList[game.questionIndex].question}
+                        </Typography>
+
+                        { 
+                        game.matchState == 2 && currentPlayer.pointsEarned > 0 ?
+                            <Typography variant="h5" className={classes.pointsEarned}>
+                                + {currentPlayer.pointsEarned} points! Streak: {currentPlayer.streak} &#x1F525;
+                                <img src='wizard.gif'/>
+                            </Typography> : game.matchState == 2 ?
+                            <Typography variant="h5" className={classes.noPointsEarned}>
+                                No points earned... &#x1F4A9;
+                            </Typography> : <> </>
+                        }
+
                     </div>
                     <Typography className={classes.questNumTypo}>  {/*sx={{ mb: 1.5 }}*/}
                         Question {game.questionIndex + 1} of {game.set.cardList.length}
