@@ -53,33 +53,35 @@ describe('Add Thread Component Test Suite', () => {
         //expect it do be truthy (i.e., somthing renders)
         expect(wrapper).toBeTruthy;
     });
-
     
-    // it('Component calls addThread when given valid information', () => {
-    //     // configure mock redux store
-    //     initialState = {
-    //         currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
-    //     }
-    //     const configureMockStore = createMockStore();
-    //     const mockStore = configureMockStore(initialState);
+    it('Component calls addThread when given valid information', () => {
+        // mock props
+        let mockClose = jest.fn();
 
-    //     // set up the wrapper
-    //     const wrapper = mount(<Provider store={mockStore}>
-    //                             <AddThread />
-    //                          </Provider>);
+        // configure mock redux store
+        initialState = {
+            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
+        }
+        const configureMockStore = createMockStore();
+        const mockStore = configureMockStore(initialState);
 
-    //     let subjectWrapper = wrapper.find('#subjectInput').at(0);
-    //     let descriptionWrapper = wrapper.find('#descriptionInput').at(0);
-    //     let createButtonWrapper = wrapper.find('#createThreadButton').at(0);
+        // set up the wrapper
+        const wrapper = mount(<Provider store={mockStore}>
+                                <AddThread close={mockClose}/>
+                             </Provider>);
 
-    //     subjectWrapper.simulate('change', 'this is a test subject');
-    //     descriptionWrapper.simulate('change', 'this is a test description');
+        let subjectWrapper = wrapper.find('#subjectInput').at(0);
+        let descriptionWrapper = wrapper.find('#descriptionInput').at(0);
+        let createButtonWrapper = wrapper.find('#createThreadButton').at(0);
 
-    //     createButtonWrapper.simulate('click');
+        subjectWrapper.simulate('change', 'this is a test subject');
+        descriptionWrapper.simulate('change', 'this is a test description');
+
+        createButtonWrapper.simulate('click');
         
-    //     // expect certain methods to be called
-    //     expect(addThread).toBeCalled();
-    // });
+        // expect certain methods to be called
+        expect(addThread).toBeCalled();
+    });
 
 
 
