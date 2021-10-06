@@ -52,8 +52,7 @@ const CreateSetModal = (props: any) => {
   const _createSetState= useSelector(createSetState);
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
-  let k : number = 0;
-  let _setIsPublic : boolean = false;
+ 
 
 
   const handleChange = (e: any) => {
@@ -67,12 +66,13 @@ const CreateSetModal = (props: any) => {
     {
         try{
               let response = await getSetTags();  
-        setAllTags(response);
+              dispatch(setIsPublic());
+        
         }catch(e: any){
           console.log(e);
           setAllTags([{tagName: 'oop' , tagColor: 'blue'} ,
            {tagName: 'java' , tagColor: 'red'} ,
-           {tagName: 'lisov substitution' , tagColor: 'yellow'} ,
+           {tagName: 'liskov substitution' , tagColor: 'yellow'} ,
            {tagName: 'python' , tagColor: 'black'}
           ] as Tag[])
         }
@@ -160,10 +160,9 @@ const CreateSetModal = (props: any) => {
     }
    
     const toggleSetStatus = () => {
-
-        // _setIsPublic = !_setIsPublic
-        // console.log(_setIsPublic);
-        // dispatch(setIsPublic(_setIsPublic));
+        
+        dispatch(setIsPublic());
+       
     }
 
    
@@ -172,12 +171,17 @@ const CreateSetModal = (props: any) => {
         
             try {
                 dispatch(loading());
-                let setToSave : SetDto = {author: user.username , setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
-                dispatch(saveSet(setToSave));
-                console.log("SET TO SAVE : "+setToSave);
-                let newly_created_set = await createStudySet(_createSetState.setToSave);
-                dispatch(clearTags);
-                console.log(newly_created_set);
+
+                let setToSave_ : SetDto = {author: user.username , setName: newSet , isPublic: _createSetState.setToSave.isPublic , tags : _createSetState.setToSave.tags} as SetDto
+                dispatch(saveSet(setToSave_));
+                console.log("SET TO SAVE : " , setToSave_);
+                let newly_created_set = await createStudySet(setToSave_);
+                console.log("NEWLY CREATED SET : " ,  newly_created_set);
+                dispatch(clearTags());
+                setNewSet('');
+                // dispatch(resetCurrentSetToSave());
+                
+
             } catch (e: any) {
                 console.log(e);
             }
@@ -191,7 +195,7 @@ const CreateSetModal = (props: any) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+            <p>public <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> private { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
                 <hr/>
 
@@ -229,7 +233,8 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
+
+                    { newSet === '' ? <><Alert  severity="warning">Must Enter Set Name</Alert></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                  
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
