@@ -57,6 +57,9 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     const guestUser = useSelector(guestState);
     console.log('Game in Questions component', game)
 
+    let currentPlayer = game.players.find((player) => player.id = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
+    console.log('currentPlayer:',currentPlayer)
+
     return (
         <>
             <Card className={classes.cardClass}>
@@ -66,7 +69,7 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
                         {game.set.cardList[game.questionIndex].question}
                     </Typography>
                     <Typography variant="h5" className={classes.pointsEarned}>
-                        +{game.players.find((player) => player.id = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined).pointsEarned} points
+                        + {currentPlayer.pointsEarned} points
                     </Typography>
                     </div>
                     <Typography className={classes.questNumTypo}>  {/*sx={{ mb: 1.5 }}*/}
