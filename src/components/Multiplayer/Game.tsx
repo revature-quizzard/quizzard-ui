@@ -42,7 +42,9 @@ const useStyles = makeStyles({
 
     gameId: {
         alignSelf: 'center',
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        borderBottomStyle: 'solid',
+        borderColor: '#4e3e61'
     },
 
     bottomRow: {
@@ -69,7 +71,12 @@ const useStyles = makeStyles({
 
     leaderContainer: {
         justifyContent: "center",
+    },
 
+    buttons: {
+        alignSelf: 'baseline',
+        backgroundColor: 'rgb(245,245,245)',
+        margin: '1rem'
     }
 
 });
@@ -146,7 +153,6 @@ function postGameRecords() {
 function Game() {
     const userProfile = useSelector(profileState);
     const user = useSelector(authState);
-    //@ts-ignore
     const guestUser = useSelector(guestState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
@@ -209,7 +215,7 @@ function Game() {
             case 0:
                 return (
                     <>  
-                        <h1 className={classes.gameId}>{game.id}</h1> 
+                        <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1> 
                         <div className= {classes.playerContainer}>
                         <Players />
                         </div>
@@ -227,7 +233,7 @@ function Game() {
                     <>
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
-                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1>
                             <div className= {classes.timerContainer}>
                                 <Timer start={game.questionTimer} onTimeout={onTimeout}/>
                             </div>
@@ -249,7 +255,7 @@ function Game() {
                     <>
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
-                            <h1 className={classes.gameId}>{game.id}</h1>  
+                            <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1>  
                             <div className={classes.hideMe}>                        
                                  <div className= {classes.timerContainer}>
                                     <Timer start={game.questionTimer} onTimeout={onTimeout}/>
@@ -259,6 +265,11 @@ function Game() {
                         <div className={classes.bottomRow}>
                             <div className= {classes.playerContainer}>
                                 <Players />
+                                { (currentUser == game.host) 
+                                ?
+                                <Button className={classes.buttons} onClick={nextCard}>Next Card</Button>
+                                :
+                                <></> }
                             </div>
                             <div className= {classes.qaContainer}>
                                 <Questions />
@@ -266,14 +277,7 @@ function Game() {
                             </div>
                         </div>  
                     </div>
-                        {/* This needs to be the username of the player who made the game! */}
-                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
-
-                        { (currentUser == game.host) 
-                        ?
-                        <Button onClick={nextCard}>Next Card </Button>
-                        :
-                        <></> }
+                        
                     </>
                 )
             case 3: 
@@ -287,7 +291,7 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {closeGame(game)}}> Close Game </Button>
+                        <Button className={classes.buttons} onClick={() => {closeGame(game)}}> Close Game </Button>
                         :
                         <></> }
                     </>
@@ -425,7 +429,7 @@ function Game() {
         // Prevent duplicate calls
         numCalls++;
         // find the current user if not guest
-        let currentUser = user.authUser?.id;
+        let currentUser = user.authUser.id;
         let players = game.players.map(player => ({...player}));
 
         if(currentUser === game.host){

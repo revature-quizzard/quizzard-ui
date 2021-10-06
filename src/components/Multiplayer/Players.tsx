@@ -35,6 +35,10 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
       },
       button: {
           color: 'red'
+      },
+      closeGameButton: {
+        backgroundColor: 'rgb(245,245,245)',
+        margin: '1rem'
       }
   }))
   
@@ -122,7 +126,7 @@ function Players() {
             </TableContainer>
             {game.host == currentUser
             ?
-            <Button onClick={() => (API.graphql(graphqlOperation(deleteGame, {input: {id: game.id}})))}>Close Game</Button>
+            <Button className={styles.closeGameButton} onClick={() => (API.graphql(graphqlOperation(deleteGame, {input: {id: game.id}})))}>Close Game</Button>
             :
             <Button onClick={() => executeKick(currentUser)}>Leave Game</Button>
             }
