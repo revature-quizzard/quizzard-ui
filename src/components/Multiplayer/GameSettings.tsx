@@ -177,7 +177,9 @@ function GameSettings() {
                     answeredAt: new Date().toISOString(),
                     answeredCorrectly: false,
                     placing: -1,
-                    streak: 0
+                    streak: 0,
+                    pointsEarned: 0,
+                    afk: false
                 }]
             }
 

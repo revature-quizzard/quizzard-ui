@@ -92,7 +92,9 @@ function GameLounge() {
                     answeredCorrectly: false,
                     placing: -1,
                     streak: 0,
-                    points: 0
+                    points: 0,
+                    pointsEarned: 0,
+                    afk: false
                 };
             // User is not logged in, but has set a nickname
             } else if (guestUser.id) {
@@ -105,7 +107,9 @@ function GameLounge() {
                     answeredCorrectly: false,
                     placing: -1,
                     streak: 0,
-                    points: 0
+                    points: 0,
+                    pointsEarned: 0,
+                    afk: false
                 }
             // User is not logged in, and has not set a nickname
             } else {
