@@ -17,7 +17,7 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     cardClass: {
         width: '100%',
         flexGrow: 1,
-        borderColor: '#4e3e61',
+        borderColor: 'orange',
         borderLeftStyle: 'solid',
         backgroundColor: 'rgb(240,240,240)'
     },
