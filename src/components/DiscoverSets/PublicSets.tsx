@@ -88,7 +88,8 @@ function PublicSets() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell align="left">Tags</TableCell>
+                                    <TableCell align="left">Author</TableCell>
+                                    <TableCell align="left">name</TableCell>
                                     <TableCell align="left"># of cards</TableCell>
                                     <TableCell align="center">View</TableCell>
 
@@ -106,6 +107,7 @@ function PublicSets() {
                                                                         :
                                                                             <>
                                                                             <TableCell component="th" scope="row">{Set.setName}</TableCell>
+                                                                             <TableCell component="th" scope="row">{Set.author}</TableCell>
                                                                             <TableCell align="left">{Set.tags.map((tag, index, s) => (<h6 key={index}>{tag.tagName} </h6>))}</TableCell>
                                                                             <TableCell align="left">{Set.cards.length}</TableCell>
                                                                             <TableCell align="center"> <Button key={index} onClick={() => {handleSetState(Set)}} variant="outlined">view
