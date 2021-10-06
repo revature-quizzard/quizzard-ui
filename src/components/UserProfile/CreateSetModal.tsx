@@ -66,7 +66,6 @@ const CreateSetModal = (props: any) => {
     {
         try{
               let response = await getSetTags();  
-              dispatch(setIsPublic());
         
         }catch(e: any){
           console.log(e);
