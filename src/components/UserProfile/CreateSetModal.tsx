@@ -52,6 +52,7 @@ const CreateSetModal = (props: any) => {
   const _createSetState= useSelector(createSetState);
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
+  const [rerenderSwitch, setRerenderSwitch] = useState(false)
  
 
 
@@ -80,7 +81,7 @@ const CreateSetModal = (props: any) => {
     }
 
     getTags();
-  }, []); // <-- empty array means 'run once'
+  }, [rerenderSwitch]); // <-- empty array means 'run once'
 
 //   const updateTagName = (e: any) => {
 //     setTagName(e.target.value);
@@ -171,6 +172,7 @@ const CreateSetModal = (props: any) => {
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
+                setRerenderSwitch(!rerenderSwitch);
                 // dispatch(resetCurrentSetToSave());
                 
 
