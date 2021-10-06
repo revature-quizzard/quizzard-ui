@@ -11,7 +11,6 @@ import forumReducer, { forumState } from '../state-slices/forum/forum-slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 jest.mock('../remote/thread-service');
-jest.mock('../state-slices/forum/forum-slice');
 
 
 
@@ -62,10 +61,10 @@ describe('Add Thread Component Test Suite', () => {
 
         // configure mock redux store
         initialState = {
-            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
+            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789')
         }
         //@ts-ignore
-        const mockStore = configureStore({ reducer: {forumInfo: forumReducer }, initialState});
+        const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState});
 
         // set up a spy for useSelector (provide mock values)
         const spy = jest.spyOn(redux, 'useSelector');
