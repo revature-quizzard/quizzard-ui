@@ -41,7 +41,12 @@ import { getJSDocTags } from "typescript";
  * @author Alfonso Holmes
  * */
 
-const CreateSetModal = (props: any) => {
+ interface iCreateSetModal {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void
+}
+
+const CreateSetModal = (props: iCreateSetModal) => {
 
   const [newSet, setNewSet] = useState('')
   const [tagColor, setTagColor] = useState('');
@@ -81,7 +86,7 @@ const CreateSetModal = (props: any) => {
     }
 
     getTags();
-  }, [rerenderSwitch]); // <-- empty array means 'run once'
+  }, []); // <-- empty array means 'run once'
 
 //   const updateTagName = (e: any) => {
 //     setTagName(e.target.value);
@@ -172,7 +177,7 @@ const CreateSetModal = (props: any) => {
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
-                setRerenderSwitch(!rerenderSwitch);
+                props.setDummySwitch(!props.dummySwitch);
                 // dispatch(resetCurrentSetToSave());
                 
 
