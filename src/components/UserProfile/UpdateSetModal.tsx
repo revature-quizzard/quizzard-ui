@@ -30,10 +30,7 @@ interface iUpdateSetModal {
     setId: string,
     setName: string,
     isPublic: boolean,
-    tagNames: string[],
-    dummySwitch: boolean,
-    setDummySwitch: (nextDummySwitchVal: boolean) => void,
-    setUpdateIsOpen: (nextIsOpenVal: boolean) => void
+    tagNames: string[]
 }
 
 const UpdateSetModal = (props: iUpdateSetModal) => {
@@ -176,8 +173,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
-                props.setDummySwitch(!props.dummySwitch);
-                props.setUpdateIsOpen(false);
+                history.push('/study')
                 // dispatch(resetCurrentSetToSave());
                 
             } catch (e: any) {
