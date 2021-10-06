@@ -110,16 +110,17 @@ const UserProfileContainer = (props: any) => {
                     aria-controls="panel3a-content"
                     id="panel3a-header"
                 >
-                    <Typography>{state.isLoaded == false ? <> <span style={{color: 'red'}}><b>|</b>  </span> My Game
+                    <Typography >{state.isLoaded == false ? <> <span style={{color: 'red'}}><b>|</b>  </span> My Game
                         Records </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Game
                         Records </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        <b> Q W I Z Z A R D <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ?
+                    <Typography >
+                        
+                        <b className='logo-Grand-Qwuizzard'> QWIZZARD <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ?
                             <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>}</b>
 
-                        {state.isLoaded ? <UserGameRecords/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
+                        {state.isLoaded ? <UserGameRecords/> : <div className='logo-Grand-Qwuizzard'> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </div>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>

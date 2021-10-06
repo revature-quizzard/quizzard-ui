@@ -177,7 +177,7 @@ export function NavigationComponent() {
 
                         </IconButton>
                         <ButtonBase component={Link} to='/' className={classes.logoStyle}>
-                            <Typography variant="h3" noWrap>
+                            <Typography style={{fontFamily: "arial"}} variant="h3" noWrap>
                                 Qwizzard
                             </Typography>
                         </ButtonBase>
