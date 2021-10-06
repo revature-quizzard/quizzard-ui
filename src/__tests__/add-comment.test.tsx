@@ -64,6 +64,7 @@ describe('Add Comment Component Test Suite', () => {
         const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState});
         console.log(mockStore)
 
+        // set up spy for useSelector (provide mock values)
         const spy = jest.spyOn(redux, 'useSelector');
         spy.mockImplementation((arg) => {
             if (arg === forumState) {
