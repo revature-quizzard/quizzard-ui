@@ -44,11 +44,11 @@ function Leaderboard() {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {game.players.map((player) => (
+                {game.players.map((player, i) => (
                     <TableRow
                     key={player.username}      
                     >
-                    <TableCell align="left">{player.username}</TableCell>
+                    <TableCell align="left">{player.username} {i == 0 ? <> &#x1F451; </> : <></>}</TableCell>
                     <TableCell align="right">{player.points}</TableCell>
                     </TableRow>
                 ))}
