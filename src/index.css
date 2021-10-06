@@ -9,10 +9,7 @@
    Navy: background-color: var(--navy, #2e4756);
    Dark blue (probably best for menus/nav bars): background-color: var(--dark-blue, #16262E);
   */
-@font-face{
-  src: url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-  font-family: retro-gamer;
-}
+
 :root {
   --header-font: "Righteous", sans-serif;
   --normal-font: "Ubuntu", sans-serif;
@@ -30,6 +27,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+
   font-family: var(--normal-font);
 
 }
@@ -101,11 +99,13 @@ body {
 }
 
 .logo-Grand-Qwuizzard{
-  font-family: retro-gamer;
+  font-family: 'Press Start 2P', cursive;
   align-Content: 'center'; 
    align-Items: 'center' ;
     text-Align: 'center'  ;
-    font-Size: '60'  ;
+    font-Size: '30'  ;
+    text-Align: 'center';
+    
 }
 
 .answer {
