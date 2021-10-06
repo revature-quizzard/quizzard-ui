@@ -71,12 +71,7 @@ describe('Add Thread Component Test Suite', () => {
                                     <AddThread close={mockClose}/>
                                 </Provider>);
 
-        let subjectWrapper = wrapper.find('#subjectInput').at(0);
-        let descriptionWrapper = wrapper.find('#descriptionInput').at(0);
         let createButtonWrapper = wrapper.find('#createThreadButton').at(0);
-
-        subjectWrapper.simulate('change', 'this is a test subject');
-        descriptionWrapper.simulate('change', 'this is a test description');
 
         createButtonWrapper.simulate('click');
         
