@@ -8,6 +8,8 @@ import { forumState, setCurrentThread } from '../../state-slices/forum/forum-sli
 import { useDispatch, useSelector } from 'react-redux';
 import { authState } from '../../state-slices/auth/auth-slice';
 import AddThread from './AddThread';
+import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 const GetThreads = ()=> {
     let [threads, setThread] = useState(undefined as Thread[] | undefined);
@@ -52,40 +54,50 @@ const GetThreads = ()=> {
             }
           <TableContainer component={Paper}>
           <Table>
-              <TableHead style={{'backgroundColor':'#333333'}}>
+              <TableHead style={{'backgroundColor':'black'}}>
                   <TableRow>
-                      <TableCell style={{'color':'#FFFFFF'}}>Subject</TableCell>
-                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Author&nbsp;</TableCell>
-                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Date Created&nbsp;</TableCell>
-                      <TableCell align="left" style={{'color':'#FFFFFF'}}>Comments&nbsp;</TableCell>
+                      <TableCell style={{'color':'grey'}}>Subject</TableCell>
+                      <TableCell align="left" style={{'color':'grey'}}>Author&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'grey'}}>Date Created&nbsp;</TableCell>
+                      <TableCell align="left" style={{'color':'grey'}}>Comments&nbsp;</TableCell>
                   </TableRow>
               </TableHead>
             <TableBody>
                 {threads?.map((thr) => (
-                    <TableRow style={{'backgroundColor':'#5E5E5E'}}>
+                    <TableRow style={{'backgroundColor':'#1E1E1E'}}>
                         <TableCell
                         align="left"
-                        style={{'color':'#FFFFFF'}}
+                        style={{'color':'grey'}}
                         onClick={() => Navigate(thr.subject, thr)}>
-                            { thr.subject}
+                        <span style={{color: 'red'}}><MoreVertRoundedIcon/>  </span>    { thr.subject}
                         </TableCell>
                         <TableCell
                         align="left"
-                        style={{'color':'#FFFFFF'}}
+                        style={{'color':'grey'}}
                         onClick={() => Navigate(thr.subject, thr)}>
-                            {thr.owner}
+                          {thr.owner}
                         </TableCell>
                         <TableCell
                         align="left"
-                        style={{'color':'#FFFFFF'}}>
+                        style={{'color':'grey'}}>
                             {thr.date_created.replace('T', ' ').substring(0,16)}
                         </TableCell>
-                        <TableCell
+                        { thr.child_count > 0 ? <TableCell
                         align="left"
                         style={{'color':'#75BC3E'}}>
                             {thr.child_count}
-                        </TableCell>
+                            </TableCell>
+                             :
+                        <TableCell
+                        align="left"
+                        style={{'color':'red'}}>
+                            {thr.child_count}
+                            </TableCell>}
+
+
+                        
                   </TableRow>
+                        
               ))}
             </TableBody>
           </Table>
