@@ -8,6 +8,7 @@ import { Thread } from '../models/thread';
 import { Comment } from '../models/comment';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
+import { configureStore } from '@reduxjs/toolkit';
 
 jest.mock('../remote/comment-service');
 jest.mock('../state-slices/error/errorSlice')
@@ -58,6 +59,10 @@ describe('Update Comment Component Test Suite', () => {
         initialState = {
             currentComment: new Comment(['subforumId','threadId'], 'threadId', 'description', 'username', 'id','subject',0,'2021-10-06T23:29:17.650',[])
         }
+
+        // configure the mock store
+        //@ts-ignore
+        const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState})
     });
 
 })
