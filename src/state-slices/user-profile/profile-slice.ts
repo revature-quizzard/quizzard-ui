@@ -73,7 +73,7 @@ export const profileSlice = createSlice({
 
 
 // Export the actions/reducers to be imported into a component and dispatched from componenent
-export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer, updateImageReducer, updateSelectedImage } = profileSlice.actions;
+export const { setProfile, loading, isLoaded, clearProfile, deleteFavoriteReducer, deleteSetReducer, updateSetReducer, updateImageReducer, updateSelectedImage } = profileSlice.actions;
 
 
 // Export the state of the entire slice to be referenced in the components
