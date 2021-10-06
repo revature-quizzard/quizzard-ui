@@ -24,6 +24,9 @@ import UpdateSetModal from "./UpdateSetModal";
  * */
 
 interface iUserSets {
+    setUpdateSetName: (nextSetName: string) => void,
+    setUpdateSetIsPublic: (nextSetIsPublic: boolean) => void,
+    setUpdateSetTagNames: (nextTagNames: string[]) => void,
     setUpdateSetId: (nextSetId: string) => void,
     setUpdateIsOpen: (updateIsOpen: boolean) => void
 }
@@ -51,7 +54,11 @@ const UserSets = (props: iUserSets) => {
             renderCell: (params) => {
                 const updateSet = () => {
                     const api: GridApi = params.api;
-                    props.setUpdateSetId(api.getRow(params.id).setId);
+                    const setFields = api.getRow(params.id);
+                    props.setUpdateSetName(setFields.setName);
+                    props.setUpdateSetIsPublic(setFields.isPublic);
+                    props.setUpdateSetTagNames(setFields.tags);
+                    props.setUpdateSetId(setFields.setId);
                     props.setUpdateIsOpen(true);
                     // let rowId = api.getRow(params.id).setId;
                     // let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
@@ -120,22 +127,6 @@ const UserSets = (props: iUserSets) => {
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
         }
-    }
-
-    const upSet = async function (setId:string, set: SetDto){
-        // try{
-        //     let resp = await updateSet(setId, set);
-        //     dispatch(updateSetReducer(setId));
-        //     dispatch(setErrorSeverity('info'));
-        //     dispatch(showSnackbar("Updated!"));
-        // } catch (e:any){
-        //     console.log(e.message);
-        //     dispatch(setErrorSeverity('error'));
-        //     dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
-        // }
-
-        return <UpdateSetModal setId={setId} />
-
     }
 
     return (

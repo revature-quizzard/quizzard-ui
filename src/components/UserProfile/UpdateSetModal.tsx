@@ -32,16 +32,18 @@ import { useHistory } from "react-router";
  * */
 
 interface iUpdateSetModal {
-    setId: string
+    setId: string,
+    setName: string,
+    isPublic: boolean,
+    tagNames: string[]
 }
 
 const UpdateSetModal = (props: iUpdateSetModal) => {
 
-    console.log('WE ARE IN UPDATESETMODAL');
-
-  const [newSet, setNewSet] = useState('')
+  const [newSet, setNewSet] = useState(props.setName);
   const [tagColor, setTagColor] = useState('');
   const [tagName, setTagName] = useState('');
+  const [checked, setChecked] = useState(false);
   const [allTags , setAllTags] = useState([] as Tag[]);
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
@@ -154,12 +156,20 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         let cleard_form_w_key: SaveTagFormModel = {tagColor: '' , tagName: '' , tagAdded: false , index: key}
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
-   
+
     const toggleSetStatus = () => {
+        console.log('toggle hit');
         dispatch(setIsPublic());
-        console.log(_createSetState.setToSave.isPublic);
+        setChecked(!checked);
+        console.log(`checked: ${checked}`);
     }
 
+    useEffect(() => {
+        if(props.isPublic) {
+            console.log('isPublic is true');
+            toggleSetStatus();
+        }
+    }, []);
    
     const applyChanges = async function () {
         
@@ -199,6 +209,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         }
     });
 
+    
     const classes = useStyles();
 
     return (
