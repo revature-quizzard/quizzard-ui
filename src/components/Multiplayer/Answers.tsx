@@ -111,7 +111,7 @@ function Answers() {
         }
         playerList.push(currentPlayer);
         console.log('Player list after submit:', playerList)
-        await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: currentPlayer}}))
+        await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
         
         renderColors(e.target.id);
     }
