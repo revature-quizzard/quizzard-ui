@@ -21,7 +21,6 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
 import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
 import useSound from 'use-sound';
-import * as soundutil from '../../utilities/sound-utility';
 
 
 const useStyles = makeStyles({
@@ -76,7 +75,7 @@ const useStyles = makeStyles({
 
 });
 
-const soundFx = '../../../public/P3_SFX/GameEnd.mp3'
+const soundFx = '../../../public/P3_SFX/Incorrect.wav'
 
 
 
@@ -158,9 +157,12 @@ function Game() {
     const history = useHistory();
 
     const classes = useStyles();
+    
     const SoundTest = () => {
-        const [play] = useSound(soundFx);
     }
+    const [playActive] = useSound(
+        soundFx,
+        {volume: 1});
 
     useEffect(() => {
         // If game does not exist, reroute to /lounge
@@ -227,7 +229,10 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
+                        <>
                         <Button onClick={() => {startGame(game)}}> Start Game </Button>
+                        <Button onClick={() => playActive()}>try me</Button>
+                        </>
                         :
                         <></> }
                     </>
@@ -298,7 +303,6 @@ function Game() {
                         { (currentUser == game.host) 
                         ?
                         <>
-                        <Button onClick={SoundTest}>try me</Button>
                         <Button onClick={() => {closeGame(game)}}> Close Game </Button>
                         </>
                         :
