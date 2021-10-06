@@ -20,6 +20,7 @@ import { gameState, Player, resetGame, setGame } from '../../state-slices/multip
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
 import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
 import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
+import { maxHeight } from '@mui/system';
 
 
 const useStyles = makeStyles({
@@ -31,7 +32,8 @@ const useStyles = makeStyles({
     },
 
     playerContainer: {
-        marginRight: '1rem'
+        display: 'flex',
+        marginRight: '1rem',
     },
 
     topRow: {
@@ -76,7 +78,8 @@ const useStyles = makeStyles({
     buttons: {
         backgroundColor: 'rgb(245,245,245)',
         margin: '1rem'
-    }
+    },
+
 
 });
 

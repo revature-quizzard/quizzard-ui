@@ -27,7 +27,9 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
         width: '21em',
         borderStyle: 'solid',
         borderColor: '#4e3e61',
-        display: 'flex'
+        display: 'flex',
+        maxHeight: '550px',
+        overflowY: "scroll",
       },
       table: {
           verticalAlign: 'middle',
