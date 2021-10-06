@@ -52,6 +52,12 @@ function PublicSets() {
             backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
+        },
+        cardsInSet: {
+            color: "#75BC3E"
+        },
+        noCardsInSet: {
+            color: "red"
         }
     }));
 
@@ -93,7 +99,7 @@ function PublicSets() {
             <div>
                 <h1>Discover Set</h1>
             <TableContainer component={Paper}>
-                <Table size="small" aria-label="a dense table">
+                <Table size="small"  style={{background: '#4E3E61  ' }} >
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
@@ -105,11 +111,11 @@ function PublicSets() {
                     </TableHead>
                     <TableBody>
                         {set.map((Set, index, n) => (
-                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{Set.setName}</TableCell>
-                                <TableCell align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
-                                <TableCell align="left">{Set.cards.length}</TableCell>
-                                <TableCell align="center"> <Button key={index} onClick={ () =>{handleSetState(Set)}} variant="outlined">
+                            <TableRow key={index} >
+                                <TableCell style={{background: '#1E1E1E ' , color: 'grey'}}component="th" scope="row">{Set.setName}</TableCell>
+                                <TableCell style={{background: '#1E1E1E' , color: 'grey'}}align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
+                                <TableCell style={{background: '#1E1E1E' }}align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
+                                <TableCell style={{background: '#1E1E1E' , color: 'grey'}}align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
                                     view
                                 </Button> </TableCell>
 
