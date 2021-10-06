@@ -1,3 +1,4 @@
+import * as redux from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { shallow, configure, mount } from 'enzyme';
@@ -65,6 +66,16 @@ describe('Add Thread Component Test Suite', () => {
         }
         //@ts-ignore
         const mockStore = configureStore({ reducer: {forumInfo: forumReducer }, initialState});
+
+        // set up a spy for useSelector (provide mock values)
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockImplementation((arg) => {
+            if (arg === forumState) {
+                return initialState;
+            } else {
+                return { authUser: { username: 'username' } };
+            }
+        })
 
         // set up the wrapper
         const wrapper = mount(  <Provider store={mockStore}>
