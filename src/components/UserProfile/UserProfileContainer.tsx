@@ -32,6 +32,8 @@ const UserProfileContainer = (props: any) => {
   const [updateSetId, setUpdateSetId] = useState(undefined as string);
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
+  const [dummySwitch, setDummySwitch] = useState(false);
+
     /**
      * Main parent component for user profile. Retrieves user data and persists it to profile state.
      * Renders UserProfile, UserSets, UserFavoriteSets, and UserGameRecords upon successful retrieval.
@@ -54,7 +56,7 @@ const UserProfileContainer = (props: any) => {
     // componentDidMount lifecycle
     useEffect(() => {
         getData();
-    }, []);
+    }, [dummySwitch]);
 
     return (
         <div>
@@ -142,7 +144,7 @@ const UserProfileContainer = (props: any) => {
                 <AccordionDetails>
                     <Typography>
 
-                        {state.isLoaded ? <CreateSetModal/> : <> loading...<img className="welcomeBanner"
+                        {state.isLoaded ? <CreateSetModal dummySwitch={dummySwitch} setDummySwitch={setDummySwitch}/> : <> loading...<img className="welcomeBanner"
                                                                                 src="wizard.gif" alt="qwizard"
                                                                                 height="50px"/>  </>}
 
@@ -157,7 +159,8 @@ const UserProfileContainer = (props: any) => {
                     setUpdateIsOpen(false);
                 }}
             >
-                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}/>
+                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}
+                    dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} setUpdateIsOpen={setUpdateIsOpen} />
             </Modal>
           
         </div>
