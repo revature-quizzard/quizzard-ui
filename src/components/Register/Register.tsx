@@ -41,7 +41,14 @@ const Register = () => {
     return (
         <>
             <Form className="auth-form">
-                <h2>Registration</h2>
+            <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center'}}><b> <span style={{fontFamily:"retro-gamer"}}>Q W I Z Z A R D</span>
+      <br/> 
+      <span style={{color: '#7D7687 '}}>App</span> </b> </h1>
+      <hr/>
+            <h1  style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" , textAlign: 'center' }}><b> <span  >R e g i s t r a t i o n</span> </b></h1>
+      <br/>    
+      <hr/>
+                <h1><b></b></h1>
                 <Form.Group>
                     <Form.Label>Username: </Form.Label>
                     <Form.Control
