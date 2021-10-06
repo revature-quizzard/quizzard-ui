@@ -17,7 +17,9 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     cardClass: {
         width: '100%',
         flexGrow: 1,
-        borderColor: 'orange'
+        borderColor: 'orange',
+        borderLeftStyle: 'solid',
+        backgroundColor: 'rgb(240,240,240)'
     },
 
     contentClass: {
@@ -36,7 +38,7 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 
     questionTypo: {
         alignSelf: 'center',
-        verticalAlign: 'center'
+        verticalAlign: 'center',
     },
 
     pointsEarned: {
@@ -52,7 +54,6 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
     },
 
     questNumTypo: {
-
     }
  });
 
