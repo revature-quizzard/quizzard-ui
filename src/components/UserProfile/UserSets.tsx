@@ -56,7 +56,7 @@ const UserSets = (props: iUserSets) => {
                     const api: GridApi = params.api;
                     const setFields = api.getRow(params.id);
                     props.setUpdateSetName(setFields.setName);
-                    props.setUpdateIsOpen(setFields.isPublic);
+                    props.setUpdateSetIsPublic(setFields.isPublic);
                     props.setUpdateSetTagNames(setFields.tags);
                     props.setUpdateSetId(setFields.setId);
                     props.setUpdateIsOpen(true);
@@ -127,22 +127,6 @@ const UserSets = (props: iUserSets) => {
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar("There was an issue while trying to delete, please try again later."));
         }
-    }
-
-    const upSet = async function (setId:string, set: SetDto){
-        // try{
-        //     let resp = await updateSet(setId, set);
-        //     dispatch(updateSetReducer(setId));
-        //     dispatch(setErrorSeverity('info'));
-        //     dispatch(showSnackbar("Updated!"));
-        // } catch (e:any){
-        //     console.log(e.message);
-        //     dispatch(setErrorSeverity('error'));
-        //     dispatch(showSnackbar("There was an issue while trying to update, please try again later."));
-        // }
-
-        return <UpdateSetModal setId={setId} />
-
     }
 
     return (

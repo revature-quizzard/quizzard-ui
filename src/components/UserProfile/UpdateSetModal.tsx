@@ -31,16 +31,18 @@ import { makeStyles } from "@mui/styles";
  * */
 
 interface iUpdateSetModal {
-    setId: string
+    setId: string,
+    setName: string,
+    isPublic: boolean,
+    tagNames: string[]
 }
 
 const UpdateSetModal = (props: iUpdateSetModal) => {
 
-    console.log('WE ARE IN UPDATESETMODAL');
-
-  const [newSet, setNewSet] = useState('')
+  const [newSet, setNewSet] = useState(props.setName);
   const [tagColor, setTagColor] = useState('');
   const [tagName, setTagName] = useState('');
+  const [checked, setChecked] = useState(false);
   const [allTags , setAllTags] = useState([] as Tag[]);
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
@@ -153,12 +155,20 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         let cleard_form_w_key: SaveTagFormModel = {tagColor: '' , tagName: '' , tagAdded: false , index: key}
         dispatch(clearTagFrombyIndex(cleard_form_w_key));
     }
-   
+
     const toggleSetStatus = () => {
+        console.log('toggle hit');
         dispatch(setIsPublic());
-        console.log(_createSetState.setToSave.isPublic);
+        setChecked(!checked);
+        console.log(`checked: ${checked}`);
     }
 
+    useEffect(() => {
+        if(props.isPublic) {
+            console.log('isPublic is true');
+            toggleSetStatus();
+        }
+    }, []);
    
     const applyChanges = async function () {
         
@@ -188,7 +198,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
             <div >
             <TextField label="set name" onChange={handleChange} value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+            <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
             </div >
                 <hr/>
 

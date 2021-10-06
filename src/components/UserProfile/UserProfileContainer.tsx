@@ -78,7 +78,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography>{state.isLoaded == false ?<> <span style={{color: 'red'}}><b>|</b>  </span>  My Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span>  My Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
+                    <Typography >
                         {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}
                             setUpdateSetName={setUpdateSetName} setUpdateSetIsPublic={setUpdateSetIsPublic} setUpdateSetTagNames={setUpdateSetTagNames}
                         /> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
@@ -153,7 +153,7 @@ const UserProfileContainer = (props: any) => {
                     setUpdateIsOpen(false);
                 }}
             >
-                <UpdateSetModal setId={updateSetId} />
+                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}/>
             </Modal>
           
         </div>
