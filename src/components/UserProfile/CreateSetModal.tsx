@@ -41,6 +41,11 @@ import { getJSDocTags } from "typescript";
  * @author Alfonso Holmes
  * */
 
+interface iCreateSetModal {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void
+}
+
 const CreateSetModal = (props: any) => {
 
   const [newSet, setNewSet] = useState('')
@@ -172,7 +177,7 @@ const CreateSetModal = (props: any) => {
                 console.log("NEWLY CREATED SET : " ,  newly_created_set);
                 dispatch(clearTags());
                 setNewSet('');
-                setRerenderSwitch(!rerenderSwitch);
+                props.setDummySwitch(!props.dummySwitch);
                 // dispatch(resetCurrentSetToSave());
                 
 
