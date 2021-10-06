@@ -20,6 +20,8 @@ import { gameState, Player, resetGame, setGame } from '../../state-slices/multip
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
 import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
 import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
+import useSound from 'use-sound';
+import * as soundutil from '../../utilities/sound-utility';
 
 
 const useStyles = makeStyles({
@@ -73,6 +75,9 @@ const useStyles = makeStyles({
     }
 
 });
+
+const soundFx = '../../../public/P3_SFX/GameEnd.mp3'
+
 
 
 Amplify.configure(config);
@@ -152,6 +157,11 @@ function Game() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const classes = useStyles();
+    const SoundTest = () => {
+        const [play] = useSound(soundFx);
+    }
+
     useEffect(() => {
         // If game does not exist, reroute to /lounge
         if (!game.id) history.push('/lounge');
@@ -196,7 +206,7 @@ function Game() {
         }
     }, [])
 
-    const classes = useStyles();
+
 
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
@@ -287,7 +297,10 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
+                        <>
+                        <Button onClick={SoundTest}>try me</Button>
                         <Button onClick={() => {closeGame(game)}}> Close Game </Button>
+                        </>
                         :
                         <></> }
                     </>
