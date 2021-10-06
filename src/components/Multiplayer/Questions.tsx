@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { authState } from '../../state-slices/auth/auth-slice';
 import { gameState } from '../../state-slices/multiplayer/game-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
+import Sound, { ReactSoundProps } from 'react-sound';
 
 /**
  * React component that renders a questions to the players
@@ -84,10 +85,19 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
                                 + {currentPlayer.pointsEarned} points! 
                                 &nbsp; <img height='50px' src='fast_meow_party.gif'/> &nbsp;
                                 {currentPlayer.streak > 1 ? <> {currentPlayer.streak} &#x1F525; </>: <> </>}
+                                <Sound
+                                url={"Correct.mp3"}
+                                playStatus={"PLAYING"}
+                                />
                             </Typography> : game.matchState == 2 ?
                             <Typography variant="h5" className={classes.noPointsEarned}>
                                 No points earned... &#x1F4A9;
+                                <Sound
+                                url={"Incorrect.mp3"}
+                                playStatus={"PLAYING"}
+                                />
                             </Typography> : <> </>
+                            
                         }
 
                     </div>
