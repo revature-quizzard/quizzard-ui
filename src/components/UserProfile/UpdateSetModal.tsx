@@ -175,7 +175,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         
             try {
                 dispatch(loading());
-                let setToSave_ : SetDto = {setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                let setToSave_ : SetDto = {setName: newSet , isPublic: checked , tags : _createSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave_));
                 console.log("SET TO SAVE : " , setToSave_);
                 let newly_created_set = await updateSet(props.setId, setToSave_);
