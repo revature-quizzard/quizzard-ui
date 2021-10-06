@@ -407,6 +407,7 @@ function Game() {
      * Helper function to be called from React fragment
     */
     const callPersistData = () => {
+        console.log('callPersistData called, numCalls: ', numCalls)
         if(numCalls<1)
             persistUserData();
         numCalls++;
@@ -424,7 +425,7 @@ function Game() {
         // Prevent duplicate calls
         numCalls++;
         // find the current user if not guest
-        let currentUser = user.authUser.username;
+        let currentUser = user.authUser.id;
         let players = game.players.map(player => ({...player}));
 
         if(currentUser === game.host){
@@ -458,24 +459,6 @@ function Game() {
                 console.log('persist user data error: ', e);
             }
 
-        }
-
-        //Update user state
-        if(user?.authUser){
-            let persistPlayer;
-            let currentPlayer = game.players.find(player => player.id === user?.authUser.id);
-            console.log("Before updating persistPlayer")
-            if(currentPlayer.placing === 1){
-                persistPlayer = { wins: userProfile.userProfile.losses+1,
-                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-                     ...userProfile.userProfile}
-            } else {
-                persistPlayer = { losses: userProfile.userProfile.losses+1,
-                    points: userProfile.userProfile.points + currentPlayer.points,          // Update the Gamerecords as well
-                     ...userProfile.userProfile}
-            }
-            console.log("Dispatch: "+ persistPlayer);
-            dispatch(setProfile(persistPlayer));  //Update state
         }
     }
 
