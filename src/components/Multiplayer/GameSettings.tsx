@@ -66,6 +66,8 @@ function GameSettings() {
             return 3;
         } else if (formData.timer<3 || formData.timer > 45) {
             return 4;
+        } else if (formData.set.cards.length < 1) {
+            return 5;
         }
         return 1;
     }
@@ -107,6 +109,11 @@ function GameSettings() {
                 //Snack bar error message to user 
                 dispatch(setErrorSeverity("error"));
                 dispatch(showSnackbar("You cannot set a timer for less than five seconds, or more than forty-five seconds!"));
+                return;
+            case 5:
+                // Set has no cards
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("The set you have selected has no cards!"));
                 return;
             default:
                 break;
