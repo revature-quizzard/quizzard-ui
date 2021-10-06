@@ -21,6 +21,8 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
 import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
 import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
 import useSound from 'use-sound';
+import React from 'react';
+import Sound, { ReactSoundProps } from 'react-sound';
 
 
 const useStyles = makeStyles({
@@ -75,7 +77,7 @@ const useStyles = makeStyles({
 
 });
 
-const soundFx = '../../../public/P3_SFX/Incorrect.wav'
+const soundFx = '../../../public/P3_SFX/Correct.mp3'
 
 
 
@@ -147,6 +149,8 @@ function postGameRecords() {
 }
 
 
+    
+
 function Game() {
     const userProfile = useSelector(profileState);
     const user = useSelector(authState);
@@ -158,11 +162,31 @@ function Game() {
 
     const classes = useStyles();
     
-    const SoundTest = () => {
-    }
+    const [playbackRate, setPlaybackRate] = React.useState(1);
+    
     const [playActive] = useSound(
         soundFx,
-        {volume: 1});
+        { volume: 0.25 }
+    );
+
+    const [status, setStatus] = useState<ReactSoundProps['playStatus']>('STOPPED');
+  
+    function togglePlayStatus() {
+      setStatus((status: string) => status === 'STOPPED' ? 'PLAYING' : 'STOPPED')
+    }
+  
+    function statusLabel(status: ReactSoundProps['playStatus']): string {
+      switch(status) {
+        case 'STOPPED':
+          return 'PLAY';
+        case 'PLAYING':
+          return 'STOP';
+        default:
+          return 'STOP';
+      }
+    }
+
+    
 
     useEffect(() => {
         // If game does not exist, reroute to /lounge
@@ -231,7 +255,13 @@ function Game() {
                         ?
                         <>
                         <Button onClick={() => {startGame(game)}}> Start Game </Button>
-                        <Button onClick={() => playActive()}>try me</Button>
+                        <Button onClick={() => {playActive()}}> Play Sound </Button>
+                        <button onClick={(click) => togglePlayStatus()}>{statusLabel(status)}</button>
+                        <Sound
+                        url={"https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"}
+                        playStatus={status}
+                        />
+    
                         </>
                         :
                         <></> }
