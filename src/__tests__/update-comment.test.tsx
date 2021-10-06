@@ -60,6 +60,9 @@ describe('Update Comment Component Test Suite', () => {
             currentComment: new Comment(['subforumId','threadId'], 'threadId', 'description', 'username', 'id','subject',0,'2021-10-06T23:29:17.650',[])
         }
 
+        // mock props
+        let mockClose = jest.fn();
+
         // configure the mock store
         //@ts-ignore
         const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState})
@@ -72,7 +75,9 @@ describe('Update Comment Component Test Suite', () => {
             } else {
                 return { authUser: { username: 'username' } };
             }
-        })
+        });
+
+        const wrapper = mount(<Provider store={mockStore}><UpdateComment close={mockClose}/></Provider>)
     });
 
 })
