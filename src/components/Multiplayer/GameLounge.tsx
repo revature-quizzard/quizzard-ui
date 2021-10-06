@@ -148,12 +148,12 @@ function GameLounge() {
         { (!game.host)
         ?
         <>
-        <div className="App" >
+        <div >
             <header >
-            <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+            <h1 ><b><span  style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span></b>
             <br/> 
-            
-            <span style={{color: '#EF8D22'}}>Online</span><span style={{color: '#75BC3E'}}>.</span> </b> </h1>
+          
+            <span className='logo-Grand-Qwuizzard' style={{color: '#EF8D22' , marginLeft: '10%'}}>Online</span><span  className='logo-Grand-Qwuizzard' style={{color: '#75BC3E'}}>.</span>  </h1>
                 <hr/>
                 <br></br>
                 <br></br>

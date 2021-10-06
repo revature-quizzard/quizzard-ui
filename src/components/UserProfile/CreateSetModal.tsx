@@ -52,8 +52,7 @@ const CreateSetModal = (props: any) => {
   const _createSetState= useSelector(createSetState);
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
-  let k : number = 0;
-  let _setIsPublic : boolean = false;
+ 
 
 
   const handleChange = (e: any) => {
