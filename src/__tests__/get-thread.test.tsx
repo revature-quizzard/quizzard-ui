@@ -6,7 +6,7 @@ import { Thread } from '../models/thread';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import forumReducer from '../state-slices/forum/forum-slice';
+import forumReducer, { forumState } from '../state-slices/forum/forum-slice';
 import { getAllThreads } from '../remote/sub-forum-service';
 jest.mock('../remote/sub-forum-service');
 import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
@@ -63,6 +63,16 @@ describe('Get Threads Component Test Suite', () => {
         (getAllThreads as jest.Mock).mockImplementation(() => {
             return Promise.resolve([new Thread(["Ancestor"], "Parent", "Description", "ID", "Subject")])
         });
+
+        // set up spy for usesSelector (provide mock values)
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockImplementation((arg) => {
+            if (arg === forumState) {
+                return initialState;
+            } else {
+                return { authUser: {username: 'username'} }
+            }
+        })
 
         // set up wrapper class
         const wrapper = shallow(<Provider store={mockStore}>
