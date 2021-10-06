@@ -100,12 +100,6 @@ function PublicSets() {
                                                 set.map((Set, index, n) => (
                                                     <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
 
-                                                        {username === undefined?
-
-
-                                                                    <>
-
-
                                                                         {username === Set.author
                                                                             ?
                                                                             <></>
@@ -118,22 +112,6 @@ function PublicSets() {
                                                                             </Button> </TableCell>
                                                                             </>
                                                                         }
-
-                                                                    </>
-                                                              :
-                                                                        <>
-                                                                            <TableCell component="th" scope="row">{Set.setName}</TableCell>
-                                                                            <TableCell align="left">{Set.tags.map((tag, index, s) => (<h6 key={index}>{tag.tagName} </h6>))}</TableCell>
-                                                                            <TableCell align="left">{Set.cards.length}</TableCell>
-                                                                            <TableCell align="center"> <Button key={index} onClick={() => {handleSetState(Set)}} variant="outlined">view
-                                                                            </Button> </TableCell>
-                                                                        </>
-
-                                                        }
-
-
-
-
 
                                                     </TableRow>
                                                 ))
