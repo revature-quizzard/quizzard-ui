@@ -36,9 +36,8 @@ export const authSlice = createSlice({
       let name = response.payload.attributes.name;
       let email = response.payload.attributes.email;
       let token = response.payload.signInUserSession.idToken.jwtToken;
-      let profilePicture = response.payload.attributes.image;
 
-      state.authUser = new User(id, username, name, email, token, profilePicture);
+      state.authUser = new User(id, username, name, email, token);
       state.isAuthenticated = true;
     },
     
