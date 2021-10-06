@@ -168,6 +168,9 @@ function Game() {
                 console.log('usersToUpdate',{currentUser});
                 let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
                 console.log('onUpdate:', { provider, value });
+
+                value.data.onUpdateGameById.players.sort((a: any, b: any) => a.points < b.points ? 1 : -1);
+
                 ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
             //@ts-ignore
@@ -197,7 +200,7 @@ function Game() {
     // a switch statement in our conditional rendering.
     function render() {
         console.log('game in render: ', game)
-        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         switch(game.matchState) {
@@ -302,7 +305,7 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
-        let currentUser = user.authUser ? user.authUser.username : guestUser ? guestUser.nickname : undefined;
+        let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {

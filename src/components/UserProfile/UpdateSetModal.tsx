@@ -21,8 +21,8 @@ import { TagFormModel } from "../../models/new-tag-form";
 import { SaveTagFormModel } from "../../models/save-tag-form-model";
 import { errorState } from "../../state-slices/error/errorSlice";
 import LabelIcon from '@mui/icons-material/Label';
-import Modal from '@mui/material/Modal' 
-import { makeStyles } from "@mui/styles";
+import Box from '@mui/material/Box';
+import { makeStyles } from '@material-ui/core';
 
 /**
  * Allows user to create set with multiple tags.
@@ -191,71 +191,89 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
             }
     }
 
-   const classes = useStyles();
+   const useStyles = makeStyles({
+        box: {
+            justifyContent: "center",
+            textAlign: 'center',    
+            margin: 'auto',
+            position: 'absolute' as 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            backgroundColor: '#FFFFFF',
+            border: '2px solid #000',
+            p: 4,
+        }
+    });
+
+    
+    const classes = useStyles();
 
     return (
-        <div className={classes.updateSetModal}>                
-            <div >
-            <TextField label="set name" onChange={handleChange} value={newSet} />
-            <br/>
-            <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
-            </div >
-                <hr/>
+        <Box className={classes.box}>
+            <div>                
+                <div >
+                <TextField label="set name" onChange={handleChange} value={newSet} />
+                <br/>
+                <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+                </div >
+                    <hr/>
+                        { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
+                        { 
+                    return <div key={i}>
+                        
+                        {_createSetState.newTagForms[i].tagAdded == false 
 
-                    { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
-                     { 
-                   return <div key={i}>
+                        ? 
+
+                        <>
+                        <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
+                            <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
+                            <Select
+                                            
+                                                labelId="demo-simple-select-standard-label"
+                                                id="demo-simple-select-standard"
+                                                value={tagName}
+                                                //onChange={}
+                                                label="Age"
+                                                > 
+                                    {allTags.map((T : Tag | undefined , i) =>{
+
+                                        return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><LabelIcon style={{color: T.tagColor}}/><em>{T.tagName} </em>  </MenuItem>
+                                            
+                                        })}
+
+                                </Select>
+                        </FormControl>
+                        <br/>
+                        <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                        </>
+                        
+                        : 
+                        
+                        <>
+                        { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                     
-                    {_createSetState.newTagForms[i].tagAdded == false 
-
-                    ? 
-
-                    <>
-                    <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
-                         <Select
-                                           
-                                            labelId="demo-simple-select-standard-label"
-                                            id="demo-simple-select-standard"
-                                            value={tagName}
-                                            //onChange={}
-                                            label="Age"
-                                            > 
-                                  {allTags.map((T : Tag | undefined , i) =>{
-
-                                    return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><LabelIcon style={{color: T.tagColor}}/><em>{T.tagName} </em>  </MenuItem>
-                                          
-                                    })}
-
-                              </Select>
-                    </FormControl>
-                    <br/>
-                    <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
-                    </>
+                        <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
+                            Remove
+                        </Button>
                     
-                    : 
+                        <Alert  severity="success">Added!</Alert>  <hr/> </>}
+                        
                     
-                    <>
-                    { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
-                 
-                    <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
-                        Remove
-                    </Button>
-                  
-                    <Alert  severity="success">Added!</Alert>  <hr/> </>}
-                    
-                   
-                    <br/>
-                     </> }
-                </div>
-                })
-            }
-                    {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
-               <br/>
+                        <br/>
+                        </> }
+                    </div>
+                    })
+                }
+                        {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
+                <br/>
 
-                <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+                    <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
 
-        </div>
+            </div>
+        </Box>
     );
 }
 
