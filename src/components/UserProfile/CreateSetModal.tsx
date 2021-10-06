@@ -72,7 +72,7 @@ const CreateSetModal = (props: any) => {
           console.log(e);
           setAllTags([{tagName: 'oop' , tagColor: 'blue'} ,
            {tagName: 'java' , tagColor: 'red'} ,
-           {tagName: 'lisov substitution' , tagColor: 'yellow'} ,
+           {tagName: 'liskov substitution' , tagColor: 'yellow'} ,
            {tagName: 'python' , tagColor: 'black'}
           ] as Tag[])
         }
@@ -237,7 +237,7 @@ const CreateSetModal = (props: any) => {
                     : 
                     
                     <>
-                    { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
+                    { newSet === '' ? <><Alert  severity="warning">Must Enter Set Name</Alert></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                  
                     <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                         Remove
