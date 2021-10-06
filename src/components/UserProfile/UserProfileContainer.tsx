@@ -1,26 +1,33 @@
-import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Modal, Typography} from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserProfile from "./UserProfile";
-import {useDispatch, useSelector} from "react-redux";
-import {isLoaded, loading, profileState, setProfile} from "../../state-slices/user-profile/profile-slice";
-import {useEffect} from "react";
-import {getUserData} from "../../remote/user-service";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
+import { useEffect, useState } from "react";
+import { getUserData } from "../../remote/user-service";
 import {UserData} from "../../models/user-data";
 import {User} from "../../models/user";
 import {authState} from "../../state-slices/auth/auth-slice";
 import {createSetState} from "../../state-slices/study-set/create-set-model-slice";
 import CreateSetModal from "./CreateSetModal";
+import UpdateSetModal from "./UpdateSetModal";
 import UserGameRecords from "./UserGameRecords";
 import UserFavoriteSets from "./UserFavoriteSets";
 import UserSets from "./UserSets";
 import {Gif} from "@material-ui/icons";
 
 const UserProfileContainer = (props: any) => {
-    const state = useSelector(profileState);
-    const dispatch = useDispatch();
-    const user: User = useSelector(authState).authUser;
-    const createState = useSelector(createSetState);
-
+  const state = useSelector(profileState);
+  const dispatch = useDispatch();
+  const user: User = useSelector(authState).authUser;
+  const createState = useSelector(createSetState);
+ 
+  /* [Duct Tape] these states are for the UpdateSets modal */
+  const [updateSetName, setUpdateSetName] = useState(undefined as string);
+  const [updateSetIsPublic, setUpdateSetIsPublic] = useState(undefined as boolean);
+  const [updateSetTagNames, setUpdateSetTagNames] = useState(undefined as string[]);
+  const [updateSetId, setUpdateSetId] = useState(undefined as string);
+  const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
     /**
      * Main parent component for user profile. Retrieves user data and persists it to profile state.
@@ -45,7 +52,6 @@ const UserProfileContainer = (props: any) => {
     useEffect(() => {
         getData();
     }, []);
-
 
     return (
         <div>
@@ -72,8 +78,12 @@ const UserProfileContainer = (props: any) => {
                         Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Sets </>}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        {state.isLoaded ? <UserSets/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
+
+                    <Typography >
+                        {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}
+                            setUpdateSetName={setUpdateSetName} setUpdateSetIsPublic={setUpdateSetIsPublic} setUpdateSetTagNames={setUpdateSetTagNames}
+                        /> :  <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </>}
+
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -137,6 +147,15 @@ const UserProfileContainer = (props: any) => {
 
             </Accordion>
 
+            <Modal
+                open={updateIsOpen}
+                onClose={() => {
+                    setUpdateIsOpen(false);
+                }}
+            >
+                <UpdateSetModal setId={updateSetId} setName={updateSetName} isPublic={updateSetIsPublic} tagNames={updateSetTagNames}/>
+            </Modal>
+          
         </div>
     );
 }
