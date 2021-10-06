@@ -425,7 +425,7 @@ function Game() {
         // Prevent duplicate calls
         numCalls++;
         // find the current user if not guest
-        let currentUser = user.authUser.id;
+        let currentUser = user.authUser?.id;
         let players = game.players.map(player => ({...player}));
 
         if(currentUser === game.host){
