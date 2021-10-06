@@ -41,6 +41,8 @@ function ViewSetPage() {
     const [answer, setAnswer] = React.useState(false);
     const user: User = useSelector(authState).authUser;
     const history = useHistory();
+    const s: Set = useSelector(StudySetState).aSet;
+
 
     // const state = useSelector(profileState);
     // const favorites = state.userProfile.favoriteSets;
@@ -52,7 +54,7 @@ function ViewSetPage() {
         }
     const handleClose = () => setOpen(false);
 
-    const s: Set = useSelector(StudySetState).aSet;
+
 
 
     const useStyles = makeStyles((theme:Theme) => ({
@@ -110,8 +112,6 @@ function ViewSetPage() {
     };
 
     async function addTofavoriets(){
-
-
 
         let setId={
             id:s.id
