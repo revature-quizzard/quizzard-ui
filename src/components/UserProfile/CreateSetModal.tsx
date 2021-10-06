@@ -66,7 +66,7 @@ const CreateSetModal = (props: any) => {
     {
         try{
               let response = await getSetTags();  
-        
+              setAllTags(response);
         }catch(e: any){
           console.log(e);
           setAllTags([{tagName: 'oop' , tagColor: 'blue'} ,
