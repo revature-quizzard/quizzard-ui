@@ -17,6 +17,7 @@ import errorReducer from "../state-slices/error/errorSlice";
 import forumReducer from "../state-slices/forum/forum-slice"
 import profileReducer from "../state-slices/user-profile/profile-slice";
 import createSetReducer  from "../state-slices/study-set/create-set-model-slice";
+import updateSetReducer  from "../state-slices/study-set/update-set-modal-slice";
 import {createStore, combineReducers} from 'redux'
 
 
@@ -34,6 +35,7 @@ export const store = configureStore({
         error: errorReducer,
         profile: profileReducer, 
         createSet: createSetReducer,
+        updateSet: updateSetReducer,
         forum: forumReducer,
         guest: guestReducer
     }

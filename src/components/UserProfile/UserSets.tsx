@@ -1,7 +1,8 @@
 import {Container, Typography, Button, IconButton, Modal, Box} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateIcon from '@mui/icons-material/Update';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteSetReducer, profileState} from "../../state-slices/user-profile/profile-slice";
+import {deleteSetReducer, profileState, updateSetReducer} from "../../state-slices/user-profile/profile-slice";
 import {
     DataGrid,
     GridColDef,
@@ -10,7 +11,10 @@ import {
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
-import {addCard, deleteSet, getSetById} from "../../remote/set-service";
+import {SetDto} from '../../dtos/set-dto';
+import { Tag } from "../../dtos/Tag";
+import UpdateSetModal from "./UpdateSetModal";
+import {addCard, updateSet, deleteSet, getSetById} from "../../remote/set-service";
 import React, {useState} from "react";
 import {Form} from "react-bootstrap";
 import AddIcon from '@mui/icons-material/Add';
@@ -26,7 +30,15 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
  * @authors Cody McDonald, Mitchell Panenko, Jose Tejada
  * */
 
-const UserSets = () => {
+interface iUserSets {
+    setUpdateSetName: (nextSetName: string) => void,
+    setUpdateSetIsPublic: (nextSetIsPublic: boolean) => void,
+    setUpdateSetTagNames: (nextTagNames: string[]) => void,
+    setUpdateSetId: (nextSetId: string) => void,
+    setUpdateIsOpen: (updateIsOpen: boolean) => void
+}
+
+const UserSets = (props: iUserSets) => {
     const state = useSelector(profileState);
     const dispatch = useDispatch();
     const userCreatedSets = state.userProfile.createdSets;
@@ -98,8 +110,36 @@ const UserSets = () => {
         {field: 'plays', headerName: 'Plays', flex: 1},
         {field: 'studies', headerName: 'Studies', flex: 1},
         {field: 'favorites', headerName: 'Faves', flex: 1},
-        {
-            field: "",
+        {field: "updateSet",
+            headerName: " ",
+            sortable: false,
+            width: 50,
+            renderCell: (params) => {
+                const updateSet = () => {
+                    const api: GridApi = params.api;
+                    const setFields = api.getRow(params.id);
+                    props.setUpdateSetName(setFields.setName);
+                    props.setUpdateSetIsPublic(setFields.isPublic);
+                    props.setUpdateSetTagNames(setFields.tags);
+                    props.setUpdateSetId(setFields.setId);
+                    props.setUpdateIsOpen(true);
+                    // let rowId = api.getRow(params.id).setId;
+                    // let setDto = new SetDto(api.getRow(params.id).setName, api.getRow(params.id).isPublic, api.getRow(params.id).tags, '');
+                    //  upSet(rowId, setDto); 
+                    api.updateRows([{
+                        id: params.id,
+                        _action1: 'update'
+                    }]);
+                };
+
+                return <IconButton onClick={() => {
+                    updateSet()
+                }}>
+                    <UpdateIcon/>
+                </IconButton>;
+            }
+        },
+        {field: "deleteSet",
             headerName: " ",
             sortable: false,
             width: 50,
@@ -188,7 +228,7 @@ const UserSets = () => {
                 id: index,
                 setId: set.id,
                 setName: set.setName,
-                tags: set.tags.map((x) => (x.tagName)),
+                tags: set.tags.map((x) => x.tagName),
                 isPublic: set.isPublic,
                 views: set.views,
                 plays: set.plays,
