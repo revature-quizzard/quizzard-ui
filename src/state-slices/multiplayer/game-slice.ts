@@ -10,7 +10,9 @@ export interface Player {
     answeredAt: string,
     answeredCorrectly: boolean,
     placing: number,
-    streak: number
+    streak: number,
+    pointsEarned: number,
+    afk: boolean
 }
 
 interface Set {

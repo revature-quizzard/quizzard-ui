@@ -3,6 +3,7 @@
  */
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -10,9 +11,6 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ForumIcon from '@mui/icons-material/Forum';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link, useHistory} from "react-router-dom";
 import clsx from 'clsx';
