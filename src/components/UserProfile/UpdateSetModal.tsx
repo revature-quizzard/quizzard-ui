@@ -6,7 +6,7 @@ import { User } from "../../models/user";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { updateSet, getSetTags } from "../../remote/set-service";
 import { SetDto } from "../../dtos/set-dto";
-import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, createSetState, deleteTag, incrementTagLimit, openModal, resetCurrentSetToSave, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/create-set-model-slice";
+import { appendNewTag, appendNewTagForm, clearTagFrombyIndex, clearTags, closeModal, deleteTag, incrementTagLimit, openModal, saveSet, setIsPublic, updateTagFormbyIndex  } from "../../state-slices/study-set/update-set-modal-slice";
 import Switch from '@mui/material/Switch';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField  } from "@material-ui/core";
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
@@ -18,6 +18,7 @@ import LabelIcon from '@mui/icons-material/Label';
 import Box from '@mui/material/Box';
 import { makeStyles } from '@material-ui/core';
 import { useHistory } from "react-router";
+import { updateSetState } from "../../state-slices/study-set/update-set-modal-slice";
 
 /**
  * Allows user to create set with multiple tags.
@@ -41,7 +42,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
   const [allTags , setAllTags] = useState([] as Tag[]);
   const dispatch = useDispatch();
   const user: User = useSelector(authState).authUser;
-  const _createSetState= useSelector(createSetState);
+  const _updateSetState= useSelector(updateSetState);
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
   let k : number = 0;
@@ -94,10 +95,10 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
     }
 
     const createNewTagForm = () => {  
-        console.log(_createSetState.tagLimit);
-        if( _createSetState.tagLimit < 10)
+        console.log(_updateSetState.tagLimit);
+        if( _updateSetState.tagLimit < 10)
         {
-          //  setNewTagFromState( _createSetState.newTagForms as TagFormModel[]);
+          //  setNewTagFromState( _updateSetState.newTagForms as TagFormModel[]);
            
             let ntf : TagFormModel = { tagColor: '' , TagName: '' , tagAdded: false};
             dispatch(appendNewTagForm(ntf)); 
@@ -112,7 +113,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
 
     const ClearTags = (e: any ) => {  
         dispatch(clearTags);
-        console.log(_createSetState.setToSave.tags + " " + _createSetState.newTagForms );
+        console.log(_updateSetState.setToSave.tags + " " + _updateSetState.newTagForms );
     }
 
     const removeTag = (e: any , key: number) => {   
@@ -131,7 +132,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         
         let formToSave_w_key: SaveTagFormModel = { tagColor: tagColor , tagName: tagName , tagAdded: true , index: key};
         dispatch(updateTagFormbyIndex(formToSave_w_key));
-        console.log("TAGS ON SET TO SEND : " ,  _createSetState.setToSave.tags);
+        console.log("TAGS ON SET TO SEND : " ,  _updateSetState.setToSave.tags);
         }
         else{
             
@@ -165,7 +166,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
         
             try {
                 dispatch(loading());
-                let setToSave_ : SetDto = {setName: newSet , isPublic: false , tags : _createSetState.setToSave.tags} as SetDto
+                let setToSave_ : SetDto = {setName: newSet , isPublic: false , tags : _updateSetState.setToSave.tags} as SetDto
                 dispatch(saveSet(setToSave_));
                 console.log("SET TO SAVE : " , setToSave_);
                 let newly_created_set = await updateSet(props.setId, setToSave_);
@@ -212,55 +213,55 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                 <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
                 </div >
                     <hr/>
-                        { _createSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
-                        { 
-                    return <div key={i}>
+                        { _updateSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
+                            { 
+                            return <div key={i}>
                         
-                        {_createSetState.newTagForms[i].tagAdded == false 
+                                {_updateSetState.newTagForms[i].tagAdded == false 
 
-                        ? 
+                                ? 
 
-                        <>
-                        <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
-                            <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
-                            <Select
-                                                labelId="demo-simple-select-standard-label"
-                                                id="demo-simple-select-standard"
-                                                value={tagName}
-                                                //onChange={}
-                                                label="Age"
-                                                > 
-                                    {allTags.map((T : Tag | undefined , i) =>{
+                                <>
+                                <FormControl variant="standard" style={{ margin: 1, minWidth: 120 }}>
+                                    <InputLabel id="demo-simple-select-standard-label">Tags</InputLabel>
+                                    <Select
+                                                        labelId="demo-simple-select-standard-label"
+                                                        id="demo-simple-select-standard"
+                                                        value={tagName}
+                                                        //onChange={}
+                                                        label="Age"
+                                                        > 
+                                            {allTags.map((T : Tag | undefined , i) =>{
 
-                                        return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><LabelIcon style={{color: T.tagColor}}/><em>{T.tagName} </em>  </MenuItem>
-                                            
-                                        })}
+                                                return   <MenuItem value={T.tagName} key={i}  onClick={(e) => updateTagNameAndColor(e , i)}><LabelIcon style={{color: T.tagColor}}/><em>{T.tagName} </em>  </MenuItem>
+                                                    
+                                                })}
 
-                                </Select>
-                        </FormControl>
+                                        </Select>
+                                </FormControl>
+                                <br/>
+                                <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                                </>
+                                
+                                : 
+                                
+                                <>
+                                { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _updateSetState.newTagForms[i].tagColor}} />  {_updateSetState.newTagForms[i].TagName}</p>
+                            
+                                <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
+                                    Remove
+                                </Button>
+                            
+                                <Alert  severity="success">Added!</Alert>  <hr/> </>}
+                                
+                            
+                                <br/>
+                                </> }
+                            </div>
+                            })
+                        }
+                                {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
                         <br/>
-                        <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
-                        </>
-                        
-                        : 
-                        
-                        <>
-                        { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
-                    
-                        <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
-                            Remove
-                        </Button>
-                    
-                        <Alert  severity="success">Added!</Alert>  <hr/> </>}
-                        
-                    
-                        <br/>
-                        </> }
-                    </div>
-                    })
-                }
-                        {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
-                <br/>
 
                     <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
 
