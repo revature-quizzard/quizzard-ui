@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'rich-markdown-editor';
 import { Paper } from '@mui/material';
 import { Button, Box, FormControl, Input, Typography, makeStyles } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { updateThread } from '../../remote/thread-service';
 import { Redirect } from 'react-router';
+import { setErrorSeverity, showSnackbar } from '../../state-slices/error/errorSlice';
 
 const useStyles = makeStyles({
     updateThreadContainer: {
@@ -41,6 +42,7 @@ function UpdateThread(props: IUpdateThreadProps) {
     const [subject, setSubject] = useState('');
     const [redirect, setRedirect] = useState(false);
     const auth = useSelector(authState);
+    const dispatch = useDispatch();
     const forumInfo = useSelector(forumState);
 
     
@@ -68,12 +70,16 @@ function UpdateThread(props: IUpdateThreadProps) {
                 forumInfo.currentThread.tags
             );
             console.log(toAdd);
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar('Updating your thread...'))
             let resp = await updateThread(toAdd);
+            dispatch(setErrorSeverity('success'));
+            dispatch(showSnackbar('Thread updated!'))
             setRedirect(true);
             setRedirect(false);
         } catch (e: any) {
-            console.log(e);
-            // #TODO: set error message / toast here
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar('There was a problem updating your thread'))
         }
     }
 

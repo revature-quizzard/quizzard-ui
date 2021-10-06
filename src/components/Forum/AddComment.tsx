@@ -32,10 +32,10 @@ function AddComment() {
             setRedirect(true);
             setRedirect(false);
             dispatch(setErrorSeverity('success'));
-            dispatch(showSnackbar('Comment successfully added'));
+            dispatch(showSnackbar('Comment added!'));
         } catch (e: any) {
             dispatch(setErrorSeverity('error'));
-            dispatch(showSnackbar('Your comment could not be added'));
+            dispatch(showSnackbar('There was a problem creating your comment'));
         }
     }
     

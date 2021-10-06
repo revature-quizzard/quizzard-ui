@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'rich-markdown-editor';
 import { Paper } from '@mui/material';
 import { Button, Box, FormControl, Input, Typography, makeStyles } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { addThread } from '../../remote/thread-service';
 import { Redirect } from 'react-router';
+import { setErrorSeverity, showSnackbar } from '../../state-slices/error/errorSlice';
 
 interface IAddThreadProps {
     close: (input: boolean) => void;
@@ -42,6 +43,7 @@ function AddThread(props: IAddThreadProps) {
     const [subject, setSubject] = useState('');
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
+    const dispatch = useDispatch();
 
     
     const handleSubjectChange = (e: any) => {
@@ -63,12 +65,17 @@ function AddThread(props: IAddThreadProps) {
                 subject,
                 auth.authUser.username
             );
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar('Creating thread...'));
             let resp = await addThread(toAdd);
+            dispatch(setErrorSeverity('success'));
+            dispatch(showSnackbar('Thread created!'))
             setRedirect(true);
             setRedirect(false);
         } catch (e: any) {
             console.log(e);
-            // #TODO: set error message / toast here
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar('There was a problem creating your thread'));
         }
     }
 
