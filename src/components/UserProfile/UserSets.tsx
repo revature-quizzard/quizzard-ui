@@ -6,7 +6,6 @@ import {
     DataGrid,
     GridColDef,
     GridApi,
-    GridCellValue
 } from "@mui/x-data-grid";
 import {SetDocument} from "../../models/set-document";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";

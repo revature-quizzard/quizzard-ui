@@ -1,5 +1,3 @@
-// import {DataGrid} from "@material-ui/data-grid";
-import { DataGrid } from '@mui/x-data-grid';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,25 +6,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {
-    AppBar, Button,
-    CssBaseline,
-    Divider,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
+  Button,
     useTheme,
 } from "@mui/material";
 import {makeStyles, Theme } from '@material-ui/core/styles'
 import React, {useEffect, useState} from "react";
 import {getAllSets} from "../../remote/set-service";
 import {Set} from "../../dtos/Set";
-import {Tag} from "../../dtos/Tag";
-import {useDispatch, useSelector} from "react-redux";
-import {StudySet, StudySetState} from "../../state-slices/sets/create-study-sets-slice";
+import {StudySet} from "../../state-slices/sets/create-study-sets-slice";
 import {useAppDispatch} from "../../store/hooks";
 import {useHistory} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {profileState} from "../../state-slices/user-profile/profile-slice";
 
 /**
  * @Author Jose Tejada
@@ -37,6 +28,7 @@ function PublicSets() {
     let history = useHistory();
     let [set, setSet] = useState([] as Set[]);
     const dispatch = useAppDispatch();
+    const username:string | undefined = useSelector(profileState)?.userProfile?.username;
 
 
 
@@ -55,8 +47,6 @@ function PublicSets() {
         }
     }));
 
-    const classes = useStyles();
-    const theme = useTheme();
 
 
     async function getSets() {
@@ -92,34 +82,68 @@ function PublicSets() {
 
             <div>
                 <h1>Discover Set</h1>
-            <TableContainer component={Paper}>
-                <Table size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell align="left">Tags</TableCell>
-                            <TableCell align="left"># of cards</TableCell>
-                            <TableCell align="center">View</TableCell>
 
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {set.map((Set, index, n) => (
-                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{Set.setName}</TableCell>
-                                <TableCell align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
-                                <TableCell align="left">{Set.cards.length}</TableCell>
-                                <TableCell align="center"> <Button key={index} onClick={ () =>{handleSetState(Set)}} variant="outlined">
-                                    view
-                                </Button> </TableCell>
+                    <TableContainer component={Paper}>
+                        <Table size="small" aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell align="left">Tags</TableCell>
+                                    <TableCell align="left"># of cards</TableCell>
+                                    <TableCell align="center">View</TableCell>
+
+                                </TableRow>
+                            </TableHead>
+                                <TableBody>
+                                        {
+
+                                                set.map((Set, index, n) => (
+                                                    <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+
+                                                        {username === undefined?
 
 
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+                                                                    <>
+
+
+                                                                        {username === Set.author
+                                                                            ?
+                                                                            <></>
+                                                                        :
+                                                                            <>
+                                                                            <TableCell component="th" scope="row">{Set.setName}</TableCell>
+                                                                            <TableCell align="left">{Set.tags.map((tag, index, s) => (<h6 key={index}>{tag.tagName} </h6>))}</TableCell>
+                                                                            <TableCell align="left">{Set.cards.length}</TableCell>
+                                                                            <TableCell align="center"> <Button key={index} onClick={() => {handleSetState(Set)}} variant="outlined">view
+                                                                            </Button> </TableCell>
+                                                                            </>
+                                                                        }
+
+                                                                    </>
+                                                              :
+                                                                        <>
+                                                                            <TableCell component="th" scope="row">{Set.setName}</TableCell>
+                                                                            <TableCell align="left">{Set.tags.map((tag, index, s) => (<h6 key={index}>{tag.tagName} </h6>))}</TableCell>
+                                                                            <TableCell align="left">{Set.cards.length}</TableCell>
+                                                                            <TableCell align="center"> <Button key={index} onClick={() => {handleSetState(Set)}} variant="outlined">view
+                                                                            </Button> </TableCell>
+                                                                        </>
+
+                                                        }
+
+
+
+
+
+                                                    </TableRow>
+                                                ))
+
+                                        }
+                                </TableBody>
+                        </Table>
+                    </TableContainer>
+
+            </div>
         </>
     )
 }
