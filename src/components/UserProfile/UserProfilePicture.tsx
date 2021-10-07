@@ -40,7 +40,7 @@ const UserProfilePicture = () => {
         <>
             <Container  fixed maxWidth='md'>
                 <br/><br/>
-                {state.userProfile.profilePicture? <img src={state.userProfile.profilePicture} width="200"/>: <img src="default_profile_picture.jpg" width="200"/>}
+                {state.userProfile.profilePicture? <img src={state.userProfile.profilePicture +"?cachebust="+Math.random().toString(36).substr(2, 5)} width="200"/>: <img src="default_profile_picture.jpg" width="200"/>}
                 <div>
                     <Input
                         type="file"
