@@ -2,8 +2,9 @@ import { quizzardApiClientTokenAuthorized as QuizzardClient } from "./api-client
 import { Thread } from "../models/thread";
 
 /**
+ * async function which makes an axios call to the API to post a new thread
  * @param thread - Thread to be persisted to database
- * @returns The response data
+ * @returns The data inside the axios response, including a 201 status
  * @author Charles Mettee
  */
 export async function addThread(thread: Thread){
@@ -16,8 +17,9 @@ export async function addThread(thread: Thread){
 }
 
 /**
+ * async function which makes an axios call to the API to replace an existing thread with an updated version of itself
  * @param thread - Thread to be updated in the database
- * @returns The response data
+ * @returns The data inside the axios response, including a 200 status
  * @author Charles Mettee
  */
  export async function updateThread(thread: Thread){
