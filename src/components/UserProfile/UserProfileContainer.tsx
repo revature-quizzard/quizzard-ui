@@ -59,7 +59,7 @@ const UserProfileContainer = (props: any) => {
     }, [dummySwitch]);
 
     return (
-        <div>
+        <div style={{ alignContent: 'center'}}>
             <Accordion expanded>
                 <AccordionSummary
                     aria-controls="panel1a-content"
@@ -134,7 +134,7 @@ const UserProfileContainer = (props: any) => {
             <div>
                 <hr/>
             </div>
-            <Accordion style={{background: "#332347 ", color: '#7D7687 '}}>
+            <Accordion style={{background: "#332347 ", color: '#7D7687 ' }}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel3a-content"
