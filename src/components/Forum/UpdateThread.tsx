@@ -113,7 +113,7 @@ function UpdateThread(props: IUpdateThreadProps) {
                 </Paper>
                 <br />
                 <Box textAlign='center'>
-                    <Button variant="contained" disabled={disabled} className={classes.button} onClick={handleClick}>Update Thread</Button>
+                    <Button id='updateThreadButton' variant="contained" disabled={disabled} className={classes.button} onClick={handleClick}>Update Thread</Button>
                 </Box>
         </div>
     )

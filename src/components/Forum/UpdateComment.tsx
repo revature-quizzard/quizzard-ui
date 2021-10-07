@@ -67,7 +67,7 @@ function UpdateComment(props: IUpdateCommentProps) {
             <Paper elevation={3} style={{'margin': '4rem'}}>
                 <div style={{'margin': '2rem'}}>
                     <Editor onChange={handleChange} placeholder='Update your comment...' />
-                    <Button onClick={handleClick} disabled={disabled} style={{'color':'#75BC3E'}}>Update</Button>
+                    <Button id='updateCommentButton' onClick={handleClick} disabled={disabled} style={{'color':'#75BC3E'}}>Update</Button>
                 </div>
             </Paper>
         </>
