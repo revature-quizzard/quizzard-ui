@@ -35,13 +35,16 @@ describe('Update Thread Component Test Suite', () => {
     });
 
     it('Component renders successfully', () => {
+        // mock props
+        let mockClose = jest.fn();
+
         // configure mock store
         const configureMockStore = createMockStore();
         const mockStore = configureMockStore(initialState);
 
         // set up wrapper class
         const wrapper = shallow(<Provider store={mockStore}>
-                                    <UpdateThread />
+                                    <UpdateThread close={mockClose}/>
                                 </Provider>);
 
         // expect it to be truthy (i.e. something renders)
