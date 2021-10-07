@@ -45,6 +45,9 @@ import { guestState } from '../../state-slices/multiplayer/guest-slice';
       },
       closeGameButton: {
         backgroundColor: 'rgb(245,245,245)',
+        width: '21rem',
+        marginTop: '1rem',
+        marginLeft: '0rem'
       }
   }))
   
