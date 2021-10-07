@@ -18,6 +18,8 @@ import {
     ListItemIcon,
     useTheme,
 } from "@mui/material";
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+
 import {makeStyles, Theme } from '@material-ui/core/styles'
 import React, {useEffect, useState} from "react";
 import {getAllSets} from "../../remote/set-service";
@@ -112,10 +114,10 @@ function PublicSets() {
                     <TableBody>
                         {set.map((Set, index, n) => (
                             <TableRow key={index} >
-                                <TableCell style={{background: '#1E1E1E ' , color: 'grey'}}component="th" scope="row">{Set.setName}</TableCell>
-                                <TableCell style={{background: '#1E1E1E' , color: 'grey'}}align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
-                                <TableCell style={{background: '#1E1E1E' }}align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
-                                <TableCell style={{background: '#1E1E1E' , color: 'grey'}}align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
+                                <TableCell style={{background: 'white ' , color: 'black'}}component="th" scope="row">{Set.cards.length > 0 ?<span className={classes.cardsInSet}><MoreVertRoundedIcon/></span> : <span className={classes.noCardsInSet}><MoreVertRoundedIcon/></span> }{Set.setName}</TableCell>
+                                <TableCell style={{background: 'white ' , color: 'black'}}align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
+                                <TableCell style={{background: 'white ' }}align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
+                                <TableCell style={{background: 'white ' , color: 'black'}}align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
                                     view
                                 </Button> </TableCell>
 

@@ -150,10 +150,10 @@ function GameLounge() {
         <>
         <div >
             <header >
-            <h1 className='logo-Grand-Qwuizzard'><b><span  style={{color: '#4E3E61 ' , fontFamily:"Press Start 2P" }}>QWIZZARD</span></b>
+            <h1 style={{textAlign:'center' }} ><span  style={{color: '#4E3E61 '}}><b>Q W I Z Z A R D</b></span>
             <br/> 
           
-            <span  style={{color: '#EF8D22' , marginLeft: '10%' }}>Online</span><span  style={{color: '#75BC3E'}}>.</span>  </h1>
+            <span className='logo-Grand-Qwuizzard'   style={{color: '#EF8D22' , marginLeft: '10%' }}>online</span><span   className='logo-Grand-Qwuizzard' style={{color: '#75BC3E'}}>.</span>  </h1>
                 <hr/>
                 <br></br>
                 <br></br>

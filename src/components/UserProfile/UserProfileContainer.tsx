@@ -69,7 +69,7 @@ const UserProfileContainer = (props: any) => {
                     <Typography><h1>My Profile<span style={{color: '#75BC3E'}}> <b>|</b>  </span></h1></Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    {state.isLoaded ? <UserProfilePicture/> : 'Loading...'}
+                    {state.isLoaded ? <UserProfilePicture/> : <b></b>}
                     {state.isLoaded ? <UserProfile/> : <> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="50px" /> </>}
                 </AccordionDetails>
             </Accordion>
@@ -83,7 +83,8 @@ const UserProfileContainer = (props: any) => {
                     <Typography>{state.isLoaded == false ? <> <span style={{color: 'red'}}><b>|</b>  </span> My
                         Sets </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> My Sets </>}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+
+                <AccordionDetails >
 
                     <Typography >
                         {state.isLoaded ? <UserSets setUpdateIsOpen={setUpdateIsOpen} setUpdateSetId={setUpdateSetId}
@@ -126,14 +127,14 @@ const UserProfileContainer = (props: any) => {
                         <b className='logo-Grand-Qwuizzard'> QWIZZARD <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ?
                             <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>}</b>
 
-                        {state.isLoaded ? <UserGameRecords/> : <div className='logo-Grand-Qwuizzard'> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </div>}
+                        {state.isLoaded ? <UserGameRecords/> : <div> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </div>}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
             <div>
                 <hr/>
             </div>
-            <Accordion>
+            <Accordion style={{background: "#332347 ", color: '#7D7687 '}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
                     aria-controls="panel3a-content"
@@ -142,7 +143,8 @@ const UserProfileContainer = (props: any) => {
                     <Typography>{state.isLoaded == false ? <> <span style={{color: 'red'}}><b>|</b>  </span> Create New
                         Set </> : <> <span style={{color: '#75BC3E'}}><b>|</b>  </span> Create New Set </>}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+
+                <AccordionDetails >
                     <Typography>
 
                         {state.isLoaded ? <CreateSetModal dummySwitch={dummySwitch} setDummySwitch={setDummySwitch}/> : <> loading...<img className="welcomeBanner"
