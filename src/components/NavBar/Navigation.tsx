@@ -126,8 +126,9 @@ export function NavigationComponent() {
         },
         logoStyle: {
             textDecoration:'none',
-            color:'gray',
-            '&:hover':{color:'orange', textDecoration:'none'}
+            color:'#DBDFE7',
+            fontFamily: 'Emilys Candy',
+            '&:hover':{color:'#332347  ', textDecoration:'none'}
         }
     }));
 
@@ -174,9 +175,9 @@ export function NavigationComponent() {
 
 
                         </IconButton>
-                        <ButtonBase component={Link} to='/' className={classes.logoStyle}>
-                            <Typography variant="h3" noWrap>
-                                Qwizzard
+                        <ButtonBase component={Link} to='/' >
+                            <Typography className={classes.logoStyle}variant="h3" noWrap>
+                            Q W i Z Z A R D
                             </Typography>
                         </ButtonBase>
 

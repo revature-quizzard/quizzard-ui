@@ -79,6 +79,10 @@ const UserSets = (props: iUserSets) => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+        modalbuttin: {
+          background: '#7D7687' ,
+           color: '#4E3E61'
+        }
     };
 
     function addCardToSet(){
@@ -134,7 +138,7 @@ const UserSets = (props: iUserSets) => {
                 return <IconButton onClick={() => {
                     updateSet()
                 }}>
-                    <UpdateIcon/>
+                    <UpdateIcon style={{color: "#EF8D22 "}}/>
                 </IconButton>;
             }
         },
@@ -142,6 +146,7 @@ const UserSets = (props: iUserSets) => {
             headerName: " ",
             sortable: false,
             width: 50,
+           
             renderCell: (params) => {
                 const removeSet = () => {
                     const api: GridApi = params.api;
@@ -156,7 +161,7 @@ const UserSets = (props: iUserSets) => {
                 return <IconButton onClick={() => {
                     removeSet()
                 }}>
-                    <DeleteIcon/>
+                    <DeleteIcon style={{color: "red"}}/>
                 </IconButton>;
             }
         },
@@ -178,7 +183,7 @@ const UserSets = (props: iUserSets) => {
                     NewCard()
                     handleOpen()
                 }}>
-                    <AddIcon/>
+                    <AddIcon style={{color: "green"}}/>
                 </IconButton>;
             }
         },
@@ -203,7 +208,7 @@ const UserSets = (props: iUserSets) => {
 
                     ViewSetCard()
                 }}>
-                    <RemoveRedEyeIcon/>
+                    <RemoveRedEyeIcon style={{color: "grey"}}/>
                 </IconButton>;
             }
 
@@ -275,7 +280,7 @@ const UserSets = (props: iUserSets) => {
                     pagination={true}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
-                    style={{background: "white" }}
+                    style={{background: "white" ,  color: 'grey' }}
                 />
                 :
                 <Typography>
@@ -291,8 +296,8 @@ const UserSets = (props: iUserSets) => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={style}>
-                        <Form className="card form">
+                    <Box style={{background: "#332347 ",  border: '.4em solid #7D7687'}}sx={style}>
+                        <Form >
                             <h2>Add a new card</h2>
                             <Form.Group>
                                 <Form.Label>Question: </Form.Label>
@@ -315,8 +320,8 @@ const UserSets = (props: iUserSets) => {
                                 />
                             </Form.Group>
                         </Form>
-                        <Button onClick={addCardToSet} variant="contained" color="success">
-                            Success
+                        <Button  style={{ background: '#4E3E61' , color:'#7D7687' }} onClick={addCardToSet} variant="contained" color="success">
+                           ADD CARD
                         </Button>
 
                     </Box>

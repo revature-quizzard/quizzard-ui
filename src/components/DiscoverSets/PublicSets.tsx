@@ -9,6 +9,8 @@ import {
   Button,
     useTheme,
 } from "@mui/material";
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+
 import {makeStyles, Theme } from '@material-ui/core/styles'
 import React, {useEffect, useState} from "react";
 import {getAllSets} from "../../remote/set-service";
@@ -44,10 +46,17 @@ function PublicSets() {
             backgroundColor: theme.palette.background.paper,
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
+        },
+        cardsInSet: {
+            color: "#75BC3E"
+        },
+        noCardsInSet: {
+            color: "grey"
         }
     }));
 
-
+    const classes = useStyles();
+    const theme = useTheme();
 
     async function getSets() {
         console.log("FETCHING TRIVIA CARD SETS")
@@ -78,10 +87,10 @@ function PublicSets() {
 
     return(
         <>
-
+                    
 
             <div>
-                <h1>Discover Set</h1>
+                    <h1  style={{color: '#4E3E61' ,fontFamily:"Emilys Candy"  }}>Discover Set</h1>
 
                     <TableContainer component={Paper}>
                         <Table size="small" aria-label="a dense table">
@@ -106,12 +115,13 @@ function PublicSets() {
                                                                             <></>
                                                                         :
                                                                             <>
-                                                                            <TableCell component="th" scope="row">{Set.setName}</TableCell>
-                                                                             <TableCell component="th" scope="row">{Set.author}</TableCell>
-                                                                            <TableCell align="left">{Set.tags.map((tag, index, s) => (<h6 key={index}>{tag.tagName} </h6>))}</TableCell>
-                                                                            <TableCell align="left">{Set.cards.length}</TableCell>
-                                                                            <TableCell align="center"> <Button key={index} onClick={() => {handleSetState(Set)}} variant="outlined">view
-                                                                            </Button> </TableCell>
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}}component="th" scope="row">{Set.cards.length > 0 ?<span className={classes.cardsInSet}><MoreVertRoundedIcon/></span> : <span className={classes.noCardsInSet}><MoreVertRoundedIcon/></span> }{Set.setName}</TableCell>
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}}align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
+                                                                              <TableCell style={{background: 'white ' }}align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}}align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
+                                                                                    view
+                                                                                </Button> </TableCell>
+
                                                                             </>
                                                                         }
 

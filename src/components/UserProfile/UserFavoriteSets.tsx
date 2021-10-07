@@ -50,7 +50,7 @@ const UserFavoriteSets = () => {
                 return <IconButton onClick={() => {
                     removeSetFromUserFavorites()
                 }}>
-                    <DeleteIcon/>
+                    <DeleteIcon style={{color: "red"}}/>
                 </IconButton>;
             }
         }
@@ -96,6 +96,7 @@ const UserFavoriteSets = () => {
                     pagination={true}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
+                    style={{background: "white" ,  color: 'grey' }}
                 />
                 :
                 <Typography>
