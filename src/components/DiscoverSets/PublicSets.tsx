@@ -98,7 +98,7 @@ function PublicSets() {
                                 <TableRow>
                                     <TableCell>Name</TableCell>
                                     <TableCell align="left">Author</TableCell>
-                                    <TableCell align="left">name</TableCell>
+                                    <TableCell align="left">Tags</TableCell>
                                     <TableCell align="left"># of cards</TableCell>
                                     <TableCell align="center">View</TableCell>
 
@@ -115,10 +115,10 @@ function PublicSets() {
                                                                             <></>
                                                                         :
                                                                             <>
-                                                                              <TableCell style={{background: 'white ' , color: 'black'}}component="th" scope="row">{Set.cards.length > 0 ?<span className={classes.cardsInSet}><MoreVertRoundedIcon/></span> : <span className={classes.noCardsInSet}><MoreVertRoundedIcon/></span> }{Set.setName}</TableCell>
-                                                                              <TableCell style={{background: 'white ' , color: 'black'}}align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
-                                                                              <TableCell style={{background: 'white ' }}align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
-                                                                              <TableCell style={{background: 'white ' , color: 'black'}}align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}} component="th" scope="row">{Set.cards.length > 0 ?<span className={classes.cardsInSet}><MoreVertRoundedIcon/></span> : <span className={classes.noCardsInSet}><MoreVertRoundedIcon/></span> }{Set.setName}</TableCell>
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}} align="left">{Set.tags.map((tag,index, s) =>( <h6 key={index}>{tag.tagName} </h6>   ))}</TableCell>
+                                                                              <TableCell style={{background: 'white ' }} align="left">{Set.cards.length > 0 ?<span className={classes.cardsInSet}>{Set.cards.length}</span> : <span className={classes.noCardsInSet}>{Set.cards.length}</span> }</TableCell>
+                                                                              <TableCell style={{background: 'white ' , color: 'black'}} align="center"> <Button key={index} style={{background: '#4E3E61 ' , color: 'black'}} onClick={ () =>{handleSetState(Set)}} variant="contained">
                                                                                     view
                                                                                 </Button> </TableCell>
 
