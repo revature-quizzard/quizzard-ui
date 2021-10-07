@@ -97,7 +97,6 @@ function PublicSets() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Name</TableCell>
-                                    <TableCell align="left">Author</TableCell>
                                     <TableCell align="left">name</TableCell>
                                     <TableCell align="left"># of cards</TableCell>
                                     <TableCell align="center">View</TableCell>
