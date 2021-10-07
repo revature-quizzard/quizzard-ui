@@ -32,9 +32,9 @@ const SubforumHandler = ()=> {
 
     return (
       <>
-      <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>Q W I Z Z A R D</span>
+      <h1 className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"Emilys Candy" ,  textAlign: 'center' }}><b> <span >Q W I Z Z A R D</span>
       <br/> 
-      <span style={{color: 'grey'}}>Forum</span> </b> </h1>
+      <span style={{color: 'grey' ,  textAlign: 'center'}}>Forum</span> </b> </h1>
       <hr/>
 
       <TableContainer component={Paper}>

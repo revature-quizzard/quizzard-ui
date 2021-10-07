@@ -66,7 +66,7 @@ export const profileSlice = createSlice({
             state.selectedImage = action.payload;
         },
         updateImageReducer: (state, action: PayloadAction<string>) =>{
-            state.userProfile.profilePicture = action.payload+"?cachebust="+Math.random().toString(36).substr(2, 5);
+            state.userProfile.profilePicture = action.payload;
         }
     }
 })

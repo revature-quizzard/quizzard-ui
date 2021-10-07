@@ -5,6 +5,7 @@ import {RegisterModel} from "../../models/register-model";
 import {useDispatch} from 'react-redux';
 import {useHistory} from "react-router-dom";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
+import { Container } from "@mui/material";
 
 
 const Register = () => {
@@ -40,14 +41,15 @@ const Register = () => {
 
     return (
         <>
-            <Form className="auth-form">
-            <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center'}}><b> <span style={{fontFamily:"retro-gamer"}}>Q W I Z Z A R D</span>
-      <br/> 
-      <span style={{color: '#7D7687 '}}>App</span> </b> </h1>
-      <hr/>
-            <h1  style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" , textAlign: 'center' }}><b> <span  >R e g i s t r a t i o n</span> </b></h1>
+        <Container style={{width:'30em' ,justifyContent: 'center' }}>
+            <Form >
+         
+            <br/>     
+            <br/>    
+             <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center' ,fontFamily:"Emilys Candy"}}><b> <span  >REGiSTRATION</span> </b></h1> 
+             <hr/>
       <br/>    
-      <hr/>
+     
                 <h1><b></b></h1>
                 <Form.Group>
                     <Form.Label>Username: </Form.Label>
@@ -105,6 +107,7 @@ const Register = () => {
                     </Button>
                 </Form.Group>
             </Form>
+            </Container>
         </>
     );
 };

@@ -5,18 +5,11 @@ import AddComment from '../components/Forum/AddComment';
 import { Subforum } from '../models/subforum';
 import { Thread } from '../models/thread';import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
-import forumReducer, { forumState } from '../state-slices/forum/forum-slice';
+import { forumState } from '../state-slices/forum/forum-slice';
 import { addComment } from '../remote/comment-service';
 jest.mock('../remote/comment-service');
-import { showSnackbar, setErrorSeverity } from '../state-slices/error/errorSlice';
 import { act } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
-jest.mock('../state-slices/error/errorSlice')
-
-interface TempState {
-    currentSubforum: Subforum | undefined;
-    currentThread: Thread | undefined;
-}
+import { store } from '../store/store';
 
 let initialState: any;
 
@@ -59,11 +52,6 @@ describe('Add Comment Component Test Suite', () => {
             currentThread: new Thread(['subforumId'], 'subforumId', 'description', 'subject', 'username', 'threadId', 1, '2021-09-28T12:42:56.789')
         }
 
-        // configure mock store
-        //@ts-ignore
-        const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState});
-        console.log(mockStore)
-
         // set up spy for useSelector (provide mock values)
         const spy = jest.spyOn(redux, 'useSelector');
         spy.mockImplementation((arg) => {
@@ -76,7 +64,7 @@ describe('Add Comment Component Test Suite', () => {
             }
         })
         // set up wrapper class
-        const wrapper = mount(<Provider store={mockStore}>
+        const wrapper = mount(<Provider store={store}>
                                     <AddComment />
                                 </Provider>);
         let createWrapper = wrapper.find('#createCommentButton').at(0);
@@ -86,35 +74,5 @@ describe('Add Comment Component Test Suite', () => {
         // expect addComment to have been called
         expect(addComment).toBeCalled();
     })
-
-    /*
-    NOTE: test currently doesn't work. rich-markdown-editor's onChange function is strange.
-    
-    it('Component calls addComment (POST request to quizzard api) when given valid information', () => {
-        // configure mock redux store
-        initialState = {
-            currentSubforum: new Subforum([], 'NULL', 'description', 'subforumId', 'subject', 1, '2021-09-28T12:34:56.789'),
-            currentThread: new Thread(['subforumId'], 'subforumId', 'description', 'subject', 1, 'username', 'threadId', '2021-09-28T12:42:56.789')
-        }
-        const configureMockStore = createMockStore();
-        const mockStore = configureMockStore(initialState);
-
-        // set up the wrapper
-        const wrapper = mount(  <Provider store={mockStore}>
-                                    <AddComment />
-                                </Provider>);
-
-        let markdownWrapper = wrapper.find('#addNewComment').at(0);
-        let createButtonWrapper = wrapper.find('#createCommentButton').at(0);
-
-        markdownWrapper.simulate('change', 'this is a test deciription');
-        createButtonWrapper.simulate('click');
-        console.log(markdownWrapper.debug());
-        
-        // expect certain methods to be called
-        expect(addComment).toBeCalled();
-        
-    })
-    */
     
 })

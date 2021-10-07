@@ -53,13 +53,9 @@ function GameLounge() {
 
     useEffect(() => {
         async function fetchGame() {
-            console.log('Id.current',id.current);
-            console.log('nickName:', nickName)
-            
             let game: Game;
             try {
                 let resp = await (API.graphql(graphqlOperation(getGame, {id: id.current})) as Promise<GraphQLResult>);
-                console.log('resp:', resp)
                 //@ts-ignore
                 game = {...resp.data.getGame};
             } catch {
@@ -122,17 +118,13 @@ function GameLounge() {
                 }
             // User is not logged in, and has not set a nickname
             } else {
-                console.log('guest: ', guestUser)
                 dispatch(setErrorSeverity("error"));
                 dispatch(showSnackbar("Please set a nickname."));
                 return;
             }
-            console.log('Base User: ', baseUser);
     
             game.players.push(baseUser);
             let updateresp = await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: game.players}})));
-    
-            console.log("Successfully updated GraphQL!", updateresp);
     
             dispatch(setGame(game));
     
@@ -149,7 +141,6 @@ function GameLounge() {
     
     function handleUpdate(e: any) {
         id.current = e.target.value;
-        console.log('Id.current:',id.current);
     }
 
     function changeNickName(e: any) {
@@ -163,10 +154,10 @@ function GameLounge() {
         <>
         <div >
             <header >
-            <h1 className='logo-Grand-Qwuizzard'><b><span  style={{color: '#4E3E61 ' , fontFamily:"Press Start 2P" }}>Q W I Z Z A R D</span></b>
+            <h1 style={{textAlign:'center' }} ><span  style={{color: '#4E3E61 ', fontFamily: 'Emilys Candy '}}><b>Q W i Z Z A R D</b></span>
             <br/> 
           
-            <span  style={{color: '#EF8D22' , marginLeft: '10%' }}>Online</span><span  style={{color: '#75BC3E'}}>.</span>  </h1>
+            <span className='logo-Grand-Qwuizzard'   style={{color: '#EF8D22' , marginLeft: '10%' }}>online</span><span   className='logo-Grand-Qwuizzard' style={{color: '#75BC3E'}}>.</span>  </h1>
                 <hr/>
                 <br></br>
                 <br></br>

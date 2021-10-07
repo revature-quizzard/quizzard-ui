@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, makeStyles, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, Typography } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { isLoaded, loading, profileState, setProfile } from "../../state-slices/user-profile/profile-slice";
@@ -31,7 +31,10 @@ import Fade from '@mui/material/Fade';
 import Popover from '@mui/material/Popover';
 import { style } from "@mui/system";
 import { ClassNames, useTheme } from "@emotion/react";
+import {makeStyles, Theme } from '@material-ui/core/styles'
+
 import { getJSDocTags } from "typescript";
+
 
 
 
@@ -57,8 +60,34 @@ const CreateSetModal = (props: iCreateSetModal) => {
   const _createSetState= useSelector(createSetState);
   const error_state= useSelector(errorState);
   let isAtTagLimit : boolean = false;
-  const [rerenderSwitch, setRerenderSwitch] = useState(false)
- 
+  const [rerenderSwitch, setRerenderSwitch] = useState(false);
+
+  const useStyles = makeStyles((theme:Theme) => ({
+    divTable: {
+        textAlign: 'center',
+        width: '70%',
+        marginLeft: 200,
+    },
+    paper: {
+
+
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+    newTag_Form: {
+        padding: '1em',
+         color: '#7D7687' , 
+         borderColor: '#7D7687' 
+    },
+    alert_Format: {
+        width: '15em'
+    }
+
+}));
+
+const classes = useStyles();
+const theme = useTheme();
 
 
   const handleChange = (e: any) => {
@@ -69,8 +98,9 @@ const CreateSetModal = (props: iCreateSetModal) => {
 
   useEffect(() => {
     async function getTags()
-    {
+    {  
         try{
+              
               let response = await getSetTags();  
               dispatch(resetCurrentSetToSave());
               setAllTags(response);
@@ -178,27 +208,28 @@ const CreateSetModal = (props: iCreateSetModal) => {
                 dispatch(clearTags());
                 setNewSet('');
                 props.setDummySwitch(!props.dummySwitch);
-                // dispatch(resetCurrentSetToSave());
+                 dispatch(resetCurrentSetToSave());
                 
 
             } catch (e: any) {
                 console.log(e);
             }
+            dispatch(isLoaded());
     }
 
    
 
     return (
         <div>    
-            <div >
-            <TextField label="set name" onChange={handleChange} value={newSet} />
+            <div className={classes.newTag_Form}>
+            <TextField label="set name"  onChange={handleChange}  variant='filled' size="small" value={newSet} />
             <br/>
-            <p>private <Switch  style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
+            <p>private <Switch  style={{color:"#7D7687" }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
             <hr/>
             { 
                 _createSetState.newTagForms.map((F : TagFormModel | undefined , i) => { 
-                    return <div key={i}>
+                    return <div  key={i}>
                 
                         {
                             _createSetState.newTagForms[i].tagAdded == false 
@@ -221,7 +252,7 @@ const CreateSetModal = (props: iCreateSetModal) => {
                                     </Select>
                                 </FormControl>
                                 <br/>
-                                <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                                <Button key={i}  variant="contained" style={{background: '#4E3E61' , color: '#7D7687'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
                             </>
                     
                         : 
@@ -231,16 +262,17 @@ const CreateSetModal = (props: iCreateSetModal) => {
                             { 
                                 newSet === '' 
                                 ? 
-                                    <><Alert  severity="warning">Must Enter Set Name</Alert></> 
+                                    <><Alert className={classes.alert_Format} severity="warning">Must Enter Set Name!</Alert>{dispatch(clearTags())}</> 
+                                    
                                 : 
                                     <> 
                                         <p> <LabelIcon style={{color: _createSetState.newTagForms[i].tagColor}} />  {_createSetState.newTagForms[i].TagName}</p>
                             
-                                        <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
+                                        <Button style={{background: '#4E3E61' , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                                             Remove
                                         </Button>
                             
-                                        <Alert  severity="success">Added!</Alert> 
+                                        <Alert className={classes.alert_Format} severity="success">Added!</Alert> 
                                     </>
                             }
                             <hr/>
@@ -250,9 +282,9 @@ const CreateSetModal = (props: iCreateSetModal) => {
                     </div>
                 })
             }
-            {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
+            {isAtTagLimit == false ? <Button style={{background: '#4E3E61' , color: '#7D7687' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
             <br/>
-            <Button style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+            <Button style={{background: '#7D7687' , color: '#4E3E61'}} onClick={applyChanges}>Create</Button>
         </div>
     );
 }
