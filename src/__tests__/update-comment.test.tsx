@@ -9,6 +9,8 @@ import { Comment } from '../models/comment';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
 import { configureStore } from '@reduxjs/toolkit';
+import { updateComment } from '../remote/comment-service';
+import { store } from '../store/store';
 
 jest.mock('../remote/comment-service');
 jest.mock('../state-slices/error/errorSlice')
@@ -63,10 +65,6 @@ describe('Update Comment Component Test Suite', () => {
         // mock props
         let mockClose = jest.fn();
 
-        // configure the mock store
-        //@ts-ignore
-        const mockStore = configureStore({reducer: {forumInfo: forumReducer}, initialState})
-
         // set up a spy for useSelector (to mock values)
         const spy = jest.spyOn(redux, 'useSelector');
         spy.mockImplementation((arg) => {
@@ -77,7 +75,15 @@ describe('Update Comment Component Test Suite', () => {
             }
         });
 
-        const wrapper = mount(<Provider store={mockStore}><UpdateComment close={mockClose}/></Provider>)
+        // set up wrapper
+        const wrapper = mount(<Provider store={store}><UpdateComment close={mockClose}/></Provider>)
+
+        let buttonWrapper = wrapper.find('#updateCommentButton').at(0);
+
+        buttonWrapper.simulate('click');
+
+        // expect axios function to have been called
+        expect(updateComment).toBeCalled();
     });
 
 })
