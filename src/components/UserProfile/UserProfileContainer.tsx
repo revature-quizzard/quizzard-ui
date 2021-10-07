@@ -124,7 +124,7 @@ const UserProfileContainer = (props: any) => {
                 <AccordionDetails>
                     <Typography >
                         
-                        <b className='logo-Grand-Qwuizzard'> QWIZZARD <span style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ?
+                        <b className='logo-Grand-Qwuizzard' > QWIZZARD <span className='logo-Grand-Qwuizzard'style={{color: '#EF8D22'}}>Online</span>{state.isLoaded ?
                             <span style={{color: '#75BC3E'}}>.</span> : <span style={{color: 'red'}}>.</span>}</b>
 
                         {state.isLoaded ? <UserGameRecords/> : <div> loading...<img className="welcomeBanner" src="wizard.gif" alt="qwizard" height="30px" /> </div>}

@@ -44,7 +44,7 @@ const Register = () => {
          
             <br/>     
             <br/>    
-             <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center' , fontFamily: 'serif'}}><b> <span  >REGISTRATION</span> </b></h1> 
+             <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center' ,fontFamily:"Emilys Candy"}}><b> <span  >REGiSTRATION</span> </b></h1> 
              <hr/>
       <br/>    
      

@@ -222,14 +222,14 @@ const theme = useTheme();
     return (
         <div>    
             <div className={classes.newTag_Form}>
-            <TextField label="set name"  onChange={handleChange} variant='filled' size="small" value={newSet} />
+            <TextField label="set name"  onChange={handleChange}  variant='filled' size="small" value={newSet} />
             <br/>
             <p>private <Switch  style={{color:"#7D7687" }}  onClick={toggleSetStatus}/> public { _createSetState.setToSave.isPublic ? <> <img className="welcomeBanner" src="wizard_dance.gif" alt="qwizard" height="30px" /> </> : <></>}</p> 
             </div >
             <hr/>
             { 
                 _createSetState.newTagForms.map((F : TagFormModel | undefined , i) => { 
-                    return <div  className={classes.newTag_Form} key={i}>
+                    return <div  key={i}>
                 
                         {
                             _createSetState.newTagForms[i].tagAdded == false 

@@ -59,7 +59,7 @@ function PublicSets() {
             color: "#75BC3E"
         },
         noCardsInSet: {
-            color: "red"
+            color: "grey"
         }
     }));
 
@@ -96,10 +96,10 @@ function PublicSets() {
 
     return(
         <>
-
+                    
 
             <div>
-                <h1>Discover Set</h1>
+                <h1  style={{color: '#4E3E61' ,fontFamily:"Emilys Candy"  }}>Discover Set</h1>
             <TableContainer component={Paper}>
                 <Table size="small"  style={{background: '#4E3E61  ' }} >
                     <TableHead>

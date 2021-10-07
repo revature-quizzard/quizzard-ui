@@ -208,13 +208,13 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.box}>
+        <Box  style={{background: "#332347 ",  border: '.4em solid #7D7687'}}className={classes.box}>
             <div>
-            <br /><Typography variant="h5">Update Set</Typography> <br />
+            <br /><Typography variant="h4">UPDATE SET</Typography> <br />
                 <div >
                 <TextField label="set name" onChange={handleChange} defaultValue={props.setName} value={newSet} />
                 <br/>
-                <p>private <Switch checked={checked} style={{color:"#EF8D22 " }}  onClick={toggleSetStatus}/> public</p> 
+                <p>private <Switch checked={checked} style={{color:"#7D7687" }}  onClick={toggleSetStatus}/> public</p> 
                 </div >
                     <hr/>
                         { _updateSetState.newTagForms?.map((F : TagFormModel | undefined , i) =>
@@ -244,7 +244,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                                         </Select>
                                 </FormControl>
                                 <br/>
-                                <Button key={i}  variant="contained" style={{background: 'green ' , color: 'white'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
+                                <Button key={i}  variant="contained" style={{background: '#4E3E61' , color: '#7D7687'}} onClick={(e) => addTag(e , i)}>Add Tag</Button>
                                 </>
                                 
                                 : 
@@ -252,7 +252,7 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                                 <>
                                 { newSet === '' ? <></> : <> <p> <LabelIcon style={{color: _updateSetState.newTagForms[i].tagColor}} />  {_updateSetState.newTagForms[i].TagName}</p>
                             
-                                <Button style={{background: 'white'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
+                                <Button style={{background: '#4E3E61'  , color: 'red'}} onClick={(e) => removeTag(e , i)} startIcon={<DeleteSharpIcon />}>
                                     Remove
                                 </Button>
                             
@@ -264,10 +264,10 @@ const UpdateSetModal = (props: iUpdateSetModal) => {
                             </div>
                             })
                         }
-                                {isAtTagLimit == false ? <Button style={{padding: '1em', color: 'green' , marginLeft:'10%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
+                                {isAtTagLimit == false ? <Button style={{padding: '1em' ,color: '#4E3E61', marginLeft:'50%'}}  onClick={createNewTagForm} startIcon={<LabelIcon />}> New Tag</Button> : <></>}
                         <br/>
 
-                    <Button   style={{background: ' ' , color: '#4E3E61'}} onClick={applyChanges}>Apply</Button>
+                    <Button   style={{ background: '#7D7687' ,color: '#4E3E61' , marginBottom:'8%'}} onClick={applyChanges}>Apply</Button>
 
             </div>
         </Box>
