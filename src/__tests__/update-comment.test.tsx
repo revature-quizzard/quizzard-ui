@@ -1,6 +1,6 @@
 import { shallow, configure, mount } from 'enzyme';
 import * as redux from 'react-redux';
-import forumReducer, { forumState } from '../state-slices/forum/forum-slice';
+import { forumState } from '../state-slices/forum/forum-slice';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import UpdateComment from '../components/Forum/UpdateComment';
 import { Subforum } from '../models/subforum';
@@ -8,12 +8,10 @@ import { Thread } from '../models/thread';
 import { Comment } from '../models/comment';
 import { Provider } from 'react-redux';
 import createMockStore from 'redux-mock-store';
-import { configureStore } from '@reduxjs/toolkit';
 import { updateComment } from '../remote/comment-service';
 import { store } from '../store/store';
 
 jest.mock('../remote/comment-service');
-jest.mock('../state-slices/error/errorSlice')
 
 interface TempState {
     currentSubforum: Subforum | undefined;
