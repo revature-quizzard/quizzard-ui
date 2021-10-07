@@ -161,7 +161,6 @@ function Game() {
 
         // Get initial game state
         (API.graphql(graphqlOperation(getGame, {id: game.id})) as Promise<GraphQLResult>).then(resp => {
-            console.log('Initial state', resp);
             //@ts-ignore
             dispatch(setGame({...resp.data.getGame}))
         });
@@ -172,9 +171,7 @@ function Game() {
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
                 let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
-                console.log('usersToUpdate',{currentUser});
                 let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
-                console.log('onUpdate:', { provider, value });
                 value.data.onUpdateGameById.players.sort((a: any, b: any) => a.points < b.points ? 1 : -1);
                 ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
@@ -187,7 +184,6 @@ function Game() {
             graphqlOperation(onDeleteGameById, {id: game.id})
         ) as unknown as Observable<any>).subscribe({
             next: ({ provider, value }) => {
-                console.log('onDelete:', { provider, value });
                 history.push('/lounge');
             }
         })
@@ -204,7 +200,6 @@ function Game() {
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
     function render() {
-        console.log('game in render: ', game)
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
@@ -317,19 +312,15 @@ function Game() {
      *      + Send updated player info and matchState change to Dynamo.
      */
     async function onTimeout() {
-        console.log('onTimeout called');
         if (game.matchState != 1) return;
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {
-            console.log('Host is in onTimeout');
-            console.log('players before sort: ', game.players);
             // Need to clone players array in order to mutate fields
             // Sort temp player list by time answered
             let players = [].concat(game.players.map(player => ({...player})))
                             .sort((a: any, b: any) => a.answeredAt > b.answeredAt ? 1 : -1);
-            console.log('players after sort: ', players);
 
             // Calculate points
             let count = 0;
@@ -421,7 +412,6 @@ function Game() {
      * Helper function to be called from React fragment
     */
     const callPersistData = () => {
-        console.log('callPersistData called, numCalls: ', numCalls)
         if(numCalls<1)
             persistUserData();
         numCalls++;
@@ -457,8 +447,6 @@ function Game() {
                     points: player.points
                 })
             });
-
-            console.log("newPlayers: ", newPlayers);
     
             let gameRecord = {
                 playerList: newPlayers,
@@ -466,12 +454,9 @@ function Game() {
                 winner,
                 datePlayed: new Date().toISOString()
             }
-            console.log("gameRecord: ", gameRecord);
             try{
                 let resp = await quizzardApiClientTokenAuthorized.post('/records', gameRecord);
-                console.log('persist user data response: ', resp);
             }catch(e: any){
-                console.log('persist user data error: ', e);
             }
 
         }
@@ -485,7 +470,6 @@ function Game() {
         let temp = game.matchState;
         if (temp == 3) temp = 0; 
         else temp += 1;
-        console.log('Inside incrementState, temp:', temp)
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));
     }
     
