@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     },
 
     playerContainer: {
-        display: 'flex',
+        display: 'block',
         marginRight: '1rem',
     },
 
@@ -77,6 +77,7 @@ const useStyles = makeStyles({
 
     buttons: {
         backgroundColor: 'rgb(245,245,245)',
+        width: '21rem',
         margin: '1rem',
         marginLeft: '0rem'
     },
