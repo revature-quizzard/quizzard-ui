@@ -62,10 +62,12 @@ function GameSettings() {
                 return 2;
             }
         }
-        if (formData.capacity < 1 || formData.capacity > 20) {
+        if (formData.capacity < 1 || formData.capacity > 100) {
             return 3;
         } else if (formData.timer<3 || formData.timer > 45) {
             return 4;
+        } else if (formData.set.cards.length < 1) {
+            return 5;
         }
         return 1;
     }
@@ -101,12 +103,17 @@ function GameSettings() {
             case 3:
                 //Snack bar error message to user 
                 dispatch(setErrorSeverity("error"));
-                dispatch(showSnackbar("There cannot be fewer than one players, or more than twenty!"));
+                dispatch(showSnackbar("There cannot be fewer than one players, or more than one hundred!"));
                 return;
             case 4:
                 //Snack bar error message to user 
                 dispatch(setErrorSeverity("error"));
                 dispatch(showSnackbar("You cannot set a timer for less than five seconds, or more than forty-five seconds!"));
+                return;
+            case 5:
+                // Set has no cards
+                dispatch(setErrorSeverity("error"));
+                dispatch(showSnackbar("The set you have selected has no cards!"));
                 return;
             default:
                 break;
@@ -177,7 +184,9 @@ function GameSettings() {
                     answeredAt: new Date().toISOString(),
                     answeredCorrectly: false,
                     placing: -1,
-                    streak: 0
+                    streak: 0,
+                    pointsEarned: 0,
+                    afk: false
                 }]
             }
 

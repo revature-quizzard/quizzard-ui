@@ -27,6 +27,8 @@ type Player {
   placing: Int!
   streak: Int!
   points: Int!
+  pointsEarned: Int!
+  afk: Boolean!
 }
 
 type Card {

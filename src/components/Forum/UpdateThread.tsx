@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'rich-markdown-editor';
 import { Paper } from '@mui/material';
 import { Button, Box, FormControl, Input, Typography, makeStyles } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { forumState } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { updateThread } from '../../remote/thread-service';
 import { Redirect } from 'react-router';
+import { setErrorSeverity, showSnackbar } from '../../state-slices/error/errorSlice';
 
 const useStyles = makeStyles({
     updateThreadContainer: {
@@ -40,7 +41,9 @@ function UpdateThread(props: IUpdateThreadProps) {
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
+    const dispatch = useDispatch();
     const forumInfo = useSelector(forumState);
 
     
@@ -54,6 +57,7 @@ function UpdateThread(props: IUpdateThreadProps) {
     }
 
     let handleClick = async () => {
+        setDisabled(true);
         try {
             let threadAncestors: string[] = ["114687543"];
             let toAdd = new Thread(
@@ -68,12 +72,18 @@ function UpdateThread(props: IUpdateThreadProps) {
                 forumInfo.currentThread.tags
             );
             console.log(toAdd);
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar('Updating your thread...'))
             let resp = await updateThread(toAdd);
+            dispatch(setErrorSeverity('success'));
+            dispatch(showSnackbar('Thread updated!'))
             setRedirect(true);
+            setDisabled(false);
             setRedirect(false);
         } catch (e: any) {
-            console.log(e);
-            // #TODO: set error message / toast here
+            setDisabled(false);
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar('There was a problem updating your thread'))
         }
     }
 
@@ -103,7 +113,7 @@ function UpdateThread(props: IUpdateThreadProps) {
                 </Paper>
                 <br />
                 <Box textAlign='center'>
-                    <Button variant="contained" className={classes.button} onClick={handleClick}>Update Thread</Button>
+                    <Button variant="contained" disabled={disabled} className={classes.button} onClick={handleClick}>Update Thread</Button>
                 </Box>
         </div>
     )

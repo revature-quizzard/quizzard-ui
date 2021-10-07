@@ -45,6 +45,7 @@ export async function createStudySetWithToken(
 
 export const getAllSets = async () =>{
 
+  console.log(localStorage.getItem('api-token'));
   let resp = await quizzardApiClientTokenAuthorized.get('/sets')
 
 

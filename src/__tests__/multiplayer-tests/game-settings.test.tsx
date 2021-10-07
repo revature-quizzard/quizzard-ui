@@ -1,8 +1,13 @@
-import {shallow, mount} from 'enzyme';
+import {shallow, mount, configure} from 'enzyme';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import GameSettings from '../../components/Multiplayer/GameSettings';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 describe('GameSettings Test Suite', () => {
+
+    beforeAll(() => {
+        configure({ adapter: new Adapter() });
+    })
 
     afterEach(() => {
         jest.resetAllMocks();

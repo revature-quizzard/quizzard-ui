@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { authState } from '../../state-slices/auth/auth-slice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Editor from 'rich-markdown-editor';
 import Button from '@mui/material/Button';
 import { Paper } from '@mui/material';
@@ -15,6 +15,8 @@ import AddCommentRoundedIcon from '@mui/icons-material/AddCommentRounded';
 function AddComment() {
     const [inputText, setInputText] = useState('');
     const [redirect, setRedirect] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+    const dispatch = useDispatch();
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
 
@@ -23,19 +25,22 @@ function AddComment() {
     }
 
     let handleClick = async () => {
+        setDisabled(true);
         try {
-            setErrorSeverity('info');
-            showSnackbar('Createing comment...')
+            dispatch(setErrorSeverity('info'));
+            dispatch(showSnackbar('Creating comment...'));
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
             setRedirect(true);
+            setDisabled(false);
             setRedirect(false);
-            setErrorSeverity('success');
-            showSnackbar('Comment successfully added')
+            dispatch(setErrorSeverity('success'));
+            dispatch(showSnackbar('Comment added!'));
         } catch (e: any) {
-            setErrorSeverity('error');
-            showSnackbar('Your comment could not be added');
+            setDisabled(false);
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar('There was a problem creating your comment'));
         }
     }
     
@@ -49,7 +54,7 @@ function AddComment() {
         <Paper elevation={3} style={{'margin': '.5rem'}}>
             <div style={{'margin': '2rem'}}>
                 <Editor id='addNewComment' onChange={handleChange} placeholder='Write your comment here...' />
-                <Button id='createCommentButton' onClick={handleClick} style={{'color':'#75BC3E'}}><AddCommentRoundedIcon />Create</Button>
+                <Button id='createCommentButton' disabled={disabled} onClick={handleClick} style={{'color':'#75BC3E'}}><AddCommentRoundedIcon />Create</Button>
             </div>
         </Paper>
     )

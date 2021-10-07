@@ -3,7 +3,7 @@ import GameSettings from './GameSettings';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { gameState, setGame } from '../../state-slices/multiplayer/game-slice';
-import { Button, Input } from '@material-ui/core';
+import { Button, Input, makeStyles } from '@material-ui/core';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { gameByName, getGame } from '../../graphql/queries';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
@@ -21,6 +21,13 @@ import { fontFamily } from '@mui/system';
 
 Amplify.configure(config);
 
+const useStyles = makeStyles({
+    buttons: {
+        backgroundColor: 'rgb(245,245,245)',
+        margin: '1rem'
+    }
+})
+
 /** This React component is a splash screen/landing page for the multiplayer quiz game.
  * 
  *  If no game is currently defined, a lobby will be rendered which allows users to 
@@ -32,6 +39,8 @@ Amplify.configure(config);
 function GameLounge() {
 
     const [nickName, setNickName] = useState("");
+
+    const classes = useStyles();
     
     const game = useSelector(gameState);
     const user = useSelector(authState);
@@ -92,7 +101,9 @@ function GameLounge() {
                     answeredCorrectly: false,
                     placing: -1,
                     streak: 0,
-                    points: 0
+                    points: 0,
+                    pointsEarned: 0,
+                    afk: false
                 };
             // User is not logged in, but has set a nickname
             } else if (guestUser.id) {
@@ -105,7 +116,9 @@ function GameLounge() {
                     answeredCorrectly: false,
                     placing: -1,
                     streak: 0,
-                    points: 0
+                    points: 0,
+                    pointsEarned: 0,
+                    afk: false
                 }
             // User is not logged in, and has not set a nickname
             } else {
@@ -183,7 +196,7 @@ function GameLounge() {
         </>       
         }
         {/* Button which joins existing game according to input id */}
-        <Button onClick={joinGame}>Join Game</Button>
+        <Button className={classes.buttons} onClick={joinGame}>Join Game</Button>
         </>
         : <Redirect to="/multiplayer" /> }
         </>
