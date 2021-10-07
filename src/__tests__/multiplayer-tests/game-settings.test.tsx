@@ -2,6 +2,8 @@ import {shallow, mount, configure} from 'enzyme';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import GameSettings from '../../components/Multiplayer/GameSettings';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import { store } from '../../store/store';
+import { Provider } from 'react-redux';
 
 describe('GameSettings Test Suite', () => {
 
@@ -17,7 +19,9 @@ describe('GameSettings Test Suite', () => {
         // Mock up the props
         let mockSetShowFn = jest.fn();
 
-        const wrapper = shallow(<GameSettings show={false} setShow={mockSetShowFn}/>);
+        const wrapper = shallow(<Provider store={store}>
+                                    <GameSettings />
+                                    </Provider>);
 
         expect(wrapper).toBeTruthy;
     });
@@ -26,6 +30,10 @@ describe('GameSettings Test Suite', () => {
         // Mock up the props
         let mockSetShowFn = jest.fn();
 
-        const wrapper = mount(<GameSettings show={false} setShow={mockSetShowFn}/>);
+        const wrapper = mount(<Provider store={store}>
+                                <GameSettings />
+                                </Provider>);
+
+        expect(wrapper).toBeTruthy;
     });
 })

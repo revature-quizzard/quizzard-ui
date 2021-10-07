@@ -75,14 +75,12 @@ function GameSettings() {
     let handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
-        console.log('formdata:',formData);
     }
 
     const getData = async() => {
         try{
             setSets(await getAllSets());
         } catch (e: any){
-            console.log('e',e);
         }
     }
 
@@ -137,7 +135,6 @@ function GameSettings() {
             //@ts-ignore
             card.multiAnswers = gameUtil.generateWrongAnswers(card.correctAnswer, cardList);
         })
-        console.log("CardList: ",cardList);
 
         let host = '';
         let id = '';
@@ -190,7 +187,6 @@ function GameSettings() {
                 }]
             }
 
-            console.log('game',inputGame);
             //Set game in graphql
             await API.graphql(graphqlOperation(createGame, {input: inputGame })) as Promise<GraphQLResult>;
             //Set game in redux
@@ -199,7 +195,6 @@ function GameSettings() {
         }
         catch(e: any){
             //SNACKBAR notis here
-            console.log('e',e);
         }
     }
 
@@ -243,7 +238,6 @@ function GameSettings() {
 
                 <FormControl margin="normal" fullWidth>
                     <InputLabel htmlFor="set">Set</InputLabel>
-                        {console.log('sets:',sets)}
                         <Select
                             id="set"
                             name="set"

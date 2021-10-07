@@ -65,7 +65,6 @@ import Sound, { ReactSoundProps } from 'react-sound';
     const game = useSelector(gameState);
     const user = useSelector(authState);
     const guestUser = useSelector(guestState);
-    console.log('Game in Questions component', game)
 
     let currentUser = user.authUser ? user.authUser.id : guestUser.id
     let currentPlayer = game.players.find((player) => player.id == currentUser);

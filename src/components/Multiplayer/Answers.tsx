@@ -92,7 +92,6 @@ function Answers() {
     async function submit(e: any) {
         if (game.matchState == 2) return;
 
-        console.log('submit e:', e.target.id)
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         //@ts-ignore
         let currentPlayer : Player = {};
@@ -110,7 +109,6 @@ function Answers() {
             currentPlayer.answeredCorrectly = false;
         }
         playerList.push(currentPlayer);
-        console.log('Player list after submit:', playerList)
         await API.graphql(graphqlOperation(updateGame, {input: {id: game.id, players: playerList}}))
         
         renderColors(e.target.id);
