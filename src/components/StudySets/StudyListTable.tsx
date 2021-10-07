@@ -9,11 +9,8 @@ import {
 } from "../../state-slices/study-set/study-set-slice";
 import { authState } from "../../state-slices/auth/auth-slice";
 import { useEffect } from "react";
-import { takeAnotherQuizResult } from "../../state-slices/create-quiz/result-slice";
-import {
-  clearQuiz,
-  takeAnotherQuizCreate,
-} from "../../state-slices/create-quiz/create-quiz-slice";
+
+
 
 export default function StudyListTable(props: any) {
   const dispatch = useAppDispatch();
@@ -21,9 +18,6 @@ export default function StudyListTable(props: any) {
   const auth = useAppSelector(authState);
 
   useEffect(() => {
-    dispatch(takeAnotherQuizResult());
-    dispatch(clearQuiz());
-    dispatch(takeAnotherQuizCreate());
     if (props.content === "public-sets") {
       dispatch(currentlyLoading());
       publicSetsFetcher(auth.authUser.token)
