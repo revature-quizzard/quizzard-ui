@@ -4,10 +4,13 @@ import UpdateThread from '../components/Forum/UpdateThread';
 import { Subforum } from '../models/subforum';
 import { Thread } from '../models/thread';
 import { Provider } from 'react-redux';
+import * as redux from 'react-redux';
 import createMockStore from 'redux-mock-store';
+import { store } from '../store/store';
+import { updateThread } from '../remote/thread-service';
+import { forumState } from '../state-slices/forum/forum-slice';
 
 jest.mock('../remote/thread-service');
-jest.mock('../state-slices/error/errorSlice')
 
 interface TempState {
     currentSubforum: Subforum | undefined;
@@ -50,5 +53,36 @@ describe('Update Thread Component Test Suite', () => {
         // expect it to be truthy (i.e. something renders)
         expect(wrapper).toBeTruthy();
     });
+
+    it('Component calls updateThread for axios call when button is clicked', () => {
+        // set initial state
+        initialState = {
+            ...initialState,
+            currentThread: new Thread(['subforumId'],'subforumId','dsecription','subject','username','id',0,'021-10-06T23:29:17.650',[])
+        }
+
+        // mock props
+        let mockClose = jest.fn();
+
+        // set up a spy for useSelector (to mock values)
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockImplementation((arg) => {
+            if (arg === forumState) {
+                return initialState;
+            } else {
+                return { authUser: { username: 'username' } };
+            }
+        })
+
+        // set up wrapper class
+        const wrapper = mount(<Provider store={store}><UpdateThread close={mockClose} /></Provider>);
+
+        let buttonWrapper = wrapper.find('#updateThreadButton').at(0);
+
+        buttonWrapper.simulate('click');
+
+        // expect updateThread to have been called
+        expect(updateThread).toBeCalled();
+    })
 
 })
