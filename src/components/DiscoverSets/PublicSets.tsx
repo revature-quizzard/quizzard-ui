@@ -55,7 +55,8 @@ function PublicSets() {
         }
     }));
 
-
+    const classes = useStyles();
+    const theme = useTheme();
 
     async function getSets() {
         console.log("FETCHING TRIVIA CARD SETS")

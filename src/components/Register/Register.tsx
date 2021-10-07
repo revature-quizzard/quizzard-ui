@@ -5,6 +5,7 @@ import {RegisterModel} from "../../models/register-model";
 import {useDispatch} from 'react-redux';
 import {useHistory} from "react-router-dom";
 import {setErrorSeverity, showSnackbar} from "../../state-slices/error/errorSlice";
+import { Container } from "@mui/material";
 
 
 const Register = () => {
@@ -40,7 +41,8 @@ const Register = () => {
 
     return (
         <>
-            <Form className="auth-form">
+        <Container style={{width:'30em' ,justifyContent: 'center' }}>
+            <Form >
          
             <br/>     
             <br/>    
@@ -105,6 +107,7 @@ const Register = () => {
                     </Button>
                 </Form.Group>
             </Form>
+            </Container>
         </>
     );
 };
