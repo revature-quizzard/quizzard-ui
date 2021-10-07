@@ -18,6 +18,9 @@ import Players from './Players';
 import { authState, logoutUserReducer } from '../../state-slices/auth/auth-slice';
 import { gameState, Player, resetGame, setGame } from '../../state-slices/multiplayer/game-slice';
 import { guestState } from '../../state-slices/multiplayer/guest-slice';
+import { profileState, setProfile } from '../../state-slices/user-profile/profile-slice';
+import { quizzardApiClientTokenAuthorized } from '../../remote/api-client';
+import { maxHeight } from '@mui/system';
 
 
 const useStyles = makeStyles({
@@ -29,7 +32,8 @@ const useStyles = makeStyles({
     },
 
     playerContainer: {
-        marginRight: '1rem'
+        display: 'flex',
+        marginRight: '1rem',
     },
 
     topRow: {
@@ -40,7 +44,9 @@ const useStyles = makeStyles({
 
     gameId: {
         alignSelf: 'center',
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        borderBottomStyle: 'solid',
+        borderColor: 'orange'
     },
 
     bottomRow: {
@@ -67,14 +73,23 @@ const useStyles = makeStyles({
 
     leaderContainer: {
         justifyContent: "center",
+    },
 
-    }
+    buttons: {
+        backgroundColor: 'rgb(245,245,245)',
+        margin: '1rem',
+        marginLeft: '0rem'
+    },
+
 
 });
 
 
+
 Amplify.configure(config);
 
+// Prevents duplicate calls to persist data
+let numCalls = 0;
 
 /**
  *  This React component is a container for the multiplayer quiz game.
@@ -128,25 +143,17 @@ async function closeGame(game: any) {
     }
 }
 
-/**
- *  The host of a game will invoke this function at the end of the game (match_state = 3)
- * 
- *  This function will trigger our AWS Lambda, which will post game records to DynamoDB, and pull info
- *  into player data. 
- */
-function postGameRecords() {
-
-}
-
-
 function Game() {
-
+    const userProfile = useSelector(profileState);
     const user = useSelector(authState);
-    //@ts-ignore
     const guestUser = useSelector(guestState);
     const game = useSelector(gameState);
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const classes = useStyles();
+
+    
 
     useEffect(() => {
         // If game does not exist, reroute to /lounge
@@ -168,9 +175,7 @@ function Game() {
                 console.log('usersToUpdate',{currentUser});
                 let ingame = value.data.onUpdateGameById.players.some((player: any) => player.id == currentUser);
                 console.log('onUpdate:', { provider, value });
-
                 value.data.onUpdateGameById.players.sort((a: any, b: any) => a.points < b.points ? 1 : -1);
-
                 ingame? dispatch(setGame({...value.data.onUpdateGameById})) : dispatch(resetGame());
             },
             //@ts-ignore
@@ -194,7 +199,7 @@ function Game() {
         }
     }, [])
 
-    const classes = useStyles();
+
 
     // This function abstracts away some logic from the main return method and allows us to use
     // a switch statement in our conditional rendering.
@@ -207,7 +212,9 @@ function Game() {
             case 0:
                 return (
                     <>  
-                        <h1 className={classes.gameId}>{game.id}</h1> 
+                    <div className={classes.topRow}>
+                        <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1> 
+                        </div>
                         <div className= {classes.playerContainer}>
                         <Players />
                         </div>
@@ -215,7 +222,7 @@ function Game() {
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {startGame(game)}}> Start Game </Button>
+                        <Button className={classes.buttons} onClick={() => {startGame(game)}}> Start Game </Button>
                         :
                         <></> }
                     </>
@@ -225,7 +232,7 @@ function Game() {
                     <>
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
-                            <h1 className={classes.gameId}>{game.id}</h1>
+                            <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1>
                             <div className= {classes.timerContainer}>
                                 <Timer start={game.questionTimer} onTimeout={onTimeout}/>
                             </div>
@@ -247,7 +254,7 @@ function Game() {
                     <>
                     <div className = {classes.gameContainer}>
                         <div className={classes.topRow}>
-                            <h1 className={classes.gameId}>{game.id}</h1>  
+                            <h1 className={classes.gameId}>Code&nbsp;&nbsp;{game.id}</h1>  
                             <div className={classes.hideMe}>                        
                                  <div className= {classes.timerContainer}>
                                     <Timer start={game.questionTimer} onTimeout={onTimeout}/>
@@ -257,6 +264,18 @@ function Game() {
                         <div className={classes.bottomRow}>
                             <div className= {classes.playerContainer}>
                                 <Players />
+                                { (currentUser == game.host) 
+                                ?
+                                <>
+                                { (game.questionIndex< game.set.cardList.length-1)
+                                ? 
+                                <Button className={classes.buttons} onClick={nextCard}>Next Card</Button>
+                                :
+                                <Button className={classes.buttons} onClick={nextCard}>See Leaderboard</Button>
+                                } 
+                                </>
+                                :
+                                <></> }
                             </div>
                             <div className= {classes.qaContainer}>
                                 <Questions />
@@ -264,27 +283,21 @@ function Game() {
                             </div>
                         </div>  
                     </div>
-                        {/* This needs to be the username of the player who made the game! */}
-                        {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
-
-                        { (currentUser == game.host) 
-                        ?
-                        <Button onClick={nextCard}>Next Card </Button>
-                        :
-                        <></> }
+                        
                     </>
                 )
             case 3: 
                 return (
                     <>
                     <div className = {classes.leaderContainer}>
+                        { callPersistData() }
                         <Leaderboard />
                     </div>
                         {/* This needs to be the username of the player who made the game! */}
                         {/* TODO: Change to check redux state, bit weird rn as guests don't use state */}
                         { (currentUser == game.host) 
                         ?
-                        <Button onClick={() => {closeGame(game)}}> Close Game </Button>
+                        <Button className={classes.buttons} onClick={() => {closeGame(game)}}> Close Game </Button>
                         :
                         <></> }
                     </>
@@ -305,19 +318,17 @@ function Game() {
      */
     async function onTimeout() {
         console.log('onTimeout called');
+        if (game.matchState != 1) return;
         let currentUser = user.authUser ? user.authUser.id : guestUser ? guestUser.id : undefined;
         if (!currentUser) history.push('/lounge')
         
         if (currentUser == game.host) {
             console.log('Host is in onTimeout');
-            // TODO: Utilize placing and streak fields for scoring
-            
-            
             console.log('players before sort: ', game.players);
             // Need to clone players array in order to mutate fields
             // Sort temp player list by time answered
             let players = [].concat(game.players.map(player => ({...player})))
-                            .sort((a: any, b: any) => a.answeredAt < b.answeredAt ? 1 : -1);
+                            .sort((a: any, b: any) => a.answeredAt > b.answeredAt ? 1 : -1);
             console.log('players after sort: ', players);
 
             // Calculate points
@@ -326,6 +337,7 @@ function Game() {
             players.forEach(player => {
                 points = 0;
                 if (player.answered == true && player.answeredCorrectly == true) {
+
                     count++;
                     // Points from placing
                     player.placing = count;
@@ -336,15 +348,28 @@ function Game() {
                     points *= 1 + (.1 * player.streak);
 
                     // Update points
-                    player.points += Math.floor(points);
+                    player.pointsEarned = Math.floor(points)
+                    player.points += player.pointsEarned;
+                    
+                } else if(player.answered == true && player.answeredCorrectly == false){
+                    
+                    player.pointsEarned = 0;
+                    // Reset streak if answered incorrectly
+                    player.streak = 0;
+                    
                 }
             });
+
             // Give bonus points if only one player answered correctly
             if (count == 1) {
                 players.forEach(player => {
-                    if (player.answered == true && player.answeredCorrectly == true) player.points += 200;
+                    if (player.answered == true && player.answeredCorrectly == true) {
+                        player.pointsEarned += 200;
+                        player.points += 200;
+                    }
                 })
             }
+
             // Update matchState
             let matchState = 2;
             
@@ -393,12 +418,72 @@ function Game() {
     }
 
     /**
+     * Helper function to be called from React fragment
+    */
+    const callPersistData = () => {
+        console.log('callPersistData called, numCalls: ', numCalls)
+        if(numCalls<1)
+            persistUserData();
+        numCalls++;
+    }
+
+    /**
+     *  This method is invoked at the end of a game to persist the users data (points, win, or loss)
+     *  The host of a game will invoke this function at the end of the game (match_state = 3)
+     *  The logic:
+     *      + Called by helper method callPersistData to allow async method call from React fragment
+     *      + make sure the one persisting user data is the host
+     *      + rewrite player data to discard unwanted data
+     *      + create record object and attempt to persist to lambda function postRecords
+     */
+    async function persistUserData(){
+        // Prevent duplicate calls
+        numCalls++;
+        // find the current user if not guest
+        let currentUser = user.authUser?.id;
+        let players = game.players.map(player => ({...player}));
+
+        if(currentUser === game.host){
+            let newPlayers: any[]=[];
+            let winner;
+
+            players.forEach((player, i) => {
+                player.placing = i + 1;
+                if(player.placing === 1) winner = player.username;
+                newPlayers.push({
+                    id: player.id,
+                    name: player.username,
+                    placing: player.placing,
+                    points: player.points
+                })
+            });
+
+            console.log("newPlayers: ", newPlayers);
+    
+            let gameRecord = {
+                playerList: newPlayers,
+                cardList: game.set.cardList.map(card => ({id: card.id, question: card.question, correctAnswer: card.correctAnswer})),
+                winner,
+                datePlayed: new Date().toISOString()
+            }
+            console.log("gameRecord: ", gameRecord);
+            try{
+                let resp = await quizzardApiClientTokenAuthorized.post('/records', gameRecord);
+                console.log('persist user data response: ', resp);
+            }catch(e: any){
+                console.log('persist user data error: ', e);
+            }
+
+        }
+    }
+
+    /**
      *  Utility function to aid in testing.
      *  Simply progresses game to next state, looping back to 0 from 3.
      */
     async function incrementState() {
         let temp = game.matchState;
-        if (temp == 3) temp = 0;
+        if (temp == 3) temp = 0; 
         else temp += 1;
         console.log('Inside incrementState, temp:', temp)
         await (API.graphql(graphqlOperation(updateGame, {input: {id: game.id, matchState: temp}})));

@@ -1,7 +1,7 @@
 import React from "react";
 import { LoginModel } from "../models/login-model";
 import { RegisterModel } from "../models/register-model";
-import { quizzardApiClient } from "./api-client";
+import { quizzardApiClient, quizzardApiClientTokenAuthorized, quizzardApiClientTokenAuthorizedSynchronous } from "./api-client";
 import { authState, logoutUserReducer } from "../state-slices/auth/auth-slice";
 import {RegisterUserRequest} from "../dtos/register-user-request";
 import {Auth} from "aws-amplify";
@@ -43,6 +43,8 @@ export const authenticate = async (credentials: Credentials) => {
     try {
         let response = await Auth.signIn(credentials.username, credentials.password);
         localStorage.setItem('api-token', response.signInUserSession.idToken.jwtToken);
+        quizzardApiClientTokenAuthorized.defaults.headers['Authorization'] = localStorage.getItem('api-token');
+        quizzardApiClientTokenAuthorizedSynchronous.defaults.headers['Authorization'] = localStorage.getItem('api-token');
         return response;
     } catch (err: any) {
         if (err.name == "UserNotConfirmedException")
@@ -53,5 +55,8 @@ export const authenticate = async (credentials: Credentials) => {
 }
 
 export const logout = () => {
+    localStorage.removeItem('api-token');
+    quizzardApiClientTokenAuthorized.defaults.headers['Authorization'] = undefined;
+    quizzardApiClientTokenAuthorizedSynchronous.defaults.headers['Authorization'] = undefined;
     Auth.signOut();
 }

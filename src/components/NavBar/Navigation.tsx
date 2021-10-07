@@ -3,6 +3,7 @@
  */
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -10,9 +11,6 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ForumIcon from '@mui/icons-material/Forum';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link, useHistory} from "react-router-dom";
 import clsx from 'clsx';
@@ -33,6 +31,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearProfile, profileState} from "../../state-slices/user-profile/profile-slice";
 import {authState, logoutUserReducer} from "../../state-slices/auth/auth-slice";
+import { logout } from '../../remote/login-register-service';
 
 export function NavigationComponent() {
     const state = useSelector(authState);
@@ -145,6 +144,7 @@ export function NavigationComponent() {
     const handleLogout = () => {
         dispatch(logoutUserReducer());
         dispatch(clearProfile());
+        logout();
         history.push('/login');
     };
 

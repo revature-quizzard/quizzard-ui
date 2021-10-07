@@ -45,6 +45,7 @@ export async function createStudySetWithToken(
 
 export const getAllSets = async () =>{
 
+  console.log(localStorage.getItem('api-token'));
   let resp = await quizzardApiClientTokenAuthorized.get('/sets')
 
 
@@ -58,6 +59,13 @@ export const getAllSets = async () =>{
 export const deleteSet = async (setId:string) => {
 
   let response = await quizzardApiClientTokenAuthorized.delete(`/sets/${setId}`);
+
+  return response.data;
+}
+
+export const updateSet = async (setId:string, set: SetDto) => {
+
+  let response = await quizzardApiClientTokenAuthorized.put(`/sets/${setId}`, set);
 
   return response.data;
 }
