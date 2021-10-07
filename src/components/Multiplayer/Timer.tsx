@@ -38,7 +38,6 @@ function Timer(props: ITimerProps) {
           // setTimeout(() => {            
             
           setOneLastRerender(true);
-          console.log('Calling after timeout');
           props.onTimeout();
           // }, 20);
           
