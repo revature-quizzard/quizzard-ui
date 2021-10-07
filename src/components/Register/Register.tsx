@@ -45,7 +45,7 @@ const Register = () => {
             <br/>     
             <br/>    
              <h1  style={{color: '#4E3E61 ' ,  textAlign: 'center' , fontFamily: 'serif'}}><b> <span  >REGISTRATION</span> </b></h1> 
-             \<hr/>
+             <hr/>
       <br/>    
      
                 <h1><b></b></h1>
