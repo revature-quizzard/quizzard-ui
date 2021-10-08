@@ -9,7 +9,6 @@ import Navigation from "./components/NavBar/Navigation";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import StudyHub from "./components/DiscoverSets/StudyHub";
-import CreateQuiz from "./components/CreateQuiz/CreateQuiz";
 import UpdateAccountInfo from "./components/UpdateAccountInfo/UpdateAccountInfo";
 import Sets from "./components/Sets/Sets";
 import Game from "./components/Multiplayer/Game";
@@ -69,9 +68,6 @@ function App() {
           </Route>
           <Route exact path="/card">
             <FlipCard />
-          </Route>
-          <Route exact path="/quiz">
-            <CreateQuiz />
           </Route>
           <Route exact path="/userCards">
           <ViewUserCards />
