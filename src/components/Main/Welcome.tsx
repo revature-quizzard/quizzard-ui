@@ -3,7 +3,8 @@ import { Row, Col } from "react-bootstrap";
 const Welcome = () => {
   return (
     <>
-      <Row className="d-flex justify-content-center align-items-center mt-4 mb-4">
+    {/* className="d-flex justify-content-center align-items-center mt-4 mb-4" */}
+      <Row>
         <Col lg={10} className="welcomeBanner">
           <img className="welcomeBanner" src="qwizzard.gif" alt="qwizzard quizzard qwizard kwizzard" height="80px" />
         </Col>

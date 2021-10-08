@@ -1,77 +1,107 @@
-import { Form, Button, Alert } from "react-bootstrap";
-import { useState } from "react";
-import { login } from "../../remote/login-register-service";
-import { LoginModel } from "../../models/login-model";
-import {  useDispatch, useSelector } from 'react-redux';
-import { showErrorMessage, hideErrorMessage, errorState } from "../../state-slices/error/errorSlice";
-import { useHistory } from "react-router-dom";
-import { loginUserReducer } from "../../state-slices/auth/auth-slice";
-import {getSubs} from "../../remote/subject-service";
-import {setSubjects} from "../../state-slices/subject/subject-slice";
+import {Button, Container, TextField, Typography} from "@mui/material"
+import {makeStyles} from "@mui/styles";
+import {useState} from "react";
+import {authenticate} from "../../remote/login-register-service";
+import {LoginModel} from "../../models/login-model";
+import {useDispatch, useSelector} from 'react-redux';
+import {showSnackbar, setErrorSeverity} from "../../state-slices/error/errorSlice";
+import {authState, loginUserReducer} from "../../state-slices/auth/auth-slice";
+import {Redirect, useHistory} from "react-router-dom";
+
+const useStyles = makeStyles({
+    loginContainer: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        marginTop: '3rem',
+        border: 'solid #332347',
+        borderWidth: '2px'
+    },
+    loginDiv: {
+        justifyContent: "space-between",
+        margin: '2rem'
+    }
+});
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [loginUser, setLoginUser] = useState({ username: "", password: "" } as LoginModel)
-  
-  const error = useSelector(errorState);
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const [loginUser, setLoginUser] = useState({username: "", password: ""} as LoginModel)
+    const auth = useSelector(authState);
 
-  const getSubjects = async () => {
-    let subjects = await getSubs();
-    dispatch(setSubjects(subjects));
-  }
+    let onChange = (e: any) => {
+        const {name, value} = e.target;
+        setLoginUser({
+            ...loginUser, [name]: value
+        });
+    }
 
-  let onChange = (e: any) => {
-    const {name, value} = e.target;
-    setLoginUser({
-      ...loginUser, [name]: value
-    });
-  }
-
-/*
-  Perfection looks like this (what all axios calls should look like):
-*/
-  let logUserIn = async (e: any) => {
-    e.preventDefault();
-    await login(loginUser).then(response => {
-        localStorage.setItem("Authorization", response.headers.authorization);
-        setLoginUser({username: "", password: ""} as LoginModel);
-        dispatch(loginUserReducer({username: response.data.username, token: response.headers.authorization}));
-        getSubjects();
-        history.push("/study");
-      }).catch(error => {
-        if (error.response.status === 401) {
-          dispatch(showErrorMessage("Invalid Credentials, Please try again!"));
-          setTimeout(() => {
-            dispatch(hideErrorMessage());
-          }, 5000)
-         
+    let logUserIn = async (e: any) => {
+        e.preventDefault();
+        try {
+            let response = await authenticate(loginUser);
+            dispatch(loginUserReducer(response));
+        } catch (e: any) {
+            console.log(e);
+            dispatch(setErrorSeverity('error'));
+            dispatch(showSnackbar("Invalid credentials provided."));
         }
-      }
-    );
-  }
+    }
+
+    const history = useHistory();
+
+    let navToRegister = () => {
+        history.push('/register');
+    }
 
     return (
-        <>
-        <Form>
-        <h2>Login</h2>
-          <Form.Group>
-            <Form.Label>Username: </Form.Label>
-            <Form.Control name="username" value={loginUser.username} onChange={onChange} type="text" placeholder="username"  />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Password: </Form.Label>
-            <Form.Control name="password" value={loginUser.password} onChange={onChange} type="password" placeholder="*******"/>
-          </Form.Group>
-          <Form.Group className="text-center">
-            <Button onClick={logUserIn} type="submit" >Login</Button>
-          </Form.Group>
-          {error.showError && 
-          <Alert variant="danger">{error.errorMsg}</Alert>
-          }
-        </Form>
-      </>
+        auth.isAuthenticated ? <Redirect to="/profile"/> :
+            <>
+                <Container fixed maxWidth="sm" id="login-component" className={classes.loginContainer}>
+                    <div className={classes.loginDiv}>
+                    <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#DBDFE7 ' , fontFamily:"Emilys Candy" }}>Q W i Z Z A R D</span>
+      <br/> 
+       </b> </h1>
+      <hr/>
+            <h1 ><b> <span className="logo-Grand-Qwuizzard" style={{color: '#4E3E61 ' , fontFamily:"retro-gamer" }}>L o g i n</span> 
+      <br/>    </b></h1>
+      <hr/>
+                        <br/><br/>
+                        <TextField
+                            id='username'
+                            label='Username'
+                            name='username'
+                            value={loginUser.username}
+                            variant='outlined'
+                            onChange={onChange}
+                        />
+                        <br/><br/>
+                        <TextField
+                            id='password'
+                            label='Password'
+                            name='password'
+                            value={loginUser.password}
+                            variant='outlined'
+                            type='password'
+                            onChange={onChange}
+                        />
+                        <br/><br/>
+                        <Button
+                            id='login-button'
+                            onClick={logUserIn}
+                            variant='contained'
+                            style={{backgroundColor: '#332347', color: '#FFFFFF'}}
+                            type="submit">
+                            Login
+                        </Button>
+                        <br/><br/>
+                        <p>No account yet? <span
+                            style={{color: "#0000EE", cursor: "pointer", textDecoration: "underline"}}
+                            onClick={navToRegister}>Sign Up</span>!</p>
+                    </div>
+                </Container>
+            </>
     )
 }
-
 export default Login;
+
+

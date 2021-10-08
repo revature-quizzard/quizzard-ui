@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Row, Col } from "react-bootstrap";
 import Welcome from "./Welcome";
 import Register from "../Register/Register"
@@ -10,7 +11,8 @@ const Main = () => {
   const auth = useSelector(authState);
 
   return (
-    <Row className="d-flex justify-content-around">
+    // className="d-flex justify-content-around"
+    <Row  >
       <Col md={7} style={{ height: "100%" }}>
         <Welcome />
       </Col>

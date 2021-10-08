@@ -1,20 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../../models/user";
 import { RootState } from "../../store/store";
 
 interface State {
+  username: string;
   isAuthenticated: boolean;
   isLoading: boolean;
-  username: string;
-  token: string;
+  authUser : User | undefined;
   showLogin: boolean;
 }
 
 const initialState: State = {
   isAuthenticated: false,
   isLoading: false,
-  username: "",
-  token: "",
+  authUser: undefined,
   showLogin: false,
+  username: ""
 };
 
 export const authSlice = createSlice({
@@ -29,14 +30,19 @@ export const authSlice = createSlice({
     },
 
     // this will have to be modified later once login and register compenents are pulled in to handle passing back a token and username
-    loginUserReducer: (state, action: PayloadAction<any>) => {
-      state.username = action.payload.username;
-      state.token = action.payload.token;
+    loginUserReducer: (state, response: any) => {
+      let id = response.payload.attributes.sub;
+      let username = response.payload.username;
+      let name = response.payload.attributes.name;
+      let email = response.payload.attributes.email;
+      let token = response.payload.signInUserSession.idToken.jwtToken;
+
+      state.authUser = new User(id, username, name, email, token);
       state.isAuthenticated = true;
     },
+    
     logoutUserReducer: (state) => {
-      state.username = "";
-      state.token = "";
+      state.authUser = undefined;
       state.isLoading = false;
       state.isAuthenticated = false;
       state.showLogin = false;

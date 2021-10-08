@@ -1,28 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { Flashcard } from "../../models/flashcard";
+import { Set } from "../../dtos/Set"
 
 //Create interface for state
 interface State {
     isLoading: boolean;
     isLoaded: boolean;
-    studySet: Array<Flashcard>;
-    flashCard: object;
-    showStudySet: boolean;
-    // listStudySet: Array<Studyset>
+    aSet: Set | undefined;
 }
 //set the initial state
 const initialState: State = {
     isLoading: false,
     isLoaded: false,
-    studySet: [],
-    flashCard: {},
-    showStudySet: false,
+    aSet: undefined,
 
 };
 
-//create the slice using createSlice
+/**
+ * @author Jose Tejada
+ */
 export const createStudySetSlice = createSlice({
+
     //Name the slice
     name: "createStudySet",
 
@@ -42,14 +41,16 @@ export const createStudySetSlice = createSlice({
             state.isLoaded = true;
         },
 
-        addStudySet: (state, action: PayloadAction<Array<Flashcard>>) => {
-             state.studySet = action.payload;
+        StudySet: (state, action: PayloadAction<Set>) => {
+
+             state.aSet = action.payload;
+             console.log(state.aSet)
          },
 
 //load studySet
 
         deleteStudySet: (state) => {
-            state.studySet = [];
+            state.aSet = undefined;
         }
 
     },
@@ -57,13 +58,14 @@ export const createStudySetSlice = createSlice({
 export const {
     isLoading,
     isLoaded,
-    addStudySet,
-    deleteStudySet,
+    StudySet,
+    deleteStudySet
+
 } = createStudySetSlice.actions;
 
 
 
 
-export const createStudySetState = (state: RootState) => state.createStudySet;
+export const StudySetState = (state: RootState) => state.createStudySet;
 
 export default createStudySetSlice.reducer;

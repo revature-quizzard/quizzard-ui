@@ -1,0 +1,46 @@
+type Game @model 
+  @key(name: "gbn", fields: ["name"], queryField: "gameByName") {
+  id: ID!
+  name: String!
+  matchState: Int!
+  questionIndex: Int!
+  capacity: Int!
+  host: String!
+  questionTimer: Int!
+  set: Set!
+  players: [Player]!
+}
+
+type Set {
+  id: String!
+  name: String!
+  creator: String!
+  cardList: [Card]!
+}
+
+type Player {
+  id: ID!
+  username: String!
+  answered: Boolean!
+  answeredAt: AWSDateTime!
+  answeredCorrectly: Boolean!
+  placing: Int!
+  streak: Int!
+  points: Int!
+  pointsEarned: Int!
+  afk: Boolean!
+}
+
+type Card {
+  id: String!
+  question: String!
+  correctAnswer: String!
+  multiAnswers: [String]!
+}
+
+type Subscription {
+  onUpdateGameById(id: ID!): Game
+    @aws_subscribe(mutations: ["updateGame"])
+  onDeleteGameById(id: ID!): Game
+    @aws_subscribe(mutations: ["deleteGame"])
+}
