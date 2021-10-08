@@ -31,7 +31,12 @@ export async function updateComment(comment: Comment) {
     return response.data;
 }
 
-
+/**
+ * async function which makes an axios call to the API to get all comments on a thread
+ * @param threadID - the ID of the thread whose comments we want to obtain
+ * @returns - The data inside the axios response, including a 200 status
+ * @author - Hiroshi Nobuoka, Charles Mettee
+ */
 export async function viewComments(threadID: string){
 
     let response = await QuizzardClient.get(`/forum/thread/${threadID}`);
