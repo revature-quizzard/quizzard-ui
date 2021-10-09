@@ -18,6 +18,7 @@ const GetThreads = ()=> {
     const auth = useSelector(authState);
     const forumInfo = useSelector(forumState);
     const dispatch = useDispatch();
+    const [dummySwitch, setDummySwitch] = useState(false);
 
     useEffect(() => {
    
@@ -32,7 +33,7 @@ const GetThreads = ()=> {
         };
         getThreads();
         
-      }, []);
+      }, [dummySwitch]);
 
     function Navigate(id: string, thr: Thread){
       dispatch(setCurrentThread(thr));
@@ -117,7 +118,7 @@ const GetThreads = ()=> {
           </Table>
         </TableContainer>
         <Modal open={showAddThread} onClose={() => {setShowAddThread(false)}}>
-          <AddThread close={setShowAddThread}/>
+          <AddThread dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} close={setShowAddThread}/>
         </Modal>
       </>
     );

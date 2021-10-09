@@ -11,6 +11,8 @@ import { Redirect } from 'react-router';
 import { setErrorSeverity, showSnackbar } from '../../state-slices/error/errorSlice';
 
 interface IAddThreadProps {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void,
     close: (input: boolean) => void;
 }
 
@@ -39,7 +41,6 @@ const useStyles = makeStyles({
 function AddThread(props: IAddThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
-    const [redirect, setRedirect] = useState(false);
     const [subject, setSubject] = useState('');
     const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
@@ -72,21 +73,15 @@ function AddThread(props: IAddThreadProps) {
             let resp = await addThread(toAdd);
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Thread created!'))
-            setRedirect(true);
             setDisabled(false);
-            setRedirect(false);
+            props.setDummySwitch(!props.dummySwitch);
+            props.close(false);
         } catch (e: any) {
             console.log(e);
             setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem creating your thread'));
         }
-    }
-
-    if (redirect) {
-        return (
-            <Redirect to='/forum' />
-        )
     }
 
     return (
