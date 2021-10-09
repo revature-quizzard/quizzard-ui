@@ -4,7 +4,7 @@ import Editor from 'rich-markdown-editor';
 import { Paper } from '@mui/material';
 import { Button, Box, FormControl, Input, Typography, makeStyles } from '@material-ui/core';
 import { authState } from '../../state-slices/auth/auth-slice';
-import { forumState } from '../../state-slices/forum/forum-slice';
+import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
 import {Thread } from '../../models/thread';
 import { updateThread } from '../../remote/thread-service';
 import { Redirect } from 'react-router';
@@ -72,10 +72,10 @@ function UpdateThread(props: IUpdateThreadProps) {
                 forumInfo.currentThread.date_created,
                 forumInfo.currentThread.tags
             );
-            console.log(toAdd);
             dispatch(setErrorSeverity('info'));
-            dispatch(showSnackbar('Updating your thread...'))
+            dispatch(showSnackbar('Updating your thread...'));
             let resp = await updateThread(toAdd);
+            dispatch(setCurrentThread(toAdd));
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Thread updated!'))
             setDisabled(false);

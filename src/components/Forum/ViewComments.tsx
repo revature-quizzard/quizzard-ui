@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { forumState } from '../../state-slices/forum/forum-slice';
+import { forumState, setCurrentThread } from '../../state-slices/forum/forum-slice';
 import { viewComments } from '../../remote/comment-service';
 import { Paper } from '@mui/material';
 import { Comment } from '../../models/comment';
