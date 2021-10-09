@@ -33,6 +33,8 @@ const useStyles = makeStyles({
 });
 
 interface IUpdateThreadProps {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void,
     close: (input: boolean) => void;
 }
 
@@ -40,7 +42,6 @@ function UpdateThread(props: IUpdateThreadProps) {
     const classes = useStyles();
     const [description, setDescription] = useState('');
     const [subject, setSubject] = useState('');
-    const [redirect, setRedirect] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const auth = useSelector(authState);
     const dispatch = useDispatch();
@@ -77,20 +78,14 @@ function UpdateThread(props: IUpdateThreadProps) {
             let resp = await updateThread(toAdd);
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Thread updated!'))
-            setRedirect(true);
             setDisabled(false);
-            setRedirect(false);
+            props.setDummySwitch(!props.dummySwitch);
+            props.close(false);
         } catch (e: any) {
             setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem updating your thread'))
         }
-    }
-
-    if (redirect) {
-        return (
-            <Redirect to='/forum' />
-        )
     }
 
     return (

@@ -12,9 +12,13 @@ import { Comment } from '../../models/comment';
 import { Redirect } from 'react-router';
 import AddCommentRoundedIcon from '@mui/icons-material/AddCommentRounded';
 
-function AddComment() {
+interface IAddCommentProps {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void,
+}
+
+function AddComment(props: IAddCommentProps) {
     const [inputText, setInputText] = useState('');
-    const [redirect, setRedirect] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const dispatch = useDispatch();
     const auth = useSelector(authState);
@@ -32,22 +36,15 @@ function AddComment() {
             let commentAncestors: string[] = [forumInfo.currentSubforum.id, forumInfo.currentThread.id]
             let toAdd = new Comment(commentAncestors, forumInfo.currentThread.id, inputText, auth.authUser.username)
             let resp = await addComment(toAdd);
-            setRedirect(true);
             setDisabled(false);
-            setRedirect(false);
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Comment added!'));
+            props.setDummySwitch(!props.dummySwitch);
         } catch (e: any) {
             setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem creating your comment'));
         }
-    }
-    
-    if (redirect) {
-        return (
-            <Redirect to='/forum' />
-        )
     }
 
     return (

@@ -20,6 +20,7 @@ function ViewComment() {
     const dispatch = useDispatch();
     const [showEditComment, setShowEditComment] = useState(false);
     const [showEditThread, setShowEditThread] = useState(false);
+    const [dummySwitch, setDummySwitch] = useState(false);
 
     let [comments,setComments] = useState(undefined as Comment[] | undefined);
 
@@ -27,15 +28,15 @@ function ViewComment() {
     useEffect(() => {
         console.log(forumInfo);
         const getComments = async () => {
-        try{
-            setComments(await viewComments(forumInfo.id));
-        } catch(e:any) {
-            // set an error message / toast here
-            console.log(e);
-        }
+            try{
+                setComments(await viewComments(forumInfo.id));
+            } catch(e:any) {
+                // set an error message / toast here
+                console.log(e);
+            }
         }
         getComments();
-    }, []);
+    }, [dummySwitch]);
 
 
     return (
@@ -89,13 +90,13 @@ function ViewComment() {
                 </div>
             ))}
             <div style={{'padding':'1rem','backgroundColor':'#5E5E5E'}}>
-            {(auth.isAuthenticated) ? <AddComment /> : <></>}
+            {(auth.isAuthenticated) ? <AddComment dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} /> : <></>}
             </div>
             <Modal open={showEditComment} onClose={() => {setShowEditComment(false)}}>
                 <UpdateComment close={setShowEditComment} />
             </Modal>
             <Modal open={showEditThread} onClose={() => {setShowEditThread(false)}}>
-                <UpdateThread close={setShowEditThread} />
+                <UpdateThread dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} close={setShowEditThread} />
             </Modal>
         </>
     )
