@@ -93,7 +93,7 @@ function ViewComment() {
             {(auth.isAuthenticated) ? <AddComment dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} /> : <></>}
             </div>
             <Modal open={showEditComment} onClose={() => {setShowEditComment(false)}}>
-                <UpdateComment close={setShowEditComment} />
+                <UpdateComment dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} close={setShowEditComment} />
             </Modal>
             <Modal open={showEditThread} onClose={() => {setShowEditThread(false)}}>
                 <UpdateThread dummySwitch={dummySwitch} setDummySwitch={setDummySwitch} close={setShowEditThread} />

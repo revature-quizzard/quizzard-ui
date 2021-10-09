@@ -11,6 +11,8 @@ import { Redirect } from 'react-router';
 import { setErrorSeverity, showSnackbar } from '../../state-slices/error/errorSlice';
 
 interface IUpdateCommentProps {
+    dummySwitch: boolean,
+    setDummySwitch: (nextDummySwitchVal: boolean) => void,
     close: (input: boolean) => void;
 }
 
@@ -40,26 +42,19 @@ function UpdateComment(props: IUpdateCommentProps) {
                 forumInfo.currentComment.date_created,
                 forumInfo.currentComment.tags
             );
-            console.log(toAdd);
             dispatch(setErrorSeverity('info'));
             dispatch(showSnackbar('Updating your comment...'))
             let resp = await updateComment(toAdd);
             dispatch(setErrorSeverity('success'));
             dispatch(showSnackbar('Comment updated!'))
-            setRedirect(true);
             setDisabled(false);
-            setRedirect(false);
+            props.setDummySwitch(!props.dummySwitch);
+            props.close(false);
         } catch (e: any) {
             setDisabled(false);
             dispatch(setErrorSeverity('error'));
             dispatch(showSnackbar('There was a problem updating your comment'))
         }
-    }
-
-    if (redirect) {
-        return (
-            <Redirect to='/forum' />
-        )
     }
 
     return (
