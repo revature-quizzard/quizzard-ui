@@ -48,7 +48,10 @@ describe('Add Thread Component Test Suite', () => {
 
         //set up wrapper class;
         const wrapper = shallow(<Provider store={mockStore}>
-                                    <AddThread close={mockClose} />
+                                    <AddThread 
+                                        dummySwitch={true}
+                                        setDummySwitch={() => false}
+                                        close={mockClose} />
                                 </Provider>);
         
         //expect it do be truthy (i.e., somthing renders)
@@ -78,7 +81,10 @@ describe('Add Thread Component Test Suite', () => {
 
         // set up the wrapper
         const wrapper = mount(  <Provider store={mockStore}>
-                                    <AddThread close={mockClose}/>
+                                    <AddThread 
+                                        dummySwitch={true}
+                                        setDummySwitch={() => false}
+                                        close={mockClose} />
                                 </Provider>);
 
         let createButtonWrapper = wrapper.find('#createThreadButton').at(0);

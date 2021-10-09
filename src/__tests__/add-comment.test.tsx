@@ -38,7 +38,9 @@ describe('Add Comment Component Test Suite', () => {
 
         // set up wrapper class
         const wrapper = shallow(<Provider store={mockStore}>
-                                    <AddComment />
+                                    <AddComment
+                                        dummySwitch={true}
+                                        setDummySwitch={() => false} />
                                 </Provider>);
 
         // expect it to be truthy (i.e. something renders)
@@ -65,7 +67,9 @@ describe('Add Comment Component Test Suite', () => {
         })
         // set up wrapper class
         const wrapper = mount(<Provider store={store}>
-                                    <AddComment />
+                                <AddComment
+                                    dummySwitch={true}
+                                    setDummySwitch={() => false} />
                                 </Provider>);
         let createWrapper = wrapper.find('#createCommentButton').at(0);
 

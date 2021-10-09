@@ -47,7 +47,10 @@ describe('Update Comment Component Test Suite', () => {
 
         // set up wrapper class
         const wrapper = shallow(<Provider store={mockStore}>
-                                    <UpdateComment close={() => (false)} />
+                                    <UpdateComment 
+                                        dummySwitch={true}
+                                        setDummySwitch={() => false}
+                                        close={() => (false)} />
                                 </Provider>);
 
         // expect it to be truthy (i.e. something renders)
@@ -74,7 +77,12 @@ describe('Update Comment Component Test Suite', () => {
         });
 
         // set up wrapper
-        const wrapper = mount(<Provider store={store}><UpdateComment close={mockClose}/></Provider>)
+        const wrapper = mount(<Provider store={store}>
+            <UpdateComment 
+                dummySwitch={true}
+                setDummySwitch={() => false}
+                close={mockClose} />
+            </Provider>)
 
         let buttonWrapper = wrapper.find('#updateCommentButton').at(0);
 
